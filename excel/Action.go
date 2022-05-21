@@ -1,0 +1,124 @@
+package excel
+
+import (
+	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-com/ole"
+	"syscall"
+	"unsafe"
+)
+
+// 0002448F-0000-0000-C000-000000000046
+var IID_Action = syscall.GUID{0x0002448F, 0x0000, 0x0000, 
+	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
+
+type Action struct {
+	ole.OleClient
+}
+
+func NewAction(pDisp *win32.IDispatch, addRef bool, scoped bool) *Action {
+	p := &Action{ole.OleClient{pDisp}}
+	if addRef {
+		pDisp.AddRef()
+	}
+	if scoped {
+		com.AddToScope(p)
+	}
+	return p
+}
+
+func ActionFromVar(v ole.Variant) *Action {
+	return NewAction(v.PdispValVal(), false, false)
+}
+
+func (this *Action) IID() *syscall.GUID {
+	return &IID_Action
+}
+
+func (this *Action) GetIDispatch(addRef bool) *win32.IDispatch {
+	if addRef {
+		this.AddRef()
+	}
+	return this.IDispatch
+}
+
+func (this *Action) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	_= retVal
+}
+
+func (this *Action) AddRef() uint32 {
+	retVal := this.Call(0x60000001, nil)
+	return retVal.UintValVal()
+}
+
+func (this *Action) Release() uint32 {
+	retVal := this.Call(0x60000002, nil)
+	return retVal.UintValVal()
+}
+
+func (this *Action) GetTypeInfoCount(pctinfo *uint32)  {
+	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	_= retVal
+}
+
+func (this *Action) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	_= retVal
+}
+
+func (this *Action) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	_= retVal
+}
+
+func (this *Action) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	_= retVal
+}
+
+func (this *Action) Application() *Application {
+	retVal := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.PdispValVal(), false, true)
+}
+
+func (this *Action) Creator() int32 {
+	retVal := this.PropGet(0x00000095, nil)
+	return retVal.LValVal()
+}
+
+func (this *Action) Parent() *ole.DispatchClass {
+	retVal := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+}
+
+func (this *Action) Name() string {
+	retVal := this.PropGet(0x0000006e, nil)
+	return win32.BstrToStrAndFree(retVal.BstrValVal())
+}
+
+func (this *Action) Caption() string {
+	retVal := this.PropGet(0x0000008b, nil)
+	return win32.BstrToStrAndFree(retVal.BstrValVal())
+}
+
+func (this *Action) Type() int32 {
+	retVal := this.PropGet(0x0000006c, nil)
+	return retVal.LValVal()
+}
+
+func (this *Action) Coordinate() string {
+	retVal := this.PropGet(0x00000a98, nil)
+	return win32.BstrToStrAndFree(retVal.BstrValVal())
+}
+
+func (this *Action) Content() string {
+	retVal := this.PropGet(0x00000a99, nil)
+	return win32.BstrToStrAndFree(retVal.BstrValVal())
+}
+
+func (this *Action) Execute()  {
+	retVal := this.Call(0x000008a3, nil)
+	_= retVal
+}
+
