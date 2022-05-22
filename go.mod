@@ -3,7 +3,7 @@ module github.com/zzl/go-excel-automation
 go 1.18
 
 require (
-	github.com/zzl/go-com v1.0.0
+	github.com/zzl/go-com v1.1.1
 	github.com/zzl/go-win32api v1.1.1
 )
 

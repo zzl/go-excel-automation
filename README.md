@@ -1,6 +1,6 @@
 # go-excel-automation
 
-Automate microsoft excel in golang.
+Automate Microsoft Excel in golang.
 
 Code in this repo is generated with [GO-TlbImp](https://github.com/zzl/go-tlbimp).
 
