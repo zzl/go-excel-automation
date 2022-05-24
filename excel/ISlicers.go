@@ -16,6 +16,9 @@ type ISlicers struct {
 }
 
 func NewISlicers(pUnk *win32.IUnknown, addRef bool, scoped bool) *ISlicers {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ISlicers)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *ISlicers) IID() *syscall.GUID {
 func (this *ISlicers) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *ISlicers) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ISlicers) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *ISlicers) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -63,36 +62,28 @@ func (this *ISlicers) GetCount(rhs *int32) com.Error {
 func (this *ISlicers) GetItem(index interface{}, rhs **Slicer) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ISlicers) GetDefault_(index interface{}, rhs **Slicer) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *ISlicers) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *ISlicers) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ISlicers) Add(slicerDestination interface{}, level interface{}, name interface{}, caption interface{}, top interface{}, left interface{}, width interface{}, height interface{}, rhs **Slicer) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&slicerDestination)), (uintptr)(unsafe.Pointer(&level)), (uintptr)(unsafe.Pointer(&name)), (uintptr)(unsafe.Pointer(&caption)), (uintptr)(unsafe.Pointer(&top)), (uintptr)(unsafe.Pointer(&left)), (uintptr)(unsafe.Pointer(&width)), (uintptr)(unsafe.Pointer(&height)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

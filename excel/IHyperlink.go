@@ -16,6 +16,9 @@ type IHyperlink struct {
 }
 
 func NewIHyperlink(pUnk *win32.IUnknown, addRef bool, scoped bool) *IHyperlink {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IHyperlink)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IHyperlink) IID() *syscall.GUID {
 func (this *IHyperlink) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *IHyperlink) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IHyperlink) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IHyperlink) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -63,18 +62,14 @@ func (this *IHyperlink) GetName(rhs *win32.BSTR) com.Error {
 func (this *IHyperlink) GetRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IHyperlink) GetShape(rhs **Shape) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

@@ -17,6 +17,9 @@ type ListBoxes struct {
 }
 
 func NewListBoxes(pDisp *win32.IDispatch, addRef bool, scoped bool) *ListBoxes {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &ListBoxes{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewListBoxes(pDisp *win32.IDispatch, addRef bool, scoped bool) *ListBoxes {
 }
 
 func ListBoxesFromVar(v ole.Variant) *ListBoxes {
-	return NewListBoxes(v.PdispValVal(), false, false)
+	return NewListBoxes(v.IDispatch(), false, false)
 }
 
 func (this *ListBoxes) IID() *syscall.GUID {
@@ -43,174 +46,172 @@ func (this *ListBoxes) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *ListBoxes) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *ListBoxes) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *ListBoxes) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *ListBoxes) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *ListBoxes) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *ListBoxes) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *ListBoxes) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *ListBoxes) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *ListBoxes) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *ListBoxes) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ListBoxes) Dummy3_()  {
-	retVal := this.Call(0x00010003, nil)
+	retVal, _ := this.Call(0x00010003, nil)
 	_= retVal
 }
 
 func (this *ListBoxes) BringToFront() ole.Variant {
-	retVal := this.Call(0x0000025a, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x0000025a, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *ListBoxes) Copy() ole.Variant {
-	retVal := this.Call(0x00000227, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x00000227, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
-func (this *ListBoxes) CopyPicture(appearance int32, format int32) ole.Variant {
-	retVal := this.Call(0x000000d5, []interface{}{appearance, format})
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+var ListBoxes_CopyPicture_OptArgs= []string{
+	"Appearance", "Format", 
+}
+
+func (this *ListBoxes) CopyPicture(optArgs ...interface{}) ole.Variant {
+	optArgs = ole.ProcessOptArgs(ListBoxes_CopyPicture_OptArgs, optArgs)
+	retVal, _ := this.Call(0x000000d5, nil, optArgs...)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *ListBoxes) Cut() ole.Variant {
-	retVal := this.Call(0x00000235, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x00000235, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *ListBoxes) Delete() ole.Variant {
-	retVal := this.Call(0x00000075, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x00000075, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *ListBoxes) Duplicate() *ole.DispatchClass {
-	retVal := this.Call(0x0000040f, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x0000040f, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ListBoxes) Enabled() bool {
-	retVal := this.PropGet(0x00000258, nil)
+	retVal, _ := this.PropGet(0x00000258, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *ListBoxes) SetEnabled(rhs bool)  {
-	retVal := this.PropPut(0x00000258, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
 func (this *ListBoxes) Height() float64 {
-	retVal := this.PropGet(0x0000007b, nil)
+	retVal, _ := this.PropGet(0x0000007b, nil)
 	return retVal.DblValVal()
 }
 
 func (this *ListBoxes) SetHeight(rhs float64)  {
-	retVal := this.PropPut(0x0000007b, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
 func (this *ListBoxes) Dummy12_()  {
-	retVal := this.Call(0x0001000c, nil)
+	retVal, _ := this.Call(0x0001000c, nil)
 	_= retVal
 }
 
 func (this *ListBoxes) Left() float64 {
-	retVal := this.PropGet(0x0000007f, nil)
+	retVal, _ := this.PropGet(0x0000007f, nil)
 	return retVal.DblValVal()
 }
 
 func (this *ListBoxes) SetLeft(rhs float64)  {
-	retVal := this.PropPut(0x0000007f, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
 func (this *ListBoxes) Locked() bool {
-	retVal := this.PropGet(0x0000010d, nil)
+	retVal, _ := this.PropGet(0x0000010d, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *ListBoxes) SetLocked(rhs bool)  {
-	retVal := this.PropPut(0x0000010d, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
 func (this *ListBoxes) Dummy15_()  {
-	retVal := this.Call(0x0001000f, nil)
+	retVal, _ := this.Call(0x0001000f, nil)
 	_= retVal
 }
 
 func (this *ListBoxes) OnAction() string {
-	retVal := this.PropGet(0x00000254, nil)
+	retVal, _ := this.PropGet(0x00000254, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *ListBoxes) SetOnAction(rhs string)  {
-	retVal := this.PropPut(0x00000254, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
 func (this *ListBoxes) Placement() ole.Variant {
-	retVal := this.PropGet(0x00000269, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x00000269, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *ListBoxes) SetPlacement(rhs interface{})  {
-	retVal := this.PropPut(0x00000269, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
 func (this *ListBoxes) PrintObject() bool {
-	retVal := this.PropGet(0x0000026a, nil)
+	retVal, _ := this.PropGet(0x0000026a, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *ListBoxes) SetPrintObject(rhs bool)  {
-	retVal := this.PropPut(0x0000026a, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
 var ListBoxes_Select_OptArgs= []string{
@@ -219,60 +220,57 @@ var ListBoxes_Select_OptArgs= []string{
 
 func (this *ListBoxes) Select(optArgs ...interface{}) ole.Variant {
 	optArgs = ole.ProcessOptArgs(ListBoxes_Select_OptArgs, optArgs)
-	retVal := this.Call(0x000000eb, nil, optArgs...)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x000000eb, nil, optArgs...)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *ListBoxes) SendToBack() ole.Variant {
-	retVal := this.Call(0x0000025d, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x0000025d, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *ListBoxes) Top() float64 {
-	retVal := this.PropGet(0x0000007e, nil)
+	retVal, _ := this.PropGet(0x0000007e, nil)
 	return retVal.DblValVal()
 }
 
 func (this *ListBoxes) SetTop(rhs float64)  {
-	retVal := this.PropPut(0x0000007e, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
 func (this *ListBoxes) Dummy22_()  {
-	retVal := this.Call(0x00010016, nil)
+	retVal, _ := this.Call(0x00010016, nil)
 	_= retVal
 }
 
 func (this *ListBoxes) Visible() bool {
-	retVal := this.PropGet(0x0000022e, nil)
+	retVal, _ := this.PropGet(0x0000022e, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *ListBoxes) SetVisible(rhs bool)  {
-	retVal := this.PropPut(0x0000022e, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
 func (this *ListBoxes) Width() float64 {
-	retVal := this.PropGet(0x0000007a, nil)
+	retVal, _ := this.PropGet(0x0000007a, nil)
 	return retVal.DblValVal()
 }
 
 func (this *ListBoxes) SetWidth(rhs float64)  {
-	retVal := this.PropPut(0x0000007a, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
 func (this *ListBoxes) ZOrder() int32 {
-	retVal := this.PropGet(0x0000026e, nil)
+	retVal, _ := this.PropGet(0x0000026e, nil)
 	return retVal.LValVal()
 }
 
 func (this *ListBoxes) ShapeRange() *ShapeRange {
-	retVal := this.PropGet(0x000005f8, nil)
-	return NewShapeRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000005f8, nil)
+	return NewShapeRange(retVal.IDispatch(), false, true)
 }
 
 var ListBoxes_AddItem_OptArgs= []string{
@@ -281,43 +279,40 @@ var ListBoxes_AddItem_OptArgs= []string{
 
 func (this *ListBoxes) AddItem(text interface{}, optArgs ...interface{}) ole.Variant {
 	optArgs = ole.ProcessOptArgs(ListBoxes_AddItem_OptArgs, optArgs)
-	retVal := this.Call(0x00000353, []interface{}{text}, optArgs...)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x00000353, []interface{}{text}, optArgs...)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *ListBoxes) Display3DShading() bool {
-	retVal := this.PropGet(0x00000462, nil)
+	retVal, _ := this.PropGet(0x00000462, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *ListBoxes) SetDisplay3DShading(rhs bool)  {
-	retVal := this.PropPut(0x00000462, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000462, []interface{}{rhs})
 }
 
 func (this *ListBoxes) Default_() int32 {
-	retVal := this.PropGet(0x00000000, nil)
+	retVal, _ := this.PropGet(0x00000000, nil)
 	return retVal.LValVal()
 }
 
 func (this *ListBoxes) SetDefault_(rhs int32)  {
-	retVal := this.PropPut(0x00000000, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
 func (this *ListBoxes) LinkedCell() string {
-	retVal := this.PropGet(0x00000422, nil)
+	retVal, _ := this.PropGet(0x00000422, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *ListBoxes) SetLinkedCell(rhs string)  {
-	retVal := this.PropPut(0x00000422, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000422, []interface{}{rhs})
 }
 
 func (this *ListBoxes) Dummy31_()  {
-	retVal := this.Call(0x0001001f, nil)
+	retVal, _ := this.Call(0x0001001f, nil)
 	_= retVal
 }
 
@@ -327,59 +322,55 @@ var ListBoxes_List_OptArgs= []string{
 
 func (this *ListBoxes) List(optArgs ...interface{}) ole.Variant {
 	optArgs = ole.ProcessOptArgs(ListBoxes_List_OptArgs, optArgs)
-	retVal := this.PropGet(0x0000035d, nil, optArgs...)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x0000035d, nil, optArgs...)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 var ListBoxes_SetList_OptArgs= []string{
-	"rhs", 
+	"Index", 
 }
 
-func (this *ListBoxes) SetList(index interface{}, optArgs ...interface{})  {
+func (this *ListBoxes) SetList(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(ListBoxes_SetList_OptArgs, optArgs)
-	retVal := this.PropPut(0x0000035d, []interface{}{index}, optArgs...)
-	_= retVal
+	_ = this.PropPut(0x0000035d, nil, optArgs...)
 }
 
 func (this *ListBoxes) Dummy33_()  {
-	retVal := this.Call(0x00010021, nil)
+	retVal, _ := this.Call(0x00010021, nil)
 	_= retVal
 }
 
 func (this *ListBoxes) ListFillRange() string {
-	retVal := this.PropGet(0x0000034f, nil)
+	retVal, _ := this.PropGet(0x0000034f, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *ListBoxes) SetListFillRange(rhs string)  {
-	retVal := this.PropPut(0x0000034f, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000034f, []interface{}{rhs})
 }
 
 func (this *ListBoxes) ListIndex() int32 {
-	retVal := this.PropGet(0x00000352, nil)
+	retVal, _ := this.PropGet(0x00000352, nil)
 	return retVal.LValVal()
 }
 
 func (this *ListBoxes) SetListIndex(rhs int32)  {
-	retVal := this.PropPut(0x00000352, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000352, []interface{}{rhs})
 }
 
 func (this *ListBoxes) MultiSelect() int32 {
-	retVal := this.PropGet(0x00000020, nil)
+	retVal, _ := this.PropGet(0x00000020, nil)
 	return retVal.LValVal()
 }
 
 func (this *ListBoxes) SetMultiSelect(rhs int32)  {
-	retVal := this.PropPut(0x00000020, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000020, []interface{}{rhs})
 }
 
 func (this *ListBoxes) RemoveAllItems() ole.Variant {
-	retVal := this.Call(0x00000355, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x00000355, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
@@ -389,8 +380,8 @@ var ListBoxes_RemoveItem_OptArgs= []string{
 
 func (this *ListBoxes) RemoveItem(index int32, optArgs ...interface{}) ole.Variant {
 	optArgs = ole.ProcessOptArgs(ListBoxes_RemoveItem_OptArgs, optArgs)
-	retVal := this.Call(0x00000354, []interface{}{index}, optArgs...)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x00000354, []interface{}{index}, optArgs...)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
@@ -400,53 +391,51 @@ var ListBoxes_Selected_OptArgs= []string{
 
 func (this *ListBoxes) Selected(optArgs ...interface{}) ole.Variant {
 	optArgs = ole.ProcessOptArgs(ListBoxes_Selected_OptArgs, optArgs)
-	retVal := this.PropGet(0x00000463, nil, optArgs...)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x00000463, nil, optArgs...)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 var ListBoxes_SetSelected_OptArgs= []string{
-	"rhs", 
+	"Index", 
 }
 
-func (this *ListBoxes) SetSelected(index interface{}, optArgs ...interface{})  {
+func (this *ListBoxes) SetSelected(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(ListBoxes_SetSelected_OptArgs, optArgs)
-	retVal := this.PropPut(0x00000463, []interface{}{index}, optArgs...)
-	_= retVal
+	_ = this.PropPut(0x00000463, nil, optArgs...)
 }
 
 func (this *ListBoxes) Value() int32 {
-	retVal := this.PropGet(0x00000006, nil)
+	retVal, _ := this.PropGet(0x00000006, nil)
 	return retVal.LValVal()
 }
 
 func (this *ListBoxes) SetValue(rhs int32)  {
-	retVal := this.PropPut(0x00000006, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000006, []interface{}{rhs})
 }
 
 func (this *ListBoxes) Add(left float64, top float64, width float64, height float64) *ListBox {
-	retVal := this.Call(0x000000b5, []interface{}{left, top, width, height})
-	return NewListBox(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000b5, []interface{}{left, top, width, height})
+	return NewListBox(retVal.IDispatch(), false, true)
 }
 
 func (this *ListBoxes) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
 func (this *ListBoxes) Group() *GroupObject {
-	retVal := this.Call(0x0000002e, nil)
-	return NewGroupObject(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x0000002e, nil)
+	return NewGroupObject(retVal.IDispatch(), false, true)
 }
 
 func (this *ListBoxes) Item(index interface{}) *ole.DispatchClass {
-	retVal := this.Call(0x000000aa, []interface{}{index})
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x000000aa, []interface{}{index})
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ListBoxes) NewEnum_() *com.UnknownClass {
-	retVal := this.Call(-4, nil)
+	retVal, _ := this.Call(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 

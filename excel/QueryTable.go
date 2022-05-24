@@ -16,6 +16,9 @@ type QueryTable struct {
 }
 
 func NewQueryTable(pDisp *win32.IDispatch, addRef bool, scoped bool) *QueryTable {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &QueryTable{QueryTable_{ole.OleClient{pDisp}}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewQueryTable(pDisp *win32.IDispatch, addRef bool, scoped bool) *QueryTable
 }
 
 func NewQueryTableFromVar(v ole.Variant, addRef bool, scoped bool) *QueryTable {
-	return NewQueryTable(v.PdispValVal(), addRef, scoped)
+	return NewQueryTable(v.IDispatch(), addRef, scoped)
 }
 
 func NewQueryTableInstance(scoped bool) (*QueryTable, error) {

@@ -16,6 +16,9 @@ type ICanvasShapes struct {
 }
 
 func NewICanvasShapes(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICanvasShapes {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICanvasShapes)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

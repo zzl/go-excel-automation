@@ -16,6 +16,9 @@ type IXPath struct {
 }
 
 func NewIXPath(pUnk *win32.IUnknown, addRef bool, scoped bool) *IXPath {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IXPath)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IXPath) IID() *syscall.GUID {
 func (this *IXPath) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *IXPath) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IXPath) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IXPath) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -69,9 +68,7 @@ func (this *IXPath) GetValue(rhs *win32.BSTR) com.Error {
 func (this *IXPath) GetMap(rhs **XmlMap) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

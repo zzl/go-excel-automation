@@ -17,6 +17,9 @@ type Connections struct {
 }
 
 func NewConnections(pDisp *win32.IDispatch, addRef bool, scoped bool) *Connections {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Connections{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewConnections(pDisp *win32.IDispatch, addRef bool, scoped bool) *Connectio
 }
 
 func ConnectionsFromVar(v ole.Variant) *Connections {
-	return NewConnections(v.PdispValVal(), false, false)
+	return NewConnections(v.IDispatch(), false, false)
 }
 
 func (this *Connections) IID() *syscall.GUID {
@@ -43,63 +46,63 @@ func (this *Connections) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Connections) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *Connections) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Connections) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Connections) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *Connections) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *Connections) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *Connections) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *Connections) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *Connections) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *Connections) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Connections) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
 func (this *Connections) AddFromFile(filename string) *WorkbookConnection {
-	retVal := this.Call(0x00000a8c, []interface{}{filename})
-	return NewWorkbookConnection(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000a8c, []interface{}{filename})
+	return NewWorkbookConnection(retVal.IDispatch(), false, true)
 }
 
 var Connections_Add_OptArgs= []string{
@@ -108,22 +111,22 @@ var Connections_Add_OptArgs= []string{
 
 func (this *Connections) Add(name string, description string, connectionString interface{}, commandText interface{}, optArgs ...interface{}) *WorkbookConnection {
 	optArgs = ole.ProcessOptArgs(Connections_Add_OptArgs, optArgs)
-	retVal := this.Call(0x000000b5, []interface{}{name, description, connectionString, commandText}, optArgs...)
-	return NewWorkbookConnection(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000b5, []interface{}{name, description, connectionString, commandText}, optArgs...)
+	return NewWorkbookConnection(retVal.IDispatch(), false, true)
 }
 
 func (this *Connections) Item(index interface{}) *WorkbookConnection {
-	retVal := this.Call(0x000000aa, []interface{}{index})
-	return NewWorkbookConnection(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000aa, []interface{}{index})
+	return NewWorkbookConnection(retVal.IDispatch(), false, true)
 }
 
 func (this *Connections) Default_(index interface{}) *WorkbookConnection {
-	retVal := this.PropGet(0x00000000, []interface{}{index})
-	return NewWorkbookConnection(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000000, []interface{}{index})
+	return NewWorkbookConnection(retVal.IDispatch(), false, true)
 }
 
 func (this *Connections) NewEnum_() *com.UnknownClass {
-	retVal := this.PropGet(-4, nil)
+	retVal, _ := this.PropGet(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 

@@ -17,6 +17,9 @@ type IFormatCondition struct {
 }
 
 func NewIFormatCondition(pUnk *win32.IUnknown, addRef bool, scoped bool) *IFormatCondition {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IFormatCondition)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IFormatCondition) IID() *syscall.GUID {
 func (this *IFormatCondition) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IFormatCondition) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IFormatCondition) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IFormatCondition) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -88,27 +87,21 @@ func (this *IFormatCondition) GetFormula2(rhs *win32.BSTR) com.Error {
 func (this *IFormatCondition) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[15]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IFormatCondition) GetBorders(rhs **Borders) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IFormatCondition) GetFont(rhs **Font) com.Error {
 	addr := (*this.LpVtbl)[17]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -199,9 +192,7 @@ func (this *IFormatCondition) SetStopIfTrue(rhs bool) com.Error {
 func (this *IFormatCondition) GetAppliesTo(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[32]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

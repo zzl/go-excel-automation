@@ -17,6 +17,9 @@ type IDataLabel struct {
 }
 
 func NewIDataLabel(pUnk *win32.IUnknown, addRef bool, scoped bool) *IDataLabel {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IDataLabel)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IDataLabel) IID() *syscall.GUID {
 func (this *IDataLabel) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IDataLabel) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDataLabel) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IDataLabel) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -70,9 +69,7 @@ func (this *IDataLabel) Select(rhs *ole.Variant) com.Error {
 func (this *IDataLabel) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -85,18 +82,14 @@ func (this *IDataLabel) Delete(rhs *ole.Variant) com.Error {
 func (this *IDataLabel) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDataLabel) GetFill(rhs **ChartFillFormat) com.Error {
 	addr := (*this.LpVtbl)[15]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -115,18 +108,14 @@ func (this *IDataLabel) SetCaption(rhs string) com.Error {
 func (this *IDataLabel) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[18]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDataLabel) GetFont(rhs **Font) com.Error {
 	addr := (*this.LpVtbl)[19]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -397,9 +386,7 @@ func (this *IDataLabel) SetSeparator(rhs interface{}) com.Error {
 func (this *IDataLabel) GetFormat(rhs **ChartFormat) com.Error {
 	addr := (*this.LpVtbl)[64]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

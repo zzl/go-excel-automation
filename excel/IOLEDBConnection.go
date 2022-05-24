@@ -17,6 +17,9 @@ type IOLEDBConnection struct {
 }
 
 func NewIOLEDBConnection(pUnk *win32.IUnknown, addRef bool, scoped bool) *IOLEDBConnection {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IOLEDBConnection)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IOLEDBConnection) IID() *syscall.GUID {
 func (this *IOLEDBConnection) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,21 +47,17 @@ func (this *IOLEDBConnection) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IOLEDBConnection) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IOLEDBConnection) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IOLEDBConnection) GetADOConnection(rhs **com.UnknownClass) com.Error {
+func (this *IOLEDBConnection) GetADOConnection(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -397,9 +394,7 @@ func (this *IOLEDBConnection) Reconnect() com.Error {
 func (this *IOLEDBConnection) GetCalculatedMembers(rhs **CalculatedMembers) com.Error {
 	addr := (*this.LpVtbl)[66]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

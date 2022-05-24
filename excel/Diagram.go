@@ -17,6 +17,9 @@ type Diagram struct {
 }
 
 func NewDiagram(pDisp *win32.IDispatch, addRef bool, scoped bool) *Diagram {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Diagram{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewDiagram(pDisp *win32.IDispatch, addRef bool, scoped bool) *Diagram {
 }
 
 func DiagramFromVar(v ole.Variant) *Diagram {
-	return NewDiagram(v.PdispValVal(), false, false)
+	return NewDiagram(v.IDispatch(), false, false)
 }
 
 func (this *Diagram) IID() *syscall.GUID {
@@ -43,102 +46,99 @@ func (this *Diagram) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Diagram) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *Diagram) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Diagram) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Diagram) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *Diagram) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *Diagram) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *Diagram) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *Diagram) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *Diagram) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *Diagram) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Diagram) Nodes() *DiagramNodes {
-	retVal := this.PropGet(0x000006a5, nil)
-	return NewDiagramNodes(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000006a5, nil)
+	return NewDiagramNodes(retVal.IDispatch(), false, true)
 }
 
 func (this *Diagram) Type() int32 {
-	retVal := this.PropGet(0x0000006c, nil)
+	retVal, _ := this.PropGet(0x0000006c, nil)
 	return retVal.LValVal()
 }
 
 func (this *Diagram) AutoLayout() int32 {
-	retVal := this.PropGet(0x000008c3, nil)
+	retVal, _ := this.PropGet(0x000008c3, nil)
 	return retVal.LValVal()
 }
 
 func (this *Diagram) SetAutoLayout(rhs int32)  {
-	retVal := this.PropPut(0x000008c3, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000008c3, []interface{}{rhs})
 }
 
 func (this *Diagram) Reverse() int32 {
-	retVal := this.PropGet(0x000008c4, nil)
+	retVal, _ := this.PropGet(0x000008c4, nil)
 	return retVal.LValVal()
 }
 
 func (this *Diagram) SetReverse(rhs int32)  {
-	retVal := this.PropPut(0x000008c4, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000008c4, []interface{}{rhs})
 }
 
 func (this *Diagram) AutoFormat() int32 {
-	retVal := this.PropGet(0x00000072, nil)
+	retVal, _ := this.PropGet(0x00000072, nil)
 	return retVal.LValVal()
 }
 
 func (this *Diagram) SetAutoFormat(rhs int32)  {
-	retVal := this.PropPut(0x00000072, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000072, []interface{}{rhs})
 }
 
 func (this *Diagram) Convert(type_ int32)  {
-	retVal := this.Call(0x00000416, []interface{}{type_})
+	retVal, _ := this.Call(0x00000416, []interface{}{type_})
 	_= retVal
 }
 
 func (this *Diagram) FitText()  {
-	retVal := this.Call(0x00000900, nil)
+	retVal, _ := this.Call(0x00000900, nil)
 	_= retVal
 }
 

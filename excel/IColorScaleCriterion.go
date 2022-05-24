@@ -17,6 +17,9 @@ type IColorScaleCriterion struct {
 }
 
 func NewIColorScaleCriterion(pUnk *win32.IUnknown, addRef bool, scoped bool) *IColorScaleCriterion {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IColorScaleCriterion)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -64,9 +67,7 @@ func (this *IColorScaleCriterion) SetValue(rhs interface{}) com.Error {
 func (this *IColorScaleCriterion) GetFormatColor(rhs **FormatColor) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

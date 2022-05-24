@@ -17,6 +17,9 @@ type IGroupBox struct {
 }
 
 func NewIGroupBox(pUnk *win32.IUnknown, addRef bool, scoped bool) *IGroupBox {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IGroupBox)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IGroupBox) IID() *syscall.GUID {
 func (this *IGroupBox) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,21 +47,17 @@ func (this *IGroupBox) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IGroupBox) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IGroupBox) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IGroupBox) GetBottomRightCell(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -94,12 +91,10 @@ func (this *IGroupBox) Delete(rhs *ole.Variant) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IGroupBox) Duplicate(rhs **com.UnknownClass) com.Error {
+func (this *IGroupBox) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -232,9 +227,7 @@ func (this *IGroupBox) SetTop(rhs float64) com.Error {
 func (this *IGroupBox) GetTopLeftCell(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[38]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -271,9 +264,7 @@ func (this *IGroupBox) GetZOrder(rhs *int32) com.Error {
 func (this *IGroupBox) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[44]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -292,9 +283,7 @@ func (this *IGroupBox) SetCaption(rhs string) com.Error {
 func (this *IGroupBox) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[47]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

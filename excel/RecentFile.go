@@ -17,6 +17,9 @@ type RecentFile struct {
 }
 
 func NewRecentFile(pDisp *win32.IDispatch, addRef bool, scoped bool) *RecentFile {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &RecentFile{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewRecentFile(pDisp *win32.IDispatch, addRef bool, scoped bool) *RecentFile
 }
 
 func RecentFileFromVar(v ole.Variant) *RecentFile {
-	return NewRecentFile(v.PdispValVal(), false, false)
+	return NewRecentFile(v.IDispatch(), false, false)
 }
 
 func (this *RecentFile) IID() *syscall.GUID {
@@ -43,77 +46,77 @@ func (this *RecentFile) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *RecentFile) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *RecentFile) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *RecentFile) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *RecentFile) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *RecentFile) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *RecentFile) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *RecentFile) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *RecentFile) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *RecentFile) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *RecentFile) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *RecentFile) Name() string {
-	retVal := this.PropGet(0x0000006e, nil)
+	retVal, _ := this.PropGet(0x0000006e, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *RecentFile) Path() string {
-	retVal := this.PropGet(0x00000123, nil)
+	retVal, _ := this.PropGet(0x00000123, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *RecentFile) Index() int32 {
-	retVal := this.PropGet(0x000001e6, nil)
+	retVal, _ := this.PropGet(0x000001e6, nil)
 	return retVal.LValVal()
 }
 
 func (this *RecentFile) Open() *Workbook {
-	retVal := this.Call(0x00000783, nil)
-	return NewWorkbook(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000783, nil)
+	return NewWorkbook(retVal.IDispatch(), false, true)
 }
 
 func (this *RecentFile) Delete()  {
-	retVal := this.Call(0x00000075, nil)
+	retVal, _ := this.Call(0x00000075, nil)
 	_= retVal
 }
 

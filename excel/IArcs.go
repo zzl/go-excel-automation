@@ -17,6 +17,9 @@ type IArcs struct {
 }
 
 func NewIArcs(pUnk *win32.IUnknown, addRef bool, scoped bool) *IArcs {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IArcs)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IArcs) IID() *syscall.GUID {
 func (this *IArcs) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IArcs) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IArcs) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IArcs) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -90,12 +89,10 @@ func (this *IArcs) Delete(rhs *ole.Variant) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IArcs) Duplicate(rhs **com.UnknownClass) com.Error {
+func (this *IArcs) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -255,9 +252,7 @@ func (this *IArcs) GetZOrder(rhs *int32) com.Error {
 func (this *IArcs) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -312,9 +307,7 @@ func (this *IArcs) SetCaption(rhs string) com.Error {
 func (this *IArcs) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[52]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -327,9 +320,7 @@ func (this *IArcs) CheckSpelling(customDictionary interface{}, ignoreUppercase i
 func (this *IArcs) GetFont(rhs **Font) com.Error {
 	addr := (*this.LpVtbl)[54]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -420,18 +411,14 @@ func (this *IArcs) SetReadingOrder(rhs int32) com.Error {
 func (this *IArcs) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[69]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IArcs) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[70]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -443,9 +430,7 @@ func (this *IArcs) Dummy43_()  {
 func (this *IArcs) Add(x1 float64, y1 float64, x2 float64, y2 float64, rhs **Arc) com.Error {
 	addr := (*this.LpVtbl)[72]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(x1), uintptr(y1), uintptr(x2), uintptr(y2), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -458,27 +443,21 @@ func (this *IArcs) GetCount(rhs *int32) com.Error {
 func (this *IArcs) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[74]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IArcs) Item(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IArcs) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[75]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IArcs) NewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IArcs) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[76]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

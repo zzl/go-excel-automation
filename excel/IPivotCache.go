@@ -17,6 +17,9 @@ type IPivotCache struct {
 }
 
 func NewIPivotCache(pUnk *win32.IUnknown, addRef bool, scoped bool) *IPivotCache {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IPivotCache)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IPivotCache) IID() *syscall.GUID {
 func (this *IPivotCache) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IPivotCache) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPivotCache) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IPivotCache) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -241,16 +240,14 @@ func (this *IPivotCache) SetRefreshPeriod(rhs int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPivotCache) GetRecordset(rhs **com.UnknownClass) com.Error {
+func (this *IPivotCache) GetRecordset(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[41]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IPivotCache) SetRecordset(rhs *ole.DispatchClass) com.Error {
+func (this *IPivotCache) SetRecordset(rhs *win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[42]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
 	return com.Error(ret)
@@ -277,9 +274,7 @@ func (this *IPivotCache) SetLocalConnection(rhs interface{}) com.Error {
 func (this *IPivotCache) CreatePivotTable(tableDestination interface{}, tableName interface{}, readData interface{}, defaultVersion interface{}, rhs **PivotTable) com.Error {
 	addr := (*this.LpVtbl)[46]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&tableDestination)), (uintptr)(unsafe.Pointer(&tableName)), (uintptr)(unsafe.Pointer(&readData)), (uintptr)(unsafe.Pointer(&defaultVersion)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -295,12 +290,10 @@ func (this *IPivotCache) SetUseLocalConnection(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPivotCache) GetADOConnection(rhs **com.UnknownClass) com.Error {
+func (this *IPivotCache) GetADOConnection(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[49]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -379,9 +372,7 @@ func (this *IPivotCache) SaveAsODC(odcfileName string, description interface{}, 
 func (this *IPivotCache) GetWorkbookConnection(rhs **WorkbookConnection) com.Error {
 	addr := (*this.LpVtbl)[62]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

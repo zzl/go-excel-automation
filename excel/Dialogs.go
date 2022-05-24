@@ -17,6 +17,9 @@ type Dialogs struct {
 }
 
 func NewDialogs(pDisp *win32.IDispatch, addRef bool, scoped bool) *Dialogs {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Dialogs{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewDialogs(pDisp *win32.IDispatch, addRef bool, scoped bool) *Dialogs {
 }
 
 func DialogsFromVar(v ole.Variant) *Dialogs {
-	return NewDialogs(v.PdispValVal(), false, false)
+	return NewDialogs(v.IDispatch(), false, false)
 }
 
 func (this *Dialogs) IID() *syscall.GUID {
@@ -43,72 +46,72 @@ func (this *Dialogs) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Dialogs) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *Dialogs) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Dialogs) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Dialogs) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *Dialogs) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *Dialogs) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *Dialogs) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *Dialogs) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *Dialogs) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *Dialogs) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Dialogs) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
 func (this *Dialogs) Item(index int32) *Dialog {
-	retVal := this.PropGet(0x000000aa, []interface{}{index})
-	return NewDialog(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000000aa, []interface{}{index})
+	return NewDialog(retVal.IDispatch(), false, true)
 }
 
 func (this *Dialogs) Default_(index int32) *Dialog {
-	retVal := this.PropGet(0x00000000, []interface{}{index})
-	return NewDialog(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000000, []interface{}{index})
+	return NewDialog(retVal.IDispatch(), false, true)
 }
 
 func (this *Dialogs) NewEnum_() *com.UnknownClass {
-	retVal := this.PropGet(-4, nil)
+	retVal, _ := this.PropGet(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 

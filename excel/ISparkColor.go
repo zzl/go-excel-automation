@@ -16,6 +16,9 @@ type ISparkColor struct {
 }
 
 func NewISparkColor(pUnk *win32.IUnknown, addRef bool, scoped bool) *ISparkColor {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ISparkColor)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *ISparkColor) IID() *syscall.GUID {
 func (this *ISparkColor) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *ISparkColor) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ISparkColor) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *ISparkColor) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -69,9 +68,7 @@ func (this *ISparkColor) SetVisible(rhs bool) com.Error {
 func (this *ISparkColor) GetColor(rhs **FormatColor) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

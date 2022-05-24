@@ -17,6 +17,9 @@ type IRange struct {
 }
 
 func NewIRange(pUnk *win32.IUnknown, addRef bool, scoped bool) *IRange {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IRange)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IRange) IID() *syscall.GUID {
 func (this *IRange) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IRange) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IRange) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IRange) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -106,9 +105,7 @@ func (this *IRange) ApplyOutlineStyles(rhs *ole.Variant) com.Error {
 func (this *IRange) GetAreas(rhs **Areas) com.Error {
 	addr := (*this.LpVtbl)[18]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -157,9 +154,7 @@ func (this *IRange) BorderAround_(lineStyle interface{}, weight int32, colorInde
 func (this *IRange) GetBorders(rhs **Borders) com.Error {
 	addr := (*this.LpVtbl)[26]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -172,18 +167,14 @@ func (this *IRange) Calculate(rhs *ole.Variant) com.Error {
 func (this *IRange) GetCells(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[28]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[29]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -232,18 +223,14 @@ func (this *IRange) GetColumn(rhs *int32) com.Error {
 func (this *IRange) ColumnDifferences(comparison interface{}, rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[37]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&comparison)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetColumns(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[38]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -271,7 +258,7 @@ func (this *IRange) Copy(destination interface{}, rhs *ole.Variant) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IRange) CopyFromRecordset(data *com.UnknownClass, maxRows interface{}, maxColumns interface{}, rhs *int32) com.Error {
+func (this *IRange) CopyFromRecordset(data *win32.IUnknown, maxRows interface{}, maxColumns interface{}, rhs *int32) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(data)), (uintptr)(unsafe.Pointer(&maxRows)), (uintptr)(unsafe.Pointer(&maxColumns)), uintptr(unsafe.Pointer(rhs)))
 	return com.Error(ret)
@@ -304,18 +291,14 @@ func (this *IRange) CreatePublisher(edition interface{}, appearance int32, conta
 func (this *IRange) GetCurrentArray(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[48]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetCurrentRegion(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[49]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -352,9 +335,7 @@ func (this *IRange) Delete(shift interface{}, rhs *ole.Variant) com.Error {
 func (this *IRange) GetDependents(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[55]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -367,18 +348,14 @@ func (this *IRange) DialogBox(rhs *ole.Variant) com.Error {
 func (this *IRange) GetDirectDependents(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[57]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetDirectPrecedents(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[58]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -391,27 +368,21 @@ func (this *IRange) EditionOptions(type_ int32, option int32, name interface{}, 
 func (this *IRange) GetEnd(direction int32, rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[60]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(direction), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetEntireColumn(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[61]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetEntireRow(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[62]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -442,36 +413,28 @@ func (this *IRange) FillUp(rhs *ole.Variant) com.Error {
 func (this *IRange) Find(what interface{}, after interface{}, lookIn interface{}, lookAt interface{}, searchOrder interface{}, searchDirection int32, matchCase interface{}, matchByte interface{}, searchFormat interface{}, rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[67]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&what)), (uintptr)(unsafe.Pointer(&after)), (uintptr)(unsafe.Pointer(&lookIn)), (uintptr)(unsafe.Pointer(&lookAt)), (uintptr)(unsafe.Pointer(&searchOrder)), uintptr(searchDirection), (uintptr)(unsafe.Pointer(&matchCase)), (uintptr)(unsafe.Pointer(&matchByte)), (uintptr)(unsafe.Pointer(&searchFormat)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) FindNext(after interface{}, rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[68]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&after)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) FindPrevious(after interface{}, rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[69]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&after)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetFont(rhs **Font) com.Error {
 	addr := (*this.LpVtbl)[70]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -646,9 +609,7 @@ func (this *IRange) Insert(shift interface{}, copyOrigin interface{}, rhs *ole.V
 func (this *IRange) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[99]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -721,9 +682,7 @@ func (this *IRange) UnMerge() com.Error {
 func (this *IRange) GetMergeArea(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[111]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -757,21 +716,17 @@ func (this *IRange) NavigateArrow(towardPrecedent interface{}, arrowNumber inter
 	return com.Error(ret)
 }
 
-func (this *IRange) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IRange) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[117]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetNext(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[118]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -808,9 +763,7 @@ func (this *IRange) SetNumberFormatLocal(rhs interface{}) com.Error {
 func (this *IRange) GetOffset(rowOffset interface{}, columnOffset interface{}, rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[124]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&rowOffset)), (uintptr)(unsafe.Pointer(&columnOffset)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -865,36 +818,28 @@ func (this *IRange) PasteSpecial_(paste int32, operation int32, skipBlanks inter
 func (this *IRange) GetPivotField(rhs **PivotField) com.Error {
 	addr := (*this.LpVtbl)[133]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetPivotItem(rhs **PivotItem) com.Error {
 	addr := (*this.LpVtbl)[134]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetPivotTable(rhs **PivotTable) com.Error {
 	addr := (*this.LpVtbl)[135]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetPrecedents(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[136]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -907,9 +852,7 @@ func (this *IRange) GetPrefixCharacter(rhs *ole.Variant) com.Error {
 func (this *IRange) GetPrevious(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[138]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -928,18 +871,14 @@ func (this *IRange) PrintPreview(enableChanges interface{}, rhs *ole.Variant) co
 func (this *IRange) GetQueryTable(rhs **QueryTable) com.Error {
 	addr := (*this.LpVtbl)[141]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetRange(cell1 interface{}, cell2 interface{}, rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[142]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&cell1)), (uintptr)(unsafe.Pointer(&cell2)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -958,9 +897,7 @@ func (this *IRange) Replace(what interface{}, replacement interface{}, lookAt in
 func (this *IRange) GetResize(rowSize interface{}, columnSize interface{}, rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[145]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&rowSize)), (uintptr)(unsafe.Pointer(&columnSize)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -973,9 +910,7 @@ func (this *IRange) GetRow(rhs *int32) com.Error {
 func (this *IRange) RowDifferences(comparison interface{}, rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[147]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&comparison)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -994,9 +929,7 @@ func (this *IRange) SetRowHeight(rhs interface{}) com.Error {
 func (this *IRange) GetRows(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[150]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1075,18 +1008,14 @@ func (this *IRange) SortSpecial(sortMethod int32, key1 interface{}, order1 int32
 func (this *IRange) GetSoundNote(rhs **SoundNote) com.Error {
 	addr := (*this.LpVtbl)[163]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) SpecialCells(type_ int32, value interface{}, rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[164]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(type_), (uintptr)(unsafe.Pointer(&value)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1177,9 +1106,7 @@ func (this *IRange) SetUseStandardWidth(rhs interface{}) com.Error {
 func (this *IRange) GetValidation(rhs **Validation) com.Error {
 	addr := (*this.LpVtbl)[179]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1228,9 +1155,7 @@ func (this *IRange) GetWidth(rhs *ole.Variant) com.Error {
 func (this *IRange) GetWorksheet(rhs **Worksheet) com.Error {
 	addr := (*this.LpVtbl)[187]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1249,18 +1174,14 @@ func (this *IRange) SetWrapText(rhs interface{}) com.Error {
 func (this *IRange) AddComment(text interface{}, rhs **Comment) com.Error {
 	addr := (*this.LpVtbl)[190]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&text)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetComment(rhs **Comment) com.Error {
 	addr := (*this.LpVtbl)[191]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1273,18 +1194,14 @@ func (this *IRange) ClearComments() com.Error {
 func (this *IRange) GetPhonetic(rhs **Phonetic) com.Error {
 	addr := (*this.LpVtbl)[193]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetFormatConditions(rhs **FormatConditions) com.Error {
 	addr := (*this.LpVtbl)[194]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1303,18 +1220,14 @@ func (this *IRange) SetReadingOrder(rhs int32) com.Error {
 func (this *IRange) GetHyperlinks(rhs **Hyperlinks) com.Error {
 	addr := (*this.LpVtbl)[197]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetPhonetics(rhs **Phonetics) com.Error {
 	addr := (*this.LpVtbl)[198]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1345,9 +1258,7 @@ func (this *IRange) PrintOut_(from interface{}, to interface{}, copies interface
 func (this *IRange) GetPivotCell(rhs **PivotCell) com.Error {
 	addr := (*this.LpVtbl)[203]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1360,18 +1271,14 @@ func (this *IRange) Dirty() com.Error {
 func (this *IRange) GetErrors(rhs **Errors) com.Error {
 	addr := (*this.LpVtbl)[205]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetSmartTags(rhs **SmartTags) com.Error {
 	addr := (*this.LpVtbl)[206]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1396,27 +1303,21 @@ func (this *IRange) GetAllowEdit(rhs *win32.VARIANT_BOOL) com.Error {
 func (this *IRange) GetListObject(rhs **ListObject) com.Error {
 	addr := (*this.LpVtbl)[210]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetXPath(rhs **XPath) com.Error {
 	addr := (*this.LpVtbl)[211]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRange) GetServerActions(rhs **Actions) com.Error {
 	addr := (*this.LpVtbl)[212]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1459,9 +1360,7 @@ func (this *IRange) CalculateRowMajorOrder(rhs *ole.Variant) com.Error {
 func (this *IRange) GetSparklineGroups(rhs **SparklineGroups) com.Error {
 	addr := (*this.LpVtbl)[219]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1474,9 +1373,7 @@ func (this *IRange) ClearHyperlinks() com.Error {
 func (this *IRange) GetDisplayFormat(rhs **DisplayFormat) com.Error {
 	addr := (*this.LpVtbl)[221]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

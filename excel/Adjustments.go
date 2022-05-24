@@ -16,6 +16,9 @@ type Adjustments struct {
 }
 
 func NewAdjustments(pDisp *win32.IDispatch, addRef bool, scoped bool) *Adjustments {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Adjustments{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewAdjustments(pDisp *win32.IDispatch, addRef bool, scoped bool) *Adjustmen
 }
 
 func AdjustmentsFromVar(v ole.Variant) *Adjustments {
-	return NewAdjustments(v.PdispValVal(), false, false)
+	return NewAdjustments(v.IDispatch(), false, false)
 }
 
 func (this *Adjustments) IID() *syscall.GUID {
@@ -42,32 +45,31 @@ func (this *Adjustments) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Adjustments) Application() *ole.DispatchClass {
-	retVal := this.PropGet(0x60020000, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x60020000, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Adjustments) Creator() int32 {
-	retVal := this.PropGet(0x60020001, nil)
+	retVal, _ := this.PropGet(0x60020001, nil)
 	return retVal.LValVal()
 }
 
 func (this *Adjustments) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000001, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000001, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Adjustments) Count() int32 {
-	retVal := this.PropGet(0x00000002, nil)
+	retVal, _ := this.PropGet(0x00000002, nil)
 	return retVal.LValVal()
 }
 
 func (this *Adjustments) Item(index int32) float32 {
-	retVal := this.PropGet(0x00000000, []interface{}{index})
+	retVal, _ := this.PropGet(0x00000000, []interface{}{index})
 	return retVal.FltValVal()
 }
 
 func (this *Adjustments) SetItem(index int32, rhs float32)  {
-	retVal := this.PropPut(0x00000000, []interface{}{index, rhs})
-	_= retVal
+	_ = this.PropPut(0x00000000, []interface{}{index, rhs})
 }
 

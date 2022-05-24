@@ -16,6 +16,9 @@ type ISpeech struct {
 }
 
 func NewISpeech(pUnk *win32.IUnknown, addRef bool, scoped bool) *ISpeech {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ISpeech)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

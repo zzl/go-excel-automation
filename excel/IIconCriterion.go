@@ -17,6 +17,9 @@ type IIconCriterion struct {
 }
 
 func NewIIconCriterion(pUnk *win32.IUnknown, addRef bool, scoped bool) *IIconCriterion {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IIconCriterion)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

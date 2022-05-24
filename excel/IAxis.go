@@ -17,6 +17,9 @@ type IAxis struct {
 }
 
 func NewIAxis(pUnk *win32.IUnknown, addRef bool, scoped bool) *IAxis {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IAxis)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IAxis) IID() *syscall.GUID {
 func (this *IAxis) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IAxis) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IAxis) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IAxis) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -76,18 +75,14 @@ func (this *IAxis) GetAxisGroup(rhs *int32) com.Error {
 func (this *IAxis) GetAxisTitle(rhs **AxisTitle) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IAxis) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -172,9 +167,7 @@ func (this *IAxis) SetHasTitle(rhs bool) com.Error {
 func (this *IAxis) GetMajorGridlines(rhs **Gridlines) com.Error {
 	addr := (*this.LpVtbl)[28]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -265,9 +258,7 @@ func (this *IAxis) SetMinimumScaleIsAuto(rhs bool) com.Error {
 func (this *IAxis) GetMinorGridlines(rhs **Gridlines) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -352,9 +343,7 @@ func (this *IAxis) SetTickLabelPosition(rhs int32) com.Error {
 func (this *IAxis) GetTickLabels(rhs **TickLabels) com.Error {
 	addr := (*this.LpVtbl)[57]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -517,9 +506,7 @@ func (this *IAxis) SetHasDisplayUnitLabel(rhs bool) com.Error {
 func (this *IAxis) GetDisplayUnitLabel(rhs **DisplayUnitLabel) com.Error {
 	addr := (*this.LpVtbl)[84]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -550,9 +537,7 @@ func (this *IAxis) SetTickLabelSpacingIsAuto(rhs bool) com.Error {
 func (this *IAxis) GetFormat(rhs **ChartFormat) com.Error {
 	addr := (*this.LpVtbl)[89]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

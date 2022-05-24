@@ -17,6 +17,9 @@ type IPoint struct {
 }
 
 func NewIPoint(pUnk *win32.IUnknown, addRef bool, scoped bool) *IPoint {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IPoint)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IPoint) IID() *syscall.GUID {
 func (this *IPoint) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IPoint) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPoint) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IPoint) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -64,9 +63,7 @@ func (this *IPoint) ApplyDataLabels_(type_ int32, legendKey interface{}, autoTex
 func (this *IPoint) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -85,9 +82,7 @@ func (this *IPoint) Copy(rhs *ole.Variant) com.Error {
 func (this *IPoint) GetDataLabel(rhs **DataLabel) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -124,9 +119,7 @@ func (this *IPoint) SetHasDataLabel(rhs bool) com.Error {
 func (this *IPoint) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[20]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -313,9 +306,7 @@ func (this *IPoint) SetSecondaryPlot(rhs bool) com.Error {
 func (this *IPoint) GetFill(rhs **ChartFillFormat) com.Error {
 	addr := (*this.LpVtbl)[51]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -352,9 +343,7 @@ func (this *IPoint) SetPictureUnit2(rhs float64) com.Error {
 func (this *IPoint) GetFormat(rhs **ChartFormat) com.Error {
 	addr := (*this.LpVtbl)[57]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

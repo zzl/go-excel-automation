@@ -17,6 +17,9 @@ type Names struct {
 }
 
 func NewNames(pDisp *win32.IDispatch, addRef bool, scoped bool) *Names {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Names{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewNames(pDisp *win32.IDispatch, addRef bool, scoped bool) *Names {
 }
 
 func NamesFromVar(v ole.Variant) *Names {
-	return NewNames(v.PdispValVal(), false, false)
+	return NewNames(v.IDispatch(), false, false)
 }
 
 func (this *Names) IID() *syscall.GUID {
@@ -43,53 +46,53 @@ func (this *Names) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Names) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *Names) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Names) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Names) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *Names) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *Names) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *Names) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *Names) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *Names) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *Names) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Names_Add_OptArgs= []string{
@@ -100,8 +103,8 @@ var Names_Add_OptArgs= []string{
 
 func (this *Names) Add(optArgs ...interface{}) *Name {
 	optArgs = ole.ProcessOptArgs(Names_Add_OptArgs, optArgs)
-	retVal := this.Call(0x000000b5, nil, optArgs...)
-	return NewName(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000b5, nil, optArgs...)
+	return NewName(retVal.IDispatch(), false, true)
 }
 
 var Names_Item_OptArgs= []string{
@@ -110,8 +113,8 @@ var Names_Item_OptArgs= []string{
 
 func (this *Names) Item(optArgs ...interface{}) *Name {
 	optArgs = ole.ProcessOptArgs(Names_Item_OptArgs, optArgs)
-	retVal := this.Call(0x000000aa, nil, optArgs...)
-	return NewName(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000aa, nil, optArgs...)
+	return NewName(retVal.IDispatch(), false, true)
 }
 
 var Names_Default__OptArgs= []string{
@@ -120,17 +123,17 @@ var Names_Default__OptArgs= []string{
 
 func (this *Names) Default_(optArgs ...interface{}) *Name {
 	optArgs = ole.ProcessOptArgs(Names_Default__OptArgs, optArgs)
-	retVal := this.Call(0x00000000, nil, optArgs...)
-	return NewName(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000000, nil, optArgs...)
+	return NewName(retVal.IDispatch(), false, true)
 }
 
 func (this *Names) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
 func (this *Names) NewEnum_() *com.UnknownClass {
-	retVal := this.PropGet(-4, nil)
+	retVal, _ := this.PropGet(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 

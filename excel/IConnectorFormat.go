@@ -16,6 +16,9 @@ type IConnectorFormat struct {
 }
 
 func NewIConnectorFormat(pUnk *win32.IUnknown, addRef bool, scoped bool) *IConnectorFormat {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IConnectorFormat)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IConnectorFormat) IID() *syscall.GUID {
 func (this *IConnectorFormat) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *IConnectorFormat) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IConnectorFormat) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IConnectorFormat) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -87,9 +86,7 @@ func (this *IConnectorFormat) GetBeginConnected(rhs *int32) com.Error {
 func (this *IConnectorFormat) GetBeginConnectedShape(rhs **Shape) com.Error {
 	addr := (*this.LpVtbl)[15]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -108,9 +105,7 @@ func (this *IConnectorFormat) GetEndConnected(rhs *int32) com.Error {
 func (this *IConnectorFormat) GetEndConnectedShape(rhs **Shape) com.Error {
 	addr := (*this.LpVtbl)[18]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

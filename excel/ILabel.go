@@ -17,6 +17,9 @@ type ILabel struct {
 }
 
 func NewILabel(pUnk *win32.IUnknown, addRef bool, scoped bool) *ILabel {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ILabel)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *ILabel) IID() *syscall.GUID {
 func (this *ILabel) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,21 +47,17 @@ func (this *ILabel) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ILabel) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *ILabel) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ILabel) GetBottomRightCell(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -94,12 +91,10 @@ func (this *ILabel) Delete(rhs *ole.Variant) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ILabel) Duplicate(rhs **com.UnknownClass) com.Error {
+func (this *ILabel) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -232,9 +227,7 @@ func (this *ILabel) SetTop(rhs float64) com.Error {
 func (this *ILabel) GetTopLeftCell(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[38]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -271,9 +264,7 @@ func (this *ILabel) GetZOrder(rhs *int32) com.Error {
 func (this *ILabel) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[44]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -292,9 +283,7 @@ func (this *ILabel) SetCaption(rhs string) com.Error {
 func (this *ILabel) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[47]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

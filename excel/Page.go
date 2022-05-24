@@ -17,6 +17,9 @@ type Page struct {
 }
 
 func NewPage(pDisp *win32.IDispatch, addRef bool, scoped bool) *Page {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Page{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewPage(pDisp *win32.IDispatch, addRef bool, scoped bool) *Page {
 }
 
 func PageFromVar(v ole.Variant) *Page {
-	return NewPage(v.PdispValVal(), false, false)
+	return NewPage(v.IDispatch(), false, false)
 }
 
 func (this *Page) IID() *syscall.GUID {
@@ -43,67 +46,67 @@ func (this *Page) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Page) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *Page) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Page) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Page) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *Page) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *Page) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *Page) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *Page) LeftHeader() *HeaderFooter {
-	retVal := this.PropGet(0x000003fa, nil)
-	return NewHeaderFooter(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000003fa, nil)
+	return NewHeaderFooter(retVal.IDispatch(), false, true)
 }
 
 func (this *Page) CenterHeader() *HeaderFooter {
-	retVal := this.PropGet(0x000003f3, nil)
-	return NewHeaderFooter(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000003f3, nil)
+	return NewHeaderFooter(retVal.IDispatch(), false, true)
 }
 
 func (this *Page) RightHeader() *HeaderFooter {
-	retVal := this.PropGet(0x00000402, nil)
-	return NewHeaderFooter(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000402, nil)
+	return NewHeaderFooter(retVal.IDispatch(), false, true)
 }
 
 func (this *Page) LeftFooter() *HeaderFooter {
-	retVal := this.PropGet(0x000003f9, nil)
-	return NewHeaderFooter(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000003f9, nil)
+	return NewHeaderFooter(retVal.IDispatch(), false, true)
 }
 
 func (this *Page) CenterFooter() *HeaderFooter {
-	retVal := this.PropGet(0x000003f2, nil)
-	return NewHeaderFooter(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000003f2, nil)
+	return NewHeaderFooter(retVal.IDispatch(), false, true)
 }
 
 func (this *Page) RightFooter() *HeaderFooter {
-	retVal := this.PropGet(0x00000401, nil)
-	return NewHeaderFooter(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000401, nil)
+	return NewHeaderFooter(retVal.IDispatch(), false, true)
 }
 

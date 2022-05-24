@@ -17,6 +17,9 @@ type IEditBoxes struct {
 }
 
 func NewIEditBoxes(pUnk *win32.IUnknown, addRef bool, scoped bool) *IEditBoxes {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IEditBoxes)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IEditBoxes) IID() *syscall.GUID {
 func (this *IEditBoxes) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IEditBoxes) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IEditBoxes) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IEditBoxes) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -90,12 +89,10 @@ func (this *IEditBoxes) Delete(rhs *ole.Variant) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IEditBoxes) Duplicate(rhs **com.UnknownClass) com.Error {
+func (this *IEditBoxes) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -255,9 +252,7 @@ func (this *IEditBoxes) GetZOrder(rhs *int32) com.Error {
 func (this *IEditBoxes) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -276,9 +271,7 @@ func (this *IEditBoxes) SetCaption(rhs string) com.Error {
 func (this *IEditBoxes) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[46]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -368,9 +361,7 @@ func (this *IEditBoxes) SetPasswordEdit(rhs bool) com.Error {
 func (this *IEditBoxes) Add(left float64, top float64, width float64, height float64, rhs **EditBox) com.Error {
 	addr := (*this.LpVtbl)[61]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(left), uintptr(top), uintptr(width), uintptr(height), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -383,9 +374,7 @@ func (this *IEditBoxes) GetCount(rhs *int32) com.Error {
 func (this *IEditBoxes) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[63]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -395,12 +384,10 @@ func (this *IEditBoxes) Item(index interface{}, rhs *ole.Variant) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IEditBoxes) NewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IEditBoxes) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[65]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

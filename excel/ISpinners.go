@@ -17,6 +17,9 @@ type ISpinners struct {
 }
 
 func NewISpinners(pUnk *win32.IUnknown, addRef bool, scoped bool) *ISpinners {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ISpinners)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *ISpinners) IID() *syscall.GUID {
 func (this *ISpinners) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *ISpinners) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ISpinners) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *ISpinners) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -90,12 +89,10 @@ func (this *ISpinners) Delete(rhs *ole.Variant) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ISpinners) Duplicate(rhs **com.UnknownClass) com.Error {
+func (this *ISpinners) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -255,9 +252,7 @@ func (this *ISpinners) GetZOrder(rhs *int32) com.Error {
 func (this *ISpinners) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -348,9 +343,7 @@ func (this *ISpinners) SetValue(rhs int32) com.Error {
 func (this *ISpinners) Add(left float64, top float64, width float64, height float64, rhs **Spinner) com.Error {
 	addr := (*this.LpVtbl)[58]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(left), uintptr(top), uintptr(width), uintptr(height), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -363,27 +356,21 @@ func (this *ISpinners) GetCount(rhs *int32) com.Error {
 func (this *ISpinners) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[60]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *ISpinners) Item(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *ISpinners) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[61]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *ISpinners) NewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *ISpinners) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[62]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

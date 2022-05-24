@@ -17,6 +17,9 @@ type ShapeNodes struct {
 }
 
 func NewShapeNodes(pDisp *win32.IDispatch, addRef bool, scoped bool) *ShapeNodes {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &ShapeNodes{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewShapeNodes(pDisp *win32.IDispatch, addRef bool, scoped bool) *ShapeNodes
 }
 
 func ShapeNodesFromVar(v ole.Variant) *ShapeNodes {
-	return NewShapeNodes(v.PdispValVal(), false, false)
+	return NewShapeNodes(v.IDispatch(), false, false)
 }
 
 func (this *ShapeNodes) IID() *syscall.GUID {
@@ -43,32 +46,32 @@ func (this *ShapeNodes) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *ShapeNodes) Application() *ole.DispatchClass {
-	retVal := this.PropGet(0x60020000, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x60020000, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ShapeNodes) Creator() int32 {
-	retVal := this.PropGet(0x60020001, nil)
+	retVal, _ := this.PropGet(0x60020001, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeNodes) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000001, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000001, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ShapeNodes) Count() int32 {
-	retVal := this.PropGet(0x00000002, nil)
+	retVal, _ := this.PropGet(0x00000002, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeNodes) Item(index interface{}) *ShapeNode {
-	retVal := this.Call(0x00000000, []interface{}{index})
-	return NewShapeNode(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000000, []interface{}{index})
+	return NewShapeNode(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeNodes) NewEnum_() *com.UnknownClass {
-	retVal := this.PropGet(-4, nil)
+	retVal, _ := this.PropGet(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 
@@ -94,27 +97,32 @@ func (this *ShapeNodes) ForEach(action func(item *ShapeNode) bool) {
 }
 
 func (this *ShapeNodes) Delete(index int32)  {
-	retVal := this.Call(0x0000000b, []interface{}{index})
+	retVal, _ := this.Call(0x0000000b, []interface{}{index})
 	_= retVal
 }
 
-func (this *ShapeNodes) Insert(index int32, segmentType int32, editingType int32, x1 float32, y1 float32, x2 float32, y2 float32, x3 float32, y3 float32)  {
-	retVal := this.Call(0x0000000c, []interface{}{index, segmentType, editingType, x1, y1, x2, y2, x3, y3})
+var ShapeNodes_Insert_OptArgs= []string{
+	"X2", "Y2", "X3", "Y3", 
+}
+
+func (this *ShapeNodes) Insert(index int32, segmentType int32, editingType int32, x1 float32, y1 float32, optArgs ...interface{})  {
+	optArgs = ole.ProcessOptArgs(ShapeNodes_Insert_OptArgs, optArgs)
+	retVal, _ := this.Call(0x0000000c, []interface{}{index, segmentType, editingType, x1, y1}, optArgs...)
 	_= retVal
 }
 
 func (this *ShapeNodes) SetEditingType(index int32, editingType int32)  {
-	retVal := this.Call(0x0000000d, []interface{}{index, editingType})
+	retVal, _ := this.Call(0x0000000d, []interface{}{index, editingType})
 	_= retVal
 }
 
 func (this *ShapeNodes) SetPosition(index int32, x1 float32, y1 float32)  {
-	retVal := this.Call(0x0000000e, []interface{}{index, x1, y1})
+	retVal, _ := this.Call(0x0000000e, []interface{}{index, x1, y1})
 	_= retVal
 }
 
 func (this *ShapeNodes) SetSegmentType(index int32, segmentType int32)  {
-	retVal := this.Call(0x0000000f, []interface{}{index, segmentType})
+	retVal, _ := this.Call(0x0000000f, []interface{}{index, segmentType})
 	_= retVal
 }
 

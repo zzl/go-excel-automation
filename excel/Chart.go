@@ -16,6 +16,9 @@ type Chart struct {
 }
 
 func NewChart(pDisp *win32.IDispatch, addRef bool, scoped bool) *Chart {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Chart{Chart_{ole.OleClient{pDisp}}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewChart(pDisp *win32.IDispatch, addRef bool, scoped bool) *Chart {
 }
 
 func NewChartFromVar(v ole.Variant, addRef bool, scoped bool) *Chart {
-	return NewChart(v.PdispValVal(), addRef, scoped)
+	return NewChart(v.IDispatch(), addRef, scoped)
 }
 
 func NewChartInstance(scoped bool) (*Chart, error) {

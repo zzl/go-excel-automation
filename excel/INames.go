@@ -16,6 +16,9 @@ type INames struct {
 }
 
 func NewINames(pUnk *win32.IUnknown, addRef bool, scoped bool) *INames {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*INames)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *INames) IID() *syscall.GUID {
 func (this *INames) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,39 +46,31 @@ func (this *INames) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *INames) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *INames) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *INames) Add(name interface{}, refersTo interface{}, visible interface{}, macroType interface{}, shortcutKey interface{}, category interface{}, nameLocal interface{}, refersToLocal interface{}, categoryLocal interface{}, refersToR1C1 interface{}, refersToR1C1Local interface{}, rhs **Name) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&name)), (uintptr)(unsafe.Pointer(&refersTo)), (uintptr)(unsafe.Pointer(&visible)), (uintptr)(unsafe.Pointer(&macroType)), (uintptr)(unsafe.Pointer(&shortcutKey)), (uintptr)(unsafe.Pointer(&category)), (uintptr)(unsafe.Pointer(&nameLocal)), (uintptr)(unsafe.Pointer(&refersToLocal)), (uintptr)(unsafe.Pointer(&categoryLocal)), (uintptr)(unsafe.Pointer(&refersToR1C1)), (uintptr)(unsafe.Pointer(&refersToR1C1Local)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *INames) Item(index interface{}, indexLocal interface{}, refersTo interface{}, lcid int32, rhs **Name) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), (uintptr)(unsafe.Pointer(&indexLocal)), (uintptr)(unsafe.Pointer(&refersTo)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *INames) Default_(index interface{}, indexLocal interface{}, refersTo interface{}, lcid int32, rhs **Name) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), (uintptr)(unsafe.Pointer(&indexLocal)), (uintptr)(unsafe.Pointer(&refersTo)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -87,12 +80,10 @@ func (this *INames) GetCount(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *INames) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *INames) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

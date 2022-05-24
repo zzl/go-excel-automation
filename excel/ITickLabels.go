@@ -17,6 +17,9 @@ type ITickLabels struct {
 }
 
 func NewITickLabels(pUnk *win32.IUnknown, addRef bool, scoped bool) *ITickLabels {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ITickLabels)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *ITickLabels) IID() *syscall.GUID {
 func (this *ITickLabels) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *ITickLabels) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ITickLabels) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *ITickLabels) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -64,9 +63,7 @@ func (this *ITickLabels) Delete(rhs *ole.Variant) com.Error {
 func (this *ITickLabels) GetFont(rhs **Font) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -199,9 +196,7 @@ func (this *ITickLabels) SetMultiLevel(rhs bool) com.Error {
 func (this *ITickLabels) GetFormat(rhs **ChartFormat) com.Error {
 	addr := (*this.LpVtbl)[33]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

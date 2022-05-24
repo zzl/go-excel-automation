@@ -16,6 +16,9 @@ type Workbook struct {
 }
 
 func NewWorkbook(pDisp *win32.IDispatch, addRef bool, scoped bool) *Workbook {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Workbook{Workbook_{ole.OleClient{pDisp}}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewWorkbook(pDisp *win32.IDispatch, addRef bool, scoped bool) *Workbook {
 }
 
 func NewWorkbookFromVar(v ole.Variant, addRef bool, scoped bool) *Workbook {
-	return NewWorkbook(v.PdispValVal(), addRef, scoped)
+	return NewWorkbook(v.IDispatch(), addRef, scoped)
 }
 
 func NewWorkbookInstance(scoped bool) (*Workbook, error) {

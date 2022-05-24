@@ -3,7 +3,6 @@ package excel
 import (
 	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
-	"github.com/zzl/go-com/ole"
 	"syscall"
 	"unsafe"
 )
@@ -17,6 +16,9 @@ type IWorkbookEvents struct {
 }
 
 func NewIWorkbookEvents(pUnk *win32.IUnknown, addRef bool, scoped bool) *IWorkbookEvents {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IWorkbookEvents)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -67,7 +69,7 @@ func (this *IWorkbookEvents) BeforePrint(cancel *win32.VARIANT_BOOL) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) NewSheet(sh *ole.DispatchClass) com.Error {
+func (this *IWorkbookEvents) NewSheet(sh *win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)))
 	return com.Error(ret)
@@ -103,55 +105,55 @@ func (this *IWorkbookEvents) WindowDeactivate(wn *Window) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetSelectionChange(sh *ole.DispatchClass, target *Range) com.Error {
+func (this *IWorkbookEvents) SheetSelectionChange(sh *win32.IUnknown, target *Range) com.Error {
 	addr := (*this.LpVtbl)[19]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)), uintptr(unsafe.Pointer(target)))
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetBeforeDoubleClick(sh *ole.DispatchClass, target *Range, cancel *win32.VARIANT_BOOL) com.Error {
+func (this *IWorkbookEvents) SheetBeforeDoubleClick(sh *win32.IUnknown, target *Range, cancel *win32.VARIANT_BOOL) com.Error {
 	addr := (*this.LpVtbl)[20]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)), uintptr(unsafe.Pointer(target)), uintptr(unsafe.Pointer(cancel)))
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetBeforeRightClick(sh *ole.DispatchClass, target *Range, cancel *win32.VARIANT_BOOL) com.Error {
+func (this *IWorkbookEvents) SheetBeforeRightClick(sh *win32.IUnknown, target *Range, cancel *win32.VARIANT_BOOL) com.Error {
 	addr := (*this.LpVtbl)[21]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)), uintptr(unsafe.Pointer(target)), uintptr(unsafe.Pointer(cancel)))
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetActivate(sh *ole.DispatchClass) com.Error {
+func (this *IWorkbookEvents) SheetActivate(sh *win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[22]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)))
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetDeactivate(sh *ole.DispatchClass) com.Error {
+func (this *IWorkbookEvents) SheetDeactivate(sh *win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[23]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)))
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetCalculate(sh *ole.DispatchClass) com.Error {
+func (this *IWorkbookEvents) SheetCalculate(sh *win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[24]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)))
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetChange(sh *ole.DispatchClass, target *Range) com.Error {
+func (this *IWorkbookEvents) SheetChange(sh *win32.IUnknown, target *Range) com.Error {
 	addr := (*this.LpVtbl)[25]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)), uintptr(unsafe.Pointer(target)))
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetFollowHyperlink(sh *ole.DispatchClass, target *Hyperlink) com.Error {
+func (this *IWorkbookEvents) SheetFollowHyperlink(sh *win32.IUnknown, target *Hyperlink) com.Error {
 	addr := (*this.LpVtbl)[26]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)), uintptr(unsafe.Pointer(target)))
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetPivotTableUpdate(sh *ole.DispatchClass, target *PivotTable) com.Error {
+func (this *IWorkbookEvents) SheetPivotTableUpdate(sh *win32.IUnknown, target *PivotTable) com.Error {
 	addr := (*this.LpVtbl)[27]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)), uintptr(unsafe.Pointer(target)))
 	return com.Error(ret)
@@ -205,31 +207,31 @@ func (this *IWorkbookEvents) RowsetComplete(description string, sheet string, su
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetPivotTableAfterValueChange(sh *ole.DispatchClass, targetPivotTable *PivotTable, targetRange *Range) com.Error {
+func (this *IWorkbookEvents) SheetPivotTableAfterValueChange(sh *win32.IUnknown, targetPivotTable *PivotTable, targetRange *Range) com.Error {
 	addr := (*this.LpVtbl)[36]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)), uintptr(unsafe.Pointer(targetPivotTable)), uintptr(unsafe.Pointer(targetRange)))
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetPivotTableBeforeAllocateChanges(sh *ole.DispatchClass, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) com.Error {
+func (this *IWorkbookEvents) SheetPivotTableBeforeAllocateChanges(sh *win32.IUnknown, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) com.Error {
 	addr := (*this.LpVtbl)[37]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)), uintptr(unsafe.Pointer(targetPivotTable)), uintptr(valueChangeStart), uintptr(valueChangeEnd), uintptr(unsafe.Pointer(cancel)))
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetPivotTableBeforeCommitChanges(sh *ole.DispatchClass, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) com.Error {
+func (this *IWorkbookEvents) SheetPivotTableBeforeCommitChanges(sh *win32.IUnknown, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) com.Error {
 	addr := (*this.LpVtbl)[38]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)), uintptr(unsafe.Pointer(targetPivotTable)), uintptr(valueChangeStart), uintptr(valueChangeEnd), uintptr(unsafe.Pointer(cancel)))
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetPivotTableBeforeDiscardChanges(sh *ole.DispatchClass, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32) com.Error {
+func (this *IWorkbookEvents) SheetPivotTableBeforeDiscardChanges(sh *win32.IUnknown, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32) com.Error {
 	addr := (*this.LpVtbl)[39]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)), uintptr(unsafe.Pointer(targetPivotTable)), uintptr(valueChangeStart), uintptr(valueChangeEnd))
 	return com.Error(ret)
 }
 
-func (this *IWorkbookEvents) SheetPivotTableChangeSync(sh *ole.DispatchClass, target *PivotTable) com.Error {
+func (this *IWorkbookEvents) SheetPivotTableChangeSync(sh *win32.IUnknown, target *PivotTable) com.Error {
 	addr := (*this.LpVtbl)[40]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(sh)), uintptr(unsafe.Pointer(target)))
 	return com.Error(ret)

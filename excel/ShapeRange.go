@@ -17,6 +17,9 @@ type ShapeRange struct {
 }
 
 func NewShapeRange(pDisp *win32.IDispatch, addRef bool, scoped bool) *ShapeRange {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &ShapeRange{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewShapeRange(pDisp *win32.IDispatch, addRef bool, scoped bool) *ShapeRange
 }
 
 func ShapeRangeFromVar(v ole.Variant) *ShapeRange {
-	return NewShapeRange(v.PdispValVal(), false, false)
+	return NewShapeRange(v.IDispatch(), false, false)
 }
 
 func (this *ShapeRange) IID() *syscall.GUID {
@@ -43,72 +46,72 @@ func (this *ShapeRange) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *ShapeRange) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *ShapeRange) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *ShapeRange) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *ShapeRange) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *ShapeRange) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *ShapeRange) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *ShapeRange) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *ShapeRange) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ShapeRange) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) Item(index interface{}) *Shape {
-	retVal := this.Call(0x000000aa, []interface{}{index})
-	return NewShape(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000aa, []interface{}{index})
+	return NewShape(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) Default_(index interface{}) *Shape {
-	retVal := this.Call(0x00000000, []interface{}{index})
-	return NewShape(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000000, []interface{}{index})
+	return NewShape(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) NewEnum_() *com.UnknownClass {
-	retVal := this.PropGet(-4, nil)
+	retVal, _ := this.PropGet(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 
@@ -134,68 +137,68 @@ func (this *ShapeRange) ForEach(action func(item *Shape) bool) {
 }
 
 func (this *ShapeRange) Align(alignCmd int32, relativeTo int32)  {
-	retVal := this.Call(0x000006cc, []interface{}{alignCmd, relativeTo})
+	retVal, _ := this.Call(0x000006cc, []interface{}{alignCmd, relativeTo})
 	_= retVal
 }
 
 func (this *ShapeRange) Apply()  {
-	retVal := this.Call(0x0000068b, nil)
+	retVal, _ := this.Call(0x0000068b, nil)
 	_= retVal
 }
 
 func (this *ShapeRange) Delete()  {
-	retVal := this.Call(0x00000075, nil)
+	retVal, _ := this.Call(0x00000075, nil)
 	_= retVal
 }
 
 func (this *ShapeRange) Distribute(distributeCmd int32, relativeTo int32)  {
-	retVal := this.Call(0x000006ce, []interface{}{distributeCmd, relativeTo})
+	retVal, _ := this.Call(0x000006ce, []interface{}{distributeCmd, relativeTo})
 	_= retVal
 }
 
 func (this *ShapeRange) Duplicate() *ShapeRange {
-	retVal := this.Call(0x0000040f, nil)
-	return NewShapeRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x0000040f, nil)
+	return NewShapeRange(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) Flip(flipCmd int32)  {
-	retVal := this.Call(0x0000068c, []interface{}{flipCmd})
+	retVal, _ := this.Call(0x0000068c, []interface{}{flipCmd})
 	_= retVal
 }
 
 func (this *ShapeRange) IncrementLeft(increment float32)  {
-	retVal := this.Call(0x0000068e, []interface{}{increment})
+	retVal, _ := this.Call(0x0000068e, []interface{}{increment})
 	_= retVal
 }
 
 func (this *ShapeRange) IncrementRotation(increment float32)  {
-	retVal := this.Call(0x00000690, []interface{}{increment})
+	retVal, _ := this.Call(0x00000690, []interface{}{increment})
 	_= retVal
 }
 
 func (this *ShapeRange) IncrementTop(increment float32)  {
-	retVal := this.Call(0x00000691, []interface{}{increment})
+	retVal, _ := this.Call(0x00000691, []interface{}{increment})
 	_= retVal
 }
 
 func (this *ShapeRange) Group() *Shape {
-	retVal := this.Call(0x0000002e, nil)
-	return NewShape(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x0000002e, nil)
+	return NewShape(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) PickUp()  {
-	retVal := this.Call(0x00000692, nil)
+	retVal, _ := this.Call(0x00000692, nil)
 	_= retVal
 }
 
 func (this *ShapeRange) RerouteConnections()  {
-	retVal := this.Call(0x00000693, nil)
+	retVal, _ := this.Call(0x00000693, nil)
 	_= retVal
 }
 
 func (this *ShapeRange) Regroup() *Shape {
-	retVal := this.Call(0x000006d0, nil)
-	return NewShape(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000006d0, nil)
+	return NewShape(retVal.IDispatch(), false, true)
 }
 
 var ShapeRange_ScaleHeight_OptArgs= []string{
@@ -204,7 +207,7 @@ var ShapeRange_ScaleHeight_OptArgs= []string{
 
 func (this *ShapeRange) ScaleHeight(factor float32, relativeToOriginalSize int32, optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(ShapeRange_ScaleHeight_OptArgs, optArgs)
-	retVal := this.Call(0x00000694, []interface{}{factor, relativeToOriginalSize}, optArgs...)
+	retVal, _ := this.Call(0x00000694, []interface{}{factor, relativeToOriginalSize}, optArgs...)
 	_= retVal
 }
 
@@ -214,7 +217,7 @@ var ShapeRange_ScaleWidth_OptArgs= []string{
 
 func (this *ShapeRange) ScaleWidth(factor float32, relativeToOriginalSize int32, optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(ShapeRange_ScaleWidth_OptArgs, optArgs)
-	retVal := this.Call(0x00000698, []interface{}{factor, relativeToOriginalSize}, optArgs...)
+	retVal, _ := this.Call(0x00000698, []interface{}{factor, relativeToOriginalSize}, optArgs...)
 	_= retVal
 }
 
@@ -224,348 +227,334 @@ var ShapeRange_Select_OptArgs= []string{
 
 func (this *ShapeRange) Select(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(ShapeRange_Select_OptArgs, optArgs)
-	retVal := this.Call(0x000000eb, nil, optArgs...)
+	retVal, _ := this.Call(0x000000eb, nil, optArgs...)
 	_= retVal
 }
 
 func (this *ShapeRange) SetShapesDefaultProperties()  {
-	retVal := this.Call(0x00000699, nil)
+	retVal, _ := this.Call(0x00000699, nil)
 	_= retVal
 }
 
 func (this *ShapeRange) Ungroup() *ShapeRange {
-	retVal := this.Call(0x000000f4, nil)
-	return NewShapeRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000f4, nil)
+	return NewShapeRange(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) ZOrder(zorderCmd int32)  {
-	retVal := this.Call(0x0000026e, []interface{}{zorderCmd})
+	retVal, _ := this.Call(0x0000026e, []interface{}{zorderCmd})
 	_= retVal
 }
 
 func (this *ShapeRange) Adjustments() *Adjustments {
-	retVal := this.PropGet(0x0000069b, nil)
-	return NewAdjustments(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000069b, nil)
+	return NewAdjustments(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) TextFrame() *TextFrame {
-	retVal := this.PropGet(0x0000069c, nil)
-	return NewTextFrame(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000069c, nil)
+	return NewTextFrame(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) AutoShapeType() int32 {
-	retVal := this.PropGet(0x0000069d, nil)
+	retVal, _ := this.PropGet(0x0000069d, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) SetAutoShapeType(rhs int32)  {
-	retVal := this.PropPut(0x0000069d, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000069d, []interface{}{rhs})
 }
 
 func (this *ShapeRange) Callout() *CalloutFormat {
-	retVal := this.PropGet(0x0000069e, nil)
-	return NewCalloutFormat(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000069e, nil)
+	return NewCalloutFormat(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) ConnectionSiteCount() int32 {
-	retVal := this.PropGet(0x0000069f, nil)
+	retVal, _ := this.PropGet(0x0000069f, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) Connector() int32 {
-	retVal := this.PropGet(0x000006a0, nil)
+	retVal, _ := this.PropGet(0x000006a0, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) ConnectorFormat() *ConnectorFormat {
-	retVal := this.PropGet(0x000006a1, nil)
-	return NewConnectorFormat(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000006a1, nil)
+	return NewConnectorFormat(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) Fill() *FillFormat {
-	retVal := this.PropGet(0x0000067f, nil)
-	return NewFillFormat(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000067f, nil)
+	return NewFillFormat(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) GroupItems() *GroupShapes {
-	retVal := this.PropGet(0x000006a2, nil)
-	return NewGroupShapes(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000006a2, nil)
+	return NewGroupShapes(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) Height() float32 {
-	retVal := this.PropGet(0x0000007b, nil)
+	retVal, _ := this.PropGet(0x0000007b, nil)
 	return retVal.FltValVal()
 }
 
 func (this *ShapeRange) SetHeight(rhs float32)  {
-	retVal := this.PropPut(0x0000007b, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
 func (this *ShapeRange) HorizontalFlip() int32 {
-	retVal := this.PropGet(0x000006a3, nil)
+	retVal, _ := this.PropGet(0x000006a3, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) Left() float32 {
-	retVal := this.PropGet(0x0000007f, nil)
+	retVal, _ := this.PropGet(0x0000007f, nil)
 	return retVal.FltValVal()
 }
 
 func (this *ShapeRange) SetLeft(rhs float32)  {
-	retVal := this.PropPut(0x0000007f, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
 func (this *ShapeRange) Line() *LineFormat {
-	retVal := this.PropGet(0x00000331, nil)
-	return NewLineFormat(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000331, nil)
+	return NewLineFormat(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) LockAspectRatio() int32 {
-	retVal := this.PropGet(0x000006a4, nil)
+	retVal, _ := this.PropGet(0x000006a4, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) SetLockAspectRatio(rhs int32)  {
-	retVal := this.PropPut(0x000006a4, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000006a4, []interface{}{rhs})
 }
 
 func (this *ShapeRange) Name() string {
-	retVal := this.PropGet(0x0000006e, nil)
+	retVal, _ := this.PropGet(0x0000006e, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *ShapeRange) SetName(rhs string)  {
-	retVal := this.PropPut(0x0000006e, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
 func (this *ShapeRange) Nodes() *ShapeNodes {
-	retVal := this.PropGet(0x000006a5, nil)
-	return NewShapeNodes(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000006a5, nil)
+	return NewShapeNodes(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) Rotation() float32 {
-	retVal := this.PropGet(0x0000003b, nil)
+	retVal, _ := this.PropGet(0x0000003b, nil)
 	return retVal.FltValVal()
 }
 
 func (this *ShapeRange) SetRotation(rhs float32)  {
-	retVal := this.PropPut(0x0000003b, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000003b, []interface{}{rhs})
 }
 
 func (this *ShapeRange) PictureFormat() *PictureFormat {
-	retVal := this.PropGet(0x0000065f, nil)
-	return NewPictureFormat(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000065f, nil)
+	return NewPictureFormat(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) Shadow() *ShadowFormat {
-	retVal := this.PropGet(0x00000067, nil)
-	return NewShadowFormat(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000067, nil)
+	return NewShadowFormat(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) TextEffect() *TextEffectFormat {
-	retVal := this.PropGet(0x000006a6, nil)
-	return NewTextEffectFormat(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000006a6, nil)
+	return NewTextEffectFormat(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) ThreeD() *ThreeDFormat {
-	retVal := this.PropGet(0x000006a7, nil)
-	return NewThreeDFormat(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000006a7, nil)
+	return NewThreeDFormat(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) Top() float32 {
-	retVal := this.PropGet(0x0000007e, nil)
+	retVal, _ := this.PropGet(0x0000007e, nil)
 	return retVal.FltValVal()
 }
 
 func (this *ShapeRange) SetTop(rhs float32)  {
-	retVal := this.PropPut(0x0000007e, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
 func (this *ShapeRange) Type() int32 {
-	retVal := this.PropGet(0x0000006c, nil)
+	retVal, _ := this.PropGet(0x0000006c, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) VerticalFlip() int32 {
-	retVal := this.PropGet(0x000006a8, nil)
+	retVal, _ := this.PropGet(0x000006a8, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) Vertices() ole.Variant {
-	retVal := this.PropGet(0x0000026d, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x0000026d, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *ShapeRange) Visible() int32 {
-	retVal := this.PropGet(0x0000022e, nil)
+	retVal, _ := this.PropGet(0x0000022e, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) SetVisible(rhs int32)  {
-	retVal := this.PropPut(0x0000022e, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
 func (this *ShapeRange) Width() float32 {
-	retVal := this.PropGet(0x0000007a, nil)
+	retVal, _ := this.PropGet(0x0000007a, nil)
 	return retVal.FltValVal()
 }
 
 func (this *ShapeRange) SetWidth(rhs float32)  {
-	retVal := this.PropPut(0x0000007a, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
 func (this *ShapeRange) ZOrderPosition() int32 {
-	retVal := this.PropGet(0x000006a9, nil)
+	retVal, _ := this.PropGet(0x000006a9, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) BlackWhiteMode() int32 {
-	retVal := this.PropGet(0x000006ab, nil)
+	retVal, _ := this.PropGet(0x000006ab, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) SetBlackWhiteMode(rhs int32)  {
-	retVal := this.PropPut(0x000006ab, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000006ab, []interface{}{rhs})
 }
 
 func (this *ShapeRange) AlternativeText() string {
-	retVal := this.PropGet(0x00000763, nil)
+	retVal, _ := this.PropGet(0x00000763, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *ShapeRange) SetAlternativeText(rhs string)  {
-	retVal := this.PropPut(0x00000763, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000763, []interface{}{rhs})
 }
 
 func (this *ShapeRange) DiagramNode() *DiagramNode {
-	retVal := this.PropGet(0x00000875, nil)
-	return NewDiagramNode(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000875, nil)
+	return NewDiagramNode(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) HasDiagramNode() int32 {
-	retVal := this.PropGet(0x00000876, nil)
+	retVal, _ := this.PropGet(0x00000876, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) Diagram() *Diagram {
-	retVal := this.PropGet(0x00000877, nil)
-	return NewDiagram(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000877, nil)
+	return NewDiagram(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) HasDiagram() int32 {
-	retVal := this.PropGet(0x00000878, nil)
+	retVal, _ := this.PropGet(0x00000878, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) Child() int32 {
-	retVal := this.PropGet(0x00000879, nil)
+	retVal, _ := this.PropGet(0x00000879, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) ParentGroup() *Shape {
-	retVal := this.PropGet(0x0000087a, nil)
-	return NewShape(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000087a, nil)
+	return NewShape(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) CanvasItems() *ole.DispatchClass {
-	retVal := this.PropGet(0x0000087b, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x0000087b, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ShapeRange) ID() int32 {
-	retVal := this.PropGet(0x0000023a, nil)
+	retVal, _ := this.PropGet(0x0000023a, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) CanvasCropLeft(increment float32)  {
-	retVal := this.Call(0x0000087c, []interface{}{increment})
+	retVal, _ := this.Call(0x0000087c, []interface{}{increment})
 	_= retVal
 }
 
 func (this *ShapeRange) CanvasCropTop(increment float32)  {
-	retVal := this.Call(0x0000087d, []interface{}{increment})
+	retVal, _ := this.Call(0x0000087d, []interface{}{increment})
 	_= retVal
 }
 
 func (this *ShapeRange) CanvasCropRight(increment float32)  {
-	retVal := this.Call(0x0000087e, []interface{}{increment})
+	retVal, _ := this.Call(0x0000087e, []interface{}{increment})
 	_= retVal
 }
 
 func (this *ShapeRange) CanvasCropBottom(increment float32)  {
-	retVal := this.Call(0x0000087f, []interface{}{increment})
+	retVal, _ := this.Call(0x0000087f, []interface{}{increment})
 	_= retVal
 }
 
 func (this *ShapeRange) Chart() *Chart {
-	retVal := this.PropGet(0x00000007, nil)
-	return NewChart(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000007, nil)
+	return NewChart(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) HasChart() int32 {
-	retVal := this.PropGet(0x00000a62, nil)
+	retVal, _ := this.PropGet(0x00000a62, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) TextFrame2() *TextFrame2 {
-	retVal := this.PropGet(0x00000a63, nil)
-	return NewTextFrame2(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000a63, nil)
+	return NewTextFrame2(retVal.IDispatch(), false, true)
 }
 
 func (this *ShapeRange) ShapeStyle() int32 {
-	retVal := this.PropGet(0x00000a64, nil)
+	retVal, _ := this.PropGet(0x00000a64, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) SetShapeStyle(rhs int32)  {
-	retVal := this.PropPut(0x00000a64, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a64, []interface{}{rhs})
 }
 
 func (this *ShapeRange) BackgroundStyle() int32 {
-	retVal := this.PropGet(0x00000a65, nil)
+	retVal, _ := this.PropGet(0x00000a65, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeRange) SetBackgroundStyle(rhs int32)  {
-	retVal := this.PropPut(0x00000a65, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a65, []interface{}{rhs})
 }
 
 func (this *ShapeRange) SoftEdge() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000a66, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000a66, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ShapeRange) Glow() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000a67, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000a67, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ShapeRange) Reflection() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000a68, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000a68, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ShapeRange) Title() string {
-	retVal := this.PropGet(0x000000c7, nil)
+	retVal, _ := this.PropGet(0x000000c7, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *ShapeRange) SetTitle(rhs string)  {
-	retVal := this.PropPut(0x000000c7, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000000c7, []interface{}{rhs})
 }
 

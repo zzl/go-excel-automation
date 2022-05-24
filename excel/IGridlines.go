@@ -17,6 +17,9 @@ type IGridlines struct {
 }
 
 func NewIGridlines(pUnk *win32.IUnknown, addRef bool, scoped bool) *IGridlines {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IGridlines)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IGridlines) IID() *syscall.GUID {
 func (this *IGridlines) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IGridlines) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IGridlines) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IGridlines) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -70,9 +69,7 @@ func (this *IGridlines) Select(rhs *ole.Variant) com.Error {
 func (this *IGridlines) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -85,9 +82,7 @@ func (this *IGridlines) Delete(rhs *ole.Variant) com.Error {
 func (this *IGridlines) GetFormat(rhs **ChartFormat) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

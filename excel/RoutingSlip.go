@@ -17,6 +17,9 @@ type RoutingSlip struct {
 }
 
 func NewRoutingSlip(pDisp *win32.IDispatch, addRef bool, scoped bool) *RoutingSlip {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &RoutingSlip{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewRoutingSlip(pDisp *win32.IDispatch, addRef bool, scoped bool) *RoutingSl
 }
 
 func RoutingSlipFromVar(v ole.Variant) *RoutingSlip {
-	return NewRoutingSlip(v.PdispValVal(), false, false)
+	return NewRoutingSlip(v.IDispatch(), false, false)
 }
 
 func (this *RoutingSlip) IID() *syscall.GUID {
@@ -43,74 +46,72 @@ func (this *RoutingSlip) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *RoutingSlip) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *RoutingSlip) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *RoutingSlip) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *RoutingSlip) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *RoutingSlip) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *RoutingSlip) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *RoutingSlip) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *RoutingSlip) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *RoutingSlip) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *RoutingSlip) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *RoutingSlip) Delivery() int32 {
-	retVal := this.PropGet(0x000003bb, nil)
+	retVal, _ := this.PropGet(0x000003bb, nil)
 	return retVal.LValVal()
 }
 
 func (this *RoutingSlip) SetDelivery(rhs int32)  {
-	retVal := this.PropPut(0x000003bb, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000003bb, []interface{}{rhs})
 }
 
 func (this *RoutingSlip) Message() ole.Variant {
-	retVal := this.PropGet(0x000003ba, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x000003ba, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *RoutingSlip) SetMessage(rhs interface{})  {
-	retVal := this.PropPut(0x000003ba, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000003ba, []interface{}{rhs})
 }
 
 var RoutingSlip_Recipients_OptArgs= []string{
@@ -119,60 +120,56 @@ var RoutingSlip_Recipients_OptArgs= []string{
 
 func (this *RoutingSlip) Recipients(optArgs ...interface{}) ole.Variant {
 	optArgs = ole.ProcessOptArgs(RoutingSlip_Recipients_OptArgs, optArgs)
-	retVal := this.PropGet(0x000003b8, nil, optArgs...)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x000003b8, nil, optArgs...)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 var RoutingSlip_SetRecipients_OptArgs= []string{
-	"rhs", 
+	"Index", 
 }
 
-func (this *RoutingSlip) SetRecipients(index interface{}, optArgs ...interface{})  {
+func (this *RoutingSlip) SetRecipients(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(RoutingSlip_SetRecipients_OptArgs, optArgs)
-	retVal := this.PropPut(0x000003b8, []interface{}{index}, optArgs...)
-	_= retVal
+	_ = this.PropPut(0x000003b8, nil, optArgs...)
 }
 
 func (this *RoutingSlip) Reset() ole.Variant {
-	retVal := this.Call(0x0000022b, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x0000022b, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *RoutingSlip) ReturnWhenDone() bool {
-	retVal := this.PropGet(0x000003bc, nil)
+	retVal, _ := this.PropGet(0x000003bc, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *RoutingSlip) SetReturnWhenDone(rhs bool)  {
-	retVal := this.PropPut(0x000003bc, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000003bc, []interface{}{rhs})
 }
 
 func (this *RoutingSlip) Status() int32 {
-	retVal := this.PropGet(0x000003be, nil)
+	retVal, _ := this.PropGet(0x000003be, nil)
 	return retVal.LValVal()
 }
 
 func (this *RoutingSlip) Subject() ole.Variant {
-	retVal := this.PropGet(0x000003b9, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x000003b9, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *RoutingSlip) SetSubject(rhs interface{})  {
-	retVal := this.PropPut(0x000003b9, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000003b9, []interface{}{rhs})
 }
 
 func (this *RoutingSlip) TrackStatus() bool {
-	retVal := this.PropGet(0x000003bd, nil)
+	retVal, _ := this.PropGet(0x000003bd, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *RoutingSlip) SetTrackStatus(rhs bool)  {
-	retVal := this.PropPut(0x000003bd, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000003bd, []interface{}{rhs})
 }
 

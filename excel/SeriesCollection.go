@@ -17,6 +17,9 @@ type SeriesCollection struct {
 }
 
 func NewSeriesCollection(pDisp *win32.IDispatch, addRef bool, scoped bool) *SeriesCollection {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &SeriesCollection{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewSeriesCollection(pDisp *win32.IDispatch, addRef bool, scoped bool) *Seri
 }
 
 func SeriesCollectionFromVar(v ole.Variant) *SeriesCollection {
-	return NewSeriesCollection(v.PdispValVal(), false, false)
+	return NewSeriesCollection(v.IDispatch(), false, false)
 }
 
 func (this *SeriesCollection) IID() *syscall.GUID {
@@ -43,67 +46,67 @@ func (this *SeriesCollection) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *SeriesCollection) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *SeriesCollection) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *SeriesCollection) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *SeriesCollection) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *SeriesCollection) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *SeriesCollection) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *SeriesCollection) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *SeriesCollection) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *SeriesCollection) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *SeriesCollection) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var SeriesCollection_Add_OptArgs= []string{
-	"SeriesLabels", "CategoryLabels", "Replace", 
+	"Rowcol", "SeriesLabels", "CategoryLabels", "Replace", 
 }
 
-func (this *SeriesCollection) Add(source interface{}, rowcol int32, optArgs ...interface{}) *Series {
+func (this *SeriesCollection) Add(source interface{}, optArgs ...interface{}) *Series {
 	optArgs = ole.ProcessOptArgs(SeriesCollection_Add_OptArgs, optArgs)
-	retVal := this.Call(0x000000b5, []interface{}{source, rowcol}, optArgs...)
-	return NewSeries(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000b5, []interface{}{source}, optArgs...)
+	return NewSeries(retVal.IDispatch(), false, true)
 }
 
 func (this *SeriesCollection) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
@@ -113,18 +116,18 @@ var SeriesCollection_Extend_OptArgs= []string{
 
 func (this *SeriesCollection) Extend(source interface{}, optArgs ...interface{}) ole.Variant {
 	optArgs = ole.ProcessOptArgs(SeriesCollection_Extend_OptArgs, optArgs)
-	retVal := this.Call(0x000000e3, []interface{}{source}, optArgs...)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x000000e3, []interface{}{source}, optArgs...)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *SeriesCollection) Item(index interface{}) *Series {
-	retVal := this.Call(0x000000aa, []interface{}{index})
-	return NewSeries(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000aa, []interface{}{index})
+	return NewSeries(retVal.IDispatch(), false, true)
 }
 
 func (this *SeriesCollection) NewEnum_() *com.UnknownClass {
-	retVal := this.Call(-4, nil)
+	retVal, _ := this.Call(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 
@@ -150,23 +153,23 @@ func (this *SeriesCollection) ForEach(action func(item *Series) bool) {
 }
 
 var SeriesCollection_Paste_OptArgs= []string{
-	"SeriesLabels", "CategoryLabels", "Replace", "NewSeries", 
+	"Rowcol", "SeriesLabels", "CategoryLabels", "Replace", "NewSeries", 
 }
 
-func (this *SeriesCollection) Paste(rowcol int32, optArgs ...interface{}) ole.Variant {
+func (this *SeriesCollection) Paste(optArgs ...interface{}) ole.Variant {
 	optArgs = ole.ProcessOptArgs(SeriesCollection_Paste_OptArgs, optArgs)
-	retVal := this.Call(0x000000d3, []interface{}{rowcol}, optArgs...)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x000000d3, nil, optArgs...)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *SeriesCollection) NewSeries() *Series {
-	retVal := this.Call(0x0000045d, nil)
-	return NewSeries(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x0000045d, nil)
+	return NewSeries(retVal.IDispatch(), false, true)
 }
 
 func (this *SeriesCollection) Default_(index interface{}) *Series {
-	retVal := this.Call(0x00000000, []interface{}{index})
-	return NewSeries(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000000, []interface{}{index})
+	return NewSeries(retVal.IDispatch(), false, true)
 }
 

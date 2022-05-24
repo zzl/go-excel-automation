@@ -17,6 +17,9 @@ type Workbooks struct {
 }
 
 func NewWorkbooks(pDisp *win32.IDispatch, addRef bool, scoped bool) *Workbooks {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Workbooks{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewWorkbooks(pDisp *win32.IDispatch, addRef bool, scoped bool) *Workbooks {
 }
 
 func WorkbooksFromVar(v ole.Variant) *Workbooks {
-	return NewWorkbooks(v.PdispValVal(), false, false)
+	return NewWorkbooks(v.IDispatch(), false, false)
 }
 
 func (this *Workbooks) IID() *syscall.GUID {
@@ -43,18 +46,18 @@ func (this *Workbooks) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Workbooks) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *Workbooks) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *Workbooks) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Workbooks_Add_OptArgs= []string{
@@ -63,27 +66,27 @@ var Workbooks_Add_OptArgs= []string{
 
 func (this *Workbooks) Add(optArgs ...interface{}) *Workbook {
 	optArgs = ole.ProcessOptArgs(Workbooks_Add_OptArgs, optArgs)
-	retVal := this.Call(0x000000b5, nil, optArgs...)
-	return NewWorkbook(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000b5, nil, optArgs...)
+	return NewWorkbook(retVal.IDispatch(), false, true)
 }
 
 func (this *Workbooks) Close()  {
-	retVal := this.Call(0x00000115, nil)
+	retVal, _ := this.Call(0x00000115, nil)
 	_= retVal
 }
 
 func (this *Workbooks) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
 func (this *Workbooks) Item(index interface{}) *Workbook {
-	retVal := this.PropGet(0x000000aa, []interface{}{index})
-	return NewWorkbook(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000000aa, []interface{}{index})
+	return NewWorkbook(retVal.IDispatch(), false, true)
 }
 
 func (this *Workbooks) NewEnum_() *com.UnknownClass {
-	retVal := this.PropGet(-4, nil)
+	retVal, _ := this.PropGet(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 
@@ -116,35 +119,37 @@ var Workbooks_Open__OptArgs= []string{
 
 func (this *Workbooks) Open_(filename string, optArgs ...interface{}) *Workbook {
 	optArgs = ole.ProcessOptArgs(Workbooks_Open__OptArgs, optArgs)
-	retVal := this.Call(0x000002aa, []interface{}{filename}, optArgs...)
-	return NewWorkbook(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000002aa, []interface{}{filename}, optArgs...)
+	return NewWorkbook(retVal.IDispatch(), false, true)
 }
 
 var Workbooks_OpenText___OptArgs= []string{
+	"Origin", "StartRow", "DataType", "TextQualifier", 
 	"ConsecutiveDelimiter", "Tab", "Semicolon", "Comma", 
 	"Space", "Other", "OtherChar", "FieldInfo", "TextVisualLayout", 
 }
 
-func (this *Workbooks) OpenText__(filename string, origin interface{}, startRow interface{}, dataType interface{}, textQualifier int32, optArgs ...interface{})  {
+func (this *Workbooks) OpenText__(filename string, optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Workbooks_OpenText___OptArgs, optArgs)
-	retVal := this.Call(0x000002ab, []interface{}{filename, origin, startRow, dataType, textQualifier}, optArgs...)
+	retVal, _ := this.Call(0x000002ab, []interface{}{filename}, optArgs...)
 	_= retVal
 }
 
 func (this *Workbooks) Default_(index interface{}) *Workbook {
-	retVal := this.PropGet(0x00000000, []interface{}{index})
-	return NewWorkbook(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000000, []interface{}{index})
+	return NewWorkbook(retVal.IDispatch(), false, true)
 }
 
 var Workbooks_OpenText__OptArgs= []string{
+	"Origin", "StartRow", "DataType", "TextQualifier", 
 	"ConsecutiveDelimiter", "Tab", "Semicolon", "Comma", 
 	"Space", "Other", "OtherChar", "FieldInfo", 
 	"TextVisualLayout", "DecimalSeparator", "ThousandsSeparator", 
 }
 
-func (this *Workbooks) OpenText_(filename string, origin interface{}, startRow interface{}, dataType interface{}, textQualifier int32, optArgs ...interface{})  {
+func (this *Workbooks) OpenText_(filename string, optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Workbooks_OpenText__OptArgs, optArgs)
-	retVal := this.Call(0x000006ed, []interface{}{filename, origin, startRow, dataType, textQualifier}, optArgs...)
+	retVal, _ := this.Call(0x000006ed, []interface{}{filename}, optArgs...)
 	_= retVal
 }
 
@@ -157,19 +162,20 @@ var Workbooks_Open_OptArgs= []string{
 
 func (this *Workbooks) Open(filename string, optArgs ...interface{}) *Workbook {
 	optArgs = ole.ProcessOptArgs(Workbooks_Open_OptArgs, optArgs)
-	retVal := this.Call(0x00000783, []interface{}{filename}, optArgs...)
-	return NewWorkbook(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000783, []interface{}{filename}, optArgs...)
+	return NewWorkbook(retVal.IDispatch(), false, true)
 }
 
 var Workbooks_OpenText_OptArgs= []string{
+	"Origin", "StartRow", "DataType", "TextQualifier", 
 	"ConsecutiveDelimiter", "Tab", "Semicolon", "Comma", 
 	"Space", "Other", "OtherChar", "FieldInfo", 
 	"TextVisualLayout", "DecimalSeparator", "ThousandsSeparator", "TrailingMinusNumbers", "Local", 
 }
 
-func (this *Workbooks) OpenText(filename string, origin interface{}, startRow interface{}, dataType interface{}, textQualifier int32, optArgs ...interface{})  {
+func (this *Workbooks) OpenText(filename string, optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Workbooks_OpenText_OptArgs, optArgs)
-	retVal := this.Call(0x00000784, []interface{}{filename, origin, startRow, dataType, textQualifier}, optArgs...)
+	retVal, _ := this.Call(0x00000784, []interface{}{filename}, optArgs...)
 	_= retVal
 }
 
@@ -179,17 +185,17 @@ var Workbooks_OpenDatabase_OptArgs= []string{
 
 func (this *Workbooks) OpenDatabase(filename string, optArgs ...interface{}) *Workbook {
 	optArgs = ole.ProcessOptArgs(Workbooks_OpenDatabase_OptArgs, optArgs)
-	retVal := this.Call(0x00000813, []interface{}{filename}, optArgs...)
-	return NewWorkbook(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000813, []interface{}{filename}, optArgs...)
+	return NewWorkbook(retVal.IDispatch(), false, true)
 }
 
 func (this *Workbooks) CheckOut(filename string)  {
-	retVal := this.Call(0x00000815, []interface{}{filename})
+	retVal, _ := this.Call(0x00000815, []interface{}{filename})
 	_= retVal
 }
 
 func (this *Workbooks) CanCheckOut(filename string) bool {
-	retVal := this.Call(0x00000816, []interface{}{filename})
+	retVal, _ := this.Call(0x00000816, []interface{}{filename})
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
@@ -199,8 +205,8 @@ var Workbooks_OpenXML__OptArgs= []string{
 
 func (this *Workbooks) OpenXML_(filename string, optArgs ...interface{}) *Workbook {
 	optArgs = ole.ProcessOptArgs(Workbooks_OpenXML__OptArgs, optArgs)
-	retVal := this.Call(0x00000817, []interface{}{filename}, optArgs...)
-	return NewWorkbook(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000817, []interface{}{filename}, optArgs...)
+	return NewWorkbook(retVal.IDispatch(), false, true)
 }
 
 var Workbooks_OpenXML_OptArgs= []string{
@@ -209,7 +215,7 @@ var Workbooks_OpenXML_OptArgs= []string{
 
 func (this *Workbooks) OpenXML(filename string, optArgs ...interface{}) *Workbook {
 	optArgs = ole.ProcessOptArgs(Workbooks_OpenXML_OptArgs, optArgs)
-	retVal := this.Call(0x000008e8, []interface{}{filename}, optArgs...)
-	return NewWorkbook(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000008e8, []interface{}{filename}, optArgs...)
+	return NewWorkbook(retVal.IDispatch(), false, true)
 }
 

@@ -16,6 +16,9 @@ type IRTDUpdateEvent struct {
 }
 
 func NewIRTDUpdateEvent(pDisp *win32.IDispatch, addRef bool, scoped bool) *IRTDUpdateEvent {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &IRTDUpdateEvent{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewIRTDUpdateEvent(pDisp *win32.IDispatch, addRef bool, scoped bool) *IRTDU
 }
 
 func IRTDUpdateEventFromVar(v ole.Variant) *IRTDUpdateEvent {
-	return NewIRTDUpdateEvent(v.PdispValVal(), false, false)
+	return NewIRTDUpdateEvent(v.IDispatch(), false, false)
 }
 
 func (this *IRTDUpdateEvent) IID() *syscall.GUID {
@@ -42,22 +45,21 @@ func (this *IRTDUpdateEvent) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *IRTDUpdateEvent) UpdateNotify()  {
-	retVal := this.Call(0x0000000a, nil)
+	retVal, _ := this.Call(0x0000000a, nil)
 	_= retVal
 }
 
 func (this *IRTDUpdateEvent) HeartbeatInterval() int32 {
-	retVal := this.PropGet(0x0000000b, nil)
+	retVal, _ := this.PropGet(0x0000000b, nil)
 	return retVal.LValVal()
 }
 
 func (this *IRTDUpdateEvent) SetHeartbeatInterval(rhs int32)  {
-	retVal := this.PropPut(0x0000000b, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000000b, []interface{}{rhs})
 }
 
 func (this *IRTDUpdateEvent) Disconnect()  {
-	retVal := this.Call(0x0000000c, nil)
+	retVal, _ := this.Call(0x0000000c, nil)
 	_= retVal
 }
 

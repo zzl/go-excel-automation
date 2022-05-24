@@ -16,6 +16,9 @@ type IColorScale struct {
 }
 
 func NewIColorScale(pUnk *win32.IUnknown, addRef bool, scoped bool) *IColorScale {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IColorScale)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IColorScale) IID() *syscall.GUID {
 func (this *IColorScale) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *IColorScale) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IColorScale) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IColorScale) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -75,9 +74,7 @@ func (this *IColorScale) GetStopIfTrue(rhs *win32.VARIANT_BOOL) com.Error {
 func (this *IColorScale) GetAppliesTo(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -144,9 +141,7 @@ func (this *IColorScale) SetScopeType(rhs int32) com.Error {
 func (this *IColorScale) GetColorScaleCriteria(rhs **ColorScaleCriteria) com.Error {
 	addr := (*this.LpVtbl)[24]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

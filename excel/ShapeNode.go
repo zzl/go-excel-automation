@@ -16,6 +16,9 @@ type ShapeNode struct {
 }
 
 func NewShapeNode(pDisp *win32.IDispatch, addRef bool, scoped bool) *ShapeNode {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &ShapeNode{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewShapeNode(pDisp *win32.IDispatch, addRef bool, scoped bool) *ShapeNode {
 }
 
 func ShapeNodeFromVar(v ole.Variant) *ShapeNode {
-	return NewShapeNode(v.PdispValVal(), false, false)
+	return NewShapeNode(v.IDispatch(), false, false)
 }
 
 func (this *ShapeNode) IID() *syscall.GUID {
@@ -42,33 +45,33 @@ func (this *ShapeNode) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *ShapeNode) Application() *ole.DispatchClass {
-	retVal := this.PropGet(0x60020000, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x60020000, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ShapeNode) Creator() int32 {
-	retVal := this.PropGet(0x60020001, nil)
+	retVal, _ := this.PropGet(0x60020001, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeNode) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000001, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000001, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ShapeNode) EditingType() int32 {
-	retVal := this.PropGet(0x00000064, nil)
+	retVal, _ := this.PropGet(0x00000064, nil)
 	return retVal.LValVal()
 }
 
 func (this *ShapeNode) Points() ole.Variant {
-	retVal := this.PropGet(0x00000065, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x00000065, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *ShapeNode) SegmentType() int32 {
-	retVal := this.PropGet(0x00000066, nil)
+	retVal, _ := this.PropGet(0x00000066, nil)
 	return retVal.LValVal()
 }
 

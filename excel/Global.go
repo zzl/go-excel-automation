@@ -16,6 +16,9 @@ type Global struct {
 }
 
 func NewGlobal(pDisp *win32.IDispatch, addRef bool, scoped bool) *Global {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Global{Global_{ole.OleClient{pDisp}}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewGlobal(pDisp *win32.IDispatch, addRef bool, scoped bool) *Global {
 }
 
 func NewGlobalFromVar(v ole.Variant, addRef bool, scoped bool) *Global {
-	return NewGlobal(v.PdispValVal(), addRef, scoped)
+	return NewGlobal(v.IDispatch(), addRef, scoped)
 }
 
 func NewGlobalInstance(scoped bool) (*Global, error) {

@@ -16,6 +16,9 @@ type IMenu struct {
 }
 
 func NewIMenu(pUnk *win32.IUnknown, addRef bool, scoped bool) *IMenu {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IMenu)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IMenu) IID() *syscall.GUID {
 func (this *IMenu) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *IMenu) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IMenu) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IMenu) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -93,9 +92,7 @@ func (this *IMenu) GetIndex(rhs *int32) com.Error {
 func (this *IMenu) GetMenuItems(rhs **MenuItems) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

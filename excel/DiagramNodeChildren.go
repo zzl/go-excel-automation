@@ -17,6 +17,9 @@ type DiagramNodeChildren struct {
 }
 
 func NewDiagramNodeChildren(pDisp *win32.IDispatch, addRef bool, scoped bool) *DiagramNodeChildren {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &DiagramNodeChildren{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewDiagramNodeChildren(pDisp *win32.IDispatch, addRef bool, scoped bool) *D
 }
 
 func DiagramNodeChildrenFromVar(v ole.Variant) *DiagramNodeChildren {
-	return NewDiagramNodeChildren(v.PdispValVal(), false, false)
+	return NewDiagramNodeChildren(v.IDispatch(), false, false)
 }
 
 func (this *DiagramNodeChildren) IID() *syscall.GUID {
@@ -43,17 +46,17 @@ func (this *DiagramNodeChildren) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *DiagramNodeChildren) Application() *ole.DispatchClass {
-	retVal := this.PropGet(0x60020000, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x60020000, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *DiagramNodeChildren) Creator() int32 {
-	retVal := this.PropGet(0x60020001, nil)
+	retVal, _ := this.PropGet(0x60020001, nil)
 	return retVal.LValVal()
 }
 
 func (this *DiagramNodeChildren) NewEnum_() *com.UnknownClass {
-	retVal := this.PropGet(-4, nil)
+	retVal, _ := this.PropGet(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 
@@ -79,37 +82,42 @@ func (this *DiagramNodeChildren) ForEach(action func(item *DiagramNode) bool) {
 }
 
 func (this *DiagramNodeChildren) Item(index interface{}) *DiagramNode {
-	retVal := this.Call(0x00000000, []interface{}{index})
-	return NewDiagramNode(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000000, []interface{}{index})
+	return NewDiagramNode(retVal.IDispatch(), false, true)
 }
 
-func (this *DiagramNodeChildren) AddNode(index interface{}, nodeType int32) *DiagramNode {
-	retVal := this.Call(0x0000000a, []interface{}{index, nodeType})
-	return NewDiagramNode(retVal.PdispValVal(), false, true)
+var DiagramNodeChildren_AddNode_OptArgs= []string{
+	"Index", "nodeType", 
+}
+
+func (this *DiagramNodeChildren) AddNode(optArgs ...interface{}) *DiagramNode {
+	optArgs = ole.ProcessOptArgs(DiagramNodeChildren_AddNode_OptArgs, optArgs)
+	retVal, _ := this.Call(0x0000000a, nil, optArgs...)
+	return NewDiagramNode(retVal.IDispatch(), false, true)
 }
 
 func (this *DiagramNodeChildren) SelectAll()  {
-	retVal := this.Call(0x0000000b, nil)
+	retVal, _ := this.Call(0x0000000b, nil)
 	_= retVal
 }
 
 func (this *DiagramNodeChildren) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000064, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000064, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *DiagramNodeChildren) Count() int32 {
-	retVal := this.PropGet(0x00000065, nil)
+	retVal, _ := this.PropGet(0x00000065, nil)
 	return retVal.LValVal()
 }
 
 func (this *DiagramNodeChildren) FirstChild() *DiagramNode {
-	retVal := this.PropGet(0x00000067, nil)
-	return NewDiagramNode(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000067, nil)
+	return NewDiagramNode(retVal.IDispatch(), false, true)
 }
 
 func (this *DiagramNodeChildren) LastChild() *DiagramNode {
-	retVal := this.PropGet(0x00000068, nil)
-	return NewDiagramNode(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000068, nil)
+	return NewDiagramNode(retVal.IDispatch(), false, true)
 }
 

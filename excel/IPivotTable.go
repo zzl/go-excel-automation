@@ -17,6 +17,9 @@ type IPivotTable struct {
 }
 
 func NewIPivotTable(pUnk *win32.IUnknown, addRef bool, scoped bool) *IPivotTable {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IPivotTable)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IPivotTable) IID() *syscall.GUID {
 func (this *IPivotTable) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IPivotTable) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPivotTable) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IPivotTable) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -61,12 +60,10 @@ func (this *IPivotTable) AddFields(rowFields interface{}, columnFields interface
 	return com.Error(ret)
 }
 
-func (this *IPivotTable) GetColumnFields(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IPivotTable) GetColumnFields(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -85,9 +82,7 @@ func (this *IPivotTable) SetColumnGrand(rhs bool) com.Error {
 func (this *IPivotTable) GetColumnRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -100,27 +95,21 @@ func (this *IPivotTable) ShowPages(pageField interface{}, rhs *ole.Variant) com.
 func (this *IPivotTable) GetDataBodyRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IPivotTable) GetDataFields(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IPivotTable) GetDataFields(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[17]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPivotTable) GetDataLabelRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[18]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -148,12 +137,10 @@ func (this *IPivotTable) SetHasAutoFormat(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPivotTable) GetHiddenFields(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IPivotTable) GetHiddenFields(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[23]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -181,39 +168,31 @@ func (this *IPivotTable) SetName(rhs string) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPivotTable) GetPageFields(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IPivotTable) GetPageFields(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[28]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPivotTable) GetPageRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[29]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPivotTable) GetPageRangeCells(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[30]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IPivotTable) PivotFields(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IPivotTable) PivotFields(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[31]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -235,12 +214,10 @@ func (this *IPivotTable) RefreshTable(rhs *win32.VARIANT_BOOL) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPivotTable) GetRowFields(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IPivotTable) GetRowFields(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[35]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -259,9 +236,7 @@ func (this *IPivotTable) SetRowGrand(rhs bool) com.Error {
 func (this *IPivotTable) GetRowRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[38]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -292,18 +267,14 @@ func (this *IPivotTable) SetSourceData(rhs interface{}) com.Error {
 func (this *IPivotTable) GetTableRange1(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPivotTable) GetTableRange2(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[44]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -319,12 +290,10 @@ func (this *IPivotTable) SetValue(rhs string) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPivotTable) GetVisibleFields(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IPivotTable) GetVisibleFields(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[47]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -343,9 +312,7 @@ func (this *IPivotTable) SetCacheIndex(rhs int32) com.Error {
 func (this *IPivotTable) CalculatedFields(rhs **CalculatedFields) com.Error {
 	addr := (*this.LpVtbl)[50]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -472,18 +439,14 @@ func (this *IPivotTable) SetNullString(rhs string) com.Error {
 func (this *IPivotTable) PivotCache(rhs **PivotCache) com.Error {
 	addr := (*this.LpVtbl)[71]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPivotTable) GetPivotFormulas(rhs **PivotFormulas) com.Error {
 	addr := (*this.LpVtbl)[72]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -646,9 +609,7 @@ func (this *IPivotTable) SetPrintTitles(rhs bool) com.Error {
 func (this *IPivotTable) GetCubeFields(rhs **CubeFields) com.Error {
 	addr := (*this.LpVtbl)[99]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -721,18 +682,14 @@ func (this *IPivotTable) SetPivotSelectionStandard(rhs string) com.Error {
 func (this *IPivotTable) GetPivotData(dataField interface{}, field1 interface{}, item1 interface{}, field2 interface{}, item2 interface{}, field3 interface{}, item3 interface{}, field4 interface{}, item4 interface{}, field5 interface{}, item5 interface{}, field6 interface{}, item6 interface{}, field7 interface{}, item7 interface{}, field8 interface{}, item8 interface{}, field9 interface{}, item9 interface{}, field10 interface{}, item10 interface{}, field11 interface{}, item11 interface{}, field12 interface{}, item12 interface{}, field13 interface{}, item13 interface{}, field14 interface{}, item14 interface{}, rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[111]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&dataField)), (uintptr)(unsafe.Pointer(&field1)), (uintptr)(unsafe.Pointer(&item1)), (uintptr)(unsafe.Pointer(&field2)), (uintptr)(unsafe.Pointer(&item2)), (uintptr)(unsafe.Pointer(&field3)), (uintptr)(unsafe.Pointer(&item3)), (uintptr)(unsafe.Pointer(&field4)), (uintptr)(unsafe.Pointer(&item4)), (uintptr)(unsafe.Pointer(&field5)), (uintptr)(unsafe.Pointer(&item5)), (uintptr)(unsafe.Pointer(&field6)), (uintptr)(unsafe.Pointer(&item6)), (uintptr)(unsafe.Pointer(&field7)), (uintptr)(unsafe.Pointer(&item7)), (uintptr)(unsafe.Pointer(&field8)), (uintptr)(unsafe.Pointer(&item8)), (uintptr)(unsafe.Pointer(&field9)), (uintptr)(unsafe.Pointer(&item9)), (uintptr)(unsafe.Pointer(&field10)), (uintptr)(unsafe.Pointer(&item10)), (uintptr)(unsafe.Pointer(&field11)), (uintptr)(unsafe.Pointer(&item11)), (uintptr)(unsafe.Pointer(&field12)), (uintptr)(unsafe.Pointer(&item12)), (uintptr)(unsafe.Pointer(&field13)), (uintptr)(unsafe.Pointer(&item13)), (uintptr)(unsafe.Pointer(&field14)), (uintptr)(unsafe.Pointer(&item14)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPivotTable) GetDataPivotField(rhs **PivotField) com.Error {
 	addr := (*this.LpVtbl)[112]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -748,12 +705,10 @@ func (this *IPivotTable) SetEnableDataValueEditing(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPivotTable) AddDataField(field *ole.DispatchClass, caption interface{}, function interface{}, rhs **PivotField) com.Error {
+func (this *IPivotTable) AddDataField(field *win32.IUnknown, caption interface{}, function interface{}, rhs **PivotField) com.Error {
 	addr := (*this.LpVtbl)[115]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(field)), (uintptr)(unsafe.Pointer(&caption)), (uintptr)(unsafe.Pointer(&function)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -778,9 +733,7 @@ func (this *IPivotTable) SetViewCalculatedMembers(rhs bool) com.Error {
 func (this *IPivotTable) GetCalculatedMembers(rhs **CalculatedMembers) com.Error {
 	addr := (*this.LpVtbl)[119]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -889,18 +842,14 @@ func (this *IPivotTable) SetShowCellBackgroundFromOLAP(rhs bool) com.Error {
 func (this *IPivotTable) GetPivotColumnAxis(rhs **PivotAxis) com.Error {
 	addr := (*this.LpVtbl)[137]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPivotTable) GetPivotRowAxis(rhs **PivotAxis) com.Error {
 	addr := (*this.LpVtbl)[138]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1009,9 +958,7 @@ func (this *IPivotTable) SubtotalLocation(location int32) com.Error {
 func (this *IPivotTable) GetActiveFilters(rhs **PivotFilters) com.Error {
 	addr := (*this.LpVtbl)[156]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -1288,18 +1235,14 @@ func (this *IPivotTable) RepeatAllLabels(repeat int32) com.Error {
 func (this *IPivotTable) GetChangeList(rhs **PivotTableChangeList) com.Error {
 	addr := (*this.LpVtbl)[202]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPivotTable) GetSlicers(rhs **Slicers) com.Error {
 	addr := (*this.LpVtbl)[203]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

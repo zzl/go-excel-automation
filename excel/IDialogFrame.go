@@ -17,6 +17,9 @@ type IDialogFrame struct {
 }
 
 func NewIDialogFrame(pUnk *win32.IUnknown, addRef bool, scoped bool) *IDialogFrame {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IDialogFrame)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IDialogFrame) IID() *syscall.GUID {
 func (this *IDialogFrame) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IDialogFrame) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDialogFrame) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IDialogFrame) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -224,9 +223,7 @@ func (this *IDialogFrame) Dummy25_()  {
 func (this *IDialogFrame) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[40]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -245,9 +242,7 @@ func (this *IDialogFrame) SetCaption(rhs string) com.Error {
 func (this *IDialogFrame) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

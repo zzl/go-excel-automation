@@ -17,6 +17,9 @@ type PivotFields struct {
 }
 
 func NewPivotFields(pDisp *win32.IDispatch, addRef bool, scoped bool) *PivotFields {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &PivotFields{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewPivotFields(pDisp *win32.IDispatch, addRef bool, scoped bool) *PivotFiel
 }
 
 func PivotFieldsFromVar(v ole.Variant) *PivotFields {
-	return NewPivotFields(v.PdispValVal(), false, false)
+	return NewPivotFields(v.IDispatch(), false, false)
 }
 
 func (this *PivotFields) IID() *syscall.GUID {
@@ -43,67 +46,67 @@ func (this *PivotFields) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *PivotFields) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *PivotFields) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *PivotFields) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *PivotFields) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *PivotFields) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *PivotFields) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *PivotFields) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *PivotFields) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *PivotFields) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *PivotFields) Parent() *PivotTable {
-	retVal := this.PropGet(0x00000096, nil)
-	return NewPivotTable(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return NewPivotTable(retVal.IDispatch(), false, true)
 }
 
 func (this *PivotFields) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
 func (this *PivotFields) Item(index interface{}) *ole.DispatchClass {
-	retVal := this.Call(0x000000aa, []interface{}{index})
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x000000aa, []interface{}{index})
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *PivotFields) NewEnum_() *com.UnknownClass {
-	retVal := this.Call(-4, nil)
+	retVal, _ := this.Call(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 

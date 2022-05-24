@@ -16,6 +16,9 @@ type IUsedObjects struct {
 }
 
 func NewIUsedObjects(pUnk *win32.IUnknown, addRef bool, scoped bool) *IUsedObjects {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IUsedObjects)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IUsedObjects) IID() *syscall.GUID {
 func (this *IUsedObjects) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *IUsedObjects) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IUsedObjects) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IUsedObjects) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -60,30 +59,24 @@ func (this *IUsedObjects) GetCount(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IUsedObjects) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IUsedObjects) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IUsedObjects) GetDefault_(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IUsedObjects) GetDefault_(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IUsedObjects) GetItem(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IUsedObjects) GetItem(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

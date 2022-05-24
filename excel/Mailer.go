@@ -18,6 +18,9 @@ type Mailer struct {
 }
 
 func NewMailer(pDisp *win32.IDispatch, addRef bool, scoped bool) *Mailer {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Mailer{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -29,7 +32,7 @@ func NewMailer(pDisp *win32.IDispatch, addRef bool, scoped bool) *Mailer {
 }
 
 func MailerFromVar(v ole.Variant) *Mailer {
-	return NewMailer(v.PdispValVal(), false, false)
+	return NewMailer(v.IDispatch(), false, false)
 }
 
 func (this *Mailer) IID() *syscall.GUID {
@@ -44,132 +47,126 @@ func (this *Mailer) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Mailer) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *Mailer) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Mailer) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Mailer) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *Mailer) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *Mailer) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *Mailer) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *Mailer) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *Mailer) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *Mailer) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Mailer) BCCRecipients() ole.Variant {
-	retVal := this.PropGet(0x000003d7, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x000003d7, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Mailer) SetBCCRecipients(rhs interface{})  {
-	retVal := this.PropPut(0x000003d7, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000003d7, []interface{}{rhs})
 }
 
 func (this *Mailer) CCRecipients() ole.Variant {
-	retVal := this.PropGet(0x000003d6, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x000003d6, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Mailer) SetCCRecipients(rhs interface{})  {
-	retVal := this.PropPut(0x000003d6, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000003d6, []interface{}{rhs})
 }
 
 func (this *Mailer) Enclosures() ole.Variant {
-	retVal := this.PropGet(0x000003d8, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x000003d8, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Mailer) SetEnclosures(rhs interface{})  {
-	retVal := this.PropPut(0x000003d8, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000003d8, []interface{}{rhs})
 }
 
 func (this *Mailer) Received() bool {
-	retVal := this.PropGet(0x000003da, nil)
+	retVal, _ := this.PropGet(0x000003da, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Mailer) SendDateTime() time.Time {
-	retVal := this.PropGet(0x000003db, nil)
+	retVal, _ := this.PropGet(0x000003db, nil)
 	return ole.Date(retVal.DateVal()).ToGoTime()
 }
 
 func (this *Mailer) Sender() string {
-	retVal := this.PropGet(0x000003dc, nil)
+	retVal, _ := this.PropGet(0x000003dc, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Mailer) Subject() string {
-	retVal := this.PropGet(0x000003b9, nil)
+	retVal, _ := this.PropGet(0x000003b9, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Mailer) SetSubject(rhs string)  {
-	retVal := this.PropPut(0x000003b9, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000003b9, []interface{}{rhs})
 }
 
 func (this *Mailer) ToRecipients() ole.Variant {
-	retVal := this.PropGet(0x000003d5, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x000003d5, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Mailer) SetToRecipients(rhs interface{})  {
-	retVal := this.PropPut(0x000003d5, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000003d5, []interface{}{rhs})
 }
 
 func (this *Mailer) WhichAddress() ole.Variant {
-	retVal := this.PropGet(0x000003ce, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x000003ce, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Mailer) SetWhichAddress(rhs interface{})  {
-	retVal := this.PropPut(0x000003ce, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000003ce, []interface{}{rhs})
 }
 

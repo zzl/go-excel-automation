@@ -17,6 +17,9 @@ type IShapeRange struct {
 }
 
 func NewIShapeRange(pUnk *win32.IUnknown, addRef bool, scoped bool) *IShapeRange {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IShapeRange)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IShapeRange) IID() *syscall.GUID {
 func (this *IShapeRange) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IShapeRange) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IShapeRange) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IShapeRange) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -64,27 +63,21 @@ func (this *IShapeRange) GetCount(rhs *int32) com.Error {
 func (this *IShapeRange) Item(index interface{}, rhs **Shape) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShapeRange) Default_(index interface{}, rhs **Shape) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IShapeRange) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IShapeRange) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -115,9 +108,7 @@ func (this *IShapeRange) Distribute(distributeCmd int32, relativeTo int32) com.E
 func (this *IShapeRange) Duplicate(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[18]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -148,9 +139,7 @@ func (this *IShapeRange) IncrementTop(increment float32) com.Error {
 func (this *IShapeRange) Group(rhs **Shape) com.Error {
 	addr := (*this.LpVtbl)[23]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -169,9 +158,7 @@ func (this *IShapeRange) RerouteConnections() com.Error {
 func (this *IShapeRange) Regroup(rhs **Shape) com.Error {
 	addr := (*this.LpVtbl)[26]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -202,9 +189,7 @@ func (this *IShapeRange) SetShapesDefaultProperties() com.Error {
 func (this *IShapeRange) Ungroup(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[31]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -217,18 +202,14 @@ func (this *IShapeRange) ZOrder(zorderCmd int32) com.Error {
 func (this *IShapeRange) GetAdjustments(rhs **Adjustments) com.Error {
 	addr := (*this.LpVtbl)[33]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShapeRange) GetTextFrame(rhs **TextFrame) com.Error {
 	addr := (*this.LpVtbl)[34]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -247,9 +228,7 @@ func (this *IShapeRange) SetAutoShapeType(rhs int32) com.Error {
 func (this *IShapeRange) GetCallout(rhs **CalloutFormat) com.Error {
 	addr := (*this.LpVtbl)[37]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -268,27 +247,21 @@ func (this *IShapeRange) GetConnector(rhs *int32) com.Error {
 func (this *IShapeRange) GetConnectorFormat(rhs **ConnectorFormat) com.Error {
 	addr := (*this.LpVtbl)[40]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShapeRange) GetFill(rhs **FillFormat) com.Error {
 	addr := (*this.LpVtbl)[41]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShapeRange) GetGroupItems(rhs **GroupShapes) com.Error {
 	addr := (*this.LpVtbl)[42]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -325,9 +298,7 @@ func (this *IShapeRange) SetLeft(rhs float32) com.Error {
 func (this *IShapeRange) GetLine(rhs **LineFormat) com.Error {
 	addr := (*this.LpVtbl)[48]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -358,9 +329,7 @@ func (this *IShapeRange) SetName(rhs string) com.Error {
 func (this *IShapeRange) GetNodes(rhs **ShapeNodes) com.Error {
 	addr := (*this.LpVtbl)[53]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -379,36 +348,28 @@ func (this *IShapeRange) SetRotation(rhs float32) com.Error {
 func (this *IShapeRange) GetPictureFormat(rhs **PictureFormat) com.Error {
 	addr := (*this.LpVtbl)[56]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShapeRange) GetShadow(rhs **ShadowFormat) com.Error {
 	addr := (*this.LpVtbl)[57]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShapeRange) GetTextEffect(rhs **TextEffectFormat) com.Error {
 	addr := (*this.LpVtbl)[58]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShapeRange) GetThreeD(rhs **ThreeDFormat) com.Error {
 	addr := (*this.LpVtbl)[59]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -499,9 +460,7 @@ func (this *IShapeRange) SetAlternativeText(rhs string) com.Error {
 func (this *IShapeRange) GetDiagramNode(rhs **DiagramNode) com.Error {
 	addr := (*this.LpVtbl)[74]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -514,9 +473,7 @@ func (this *IShapeRange) GetHasDiagramNode(rhs *int32) com.Error {
 func (this *IShapeRange) GetDiagram(rhs **Diagram) com.Error {
 	addr := (*this.LpVtbl)[76]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -535,18 +492,14 @@ func (this *IShapeRange) GetChild(rhs *int32) com.Error {
 func (this *IShapeRange) GetParentGroup(rhs **Shape) com.Error {
 	addr := (*this.LpVtbl)[79]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IShapeRange) GetCanvasItems(rhs **com.UnknownClass) com.Error {
+func (this *IShapeRange) GetCanvasItems(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[80]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -583,9 +536,7 @@ func (this *IShapeRange) CanvasCropBottom(increment float32) com.Error {
 func (this *IShapeRange) GetChart(rhs **Chart) com.Error {
 	addr := (*this.LpVtbl)[86]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -598,9 +549,7 @@ func (this *IShapeRange) GetHasChart(rhs *int32) com.Error {
 func (this *IShapeRange) GetTextFrame2(rhs **TextFrame2) com.Error {
 	addr := (*this.LpVtbl)[88]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -628,30 +577,24 @@ func (this *IShapeRange) SetBackgroundStyle(rhs int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IShapeRange) GetSoftEdge(rhs **com.UnknownClass) com.Error {
+func (this *IShapeRange) GetSoftEdge(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[93]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IShapeRange) GetGlow(rhs **com.UnknownClass) com.Error {
+func (this *IShapeRange) GetGlow(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[94]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IShapeRange) GetReflection(rhs **com.UnknownClass) com.Error {
+func (this *IShapeRange) GetReflection(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[95]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

@@ -17,6 +17,9 @@ type ICharts struct {
 }
 
 func NewICharts(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICharts {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICharts)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *ICharts) IID() *syscall.GUID {
 func (this *ICharts) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,21 +47,17 @@ func (this *ICharts) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ICharts) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *ICharts) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ICharts) Add(before interface{}, after interface{}, count interface{}, rhs **Chart) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&before)), (uintptr)(unsafe.Pointer(&after)), (uintptr)(unsafe.Pointer(&count)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -87,12 +84,10 @@ func (this *ICharts) Dummy7_()  {
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *ICharts) GetItem(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *ICharts) GetItem(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[15]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -102,12 +97,10 @@ func (this *ICharts) Move(before interface{}, after interface{}, lcid int32) com
 	return com.Error(ret)
 }
 
-func (this *ICharts) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *ICharts) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[17]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -132,18 +125,14 @@ func (this *ICharts) Select(replace interface{}, lcid int32) com.Error {
 func (this *ICharts) GetHPageBreaks(rhs **HPageBreaks) com.Error {
 	addr := (*this.LpVtbl)[21]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ICharts) GetVPageBreaks(rhs **VPageBreaks) com.Error {
 	addr := (*this.LpVtbl)[22]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -159,12 +148,10 @@ func (this *ICharts) SetVisible(lcid int32, rhs interface{}) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ICharts) GetDefault_(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *ICharts) GetDefault_(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[25]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

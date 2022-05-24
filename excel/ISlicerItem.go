@@ -17,6 +17,9 @@ type ISlicerItem struct {
 }
 
 func NewISlicerItem(pUnk *win32.IUnknown, addRef bool, scoped bool) *ISlicerItem {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ISlicerItem)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *ISlicerItem) IID() *syscall.GUID {
 func (this *ISlicerItem) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -49,9 +50,7 @@ func (this *ISlicerItem) GetCreator(rhs *int32) com.Error {
 func (this *ISlicerItem) GetParent(rhs **SlicerCache) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

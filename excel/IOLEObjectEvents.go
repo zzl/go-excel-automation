@@ -16,6 +16,9 @@ type IOLEObjectEvents struct {
 }
 
 func NewIOLEObjectEvents(pUnk *win32.IUnknown, addRef bool, scoped bool) *IOLEObjectEvents {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IOLEObjectEvents)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

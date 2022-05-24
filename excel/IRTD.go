@@ -16,6 +16,9 @@ type IRTD struct {
 }
 
 func NewIRTD(pUnk *win32.IUnknown, addRef bool, scoped bool) *IRTD {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IRTD)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

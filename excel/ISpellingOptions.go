@@ -16,6 +16,9 @@ type ISpellingOptions struct {
 }
 
 func NewISpellingOptions(pUnk *win32.IUnknown, addRef bool, scoped bool) *ISpellingOptions {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ISpellingOptions)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

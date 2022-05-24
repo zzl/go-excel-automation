@@ -17,6 +17,9 @@ type Protection struct {
 }
 
 func NewProtection(pDisp *win32.IDispatch, addRef bool, scoped bool) *Protection {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Protection{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewProtection(pDisp *win32.IDispatch, addRef bool, scoped bool) *Protection
 }
 
 func ProtectionFromVar(v ole.Variant) *Protection {
-	return NewProtection(v.PdispValVal(), false, false)
+	return NewProtection(v.IDispatch(), false, false)
 }
 
 func (this *Protection) IID() *syscall.GUID {
@@ -43,97 +46,97 @@ func (this *Protection) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Protection) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *Protection) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Protection) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Protection) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *Protection) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *Protection) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *Protection) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *Protection) AllowFormattingCells() bool {
-	retVal := this.PropGet(0x000007f0, nil)
+	retVal, _ := this.PropGet(0x000007f0, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Protection) AllowFormattingColumns() bool {
-	retVal := this.PropGet(0x000007f1, nil)
+	retVal, _ := this.PropGet(0x000007f1, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Protection) AllowFormattingRows() bool {
-	retVal := this.PropGet(0x000007f2, nil)
+	retVal, _ := this.PropGet(0x000007f2, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Protection) AllowInsertingColumns() bool {
-	retVal := this.PropGet(0x000007f3, nil)
+	retVal, _ := this.PropGet(0x000007f3, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Protection) AllowInsertingRows() bool {
-	retVal := this.PropGet(0x000007f4, nil)
+	retVal, _ := this.PropGet(0x000007f4, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Protection) AllowInsertingHyperlinks() bool {
-	retVal := this.PropGet(0x000007f5, nil)
+	retVal, _ := this.PropGet(0x000007f5, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Protection) AllowDeletingColumns() bool {
-	retVal := this.PropGet(0x000007f6, nil)
+	retVal, _ := this.PropGet(0x000007f6, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Protection) AllowDeletingRows() bool {
-	retVal := this.PropGet(0x000007f7, nil)
+	retVal, _ := this.PropGet(0x000007f7, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Protection) AllowSorting() bool {
-	retVal := this.PropGet(0x000007f8, nil)
+	retVal, _ := this.PropGet(0x000007f8, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Protection) AllowFiltering() bool {
-	retVal := this.PropGet(0x000007f9, nil)
+	retVal, _ := this.PropGet(0x000007f9, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Protection) AllowUsingPivotTables() bool {
-	retVal := this.PropGet(0x000007fa, nil)
+	retVal, _ := this.PropGet(0x000007fa, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Protection) AllowEditRanges() *AllowEditRanges {
-	retVal := this.PropGet(0x000008bc, nil)
-	return NewAllowEditRanges(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000008bc, nil)
+	return NewAllowEditRanges(retVal.IDispatch(), false, true)
 }
 

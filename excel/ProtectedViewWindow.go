@@ -17,6 +17,9 @@ type ProtectedViewWindow struct {
 }
 
 func NewProtectedViewWindow(pDisp *win32.IDispatch, addRef bool, scoped bool) *ProtectedViewWindow {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &ProtectedViewWindow{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewProtectedViewWindow(pDisp *win32.IDispatch, addRef bool, scoped bool) *P
 }
 
 func ProtectedViewWindowFromVar(v ole.Variant) *ProtectedViewWindow {
-	return NewProtectedViewWindow(v.PdispValVal(), false, false)
+	return NewProtectedViewWindow(v.IDispatch(), false, false)
 }
 
 func (this *ProtectedViewWindow) IID() *syscall.GUID {
@@ -43,147 +46,139 @@ func (this *ProtectedViewWindow) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *ProtectedViewWindow) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *ProtectedViewWindow) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *ProtectedViewWindow) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *ProtectedViewWindow) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *ProtectedViewWindow) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *ProtectedViewWindow) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *ProtectedViewWindow) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *ProtectedViewWindow) Default_() string {
-	retVal := this.PropGet(0x00000000, nil)
+	retVal, _ := this.PropGet(0x00000000, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *ProtectedViewWindow) Caption() string {
-	retVal := this.PropGet(0x0000008b, nil)
+	retVal, _ := this.PropGet(0x0000008b, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *ProtectedViewWindow) SetCaption(rhs string)  {
-	retVal := this.PropPut(0x0000008b, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
 func (this *ProtectedViewWindow) EnableResize() bool {
-	retVal := this.PropGet(0x000004a8, nil)
+	retVal, _ := this.PropGet(0x000004a8, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *ProtectedViewWindow) SetEnableResize(rhs bool)  {
-	retVal := this.PropPut(0x000004a8, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000004a8, []interface{}{rhs})
 }
 
 func (this *ProtectedViewWindow) Height() float64 {
-	retVal := this.PropGet(0x0000007b, nil)
+	retVal, _ := this.PropGet(0x0000007b, nil)
 	return retVal.DblValVal()
 }
 
 func (this *ProtectedViewWindow) SetHeight(rhs float64)  {
-	retVal := this.PropPut(0x0000007b, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
 func (this *ProtectedViewWindow) Left() float64 {
-	retVal := this.PropGet(0x0000007f, nil)
+	retVal, _ := this.PropGet(0x0000007f, nil)
 	return retVal.DblValVal()
 }
 
 func (this *ProtectedViewWindow) SetLeft(rhs float64)  {
-	retVal := this.PropPut(0x0000007f, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
 func (this *ProtectedViewWindow) Top() float64 {
-	retVal := this.PropGet(0x0000007e, nil)
+	retVal, _ := this.PropGet(0x0000007e, nil)
 	return retVal.DblValVal()
 }
 
 func (this *ProtectedViewWindow) SetTop(rhs float64)  {
-	retVal := this.PropPut(0x0000007e, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
 func (this *ProtectedViewWindow) Width() float64 {
-	retVal := this.PropGet(0x0000007a, nil)
+	retVal, _ := this.PropGet(0x0000007a, nil)
 	return retVal.DblValVal()
 }
 
 func (this *ProtectedViewWindow) SetWidth(rhs float64)  {
-	retVal := this.PropPut(0x0000007a, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
 func (this *ProtectedViewWindow) Visible() bool {
-	retVal := this.PropGet(0x0000022e, nil)
+	retVal, _ := this.PropGet(0x0000022e, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *ProtectedViewWindow) SetVisible(rhs bool)  {
-	retVal := this.PropPut(0x0000022e, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
 func (this *ProtectedViewWindow) SourceName() string {
-	retVal := this.PropGet(0x000002d1, nil)
+	retVal, _ := this.PropGet(0x000002d1, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *ProtectedViewWindow) SourcePath() string {
-	retVal := this.PropGet(0x00000bb1, nil)
+	retVal, _ := this.PropGet(0x00000bb1, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *ProtectedViewWindow) WindowState() int32 {
-	retVal := this.PropGet(0x0000018c, nil)
+	retVal, _ := this.PropGet(0x0000018c, nil)
 	return retVal.LValVal()
 }
 
 func (this *ProtectedViewWindow) SetWindowState(rhs int32)  {
-	retVal := this.PropPut(0x0000018c, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000018c, []interface{}{rhs})
 }
 
 func (this *ProtectedViewWindow) Workbook() *Workbook {
-	retVal := this.PropGet(0x000002f0, nil)
-	return NewWorkbook(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000002f0, nil)
+	return NewWorkbook(retVal.IDispatch(), false, true)
 }
 
 func (this *ProtectedViewWindow) Activate()  {
-	retVal := this.Call(0x00000130, nil)
+	retVal, _ := this.Call(0x00000130, nil)
 	_= retVal
 }
 
 func (this *ProtectedViewWindow) Close() bool {
-	retVal := this.Call(0x00000115, nil)
+	retVal, _ := this.Call(0x00000115, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
@@ -193,7 +188,7 @@ var ProtectedViewWindow_Edit_OptArgs= []string{
 
 func (this *ProtectedViewWindow) Edit(optArgs ...interface{}) *Workbook {
 	optArgs = ole.ProcessOptArgs(ProtectedViewWindow_Edit_OptArgs, optArgs)
-	retVal := this.Call(0x00000232, nil, optArgs...)
-	return NewWorkbook(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000232, nil, optArgs...)
+	return NewWorkbook(retVal.IDispatch(), false, true)
 }
 

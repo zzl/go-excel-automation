@@ -17,6 +17,9 @@ type IBorders struct {
 }
 
 func NewIBorders(pUnk *win32.IUnknown, addRef bool, scoped bool) *IBorders {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IBorders)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IBorders) IID() *syscall.GUID {
 func (this *IBorders) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IBorders) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IBorders) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IBorders) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -88,9 +87,7 @@ func (this *IBorders) GetCount(rhs *int32) com.Error {
 func (this *IBorders) GetItem(index int32, rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[15]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(index), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -106,12 +103,10 @@ func (this *IBorders) SetLineStyle(rhs interface{}) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IBorders) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IBorders) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[18]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -142,9 +137,7 @@ func (this *IBorders) SetWeight(rhs interface{}) com.Error {
 func (this *IBorders) GetDefault_(index int32, rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[23]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(index), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

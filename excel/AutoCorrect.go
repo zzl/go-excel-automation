@@ -17,6 +17,9 @@ type AutoCorrect struct {
 }
 
 func NewAutoCorrect(pDisp *win32.IDispatch, addRef bool, scoped bool) *AutoCorrect {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &AutoCorrect{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewAutoCorrect(pDisp *win32.IDispatch, addRef bool, scoped bool) *AutoCorre
 }
 
 func AutoCorrectFromVar(v ole.Variant) *AutoCorrect {
-	return NewAutoCorrect(v.PdispValVal(), false, false)
+	return NewAutoCorrect(v.IDispatch(), false, false)
 }
 
 func (this *AutoCorrect) IID() *syscall.GUID {
@@ -43,74 +46,73 @@ func (this *AutoCorrect) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *AutoCorrect) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *AutoCorrect) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *AutoCorrect) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *AutoCorrect) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *AutoCorrect) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *AutoCorrect) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *AutoCorrect) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *AutoCorrect) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *AutoCorrect) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *AutoCorrect) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *AutoCorrect) AddReplacement(what string, replacement string) ole.Variant {
-	retVal := this.Call(0x0000047a, []interface{}{what, replacement})
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x0000047a, []interface{}{what, replacement})
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *AutoCorrect) CapitalizeNamesOfDays() bool {
-	retVal := this.PropGet(0x0000047e, nil)
+	retVal, _ := this.PropGet(0x0000047e, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *AutoCorrect) SetCapitalizeNamesOfDays(rhs bool)  {
-	retVal := this.PropPut(0x0000047e, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000047e, []interface{}{rhs})
 }
 
 func (this *AutoCorrect) DeleteReplacement(what string) ole.Variant {
-	retVal := this.Call(0x0000047b, []interface{}{what})
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x0000047b, []interface{}{what})
+	com.AddToScope(retVal)
 	return *retVal
 }
 
@@ -120,88 +122,80 @@ var AutoCorrect_ReplacementList_OptArgs= []string{
 
 func (this *AutoCorrect) ReplacementList(optArgs ...interface{}) ole.Variant {
 	optArgs = ole.ProcessOptArgs(AutoCorrect_ReplacementList_OptArgs, optArgs)
-	retVal := this.PropGet(0x0000047f, nil, optArgs...)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x0000047f, nil, optArgs...)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 var AutoCorrect_SetReplacementList_OptArgs= []string{
-	"rhs", 
+	"Index", 
 }
 
-func (this *AutoCorrect) SetReplacementList(index interface{}, optArgs ...interface{})  {
+func (this *AutoCorrect) SetReplacementList(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(AutoCorrect_SetReplacementList_OptArgs, optArgs)
-	retVal := this.PropPut(0x0000047f, []interface{}{index}, optArgs...)
-	_= retVal
+	_ = this.PropPut(0x0000047f, nil, optArgs...)
 }
 
 func (this *AutoCorrect) ReplaceText() bool {
-	retVal := this.PropGet(0x0000047c, nil)
+	retVal, _ := this.PropGet(0x0000047c, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *AutoCorrect) SetReplaceText(rhs bool)  {
-	retVal := this.PropPut(0x0000047c, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000047c, []interface{}{rhs})
 }
 
 func (this *AutoCorrect) TwoInitialCapitals() bool {
-	retVal := this.PropGet(0x0000047d, nil)
+	retVal, _ := this.PropGet(0x0000047d, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *AutoCorrect) SetTwoInitialCapitals(rhs bool)  {
-	retVal := this.PropPut(0x0000047d, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000047d, []interface{}{rhs})
 }
 
 func (this *AutoCorrect) CorrectSentenceCap() bool {
-	retVal := this.PropGet(0x00000653, nil)
+	retVal, _ := this.PropGet(0x00000653, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *AutoCorrect) SetCorrectSentenceCap(rhs bool)  {
-	retVal := this.PropPut(0x00000653, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000653, []interface{}{rhs})
 }
 
 func (this *AutoCorrect) CorrectCapsLock() bool {
-	retVal := this.PropGet(0x00000654, nil)
+	retVal, _ := this.PropGet(0x00000654, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *AutoCorrect) SetCorrectCapsLock(rhs bool)  {
-	retVal := this.PropPut(0x00000654, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000654, []interface{}{rhs})
 }
 
 func (this *AutoCorrect) DisplayAutoCorrectOptions() bool {
-	retVal := this.PropGet(0x00000786, nil)
+	retVal, _ := this.PropGet(0x00000786, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *AutoCorrect) SetDisplayAutoCorrectOptions(rhs bool)  {
-	retVal := this.PropPut(0x00000786, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000786, []interface{}{rhs})
 }
 
 func (this *AutoCorrect) AutoExpandListRange() bool {
-	retVal := this.PropGet(0x000008f6, nil)
+	retVal, _ := this.PropGet(0x000008f6, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *AutoCorrect) SetAutoExpandListRange(rhs bool)  {
-	retVal := this.PropPut(0x000008f6, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000008f6, []interface{}{rhs})
 }
 
 func (this *AutoCorrect) AutoFillFormulasInLists() bool {
-	retVal := this.PropGet(0x00000a52, nil)
+	retVal, _ := this.PropGet(0x00000a52, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *AutoCorrect) SetAutoFillFormulasInLists(rhs bool)  {
-	retVal := this.PropPut(0x00000a52, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a52, []interface{}{rhs})
 }
 

@@ -16,6 +16,9 @@ type ITableStyle struct {
 }
 
 func NewITableStyle(pUnk *win32.IUnknown, addRef bool, scoped bool) *ITableStyle {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ITableStyle)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *ITableStyle) IID() *syscall.GUID {
 func (this *ITableStyle) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *ITableStyle) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ITableStyle) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *ITableStyle) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -81,9 +80,7 @@ func (this *ITableStyle) GetBuiltIn(rhs *win32.VARIANT_BOOL) com.Error {
 func (this *ITableStyle) GetTableStyleElements(rhs **TableStyleElements) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -120,9 +117,7 @@ func (this *ITableStyle) Delete() com.Error {
 func (this *ITableStyle) Duplicate(newTableStyleName interface{}, rhs **TableStyle) com.Error {
 	addr := (*this.LpVtbl)[20]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&newTableStyleName)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

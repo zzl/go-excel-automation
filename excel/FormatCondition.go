@@ -17,6 +17,9 @@ type FormatCondition struct {
 }
 
 func NewFormatCondition(pDisp *win32.IDispatch, addRef bool, scoped bool) *FormatCondition {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &FormatCondition{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewFormatCondition(pDisp *win32.IDispatch, addRef bool, scoped bool) *Forma
 }
 
 func FormatConditionFromVar(v ole.Variant) *FormatCondition {
-	return NewFormatCondition(v.PdispValVal(), false, false)
+	return NewFormatCondition(v.IDispatch(), false, false)
 }
 
 func (this *FormatCondition) IID() *syscall.GUID {
@@ -43,53 +46,53 @@ func (this *FormatCondition) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *FormatCondition) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *FormatCondition) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *FormatCondition) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *FormatCondition) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *FormatCondition) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *FormatCondition) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *FormatCondition) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *FormatCondition) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *FormatCondition) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *FormatCondition) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var FormatCondition_Modify__OptArgs= []string{
@@ -98,47 +101,47 @@ var FormatCondition_Modify__OptArgs= []string{
 
 func (this *FormatCondition) Modify_(type_ int32, optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(FormatCondition_Modify__OptArgs, optArgs)
-	retVal := this.Call(0x00000a3f, []interface{}{type_}, optArgs...)
+	retVal, _ := this.Call(0x00000a3f, []interface{}{type_}, optArgs...)
 	_= retVal
 }
 
 func (this *FormatCondition) Type() int32 {
-	retVal := this.PropGet(0x0000006c, nil)
+	retVal, _ := this.PropGet(0x0000006c, nil)
 	return retVal.LValVal()
 }
 
 func (this *FormatCondition) Operator() int32 {
-	retVal := this.PropGet(0x0000031d, nil)
+	retVal, _ := this.PropGet(0x0000031d, nil)
 	return retVal.LValVal()
 }
 
 func (this *FormatCondition) Formula1() string {
-	retVal := this.PropGet(0x0000062b, nil)
+	retVal, _ := this.PropGet(0x0000062b, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *FormatCondition) Formula2() string {
-	retVal := this.PropGet(0x0000062c, nil)
+	retVal, _ := this.PropGet(0x0000062c, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *FormatCondition) Interior() *Interior {
-	retVal := this.PropGet(0x00000081, nil)
-	return NewInterior(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000081, nil)
+	return NewInterior(retVal.IDispatch(), false, true)
 }
 
 func (this *FormatCondition) Borders() *Borders {
-	retVal := this.PropGet(0x000001b3, nil)
-	return NewBorders(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000001b3, nil)
+	return NewBorders(retVal.IDispatch(), false, true)
 }
 
 func (this *FormatCondition) Font() *Font {
-	retVal := this.PropGet(0x00000092, nil)
-	return NewFont(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000092, nil)
+	return NewFont(retVal.IDispatch(), false, true)
 }
 
 func (this *FormatCondition) Delete()  {
-	retVal := this.Call(0x00000075, nil)
+	retVal, _ := this.Call(0x00000075, nil)
 	_= retVal
 }
 
@@ -148,103 +151,96 @@ var FormatCondition_Modify_OptArgs= []string{
 
 func (this *FormatCondition) Modify(type_ int32, optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(FormatCondition_Modify_OptArgs, optArgs)
-	retVal := this.Call(0x0000062d, []interface{}{type_}, optArgs...)
+	retVal, _ := this.Call(0x0000062d, []interface{}{type_}, optArgs...)
 	_= retVal
 }
 
 func (this *FormatCondition) Text() string {
-	retVal := this.PropGet(0x0000008a, nil)
+	retVal, _ := this.PropGet(0x0000008a, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *FormatCondition) SetText(rhs string)  {
-	retVal := this.PropPut(0x0000008a, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
 func (this *FormatCondition) TextOperator() int32 {
-	retVal := this.PropGet(0x00000a35, nil)
+	retVal, _ := this.PropGet(0x00000a35, nil)
 	return retVal.LValVal()
 }
 
 func (this *FormatCondition) SetTextOperator(rhs int32)  {
-	retVal := this.PropPut(0x00000a35, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a35, []interface{}{rhs})
 }
 
 func (this *FormatCondition) DateOperator() int32 {
-	retVal := this.PropGet(0x00000a36, nil)
+	retVal, _ := this.PropGet(0x00000a36, nil)
 	return retVal.LValVal()
 }
 
 func (this *FormatCondition) SetDateOperator(rhs int32)  {
-	retVal := this.PropPut(0x00000a36, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a36, []interface{}{rhs})
 }
 
 func (this *FormatCondition) NumberFormat() ole.Variant {
-	retVal := this.PropGet(0x000000c1, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x000000c1, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *FormatCondition) SetNumberFormat(rhs interface{})  {
-	retVal := this.PropPut(0x000000c1, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000000c1, []interface{}{rhs})
 }
 
 func (this *FormatCondition) Priority() int32 {
-	retVal := this.PropGet(0x000003d9, nil)
+	retVal, _ := this.PropGet(0x000003d9, nil)
 	return retVal.LValVal()
 }
 
 func (this *FormatCondition) SetPriority(rhs int32)  {
-	retVal := this.PropPut(0x000003d9, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000003d9, []interface{}{rhs})
 }
 
 func (this *FormatCondition) StopIfTrue() bool {
-	retVal := this.PropGet(0x00000a41, nil)
+	retVal, _ := this.PropGet(0x00000a41, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *FormatCondition) SetStopIfTrue(rhs bool)  {
-	retVal := this.PropPut(0x00000a41, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a41, []interface{}{rhs})
 }
 
 func (this *FormatCondition) AppliesTo() *Range {
-	retVal := this.PropGet(0x00000a42, nil)
-	return NewRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000a42, nil)
+	return NewRange(retVal.IDispatch(), false, true)
 }
 
 func (this *FormatCondition) ModifyAppliesToRange(range_ *Range)  {
-	retVal := this.Call(0x00000a43, []interface{}{range_})
+	retVal, _ := this.Call(0x00000a43, []interface{}{range_})
 	_= retVal
 }
 
 func (this *FormatCondition) SetFirstPriority()  {
-	retVal := this.Call(0x00000a45, nil)
+	retVal, _ := this.Call(0x00000a45, nil)
 	_= retVal
 }
 
 func (this *FormatCondition) SetLastPriority()  {
-	retVal := this.Call(0x00000a46, nil)
+	retVal, _ := this.Call(0x00000a46, nil)
 	_= retVal
 }
 
 func (this *FormatCondition) PTCondition() bool {
-	retVal := this.PropGet(0x00000a47, nil)
+	retVal, _ := this.PropGet(0x00000a47, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *FormatCondition) ScopeType() int32 {
-	retVal := this.PropGet(0x00000a37, nil)
+	retVal, _ := this.PropGet(0x00000a37, nil)
 	return retVal.LValVal()
 }
 
 func (this *FormatCondition) SetScopeType(rhs int32)  {
-	retVal := this.PropPut(0x00000a37, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a37, []interface{}{rhs})
 }
 

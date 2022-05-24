@@ -16,6 +16,9 @@ type IAllowEditRanges struct {
 }
 
 func NewIAllowEditRanges(pUnk *win32.IUnknown, addRef bool, scoped bool) *IAllowEditRanges {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IAllowEditRanges)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -39,36 +42,28 @@ func (this *IAllowEditRanges) GetCount(rhs *int32) com.Error {
 func (this *IAllowEditRanges) GetItem(index interface{}, rhs **AllowEditRange) com.Error {
 	addr := (*this.LpVtbl)[8]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IAllowEditRanges) Add(title string, range_ *Range, password interface{}, rhs **AllowEditRange) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(title)), uintptr(unsafe.Pointer(range_)), (uintptr)(unsafe.Pointer(&password)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IAllowEditRanges) GetDefault_(index interface{}, rhs **AllowEditRange) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IAllowEditRanges) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IAllowEditRanges) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

@@ -16,6 +16,9 @@ type IDocEvents struct {
 }
 
 func NewIDocEvents(pUnk *win32.IUnknown, addRef bool, scoped bool) *IDocEvents {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IDocEvents)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

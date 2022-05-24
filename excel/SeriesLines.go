@@ -17,6 +17,9 @@ type SeriesLines struct {
 }
 
 func NewSeriesLines(pDisp *win32.IDispatch, addRef bool, scoped bool) *SeriesLines {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &SeriesLines{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewSeriesLines(pDisp *win32.IDispatch, addRef bool, scoped bool) *SeriesLin
 }
 
 func SeriesLinesFromVar(v ole.Variant) *SeriesLines {
-	return NewSeriesLines(v.PdispValVal(), false, false)
+	return NewSeriesLines(v.IDispatch(), false, false)
 }
 
 func (this *SeriesLines) IID() *syscall.GUID {
@@ -43,79 +46,79 @@ func (this *SeriesLines) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *SeriesLines) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *SeriesLines) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *SeriesLines) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *SeriesLines) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *SeriesLines) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *SeriesLines) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *SeriesLines) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *SeriesLines) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *SeriesLines) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *SeriesLines) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *SeriesLines) Name() string {
-	retVal := this.PropGet(0x0000006e, nil)
+	retVal, _ := this.PropGet(0x0000006e, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *SeriesLines) Select() ole.Variant {
-	retVal := this.Call(0x000000eb, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x000000eb, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *SeriesLines) Border() *Border {
-	retVal := this.PropGet(0x00000080, nil)
-	return NewBorder(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000080, nil)
+	return NewBorder(retVal.IDispatch(), false, true)
 }
 
 func (this *SeriesLines) Delete() ole.Variant {
-	retVal := this.Call(0x00000075, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x00000075, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *SeriesLines) Format() *ChartFormat {
-	retVal := this.PropGet(0x00000074, nil)
-	return NewChartFormat(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000074, nil)
+	return NewChartFormat(retVal.IDispatch(), false, true)
 }
 

@@ -17,6 +17,9 @@ type ITrendline struct {
 }
 
 func NewITrendline(pUnk *win32.IUnknown, addRef bool, scoped bool) *ITrendline {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ITrendline)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *ITrendline) IID() *syscall.GUID {
 func (this *ITrendline) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *ITrendline) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ITrendline) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *ITrendline) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -70,9 +69,7 @@ func (this *ITrendline) SetBackward(rhs int32) com.Error {
 func (this *ITrendline) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -85,9 +82,7 @@ func (this *ITrendline) ClearFormats(rhs *ole.Variant) com.Error {
 func (this *ITrendline) GetDataLabel(rhs **DataLabel) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -256,9 +251,7 @@ func (this *ITrendline) SetForward2(rhs float64) com.Error {
 func (this *ITrendline) GetFormat(rhs **ChartFormat) com.Error {
 	addr := (*this.LpVtbl)[42]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

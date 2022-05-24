@@ -17,6 +17,9 @@ type IIconSetCondition struct {
 }
 
 func NewIIconSetCondition(pUnk *win32.IUnknown, addRef bool, scoped bool) *IIconSetCondition {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IIconSetCondition)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IIconSetCondition) IID() *syscall.GUID {
 func (this *IIconSetCondition) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IIconSetCondition) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IIconSetCondition) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IIconSetCondition) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -76,9 +75,7 @@ func (this *IIconSetCondition) GetStopIfTrue(rhs *win32.VARIANT_BOOL) com.Error 
 func (this *IIconSetCondition) GetAppliesTo(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -193,9 +190,7 @@ func (this *IIconSetCondition) SetIconSet(rhs interface{}) com.Error {
 func (this *IIconSetCondition) GetIconCriteria(rhs **IconCriteria) com.Error {
 	addr := (*this.LpVtbl)[32]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

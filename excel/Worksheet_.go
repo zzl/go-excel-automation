@@ -16,6 +16,9 @@ type Worksheet_ struct {
 }
 
 func NewWorksheet_(pDisp *win32.IDispatch, addRef bool, scoped bool) *Worksheet_ {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Worksheet_{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewWorksheet_(pDisp *win32.IDispatch, addRef bool, scoped bool) *Worksheet_
 }
 
 func Worksheet_FromVar(v ole.Variant) *Worksheet_ {
-	return NewWorksheet_(v.PdispValVal(), false, false)
+	return NewWorksheet_(v.IDispatch(), false, false)
 }
 
 func (this *Worksheet_) IID() *syscall.GUID {
@@ -42,22 +45,22 @@ func (this *Worksheet_) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Worksheet_) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *Worksheet_) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) Activate()  {
-	retVal := this.Call(0x00000130, nil)
+	retVal, _ := this.Call(0x00000130, nil)
 	_= retVal
 }
 
@@ -67,32 +70,31 @@ var Worksheet__Copy_OptArgs= []string{
 
 func (this *Worksheet_) Copy(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__Copy_OptArgs, optArgs)
-	retVal := this.Call(0x00000227, nil, optArgs...)
+	retVal, _ := this.Call(0x00000227, nil, optArgs...)
 	_= retVal
 }
 
 func (this *Worksheet_) Delete()  {
-	retVal := this.Call(0x00000075, nil)
+	retVal, _ := this.Call(0x00000075, nil)
 	_= retVal
 }
 
 func (this *Worksheet_) CodeName() string {
-	retVal := this.PropGet(0x0000055d, nil)
+	retVal, _ := this.PropGet(0x0000055d, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Worksheet_) CodeName_() string {
-	retVal := this.PropGet(-2147418112, nil)
+	retVal, _ := this.PropGet(-2147418112, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Worksheet_) SetCodeName_(rhs string)  {
-	retVal := this.PropPut(-2147418112, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(-2147418112, []interface{}{rhs})
 }
 
 func (this *Worksheet_) Index() int32 {
-	retVal := this.PropGet(0x000001e6, nil)
+	retVal, _ := this.PropGet(0x000001e6, nil)
 	return retVal.LValVal()
 }
 
@@ -102,63 +104,59 @@ var Worksheet__Move_OptArgs= []string{
 
 func (this *Worksheet_) Move(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__Move_OptArgs, optArgs)
-	retVal := this.Call(0x0000027d, nil, optArgs...)
+	retVal, _ := this.Call(0x0000027d, nil, optArgs...)
 	_= retVal
 }
 
 func (this *Worksheet_) Name() string {
-	retVal := this.PropGet(0x0000006e, nil)
+	retVal, _ := this.PropGet(0x0000006e, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Worksheet_) SetName(rhs string)  {
-	retVal := this.PropPut(0x0000006e, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
 func (this *Worksheet_) Next() *ole.DispatchClass {
-	retVal := this.PropGet(0x000001f6, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x000001f6, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) OnDoubleClick() string {
-	retVal := this.PropGet(0x00000274, nil)
+	retVal, _ := this.PropGet(0x00000274, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Worksheet_) SetOnDoubleClick(rhs string)  {
-	retVal := this.PropPut(0x00000274, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000274, []interface{}{rhs})
 }
 
 func (this *Worksheet_) OnSheetActivate() string {
-	retVal := this.PropGet(0x00000407, nil)
+	retVal, _ := this.PropGet(0x00000407, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Worksheet_) SetOnSheetActivate(rhs string)  {
-	retVal := this.PropPut(0x00000407, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000407, []interface{}{rhs})
 }
 
 func (this *Worksheet_) OnSheetDeactivate() string {
-	retVal := this.PropGet(0x00000439, nil)
+	retVal, _ := this.PropGet(0x00000439, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Worksheet_) SetOnSheetDeactivate(rhs string)  {
-	retVal := this.PropPut(0x00000439, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000439, []interface{}{rhs})
 }
 
 func (this *Worksheet_) PageSetup() *PageSetup {
-	retVal := this.PropGet(0x000003e6, nil)
-	return NewPageSetup(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000003e6, nil)
+	return NewPageSetup(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) Previous() *ole.DispatchClass {
-	retVal := this.PropGet(0x000001f7, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x000001f7, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__PrintOut___OptArgs= []string{
@@ -168,7 +166,7 @@ var Worksheet__PrintOut___OptArgs= []string{
 
 func (this *Worksheet_) PrintOut__(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__PrintOut___OptArgs, optArgs)
-	retVal := this.Call(0x00000389, nil, optArgs...)
+	retVal, _ := this.Call(0x00000389, nil, optArgs...)
 	_= retVal
 }
 
@@ -178,7 +176,7 @@ var Worksheet__PrintPreview_OptArgs= []string{
 
 func (this *Worksheet_) PrintPreview(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__PrintPreview_OptArgs, optArgs)
-	retVal := this.Call(0x00000119, nil, optArgs...)
+	retVal, _ := this.Call(0x00000119, nil, optArgs...)
 	_= retVal
 }
 
@@ -188,27 +186,27 @@ var Worksheet__Protect__OptArgs= []string{
 
 func (this *Worksheet_) Protect_(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__Protect__OptArgs, optArgs)
-	retVal := this.Call(0x0000011a, nil, optArgs...)
+	retVal, _ := this.Call(0x0000011a, nil, optArgs...)
 	_= retVal
 }
 
 func (this *Worksheet_) ProtectContents() bool {
-	retVal := this.PropGet(0x00000124, nil)
+	retVal, _ := this.PropGet(0x00000124, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) ProtectDrawingObjects() bool {
-	retVal := this.PropGet(0x00000125, nil)
+	retVal, _ := this.PropGet(0x00000125, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) ProtectionMode() bool {
-	retVal := this.PropGet(0x00000487, nil)
+	retVal, _ := this.PropGet(0x00000487, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) ProtectScenarios() bool {
-	retVal := this.PropGet(0x00000126, nil)
+	retVal, _ := this.PropGet(0x00000126, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
@@ -219,7 +217,7 @@ var Worksheet__SaveAs__OptArgs= []string{
 
 func (this *Worksheet_) SaveAs_(filename string, optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__SaveAs__OptArgs, optArgs)
-	retVal := this.Call(0x0000011c, []interface{}{filename}, optArgs...)
+	retVal, _ := this.Call(0x0000011c, []interface{}{filename}, optArgs...)
 	_= retVal
 }
 
@@ -229,7 +227,7 @@ var Worksheet__Select_OptArgs= []string{
 
 func (this *Worksheet_) Select(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__Select_OptArgs, optArgs)
-	retVal := this.Call(0x000000eb, nil, optArgs...)
+	retVal, _ := this.Call(0x000000eb, nil, optArgs...)
 	_= retVal
 }
 
@@ -239,33 +237,31 @@ var Worksheet__Unprotect_OptArgs= []string{
 
 func (this *Worksheet_) Unprotect(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__Unprotect_OptArgs, optArgs)
-	retVal := this.Call(0x0000011d, nil, optArgs...)
+	retVal, _ := this.Call(0x0000011d, nil, optArgs...)
 	_= retVal
 }
 
 func (this *Worksheet_) Visible() int32 {
-	retVal := this.PropGet(0x0000022e, nil)
+	retVal, _ := this.PropGet(0x0000022e, nil)
 	return retVal.LValVal()
 }
 
 func (this *Worksheet_) SetVisible(rhs int32)  {
-	retVal := this.PropPut(0x0000022e, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
 func (this *Worksheet_) Shapes() *Shapes {
-	retVal := this.PropGet(0x00000561, nil)
-	return NewShapes(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000561, nil)
+	return NewShapes(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) TransitionExpEval() bool {
-	retVal := this.PropGet(0x00000191, nil)
+	retVal, _ := this.PropGet(0x00000191, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) SetTransitionExpEval(rhs bool)  {
-	retVal := this.PropPut(0x00000191, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000191, []interface{}{rhs})
 }
 
 var Worksheet__Arcs_OptArgs= []string{
@@ -274,22 +270,21 @@ var Worksheet__Arcs_OptArgs= []string{
 
 func (this *Worksheet_) Arcs(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__Arcs_OptArgs, optArgs)
-	retVal := this.Call(0x000002f8, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x000002f8, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) AutoFilterMode() bool {
-	retVal := this.PropGet(0x00000318, nil)
+	retVal, _ := this.PropGet(0x00000318, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) SetAutoFilterMode(rhs bool)  {
-	retVal := this.PropPut(0x00000318, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000318, []interface{}{rhs})
 }
 
 func (this *Worksheet_) SetBackgroundPicture(filename string)  {
-	retVal := this.Call(0x000004a4, []interface{}{filename})
+	retVal, _ := this.Call(0x000004a4, []interface{}{filename})
 	_= retVal
 }
 
@@ -299,28 +294,27 @@ var Worksheet__Buttons_OptArgs= []string{
 
 func (this *Worksheet_) Buttons(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__Buttons_OptArgs, optArgs)
-	retVal := this.Call(0x0000022d, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x0000022d, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) Calculate()  {
-	retVal := this.Call(0x00000117, nil)
+	retVal, _ := this.Call(0x00000117, nil)
 	_= retVal
 }
 
 func (this *Worksheet_) EnableCalculation() bool {
-	retVal := this.PropGet(0x00000590, nil)
+	retVal, _ := this.PropGet(0x00000590, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) SetEnableCalculation(rhs bool)  {
-	retVal := this.PropPut(0x00000590, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000590, []interface{}{rhs})
 }
 
 func (this *Worksheet_) Cells() *Range {
-	retVal := this.PropGet(0x000000ee, nil)
-	return NewRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000000ee, nil)
+	return NewRange(retVal.IDispatch(), false, true)
 }
 
 var Worksheet__ChartObjects_OptArgs= []string{
@@ -329,8 +323,8 @@ var Worksheet__ChartObjects_OptArgs= []string{
 
 func (this *Worksheet_) ChartObjects(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__ChartObjects_OptArgs, optArgs)
-	retVal := this.Call(0x00000424, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000424, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__CheckBoxes_OptArgs= []string{
@@ -339,8 +333,8 @@ var Worksheet__CheckBoxes_OptArgs= []string{
 
 func (this *Worksheet_) CheckBoxes(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__CheckBoxes_OptArgs, optArgs)
-	retVal := this.Call(0x00000338, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000338, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__CheckSpelling_OptArgs= []string{
@@ -349,50 +343,49 @@ var Worksheet__CheckSpelling_OptArgs= []string{
 
 func (this *Worksheet_) CheckSpelling(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__CheckSpelling_OptArgs, optArgs)
-	retVal := this.Call(0x000001f9, nil, optArgs...)
+	retVal, _ := this.Call(0x000001f9, nil, optArgs...)
 	_= retVal
 }
 
 func (this *Worksheet_) CircularReference() *Range {
-	retVal := this.PropGet(0x0000042d, nil)
-	return NewRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000042d, nil)
+	return NewRange(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) ClearArrows()  {
-	retVal := this.Call(0x000003ca, nil)
+	retVal, _ := this.Call(0x000003ca, nil)
 	_= retVal
 }
 
 func (this *Worksheet_) Columns() *Range {
-	retVal := this.PropGet(0x000000f1, nil)
-	return NewRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000000f1, nil)
+	return NewRange(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) ConsolidationFunction() int32 {
-	retVal := this.PropGet(0x00000315, nil)
+	retVal, _ := this.PropGet(0x00000315, nil)
 	return retVal.LValVal()
 }
 
 func (this *Worksheet_) ConsolidationOptions() ole.Variant {
-	retVal := this.PropGet(0x00000316, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x00000316, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Worksheet_) ConsolidationSources() ole.Variant {
-	retVal := this.PropGet(0x00000317, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x00000317, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Worksheet_) DisplayAutomaticPageBreaks() bool {
-	retVal := this.PropGet(0x00000283, nil)
+	retVal, _ := this.PropGet(0x00000283, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) SetDisplayAutomaticPageBreaks(rhs bool)  {
-	retVal := this.PropPut(0x00000283, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000283, []interface{}{rhs})
 }
 
 var Worksheet__Drawings_OptArgs= []string{
@@ -401,8 +394,8 @@ var Worksheet__Drawings_OptArgs= []string{
 
 func (this *Worksheet_) Drawings(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__Drawings_OptArgs, optArgs)
-	retVal := this.Call(0x00000304, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000304, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__DrawingObjects_OptArgs= []string{
@@ -411,8 +404,8 @@ var Worksheet__DrawingObjects_OptArgs= []string{
 
 func (this *Worksheet_) DrawingObjects(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__DrawingObjects_OptArgs, optArgs)
-	retVal := this.Call(0x00000058, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000058, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__DropDowns_OptArgs= []string{
@@ -421,69 +414,65 @@ var Worksheet__DropDowns_OptArgs= []string{
 
 func (this *Worksheet_) DropDowns(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__DropDowns_OptArgs, optArgs)
-	retVal := this.Call(0x00000344, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000344, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) EnableAutoFilter() bool {
-	retVal := this.PropGet(0x00000484, nil)
+	retVal, _ := this.PropGet(0x00000484, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) SetEnableAutoFilter(rhs bool)  {
-	retVal := this.PropPut(0x00000484, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000484, []interface{}{rhs})
 }
 
 func (this *Worksheet_) EnableSelection() int32 {
-	retVal := this.PropGet(0x00000591, nil)
+	retVal, _ := this.PropGet(0x00000591, nil)
 	return retVal.LValVal()
 }
 
 func (this *Worksheet_) SetEnableSelection(rhs int32)  {
-	retVal := this.PropPut(0x00000591, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000591, []interface{}{rhs})
 }
 
 func (this *Worksheet_) EnableOutlining() bool {
-	retVal := this.PropGet(0x00000485, nil)
+	retVal, _ := this.PropGet(0x00000485, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) SetEnableOutlining(rhs bool)  {
-	retVal := this.PropPut(0x00000485, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000485, []interface{}{rhs})
 }
 
 func (this *Worksheet_) EnablePivotTable() bool {
-	retVal := this.PropGet(0x00000486, nil)
+	retVal, _ := this.PropGet(0x00000486, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) SetEnablePivotTable(rhs bool)  {
-	retVal := this.PropPut(0x00000486, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000486, []interface{}{rhs})
 }
 
 func (this *Worksheet_) Evaluate(name interface{}) ole.Variant {
-	retVal := this.Call(0x00000001, []interface{}{name})
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x00000001, []interface{}{name})
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Worksheet_) Evaluate_(name interface{}) ole.Variant {
-	retVal := this.Call(-5, []interface{}{name})
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(-5, []interface{}{name})
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Worksheet_) FilterMode() bool {
-	retVal := this.PropGet(0x00000320, nil)
+	retVal, _ := this.PropGet(0x00000320, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) ResetAllPageBreaks()  {
-	retVal := this.Call(0x00000592, nil)
+	retVal, _ := this.Call(0x00000592, nil)
 	_= retVal
 }
 
@@ -493,8 +482,8 @@ var Worksheet__GroupBoxes_OptArgs= []string{
 
 func (this *Worksheet_) GroupBoxes(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__GroupBoxes_OptArgs, optArgs)
-	retVal := this.Call(0x00000342, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000342, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__GroupObjects_OptArgs= []string{
@@ -503,8 +492,8 @@ var Worksheet__GroupObjects_OptArgs= []string{
 
 func (this *Worksheet_) GroupObjects(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__GroupObjects_OptArgs, optArgs)
-	retVal := this.Call(0x00000459, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000459, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__Labels_OptArgs= []string{
@@ -513,8 +502,8 @@ var Worksheet__Labels_OptArgs= []string{
 
 func (this *Worksheet_) Labels(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__Labels_OptArgs, optArgs)
-	retVal := this.Call(0x00000349, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000349, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__Lines_OptArgs= []string{
@@ -523,8 +512,8 @@ var Worksheet__Lines_OptArgs= []string{
 
 func (this *Worksheet_) Lines(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__Lines_OptArgs, optArgs)
-	retVal := this.Call(0x000002ff, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x000002ff, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__ListBoxes_OptArgs= []string{
@@ -533,13 +522,13 @@ var Worksheet__ListBoxes_OptArgs= []string{
 
 func (this *Worksheet_) ListBoxes(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__ListBoxes_OptArgs, optArgs)
-	retVal := this.Call(0x00000340, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000340, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) Names() *Names {
-	retVal := this.PropGet(0x000001ba, nil)
-	return NewNames(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000001ba, nil)
+	return NewNames(retVal.IDispatch(), false, true)
 }
 
 var Worksheet__OLEObjects_OptArgs= []string{
@@ -548,38 +537,35 @@ var Worksheet__OLEObjects_OptArgs= []string{
 
 func (this *Worksheet_) OLEObjects(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__OLEObjects_OptArgs, optArgs)
-	retVal := this.Call(0x0000031f, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x0000031f, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) OnCalculate() string {
-	retVal := this.PropGet(0x00000271, nil)
+	retVal, _ := this.PropGet(0x00000271, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Worksheet_) SetOnCalculate(rhs string)  {
-	retVal := this.PropPut(0x00000271, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000271, []interface{}{rhs})
 }
 
 func (this *Worksheet_) OnData() string {
-	retVal := this.PropGet(0x00000275, nil)
+	retVal, _ := this.PropGet(0x00000275, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Worksheet_) SetOnData(rhs string)  {
-	retVal := this.PropPut(0x00000275, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000275, []interface{}{rhs})
 }
 
 func (this *Worksheet_) OnEntry() string {
-	retVal := this.PropGet(0x00000273, nil)
+	retVal, _ := this.PropGet(0x00000273, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Worksheet_) SetOnEntry(rhs string)  {
-	retVal := this.PropPut(0x00000273, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000273, []interface{}{rhs})
 }
 
 var Worksheet__OptionButtons_OptArgs= []string{
@@ -588,13 +574,13 @@ var Worksheet__OptionButtons_OptArgs= []string{
 
 func (this *Worksheet_) OptionButtons(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__OptionButtons_OptArgs, optArgs)
-	retVal := this.Call(0x0000033a, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x0000033a, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) Outline() *Outline {
-	retVal := this.PropGet(0x00000066, nil)
-	return NewOutline(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000066, nil)
+	return NewOutline(retVal.IDispatch(), false, true)
 }
 
 var Worksheet__Ovals_OptArgs= []string{
@@ -603,8 +589,8 @@ var Worksheet__Ovals_OptArgs= []string{
 
 func (this *Worksheet_) Ovals(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__Ovals_OptArgs, optArgs)
-	retVal := this.Call(0x00000321, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000321, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__Paste_OptArgs= []string{
@@ -613,7 +599,7 @@ var Worksheet__Paste_OptArgs= []string{
 
 func (this *Worksheet_) Paste(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__Paste_OptArgs, optArgs)
-	retVal := this.Call(0x000000d3, nil, optArgs...)
+	retVal, _ := this.Call(0x000000d3, nil, optArgs...)
 	_= retVal
 }
 
@@ -624,7 +610,7 @@ var Worksheet__PasteSpecial__OptArgs= []string{
 
 func (this *Worksheet_) PasteSpecial_(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__PasteSpecial__OptArgs, optArgs)
-	retVal := this.Call(0x00000403, nil, optArgs...)
+	retVal, _ := this.Call(0x00000403, nil, optArgs...)
 	_= retVal
 }
 
@@ -634,8 +620,8 @@ var Worksheet__Pictures_OptArgs= []string{
 
 func (this *Worksheet_) Pictures(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__Pictures_OptArgs, optArgs)
-	retVal := this.Call(0x00000303, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000303, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__PivotTables_OptArgs= []string{
@@ -644,8 +630,8 @@ var Worksheet__PivotTables_OptArgs= []string{
 
 func (this *Worksheet_) PivotTables(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__PivotTables_OptArgs, optArgs)
-	retVal := this.Call(0x000002b2, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x000002b2, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__PivotTableWizard_OptArgs= []string{
@@ -657,8 +643,8 @@ var Worksheet__PivotTableWizard_OptArgs= []string{
 
 func (this *Worksheet_) PivotTableWizard(optArgs ...interface{}) *PivotTable {
 	optArgs = ole.ProcessOptArgs(Worksheet__PivotTableWizard_OptArgs, optArgs)
-	retVal := this.Call(0x000002ac, nil, optArgs...)
-	return NewPivotTable(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000002ac, nil, optArgs...)
+	return NewPivotTable(retVal.IDispatch(), false, true)
 }
 
 var Worksheet__Range_OptArgs= []string{
@@ -667,8 +653,8 @@ var Worksheet__Range_OptArgs= []string{
 
 func (this *Worksheet_) Range(cell1 interface{}, optArgs ...interface{}) *Range {
 	optArgs = ole.ProcessOptArgs(Worksheet__Range_OptArgs, optArgs)
-	retVal := this.PropGet(0x000000c5, []interface{}{cell1}, optArgs...)
-	return NewRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000000c5, []interface{}{cell1}, optArgs...)
+	return NewRange(retVal.IDispatch(), false, true)
 }
 
 var Worksheet__Rectangles_OptArgs= []string{
@@ -677,13 +663,13 @@ var Worksheet__Rectangles_OptArgs= []string{
 
 func (this *Worksheet_) Rectangles(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__Rectangles_OptArgs, optArgs)
-	retVal := this.Call(0x00000306, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000306, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) Rows() *Range {
-	retVal := this.PropGet(0x00000102, nil)
-	return NewRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000102, nil)
+	return NewRange(retVal.IDispatch(), false, true)
 }
 
 var Worksheet__Scenarios_OptArgs= []string{
@@ -692,18 +678,17 @@ var Worksheet__Scenarios_OptArgs= []string{
 
 func (this *Worksheet_) Scenarios(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__Scenarios_OptArgs, optArgs)
-	retVal := this.Call(0x0000038c, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x0000038c, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) ScrollArea() string {
-	retVal := this.PropGet(0x00000599, nil)
+	retVal, _ := this.PropGet(0x00000599, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Worksheet_) SetScrollArea(rhs string)  {
-	retVal := this.PropPut(0x00000599, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000599, []interface{}{rhs})
 }
 
 var Worksheet__ScrollBars_OptArgs= []string{
@@ -712,17 +697,17 @@ var Worksheet__ScrollBars_OptArgs= []string{
 
 func (this *Worksheet_) ScrollBars(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__ScrollBars_OptArgs, optArgs)
-	retVal := this.Call(0x0000033e, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x0000033e, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) ShowAllData()  {
-	retVal := this.Call(0x0000031a, nil)
+	retVal, _ := this.Call(0x0000031a, nil)
 	_= retVal
 }
 
 func (this *Worksheet_) ShowDataForm()  {
-	retVal := this.Call(0x00000199, nil)
+	retVal, _ := this.Call(0x00000199, nil)
 	_= retVal
 }
 
@@ -732,23 +717,22 @@ var Worksheet__Spinners_OptArgs= []string{
 
 func (this *Worksheet_) Spinners(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__Spinners_OptArgs, optArgs)
-	retVal := this.Call(0x00000346, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000346, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) StandardHeight() float64 {
-	retVal := this.PropGet(0x00000197, nil)
+	retVal, _ := this.PropGet(0x00000197, nil)
 	return retVal.DblValVal()
 }
 
 func (this *Worksheet_) StandardWidth() float64 {
-	retVal := this.PropGet(0x00000198, nil)
+	retVal, _ := this.PropGet(0x00000198, nil)
 	return retVal.DblValVal()
 }
 
 func (this *Worksheet_) SetStandardWidth(rhs float64)  {
-	retVal := this.PropPut(0x00000198, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000198, []interface{}{rhs})
 }
 
 var Worksheet__TextBoxes_OptArgs= []string{
@@ -757,103 +741,99 @@ var Worksheet__TextBoxes_OptArgs= []string{
 
 func (this *Worksheet_) TextBoxes(optArgs ...interface{}) *ole.DispatchClass {
 	optArgs = ole.ProcessOptArgs(Worksheet__TextBoxes_OptArgs, optArgs)
-	retVal := this.Call(0x00000309, nil, optArgs...)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.Call(0x00000309, nil, optArgs...)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Worksheet_) TransitionFormEntry() bool {
-	retVal := this.PropGet(0x00000192, nil)
+	retVal, _ := this.PropGet(0x00000192, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) SetTransitionFormEntry(rhs bool)  {
-	retVal := this.PropPut(0x00000192, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000192, []interface{}{rhs})
 }
 
 func (this *Worksheet_) Type() int32 {
-	retVal := this.PropGet(0x0000006c, nil)
+	retVal, _ := this.PropGet(0x0000006c, nil)
 	return retVal.LValVal()
 }
 
 func (this *Worksheet_) UsedRange() *Range {
-	retVal := this.PropGet(0x0000019c, nil)
-	return NewRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000019c, nil)
+	return NewRange(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) HPageBreaks() *HPageBreaks {
-	retVal := this.PropGet(0x0000058a, nil)
-	return NewHPageBreaks(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000058a, nil)
+	return NewHPageBreaks(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) VPageBreaks() *VPageBreaks {
-	retVal := this.PropGet(0x0000058b, nil)
-	return NewVPageBreaks(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000058b, nil)
+	return NewVPageBreaks(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) QueryTables() *QueryTables {
-	retVal := this.PropGet(0x0000059a, nil)
-	return NewQueryTables(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000059a, nil)
+	return NewQueryTables(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) DisplayPageBreaks() bool {
-	retVal := this.PropGet(0x0000059b, nil)
+	retVal, _ := this.PropGet(0x0000059b, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) SetDisplayPageBreaks(rhs bool)  {
-	retVal := this.PropPut(0x0000059b, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000059b, []interface{}{rhs})
 }
 
 func (this *Worksheet_) Comments() *Comments {
-	retVal := this.PropGet(0x0000023f, nil)
-	return NewComments(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000023f, nil)
+	return NewComments(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) Hyperlinks() *Hyperlinks {
-	retVal := this.PropGet(0x00000571, nil)
-	return NewHyperlinks(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000571, nil)
+	return NewHyperlinks(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) ClearCircles()  {
-	retVal := this.Call(0x0000059c, nil)
+	retVal, _ := this.Call(0x0000059c, nil)
 	_= retVal
 }
 
 func (this *Worksheet_) CircleInvalid()  {
-	retVal := this.Call(0x0000059d, nil)
+	retVal, _ := this.Call(0x0000059d, nil)
 	_= retVal
 }
 
 func (this *Worksheet_) DisplayRightToLeft_() int32 {
-	retVal := this.PropGet(0x00000288, nil)
+	retVal, _ := this.PropGet(0x00000288, nil)
 	return retVal.LValVal()
 }
 
 func (this *Worksheet_) SetDisplayRightToLeft_(rhs int32)  {
-	retVal := this.PropPut(0x00000288, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000288, []interface{}{rhs})
 }
 
 func (this *Worksheet_) AutoFilter() *AutoFilter {
-	retVal := this.PropGet(0x00000319, nil)
-	return NewAutoFilter(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000319, nil)
+	return NewAutoFilter(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) DisplayRightToLeft() bool {
-	retVal := this.PropGet(0x000006ee, nil)
+	retVal, _ := this.PropGet(0x000006ee, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) SetDisplayRightToLeft(rhs bool)  {
-	retVal := this.PropPut(0x000006ee, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000006ee, []interface{}{rhs})
 }
 
 func (this *Worksheet_) Scripts() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000718, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000718, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__PrintOut__OptArgs= []string{
@@ -863,7 +843,7 @@ var Worksheet__PrintOut__OptArgs= []string{
 
 func (this *Worksheet_) PrintOut_(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__PrintOut__OptArgs, optArgs)
-	retVal := this.Call(0x000006ec, nil, optArgs...)
+	retVal, _ := this.Call(0x000006ec, nil, optArgs...)
 	_= retVal
 }
 
@@ -874,18 +854,18 @@ var Worksheet__CheckSpelling__OptArgs= []string{
 
 func (this *Worksheet_) CheckSpelling_(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__CheckSpelling__OptArgs, optArgs)
-	retVal := this.Call(0x00000719, nil, optArgs...)
+	retVal, _ := this.Call(0x00000719, nil, optArgs...)
 	_= retVal
 }
 
 func (this *Worksheet_) Tab() *Tab {
-	retVal := this.PropGet(0x00000411, nil)
-	return NewTab(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000411, nil)
+	return NewTab(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) MailEnvelope() *ole.DispatchClass {
-	retVal := this.PropGet(0x000007e5, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x000007e5, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Worksheet__SaveAs_OptArgs= []string{
@@ -895,23 +875,23 @@ var Worksheet__SaveAs_OptArgs= []string{
 
 func (this *Worksheet_) SaveAs(filename string, optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__SaveAs_OptArgs, optArgs)
-	retVal := this.Call(0x00000785, []interface{}{filename}, optArgs...)
+	retVal, _ := this.Call(0x00000785, []interface{}{filename}, optArgs...)
 	_= retVal
 }
 
 func (this *Worksheet_) CustomProperties() *CustomProperties {
-	retVal := this.PropGet(0x000007ee, nil)
-	return NewCustomProperties(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000007ee, nil)
+	return NewCustomProperties(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) SmartTags() *SmartTags {
-	retVal := this.PropGet(0x000007e0, nil)
-	return NewSmartTags(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000007e0, nil)
+	return NewSmartTags(retVal.IDispatch(), false, true)
 }
 
 func (this *Worksheet_) Protection() *Protection {
-	retVal := this.PropGet(0x000000b0, nil)
-	return NewProtection(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000000b0, nil)
+	return NewProtection(retVal.IDispatch(), false, true)
 }
 
 var Worksheet__PasteSpecial_OptArgs= []string{
@@ -921,7 +901,7 @@ var Worksheet__PasteSpecial_OptArgs= []string{
 
 func (this *Worksheet_) PasteSpecial(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__PasteSpecial_OptArgs, optArgs)
-	retVal := this.Call(0x00000788, nil, optArgs...)
+	retVal, _ := this.Call(0x00000788, nil, optArgs...)
 	_= retVal
 }
 
@@ -934,13 +914,13 @@ var Worksheet__Protect_OptArgs= []string{
 
 func (this *Worksheet_) Protect(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__Protect_OptArgs, optArgs)
-	retVal := this.Call(0x000007ed, nil, optArgs...)
+	retVal, _ := this.Call(0x000007ed, nil, optArgs...)
 	_= retVal
 }
 
 func (this *Worksheet_) ListObjects() *ListObjects {
-	retVal := this.PropGet(0x000008d3, nil)
-	return NewListObjects(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000008d3, nil)
+	return NewListObjects(retVal.IDispatch(), false, true)
 }
 
 var Worksheet__XmlDataQuery_OptArgs= []string{
@@ -949,8 +929,8 @@ var Worksheet__XmlDataQuery_OptArgs= []string{
 
 func (this *Worksheet_) XmlDataQuery(xpath string, optArgs ...interface{}) *Range {
 	optArgs = ole.ProcessOptArgs(Worksheet__XmlDataQuery_OptArgs, optArgs)
-	retVal := this.Call(0x000008d4, []interface{}{xpath}, optArgs...)
-	return NewRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000008d4, []interface{}{xpath}, optArgs...)
+	return NewRange(retVal.IDispatch(), false, true)
 }
 
 var Worksheet__XmlMapQuery_OptArgs= []string{
@@ -959,8 +939,8 @@ var Worksheet__XmlMapQuery_OptArgs= []string{
 
 func (this *Worksheet_) XmlMapQuery(xpath string, optArgs ...interface{}) *Range {
 	optArgs = ole.ProcessOptArgs(Worksheet__XmlMapQuery_OptArgs, optArgs)
-	retVal := this.Call(0x000008d7, []interface{}{xpath}, optArgs...)
-	return NewRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000008d7, []interface{}{xpath}, optArgs...)
+	return NewRange(retVal.IDispatch(), false, true)
 }
 
 var Worksheet__PrintOut_OptArgs= []string{
@@ -970,23 +950,22 @@ var Worksheet__PrintOut_OptArgs= []string{
 
 func (this *Worksheet_) PrintOut(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__PrintOut_OptArgs, optArgs)
-	retVal := this.Call(0x00000939, nil, optArgs...)
+	retVal, _ := this.Call(0x00000939, nil, optArgs...)
 	_= retVal
 }
 
 func (this *Worksheet_) EnableFormatConditionsCalculation() bool {
-	retVal := this.PropGet(0x000009cf, nil)
+	retVal, _ := this.PropGet(0x000009cf, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Worksheet_) SetEnableFormatConditionsCalculation(rhs bool)  {
-	retVal := this.PropPut(0x000009cf, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000009cf, []interface{}{rhs})
 }
 
 func (this *Worksheet_) Sort() *Sort {
-	retVal := this.PropGet(0x00000370, nil)
-	return NewSort(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000370, nil)
+	return NewSort(retVal.IDispatch(), false, true)
 }
 
 var Worksheet__ExportAsFixedFormat_OptArgs= []string{
@@ -996,12 +975,12 @@ var Worksheet__ExportAsFixedFormat_OptArgs= []string{
 
 func (this *Worksheet_) ExportAsFixedFormat(type_ int32, optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Worksheet__ExportAsFixedFormat_OptArgs, optArgs)
-	retVal := this.Call(0x000009bd, []interface{}{type_}, optArgs...)
+	retVal, _ := this.Call(0x000009bd, []interface{}{type_}, optArgs...)
 	_= retVal
 }
 
 func (this *Worksheet_) PrintedCommentPages() int32 {
-	retVal := this.PropGet(0x00000b29, nil)
+	retVal, _ := this.PropGet(0x00000b29, nil)
 	return retVal.LValVal()
 }
 

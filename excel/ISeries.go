@@ -17,6 +17,9 @@ type ISeries struct {
 }
 
 func NewISeries(pUnk *win32.IUnknown, addRef bool, scoped bool) *ISeries {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ISeries)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *ISeries) IID() *syscall.GUID {
 func (this *ISeries) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *ISeries) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ISeries) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *ISeries) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -76,9 +75,7 @@ func (this *ISeries) SetAxisGroup(rhs int32) com.Error {
 func (this *ISeries) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -94,12 +91,10 @@ func (this *ISeries) Copy(rhs *ole.Variant) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ISeries) DataLabels(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *ISeries) DataLabels(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -118,9 +113,7 @@ func (this *ISeries) ErrorBar(direction int32, include int32, type_ int32, amoun
 func (this *ISeries) GetErrorBars(rhs **ErrorBars) com.Error {
 	addr := (*this.LpVtbl)[19]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -211,18 +204,14 @@ func (this *ISeries) SetHasErrorBars(rhs bool) com.Error {
 func (this *ISeries) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[34]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ISeries) GetFill(rhs **ChartFillFormat) com.Error {
 	addr := (*this.LpVtbl)[35]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -364,12 +353,10 @@ func (this *ISeries) SetPlotOrder(rhs int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ISeries) Points(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *ISeries) Points(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[59]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -391,12 +378,10 @@ func (this *ISeries) SetSmooth(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ISeries) Trendlines(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *ISeries) Trendlines(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[63]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -553,9 +538,7 @@ func (this *ISeries) SetHasLeaderLines(rhs bool) com.Error {
 func (this *ISeries) GetLeaderLines(rhs **LeaderLines) com.Error {
 	addr := (*this.LpVtbl)[89]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -580,9 +563,7 @@ func (this *ISeries) SetPictureUnit2(rhs float64) com.Error {
 func (this *ISeries) GetFormat(rhs **ChartFormat) com.Error {
 	addr := (*this.LpVtbl)[93]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

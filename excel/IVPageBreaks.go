@@ -3,7 +3,6 @@ package excel
 import (
 	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
-	"github.com/zzl/go-com/ole"
 	"syscall"
 	"unsafe"
 )
@@ -17,6 +16,9 @@ type IVPageBreaks struct {
 }
 
 func NewIVPageBreaks(pUnk *win32.IUnknown, addRef bool, scoped bool) *IVPageBreaks {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IVPageBreaks)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +36,7 @@ func (this *IVPageBreaks) IID() *syscall.GUID {
 func (this *IVPageBreaks) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +46,10 @@ func (this *IVPageBreaks) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IVPageBreaks) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IVPageBreaks) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -64,36 +62,28 @@ func (this *IVPageBreaks) GetCount(rhs *int32) com.Error {
 func (this *IVPageBreaks) GetItem(index int32, rhs **VPageBreak) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(index), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IVPageBreaks) GetDefault_(index int32, rhs **VPageBreak) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(index), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IVPageBreaks) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IVPageBreaks) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IVPageBreaks) Add(before *ole.DispatchClass, rhs **VPageBreak) com.Error {
+func (this *IVPageBreaks) Add(before *win32.IUnknown, rhs **VPageBreak) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(before)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

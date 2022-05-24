@@ -16,6 +16,9 @@ type PublishObject struct {
 }
 
 func NewPublishObject(pDisp *win32.IDispatch, addRef bool, scoped bool) *PublishObject {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &PublishObject{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewPublishObject(pDisp *win32.IDispatch, addRef bool, scoped bool) *Publish
 }
 
 func PublishObjectFromVar(v ole.Variant) *PublishObject {
-	return NewPublishObject(v.PdispValVal(), false, false)
+	return NewPublishObject(v.IDispatch(), false, false)
 }
 
 func (this *PublishObject) IID() *syscall.GUID {
@@ -42,22 +45,22 @@ func (this *PublishObject) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *PublishObject) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *PublishObject) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *PublishObject) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *PublishObject) Delete()  {
-	retVal := this.Call(0x00000075, nil)
+	retVal, _ := this.Call(0x00000075, nil)
 	_= retVal
 }
 
@@ -67,67 +70,63 @@ var PublishObject_Publish_OptArgs= []string{
 
 func (this *PublishObject) Publish(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(PublishObject_Publish_OptArgs, optArgs)
-	retVal := this.Call(0x00000767, nil, optArgs...)
+	retVal, _ := this.Call(0x00000767, nil, optArgs...)
 	_= retVal
 }
 
 func (this *PublishObject) DivID() string {
-	retVal := this.PropGet(0x00000766, nil)
+	retVal, _ := this.PropGet(0x00000766, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *PublishObject) Sheet() string {
-	retVal := this.PropGet(0x000002ef, nil)
+	retVal, _ := this.PropGet(0x000002ef, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *PublishObject) SourceType() int32 {
-	retVal := this.PropGet(0x000002ad, nil)
+	retVal, _ := this.PropGet(0x000002ad, nil)
 	return retVal.LValVal()
 }
 
 func (this *PublishObject) Source() string {
-	retVal := this.PropGet(0x000000de, nil)
+	retVal, _ := this.PropGet(0x000000de, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *PublishObject) HtmlType() int32 {
-	retVal := this.PropGet(0x00000765, nil)
+	retVal, _ := this.PropGet(0x00000765, nil)
 	return retVal.LValVal()
 }
 
 func (this *PublishObject) SetHtmlType(rhs int32)  {
-	retVal := this.PropPut(0x00000765, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000765, []interface{}{rhs})
 }
 
 func (this *PublishObject) Title() string {
-	retVal := this.PropGet(0x000000c7, nil)
+	retVal, _ := this.PropGet(0x000000c7, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *PublishObject) SetTitle(rhs string)  {
-	retVal := this.PropPut(0x000000c7, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000000c7, []interface{}{rhs})
 }
 
 func (this *PublishObject) Filename() string {
-	retVal := this.PropGet(0x00000587, nil)
+	retVal, _ := this.PropGet(0x00000587, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *PublishObject) SetFilename(rhs string)  {
-	retVal := this.PropPut(0x00000587, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000587, []interface{}{rhs})
 }
 
 func (this *PublishObject) AutoRepublish() bool {
-	retVal := this.PropGet(0x00000882, nil)
+	retVal, _ := this.PropGet(0x00000882, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *PublishObject) SetAutoRepublish(rhs bool)  {
-	retVal := this.PropPut(0x00000882, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000882, []interface{}{rhs})
 }
 

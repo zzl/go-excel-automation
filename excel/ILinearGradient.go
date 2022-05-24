@@ -16,6 +16,9 @@ type ILinearGradient struct {
 }
 
 func NewILinearGradient(pUnk *win32.IUnknown, addRef bool, scoped bool) *ILinearGradient {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ILinearGradient)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *ILinearGradient) IID() *syscall.GUID {
 func (this *ILinearGradient) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,21 +46,17 @@ func (this *ILinearGradient) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ILinearGradient) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *ILinearGradient) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ILinearGradient) GetColorStops(rhs **ColorStops) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

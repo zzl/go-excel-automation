@@ -17,6 +17,9 @@ type Tab struct {
 }
 
 func NewTab(pDisp *win32.IDispatch, addRef bool, scoped bool) *Tab {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Tab{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewTab(pDisp *win32.IDispatch, addRef bool, scoped bool) *Tab {
 }
 
 func TabFromVar(v ole.Variant) *Tab {
-	return NewTab(v.PdispValVal(), false, false)
+	return NewTab(v.IDispatch(), false, false)
 }
 
 func (this *Tab) IID() *syscall.GUID {
@@ -43,94 +46,90 @@ func (this *Tab) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Tab) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *Tab) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Tab) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Tab) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *Tab) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *Tab) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *Tab) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *Tab) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *Tab) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *Tab) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Tab) Color() ole.Variant {
-	retVal := this.PropGet(0x00000063, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x00000063, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Tab) SetColor(rhs interface{})  {
-	retVal := this.PropPut(0x00000063, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000063, []interface{}{rhs})
 }
 
 func (this *Tab) ColorIndex() int32 {
-	retVal := this.PropGet(0x00000061, nil)
+	retVal, _ := this.PropGet(0x00000061, nil)
 	return retVal.LValVal()
 }
 
 func (this *Tab) SetColorIndex(rhs int32)  {
-	retVal := this.PropPut(0x00000061, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000061, []interface{}{rhs})
 }
 
 func (this *Tab) ThemeColor() int32 {
-	retVal := this.PropGet(0x0000093d, nil)
+	retVal, _ := this.PropGet(0x0000093d, nil)
 	return retVal.LValVal()
 }
 
 func (this *Tab) SetThemeColor(rhs int32)  {
-	retVal := this.PropPut(0x0000093d, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000093d, []interface{}{rhs})
 }
 
 func (this *Tab) TintAndShade() ole.Variant {
-	retVal := this.PropGet(0x0000093e, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x0000093e, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Tab) SetTintAndShade(rhs interface{})  {
-	retVal := this.PropPut(0x0000093e, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000093e, []interface{}{rhs})
 }
 

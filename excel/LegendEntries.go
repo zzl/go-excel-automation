@@ -17,6 +17,9 @@ type LegendEntries struct {
 }
 
 func NewLegendEntries(pDisp *win32.IDispatch, addRef bool, scoped bool) *LegendEntries {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &LegendEntries{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewLegendEntries(pDisp *win32.IDispatch, addRef bool, scoped bool) *LegendE
 }
 
 func LegendEntriesFromVar(v ole.Variant) *LegendEntries {
-	return NewLegendEntries(v.PdispValVal(), false, false)
+	return NewLegendEntries(v.IDispatch(), false, false)
 }
 
 func (this *LegendEntries) IID() *syscall.GUID {
@@ -43,67 +46,67 @@ func (this *LegendEntries) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *LegendEntries) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *LegendEntries) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *LegendEntries) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *LegendEntries) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *LegendEntries) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *LegendEntries) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *LegendEntries) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *LegendEntries) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *LegendEntries) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *LegendEntries) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *LegendEntries) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
 func (this *LegendEntries) Item(index interface{}) *LegendEntry {
-	retVal := this.Call(0x000000aa, []interface{}{index})
-	return NewLegendEntry(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000aa, []interface{}{index})
+	return NewLegendEntry(retVal.IDispatch(), false, true)
 }
 
 func (this *LegendEntries) NewEnum_() *com.UnknownClass {
-	retVal := this.Call(-4, nil)
+	retVal, _ := this.Call(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 
@@ -129,7 +132,7 @@ func (this *LegendEntries) ForEach(action func(item *LegendEntry) bool) {
 }
 
 func (this *LegendEntries) Default_(index interface{}) *LegendEntry {
-	retVal := this.Call(0x00000000, []interface{}{index})
-	return NewLegendEntry(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000000, []interface{}{index})
+	return NewLegendEntry(retVal.IDispatch(), false, true)
 }
 

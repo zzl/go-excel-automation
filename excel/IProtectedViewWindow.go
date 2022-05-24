@@ -16,6 +16,9 @@ type IProtectedViewWindow struct {
 }
 
 func NewIProtectedViewWindow(pUnk *win32.IUnknown, addRef bool, scoped bool) *IProtectedViewWindow {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IProtectedViewWindow)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -147,9 +150,7 @@ func (this *IProtectedViewWindow) SetWindowState(rhs int32) com.Error {
 func (this *IProtectedViewWindow) GetWorkbook(rhs **Workbook) com.Error {
 	addr := (*this.LpVtbl)[26]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -168,9 +169,7 @@ func (this *IProtectedViewWindow) Close(rhs *win32.VARIANT_BOOL) com.Error {
 func (this *IProtectedViewWindow) Edit(writeResPassword interface{}, updateLinks interface{}, rhs **Workbook) com.Error {
 	addr := (*this.LpVtbl)[29]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&writeResPassword)), (uintptr)(unsafe.Pointer(&updateLinks)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

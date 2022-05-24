@@ -3,7 +3,6 @@ package excel
 import (
 	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
-	"github.com/zzl/go-com/ole"
 	"syscall"
 	"unsafe"
 )
@@ -17,6 +16,9 @@ type IHyperlinks struct {
 }
 
 func NewIHyperlinks(pUnk *win32.IUnknown, addRef bool, scoped bool) *IHyperlinks {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IHyperlinks)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +36,7 @@ func (this *IHyperlinks) IID() *syscall.GUID {
 func (this *IHyperlinks) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,21 +46,17 @@ func (this *IHyperlinks) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IHyperlinks) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IHyperlinks) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IHyperlinks) Add(anchor *ole.DispatchClass, address string, subAddress interface{}, screenTip interface{}, textToDisplay interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IHyperlinks) Add(anchor *win32.IUnknown, address string, subAddress interface{}, screenTip interface{}, textToDisplay interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(anchor)), uintptr(win32.StrToPointer(address)), (uintptr)(unsafe.Pointer(&subAddress)), (uintptr)(unsafe.Pointer(&screenTip)), (uintptr)(unsafe.Pointer(&textToDisplay)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -73,27 +69,21 @@ func (this *IHyperlinks) GetCount(rhs *int32) com.Error {
 func (this *IHyperlinks) GetItem(index interface{}, rhs **Hyperlink) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IHyperlinks) GetDefault_(index interface{}, rhs **Hyperlink) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IHyperlinks) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IHyperlinks) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

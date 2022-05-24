@@ -16,6 +16,9 @@ type ColorFormat struct {
 }
 
 func NewColorFormat(pDisp *win32.IDispatch, addRef bool, scoped bool) *ColorFormat {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &ColorFormat{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewColorFormat(pDisp *win32.IDispatch, addRef bool, scoped bool) *ColorForm
 }
 
 func ColorFormatFromVar(v ole.Variant) *ColorFormat {
-	return NewColorFormat(v.PdispValVal(), false, false)
+	return NewColorFormat(v.IDispatch(), false, false)
 }
 
 func (this *ColorFormat) IID() *syscall.GUID {
@@ -42,72 +45,67 @@ func (this *ColorFormat) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *ColorFormat) Application() *ole.DispatchClass {
-	retVal := this.PropGet(0x60020000, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x60020000, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ColorFormat) Creator() int32 {
-	retVal := this.PropGet(0x60020001, nil)
+	retVal, _ := this.PropGet(0x60020001, nil)
 	return retVal.LValVal()
 }
 
 func (this *ColorFormat) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000001, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000001, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *ColorFormat) RGB() int32 {
-	retVal := this.PropGet(0x00000000, nil)
+	retVal, _ := this.PropGet(0x00000000, nil)
 	return retVal.LValVal()
 }
 
 func (this *ColorFormat) SetRGB(rhs int32)  {
-	retVal := this.PropPut(0x00000000, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
 func (this *ColorFormat) SchemeColor() int32 {
-	retVal := this.PropGet(0x00000064, nil)
+	retVal, _ := this.PropGet(0x00000064, nil)
 	return retVal.LValVal()
 }
 
 func (this *ColorFormat) SetSchemeColor(rhs int32)  {
-	retVal := this.PropPut(0x00000064, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000064, []interface{}{rhs})
 }
 
 func (this *ColorFormat) Type() int32 {
-	retVal := this.PropGet(0x00000065, nil)
+	retVal, _ := this.PropGet(0x00000065, nil)
 	return retVal.LValVal()
 }
 
 func (this *ColorFormat) TintAndShade() float32 {
-	retVal := this.PropGet(0x00000066, nil)
+	retVal, _ := this.PropGet(0x00000066, nil)
 	return retVal.FltValVal()
 }
 
 func (this *ColorFormat) SetTintAndShade(rhs float32)  {
-	retVal := this.PropPut(0x00000066, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000066, []interface{}{rhs})
 }
 
 func (this *ColorFormat) ObjectThemeColor() int32 {
-	retVal := this.PropGet(0x00000068, nil)
+	retVal, _ := this.PropGet(0x00000068, nil)
 	return retVal.LValVal()
 }
 
 func (this *ColorFormat) SetObjectThemeColor(rhs int32)  {
-	retVal := this.PropPut(0x00000068, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000068, []interface{}{rhs})
 }
 
 func (this *ColorFormat) Brightness() float32 {
-	retVal := this.PropGet(0x00000069, nil)
+	retVal, _ := this.PropGet(0x00000069, nil)
 	return retVal.FltValVal()
 }
 
 func (this *ColorFormat) SetBrightness(rhs float32)  {
-	retVal := this.PropPut(0x00000069, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000069, []interface{}{rhs})
 }
 

@@ -17,6 +17,9 @@ type IModule struct {
 }
 
 func NewIModule(pUnk *win32.IUnknown, addRef bool, scoped bool) *IModule {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IModule)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IModule) IID() *syscall.GUID {
 func (this *IModule) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IModule) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IModule) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IModule) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -115,12 +114,10 @@ func (this *IModule) SetName(rhs string) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IModule) GetNext(rhs **com.UnknownClass) com.Error {
+func (this *IModule) GetNext(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[20]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -163,18 +160,14 @@ func (this *IModule) SetOnSheetDeactivate(lcid int32, rhs string) com.Error {
 func (this *IModule) GetPageSetup(rhs **PageSetup) com.Error {
 	addr := (*this.LpVtbl)[27]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IModule) GetPrevious(rhs **com.UnknownClass) com.Error {
+func (this *IModule) GetPrevious(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[28]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -250,9 +243,7 @@ func (this *IModule) SetVisible(lcid int32, rhs int32) com.Error {
 func (this *IModule) GetShapes(rhs **Shapes) com.Error {
 	addr := (*this.LpVtbl)[41]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

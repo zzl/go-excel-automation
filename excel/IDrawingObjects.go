@@ -17,6 +17,9 @@ type IDrawingObjects struct {
 }
 
 func NewIDrawingObjects(pUnk *win32.IUnknown, addRef bool, scoped bool) *IDrawingObjects {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IDrawingObjects)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IDrawingObjects) IID() *syscall.GUID {
 func (this *IDrawingObjects) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IDrawingObjects) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IDrawingObjects) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -90,12 +89,10 @@ func (this *IDrawingObjects) Delete(rhs *ole.Variant) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) Duplicate(rhs **com.UnknownClass) com.Error {
+func (this *IDrawingObjects) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -255,9 +252,7 @@ func (this *IDrawingObjects) GetZOrder(rhs *int32) com.Error {
 func (this *IDrawingObjects) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -347,9 +342,7 @@ func (this *IDrawingObjects) SetAutoSize(rhs bool) com.Error {
 func (this *IDrawingObjects) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[58]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -380,9 +373,7 @@ func (this *IDrawingObjects) SetCaption(rhs string) com.Error {
 func (this *IDrawingObjects) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[63]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -467,9 +458,7 @@ func (this *IDrawingObjects) SetDropDownLines(rhs int32) com.Error {
 func (this *IDrawingObjects) GetFont(rhs **Font) com.Error {
 	addr := (*this.LpVtbl)[77]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -517,9 +506,7 @@ func (this *IDrawingObjects) SetInputType(rhs int32) com.Error {
 func (this *IDrawingObjects) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[85]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -743,12 +730,10 @@ func (this *IDrawingObjects) SetText(rhs string) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) Ungroup(rhs **com.UnknownClass) com.Error {
+func (this *IDrawingObjects) Ungroup(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[123]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -800,21 +785,17 @@ func (this *IDrawingObjects) GetCount(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) Item(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IDrawingObjects) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[132]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDrawingObjects) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[133]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -824,12 +805,10 @@ func (this *IDrawingObjects) LinkCombo(link interface{}, rhs *ole.Variant) com.E
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) NewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IDrawingObjects) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[135]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

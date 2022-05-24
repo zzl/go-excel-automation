@@ -16,6 +16,9 @@ type IPublishObjects struct {
 }
 
 func NewIPublishObjects(pUnk *win32.IUnknown, addRef bool, scoped bool) *IPublishObjects {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IPublishObjects)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IPublishObjects) IID() *syscall.GUID {
 func (this *IPublishObjects) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,21 +46,17 @@ func (this *IPublishObjects) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPublishObjects) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IPublishObjects) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPublishObjects) Add(sourceType int32, filename string, sheet interface{}, source interface{}, htmlType interface{}, divID interface{}, title interface{}, rhs **PublishObject) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(sourceType), uintptr(win32.StrToPointer(filename)), (uintptr)(unsafe.Pointer(&sheet)), (uintptr)(unsafe.Pointer(&source)), (uintptr)(unsafe.Pointer(&htmlType)), (uintptr)(unsafe.Pointer(&divID)), (uintptr)(unsafe.Pointer(&title)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -72,27 +69,21 @@ func (this *IPublishObjects) GetCount(rhs *int32) com.Error {
 func (this *IPublishObjects) GetItem(index interface{}, rhs **PublishObject) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPublishObjects) GetDefault_(index interface{}, rhs **PublishObject) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IPublishObjects) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IPublishObjects) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

@@ -16,6 +16,9 @@ type IValueChange struct {
 }
 
 func NewIValueChange(pUnk *win32.IUnknown, addRef bool, scoped bool) *IValueChange {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IValueChange)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IValueChange) IID() *syscall.GUID {
 func (this *IValueChange) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *IValueChange) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IValueChange) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IValueChange) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -69,9 +68,7 @@ func (this *IValueChange) GetVisibleInPivotTable(rhs *win32.VARIANT_BOOL) com.Er
 func (this *IValueChange) GetPivotCell(rhs **PivotCell) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

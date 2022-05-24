@@ -21,27 +21,27 @@ type AppEventsDispInterface interface {
 	GetIDsOfNames_(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) 
 	Invoke_(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) 
 	NewWorkbook(wb *Workbook) 
-	SheetSelectionChange(sh *ole.DispatchClass, target *Range) 
-	SheetBeforeDoubleClick(sh *ole.DispatchClass, target *Range, cancel *win32.VARIANT_BOOL) 
-	SheetBeforeRightClick(sh *ole.DispatchClass, target *Range, cancel *win32.VARIANT_BOOL) 
-	SheetActivate(sh *ole.DispatchClass) 
-	SheetDeactivate(sh *ole.DispatchClass) 
-	SheetCalculate(sh *ole.DispatchClass) 
-	SheetChange(sh *ole.DispatchClass, target *Range) 
+	SheetSelectionChange(sh *win32.IUnknown, target *Range) 
+	SheetBeforeDoubleClick(sh *win32.IUnknown, target *Range, cancel *win32.VARIANT_BOOL) 
+	SheetBeforeRightClick(sh *win32.IUnknown, target *Range, cancel *win32.VARIANT_BOOL) 
+	SheetActivate(sh *win32.IUnknown) 
+	SheetDeactivate(sh *win32.IUnknown) 
+	SheetCalculate(sh *win32.IUnknown) 
+	SheetChange(sh *win32.IUnknown, target *Range) 
 	WorkbookOpen(wb *Workbook) 
 	WorkbookActivate(wb *Workbook) 
 	WorkbookDeactivate(wb *Workbook) 
 	WorkbookBeforeClose(wb *Workbook, cancel *win32.VARIANT_BOOL) 
 	WorkbookBeforeSave(wb *Workbook, saveAsUI bool, cancel *win32.VARIANT_BOOL) 
 	WorkbookBeforePrint(wb *Workbook, cancel *win32.VARIANT_BOOL) 
-	WorkbookNewSheet(wb *Workbook, sh *ole.DispatchClass) 
+	WorkbookNewSheet(wb *Workbook, sh *win32.IUnknown) 
 	WorkbookAddinInstall(wb *Workbook) 
 	WorkbookAddinUninstall(wb *Workbook) 
 	WindowResize(wb *Workbook, wn *Window) 
 	WindowActivate(wb *Workbook, wn *Window) 
 	WindowDeactivate(wb *Workbook, wn *Window) 
-	SheetFollowHyperlink(sh *ole.DispatchClass, target *Hyperlink) 
-	SheetPivotTableUpdate(sh *ole.DispatchClass, target *PivotTable) 
+	SheetFollowHyperlink(sh *win32.IUnknown, target *Hyperlink) 
+	SheetPivotTableUpdate(sh *win32.IUnknown, target *PivotTable) 
 	WorkbookPivotTableCloseConnection(wb *Workbook, target *PivotTable) 
 	WorkbookPivotTableOpenConnection(wb *Workbook, target *PivotTable) 
 	WorkbookSync(wb *Workbook, syncEventType int32) 
@@ -51,10 +51,10 @@ type AppEventsDispInterface interface {
 	WorkbookAfterXmlExport(wb *Workbook, map_ *XmlMap, url string, result int32) 
 	WorkbookRowsetComplete(wb *Workbook, description string, sheet string, success bool) 
 	AfterCalculate() 
-	SheetPivotTableAfterValueChange(sh *ole.DispatchClass, targetPivotTable *PivotTable, targetRange *Range) 
-	SheetPivotTableBeforeAllocateChanges(sh *ole.DispatchClass, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) 
-	SheetPivotTableBeforeCommitChanges(sh *ole.DispatchClass, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) 
-	SheetPivotTableBeforeDiscardChanges(sh *ole.DispatchClass, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32) 
+	SheetPivotTableAfterValueChange(sh *win32.IUnknown, targetPivotTable *PivotTable, targetRange *Range) 
+	SheetPivotTableBeforeAllocateChanges(sh *win32.IUnknown, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) 
+	SheetPivotTableBeforeCommitChanges(sh *win32.IUnknown, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) 
+	SheetPivotTableBeforeDiscardChanges(sh *win32.IUnknown, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32) 
 	ProtectedViewWindowOpen(pvw *ProtectedViewWindow) 
 	ProtectedViewWindowBeforeEdit(pvw *ProtectedViewWindow, cancel *win32.VARIANT_BOOL) 
 	ProtectedViewWindowBeforeClose(pvw *ProtectedViewWindow, reason int32, cancel *win32.VARIANT_BOOL) 
@@ -74,27 +74,27 @@ type AppEventsHandlers struct {
 	GetIDsOfNames_ func(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) 
 	Invoke_ func(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) 
 	NewWorkbook func(wb *Workbook) 
-	SheetSelectionChange func(sh *ole.DispatchClass, target *Range) 
-	SheetBeforeDoubleClick func(sh *ole.DispatchClass, target *Range, cancel *win32.VARIANT_BOOL) 
-	SheetBeforeRightClick func(sh *ole.DispatchClass, target *Range, cancel *win32.VARIANT_BOOL) 
-	SheetActivate func(sh *ole.DispatchClass) 
-	SheetDeactivate func(sh *ole.DispatchClass) 
-	SheetCalculate func(sh *ole.DispatchClass) 
-	SheetChange func(sh *ole.DispatchClass, target *Range) 
+	SheetSelectionChange func(sh *win32.IUnknown, target *Range) 
+	SheetBeforeDoubleClick func(sh *win32.IUnknown, target *Range, cancel *win32.VARIANT_BOOL) 
+	SheetBeforeRightClick func(sh *win32.IUnknown, target *Range, cancel *win32.VARIANT_BOOL) 
+	SheetActivate func(sh *win32.IUnknown) 
+	SheetDeactivate func(sh *win32.IUnknown) 
+	SheetCalculate func(sh *win32.IUnknown) 
+	SheetChange func(sh *win32.IUnknown, target *Range) 
 	WorkbookOpen func(wb *Workbook) 
 	WorkbookActivate func(wb *Workbook) 
 	WorkbookDeactivate func(wb *Workbook) 
 	WorkbookBeforeClose func(wb *Workbook, cancel *win32.VARIANT_BOOL) 
 	WorkbookBeforeSave func(wb *Workbook, saveAsUI bool, cancel *win32.VARIANT_BOOL) 
 	WorkbookBeforePrint func(wb *Workbook, cancel *win32.VARIANT_BOOL) 
-	WorkbookNewSheet func(wb *Workbook, sh *ole.DispatchClass) 
+	WorkbookNewSheet func(wb *Workbook, sh *win32.IUnknown) 
 	WorkbookAddinInstall func(wb *Workbook) 
 	WorkbookAddinUninstall func(wb *Workbook) 
 	WindowResize func(wb *Workbook, wn *Window) 
 	WindowActivate func(wb *Workbook, wn *Window) 
 	WindowDeactivate func(wb *Workbook, wn *Window) 
-	SheetFollowHyperlink func(sh *ole.DispatchClass, target *Hyperlink) 
-	SheetPivotTableUpdate func(sh *ole.DispatchClass, target *PivotTable) 
+	SheetFollowHyperlink func(sh *win32.IUnknown, target *Hyperlink) 
+	SheetPivotTableUpdate func(sh *win32.IUnknown, target *PivotTable) 
 	WorkbookPivotTableCloseConnection func(wb *Workbook, target *PivotTable) 
 	WorkbookPivotTableOpenConnection func(wb *Workbook, target *PivotTable) 
 	WorkbookSync func(wb *Workbook, syncEventType int32) 
@@ -104,10 +104,10 @@ type AppEventsHandlers struct {
 	WorkbookAfterXmlExport func(wb *Workbook, map_ *XmlMap, url string, result int32) 
 	WorkbookRowsetComplete func(wb *Workbook, description string, sheet string, success bool) 
 	AfterCalculate func() 
-	SheetPivotTableAfterValueChange func(sh *ole.DispatchClass, targetPivotTable *PivotTable, targetRange *Range) 
-	SheetPivotTableBeforeAllocateChanges func(sh *ole.DispatchClass, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) 
-	SheetPivotTableBeforeCommitChanges func(sh *ole.DispatchClass, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) 
-	SheetPivotTableBeforeDiscardChanges func(sh *ole.DispatchClass, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32) 
+	SheetPivotTableAfterValueChange func(sh *win32.IUnknown, targetPivotTable *PivotTable, targetRange *Range) 
+	SheetPivotTableBeforeAllocateChanges func(sh *win32.IUnknown, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) 
+	SheetPivotTableBeforeCommitChanges func(sh *win32.IUnknown, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) 
+	SheetPivotTableBeforeDiscardChanges func(sh *win32.IUnknown, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32) 
 	ProtectedViewWindowOpen func(pvw *ProtectedViewWindow) 
 	ProtectedViewWindowBeforeEdit func(pvw *ProtectedViewWindow, cancel *win32.VARIANT_BOOL) 
 	ProtectedViewWindowBeforeClose func(pvw *ProtectedViewWindow, reason int32, cancel *win32.VARIANT_BOOL) 
@@ -174,43 +174,43 @@ func (this *AppEventsDispImpl) NewWorkbook(wb *Workbook) {
 	}
 }
 
-func (this *AppEventsDispImpl) SheetSelectionChange(sh *ole.DispatchClass, target *Range) {
+func (this *AppEventsDispImpl) SheetSelectionChange(sh *win32.IUnknown, target *Range) {
 	if this.Handlers.SheetSelectionChange != nil {
 		this.Handlers.SheetSelectionChange(sh, target)
 	}
 }
 
-func (this *AppEventsDispImpl) SheetBeforeDoubleClick(sh *ole.DispatchClass, target *Range, cancel *win32.VARIANT_BOOL) {
+func (this *AppEventsDispImpl) SheetBeforeDoubleClick(sh *win32.IUnknown, target *Range, cancel *win32.VARIANT_BOOL) {
 	if this.Handlers.SheetBeforeDoubleClick != nil {
 		this.Handlers.SheetBeforeDoubleClick(sh, target, cancel)
 	}
 }
 
-func (this *AppEventsDispImpl) SheetBeforeRightClick(sh *ole.DispatchClass, target *Range, cancel *win32.VARIANT_BOOL) {
+func (this *AppEventsDispImpl) SheetBeforeRightClick(sh *win32.IUnknown, target *Range, cancel *win32.VARIANT_BOOL) {
 	if this.Handlers.SheetBeforeRightClick != nil {
 		this.Handlers.SheetBeforeRightClick(sh, target, cancel)
 	}
 }
 
-func (this *AppEventsDispImpl) SheetActivate(sh *ole.DispatchClass) {
+func (this *AppEventsDispImpl) SheetActivate(sh *win32.IUnknown) {
 	if this.Handlers.SheetActivate != nil {
 		this.Handlers.SheetActivate(sh)
 	}
 }
 
-func (this *AppEventsDispImpl) SheetDeactivate(sh *ole.DispatchClass) {
+func (this *AppEventsDispImpl) SheetDeactivate(sh *win32.IUnknown) {
 	if this.Handlers.SheetDeactivate != nil {
 		this.Handlers.SheetDeactivate(sh)
 	}
 }
 
-func (this *AppEventsDispImpl) SheetCalculate(sh *ole.DispatchClass) {
+func (this *AppEventsDispImpl) SheetCalculate(sh *win32.IUnknown) {
 	if this.Handlers.SheetCalculate != nil {
 		this.Handlers.SheetCalculate(sh)
 	}
 }
 
-func (this *AppEventsDispImpl) SheetChange(sh *ole.DispatchClass, target *Range) {
+func (this *AppEventsDispImpl) SheetChange(sh *win32.IUnknown, target *Range) {
 	if this.Handlers.SheetChange != nil {
 		this.Handlers.SheetChange(sh, target)
 	}
@@ -252,7 +252,7 @@ func (this *AppEventsDispImpl) WorkbookBeforePrint(wb *Workbook, cancel *win32.V
 	}
 }
 
-func (this *AppEventsDispImpl) WorkbookNewSheet(wb *Workbook, sh *ole.DispatchClass) {
+func (this *AppEventsDispImpl) WorkbookNewSheet(wb *Workbook, sh *win32.IUnknown) {
 	if this.Handlers.WorkbookNewSheet != nil {
 		this.Handlers.WorkbookNewSheet(wb, sh)
 	}
@@ -288,13 +288,13 @@ func (this *AppEventsDispImpl) WindowDeactivate(wb *Workbook, wn *Window) {
 	}
 }
 
-func (this *AppEventsDispImpl) SheetFollowHyperlink(sh *ole.DispatchClass, target *Hyperlink) {
+func (this *AppEventsDispImpl) SheetFollowHyperlink(sh *win32.IUnknown, target *Hyperlink) {
 	if this.Handlers.SheetFollowHyperlink != nil {
 		this.Handlers.SheetFollowHyperlink(sh, target)
 	}
 }
 
-func (this *AppEventsDispImpl) SheetPivotTableUpdate(sh *ole.DispatchClass, target *PivotTable) {
+func (this *AppEventsDispImpl) SheetPivotTableUpdate(sh *win32.IUnknown, target *PivotTable) {
 	if this.Handlers.SheetPivotTableUpdate != nil {
 		this.Handlers.SheetPivotTableUpdate(sh, target)
 	}
@@ -354,25 +354,25 @@ func (this *AppEventsDispImpl) AfterCalculate() {
 	}
 }
 
-func (this *AppEventsDispImpl) SheetPivotTableAfterValueChange(sh *ole.DispatchClass, targetPivotTable *PivotTable, targetRange *Range) {
+func (this *AppEventsDispImpl) SheetPivotTableAfterValueChange(sh *win32.IUnknown, targetPivotTable *PivotTable, targetRange *Range) {
 	if this.Handlers.SheetPivotTableAfterValueChange != nil {
 		this.Handlers.SheetPivotTableAfterValueChange(sh, targetPivotTable, targetRange)
 	}
 }
 
-func (this *AppEventsDispImpl) SheetPivotTableBeforeAllocateChanges(sh *ole.DispatchClass, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) {
+func (this *AppEventsDispImpl) SheetPivotTableBeforeAllocateChanges(sh *win32.IUnknown, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) {
 	if this.Handlers.SheetPivotTableBeforeAllocateChanges != nil {
 		this.Handlers.SheetPivotTableBeforeAllocateChanges(sh, targetPivotTable, valueChangeStart, valueChangeEnd, cancel)
 	}
 }
 
-func (this *AppEventsDispImpl) SheetPivotTableBeforeCommitChanges(sh *ole.DispatchClass, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) {
+func (this *AppEventsDispImpl) SheetPivotTableBeforeCommitChanges(sh *win32.IUnknown, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) {
 	if this.Handlers.SheetPivotTableBeforeCommitChanges != nil {
 		this.Handlers.SheetPivotTableBeforeCommitChanges(sh, targetPivotTable, valueChangeStart, valueChangeEnd, cancel)
 	}
 }
 
-func (this *AppEventsDispImpl) SheetPivotTableBeforeDiscardChanges(sh *ole.DispatchClass, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32) {
+func (this *AppEventsDispImpl) SheetPivotTableBeforeDiscardChanges(sh *win32.IUnknown, targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32) {
 	if this.Handlers.SheetPivotTableBeforeDiscardChanges != nil {
 		this.Handlers.SheetPivotTableBeforeDiscardChanges(sh, targetPivotTable, valueChangeStart, valueChangeEnd)
 	}
@@ -500,42 +500,42 @@ func (this *AppEventsImpl) Invoke(dispIdMember int32, riid *syscall.GUID, lcid u
 		return win32.S_OK
 	case 1558:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 2)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		p2 := (*Range)(vArgs[1].ToPointer())
 		this.DispImpl.SheetSelectionChange(p1, p2)
 		return win32.S_OK
 	case 1559:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 3)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		p2 := (*Range)(vArgs[1].ToPointer())
 		p3 := (*win32.VARIANT_BOOL)(vArgs[2].ToPointer())
 		this.DispImpl.SheetBeforeDoubleClick(p1, p2, p3)
 		return win32.S_OK
 	case 1560:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 3)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		p2 := (*Range)(vArgs[1].ToPointer())
 		p3 := (*win32.VARIANT_BOOL)(vArgs[2].ToPointer())
 		this.DispImpl.SheetBeforeRightClick(p1, p2, p3)
 		return win32.S_OK
 	case 1561:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 1)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		this.DispImpl.SheetActivate(p1)
 		return win32.S_OK
 	case 1562:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 1)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		this.DispImpl.SheetDeactivate(p1)
 		return win32.S_OK
 	case 1563:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 1)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		this.DispImpl.SheetCalculate(p1)
 		return win32.S_OK
 	case 1564:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 2)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		p2 := (*Range)(vArgs[1].ToPointer())
 		this.DispImpl.SheetChange(p1, p2)
 		return win32.S_OK
@@ -576,7 +576,7 @@ func (this *AppEventsImpl) Invoke(dispIdMember int32, riid *syscall.GUID, lcid u
 	case 1573:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 2)
 		p1 := (*Workbook)(vArgs[0].ToPointer())
-		p2 := (*ole.DispatchClass)(vArgs[1].ToPointer())
+		p2 := (*win32.IUnknown)(vArgs[1].ToPointer())
 		this.DispImpl.WorkbookNewSheet(p1, p2)
 		return win32.S_OK
 	case 1574:
@@ -609,13 +609,13 @@ func (this *AppEventsImpl) Invoke(dispIdMember int32, riid *syscall.GUID, lcid u
 		return win32.S_OK
 	case 1854:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 2)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		p2 := (*Hyperlink)(vArgs[1].ToPointer())
 		this.DispImpl.SheetFollowHyperlink(p1, p2)
 		return win32.S_OK
 	case 2157:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 2)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		p2 := (*PivotTable)(vArgs[1].ToPointer())
 		this.DispImpl.SheetPivotTableUpdate(p1, p2)
 		return win32.S_OK
@@ -683,14 +683,14 @@ func (this *AppEventsImpl) Invoke(dispIdMember int32, riid *syscall.GUID, lcid u
 		return win32.S_OK
 	case 2895:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 3)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		p2 := (*PivotTable)(vArgs[1].ToPointer())
 		p3 := (*Range)(vArgs[2].ToPointer())
 		this.DispImpl.SheetPivotTableAfterValueChange(p1, p2, p3)
 		return win32.S_OK
 	case 2896:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 5)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		p2 := (*PivotTable)(vArgs[1].ToPointer())
 		p3, _ := vArgs[2].ToInt32()
 		p4, _ := vArgs[3].ToInt32()
@@ -699,7 +699,7 @@ func (this *AppEventsImpl) Invoke(dispIdMember int32, riid *syscall.GUID, lcid u
 		return win32.S_OK
 	case 2897:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 5)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		p2 := (*PivotTable)(vArgs[1].ToPointer())
 		p3, _ := vArgs[2].ToInt32()
 		p4, _ := vArgs[3].ToInt32()
@@ -708,7 +708,7 @@ func (this *AppEventsImpl) Invoke(dispIdMember int32, riid *syscall.GUID, lcid u
 		return win32.S_OK
 	case 2898:
 		vArgs, _ := ole.ProcessInvokeArgs(pDispParams, 4)
-		p1 := (*ole.DispatchClass)(vArgs[0].ToPointer())
+		p1 := (*win32.IUnknown)(vArgs[0].ToPointer())
 		p2 := (*PivotTable)(vArgs[1].ToPointer())
 		p3, _ := vArgs[2].ToInt32()
 		p4, _ := vArgs[3].ToInt32()

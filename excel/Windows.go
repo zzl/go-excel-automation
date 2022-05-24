@@ -17,6 +17,9 @@ type Windows struct {
 }
 
 func NewWindows(pDisp *win32.IDispatch, addRef bool, scoped bool) *Windows {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Windows{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewWindows(pDisp *win32.IDispatch, addRef bool, scoped bool) *Windows {
 }
 
 func WindowsFromVar(v ole.Variant) *Windows {
-	return NewWindows(v.PdispValVal(), false, false)
+	return NewWindows(v.IDispatch(), false, false)
 }
 
 func (this *Windows) IID() *syscall.GUID {
@@ -43,78 +46,78 @@ func (this *Windows) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Windows) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *Windows) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Windows) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Windows) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *Windows) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *Windows) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *Windows) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *Windows) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *Windows) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *Windows) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Windows_Arrange_OptArgs= []string{
-	"ActiveWorkbook", "SyncHorizontal", "SyncVertical", 
+	"ArrangeStyle", "ActiveWorkbook", "SyncHorizontal", "SyncVertical", 
 }
 
-func (this *Windows) Arrange(arrangeStyle int32, optArgs ...interface{}) ole.Variant {
+func (this *Windows) Arrange(optArgs ...interface{}) ole.Variant {
 	optArgs = ole.ProcessOptArgs(Windows_Arrange_OptArgs, optArgs)
-	retVal := this.Call(0x0000027e, []interface{}{arrangeStyle}, optArgs...)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x0000027e, nil, optArgs...)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Windows) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
 func (this *Windows) Item(index interface{}) *Window {
-	retVal := this.PropGet(0x000000aa, []interface{}{index})
-	return NewWindow(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000000aa, []interface{}{index})
+	return NewWindow(retVal.IDispatch(), false, true)
 }
 
 func (this *Windows) NewEnum_() *com.UnknownClass {
-	retVal := this.PropGet(-4, nil)
+	retVal, _ := this.PropGet(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 
@@ -140,32 +143,31 @@ func (this *Windows) ForEach(action func(item *Window) bool) {
 }
 
 func (this *Windows) Default_(index interface{}) *Window {
-	retVal := this.PropGet(0x00000000, []interface{}{index})
-	return NewWindow(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000000, []interface{}{index})
+	return NewWindow(retVal.IDispatch(), false, true)
 }
 
 func (this *Windows) CompareSideBySideWith(windowName interface{}) bool {
-	retVal := this.Call(0x000008c6, []interface{}{windowName})
+	retVal, _ := this.Call(0x000008c6, []interface{}{windowName})
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Windows) BreakSideBySide() bool {
-	retVal := this.Call(0x000008c8, nil)
+	retVal, _ := this.Call(0x000008c8, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Windows) SyncScrollingSideBySide() bool {
-	retVal := this.PropGet(0x000008c9, nil)
+	retVal, _ := this.PropGet(0x000008c9, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *Windows) SetSyncScrollingSideBySide(rhs bool)  {
-	retVal := this.PropPut(0x000008c9, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000008c9, []interface{}{rhs})
 }
 
 func (this *Windows) ResetPositionsSideBySide()  {
-	retVal := this.Call(0x000008ca, nil)
+	retVal, _ := this.Call(0x000008ca, nil)
 	_= retVal
 }
 

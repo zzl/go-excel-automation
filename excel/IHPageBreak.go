@@ -16,6 +16,9 @@ type IHPageBreak struct {
 }
 
 func NewIHPageBreak(pUnk *win32.IUnknown, addRef bool, scoped bool) *IHPageBreak {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IHPageBreak)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IHPageBreak) IID() *syscall.GUID {
 func (this *IHPageBreak) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -48,9 +49,7 @@ func (this *IHPageBreak) GetCreator(rhs *int32) com.Error {
 func (this *IHPageBreak) GetParent(rhs **Worksheet) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -87,9 +86,7 @@ func (this *IHPageBreak) GetExtent(rhs *int32) com.Error {
 func (this *IHPageBreak) GetLocation(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[15]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

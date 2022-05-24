@@ -16,6 +16,9 @@ type IUserAccess struct {
 }
 
 func NewIUserAccess(pUnk *win32.IUnknown, addRef bool, scoped bool) *IUserAccess {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IUserAccess)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

@@ -17,6 +17,9 @@ type Modules struct {
 }
 
 func NewModules(pDisp *win32.IDispatch, addRef bool, scoped bool) *Modules {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Modules{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewModules(pDisp *win32.IDispatch, addRef bool, scoped bool) *Modules {
 }
 
 func ModulesFromVar(v ole.Variant) *Modules {
-	return NewModules(v.PdispValVal(), false, false)
+	return NewModules(v.IDispatch(), false, false)
 }
 
 func (this *Modules) IID() *syscall.GUID {
@@ -43,53 +46,53 @@ func (this *Modules) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Modules) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *Modules) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Modules) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Modules) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *Modules) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *Modules) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *Modules) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *Modules) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *Modules) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *Modules) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Modules_Add_OptArgs= []string{
@@ -98,8 +101,8 @@ var Modules_Add_OptArgs= []string{
 
 func (this *Modules) Add(optArgs ...interface{}) *Module {
 	optArgs = ole.ProcessOptArgs(Modules_Add_OptArgs, optArgs)
-	retVal := this.Call(0x000000b5, nil, optArgs...)
-	return NewModule(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000b5, nil, optArgs...)
+	return NewModule(retVal.IDispatch(), false, true)
 }
 
 var Modules_Copy_OptArgs= []string{
@@ -108,28 +111,28 @@ var Modules_Copy_OptArgs= []string{
 
 func (this *Modules) Copy(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Modules_Copy_OptArgs, optArgs)
-	retVal := this.Call(0x00000227, nil, optArgs...)
+	retVal, _ := this.Call(0x00000227, nil, optArgs...)
 	_= retVal
 }
 
 func (this *Modules) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
 func (this *Modules) Delete()  {
-	retVal := this.Call(0x00000075, nil)
+	retVal, _ := this.Call(0x00000075, nil)
 	_= retVal
 }
 
 func (this *Modules) Dummy7_()  {
-	retVal := this.Call(0x00010007, nil)
+	retVal, _ := this.Call(0x00010007, nil)
 	_= retVal
 }
 
 func (this *Modules) Item(index interface{}) *ole.DispatchClass {
-	retVal := this.PropGet(0x000000aa, []interface{}{index})
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x000000aa, []interface{}{index})
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Modules_Move_OptArgs= []string{
@@ -138,12 +141,12 @@ var Modules_Move_OptArgs= []string{
 
 func (this *Modules) Move(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Modules_Move_OptArgs, optArgs)
-	retVal := this.Call(0x0000027d, nil, optArgs...)
+	retVal, _ := this.Call(0x0000027d, nil, optArgs...)
 	_= retVal
 }
 
 func (this *Modules) NewEnum_() *com.UnknownClass {
-	retVal := this.PropGet(-4, nil)
+	retVal, _ := this.PropGet(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 
@@ -175,12 +178,12 @@ var Modules_PrintOut___OptArgs= []string{
 
 func (this *Modules) PrintOut__(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Modules_PrintOut___OptArgs, optArgs)
-	retVal := this.Call(0x00000389, nil, optArgs...)
+	retVal, _ := this.Call(0x00000389, nil, optArgs...)
 	_= retVal
 }
 
 func (this *Modules) Dummy12_()  {
-	retVal := this.Call(0x0001000c, nil)
+	retVal, _ := this.Call(0x0001000c, nil)
 	_= retVal
 }
 
@@ -190,34 +193,33 @@ var Modules_Select_OptArgs= []string{
 
 func (this *Modules) Select(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Modules_Select_OptArgs, optArgs)
-	retVal := this.Call(0x000000eb, nil, optArgs...)
+	retVal, _ := this.Call(0x000000eb, nil, optArgs...)
 	_= retVal
 }
 
 func (this *Modules) HPageBreaks() *HPageBreaks {
-	retVal := this.PropGet(0x0000058a, nil)
-	return NewHPageBreaks(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000058a, nil)
+	return NewHPageBreaks(retVal.IDispatch(), false, true)
 }
 
 func (this *Modules) VPageBreaks() *VPageBreaks {
-	retVal := this.PropGet(0x0000058b, nil)
-	return NewVPageBreaks(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000058b, nil)
+	return NewVPageBreaks(retVal.IDispatch(), false, true)
 }
 
 func (this *Modules) Visible() ole.Variant {
-	retVal := this.PropGet(0x0000022e, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x0000022e, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *Modules) SetVisible(rhs interface{})  {
-	retVal := this.PropPut(0x0000022e, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
 func (this *Modules) Default_(index interface{}) *ole.DispatchClass {
-	retVal := this.PropGet(0x00000000, []interface{}{index})
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000000, []interface{}{index})
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 var Modules_PrintOut__OptArgs= []string{
@@ -227,7 +229,7 @@ var Modules_PrintOut__OptArgs= []string{
 
 func (this *Modules) PrintOut_(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Modules_PrintOut__OptArgs, optArgs)
-	retVal := this.Call(0x000006ec, nil, optArgs...)
+	retVal, _ := this.Call(0x000006ec, nil, optArgs...)
 	_= retVal
 }
 
@@ -238,7 +240,7 @@ var Modules_PrintOut_OptArgs= []string{
 
 func (this *Modules) PrintOut(optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(Modules_PrintOut_OptArgs, optArgs)
-	retVal := this.Call(0x00000939, nil, optArgs...)
+	retVal, _ := this.Call(0x00000939, nil, optArgs...)
 	_= retVal
 }
 

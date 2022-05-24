@@ -16,6 +16,9 @@ type IODBCError struct {
 }
 
 func NewIODBCError(pUnk *win32.IUnknown, addRef bool, scoped bool) *IODBCError {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IODBCError)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IODBCError) IID() *syscall.GUID {
 func (this *IODBCError) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *IODBCError) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IODBCError) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IODBCError) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

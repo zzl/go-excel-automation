@@ -17,6 +17,9 @@ type ICheckBoxes struct {
 }
 
 func NewICheckBoxes(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICheckBoxes {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICheckBoxes)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *ICheckBoxes) IID() *syscall.GUID {
 func (this *ICheckBoxes) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *ICheckBoxes) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ICheckBoxes) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *ICheckBoxes) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -90,12 +89,10 @@ func (this *ICheckBoxes) Delete(rhs *ole.Variant) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ICheckBoxes) Duplicate(rhs **com.UnknownClass) com.Error {
+func (this *ICheckBoxes) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -255,9 +252,7 @@ func (this *ICheckBoxes) GetZOrder(rhs *int32) com.Error {
 func (this *ICheckBoxes) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -276,9 +271,7 @@ func (this *ICheckBoxes) SetCaption(rhs string) com.Error {
 func (this *ICheckBoxes) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[46]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -327,9 +320,7 @@ func (this *ICheckBoxes) SetAccelerator(rhs interface{}) com.Error {
 func (this *ICheckBoxes) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[54]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -360,9 +351,7 @@ func (this *ICheckBoxes) SetDisplay3DShading(rhs bool) com.Error {
 func (this *ICheckBoxes) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[59]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -405,9 +394,7 @@ func (this *ICheckBoxes) SetValue(rhs interface{}) com.Error {
 func (this *ICheckBoxes) Add(left float64, top float64, width float64, height float64, rhs **CheckBox) com.Error {
 	addr := (*this.LpVtbl)[66]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(left), uintptr(top), uintptr(width), uintptr(height), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -420,27 +407,21 @@ func (this *ICheckBoxes) GetCount(rhs *int32) com.Error {
 func (this *ICheckBoxes) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[68]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *ICheckBoxes) Item(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *ICheckBoxes) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[69]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *ICheckBoxes) NewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *ICheckBoxes) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[70]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

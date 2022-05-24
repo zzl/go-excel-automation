@@ -17,6 +17,9 @@ type IInterior struct {
 }
 
 func NewIInterior(pUnk *win32.IUnknown, addRef bool, scoped bool) *IInterior {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IInterior)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IInterior) IID() *syscall.GUID {
 func (this *IInterior) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IInterior) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IInterior) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IInterior) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -175,12 +174,10 @@ func (this *IInterior) SetPatternTintAndShade(rhs interface{}) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IInterior) GetGradient(rhs **com.UnknownClass) com.Error {
+func (this *IInterior) GetGradient(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[30]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

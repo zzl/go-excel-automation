@@ -17,6 +17,9 @@ type PivotFilter struct {
 }
 
 func NewPivotFilter(pDisp *win32.IDispatch, addRef bool, scoped bool) *PivotFilter {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &PivotFilter{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewPivotFilter(pDisp *win32.IDispatch, addRef bool, scoped bool) *PivotFilt
 }
 
 func PivotFilterFromVar(v ole.Variant) *PivotFilter {
-	return NewPivotFilter(v.PdispValVal(), false, false)
+	return NewPivotFilter(v.IDispatch(), false, false)
 }
 
 func (this *PivotFilter) IID() *syscall.GUID {
@@ -43,124 +46,123 @@ func (this *PivotFilter) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *PivotFilter) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *PivotFilter) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *PivotFilter) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *PivotFilter) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *PivotFilter) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *PivotFilter) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *PivotFilter) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *PivotFilter) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *PivotFilter) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *PivotFilter) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *PivotFilter) Order() int32 {
-	retVal := this.PropGet(0x000000c0, nil)
+	retVal, _ := this.PropGet(0x000000c0, nil)
 	return retVal.LValVal()
 }
 
 func (this *PivotFilter) SetOrder(rhs int32)  {
-	retVal := this.PropPut(0x000000c0, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000000c0, []interface{}{rhs})
 }
 
 func (this *PivotFilter) FilterType() int32 {
-	retVal := this.PropGet(0x00000a7e, nil)
+	retVal, _ := this.PropGet(0x00000a7e, nil)
 	return retVal.LValVal()
 }
 
 func (this *PivotFilter) Name() string {
-	retVal := this.PropGet(0x0000006e, nil)
+	retVal, _ := this.PropGet(0x0000006e, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *PivotFilter) Description() string {
-	retVal := this.PropGet(0x000000da, nil)
+	retVal, _ := this.PropGet(0x000000da, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *PivotFilter) Delete()  {
-	retVal := this.Call(0x00000075, nil)
+	retVal, _ := this.Call(0x00000075, nil)
 	_= retVal
 }
 
 func (this *PivotFilter) Active() bool {
-	retVal := this.PropGet(0x00000908, nil)
+	retVal, _ := this.PropGet(0x00000908, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *PivotFilter) PivotField() *PivotField {
-	retVal := this.PropGet(0x000002db, nil)
-	return NewPivotField(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000002db, nil)
+	return NewPivotField(retVal.IDispatch(), false, true)
 }
 
 func (this *PivotFilter) DataField() *PivotField {
-	retVal := this.PropGet(0x0000082b, nil)
-	return NewPivotField(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000082b, nil)
+	return NewPivotField(retVal.IDispatch(), false, true)
 }
 
 func (this *PivotFilter) DataCubeField() *CubeField {
-	retVal := this.PropGet(0x00000a7f, nil)
-	return NewCubeField(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000a7f, nil)
+	return NewCubeField(retVal.IDispatch(), false, true)
 }
 
 func (this *PivotFilter) Value1() ole.Variant {
-	retVal := this.PropGet(0x00000a80, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x00000a80, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *PivotFilter) Value2() ole.Variant {
-	retVal := this.PropGet(0x0000056c, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x0000056c, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *PivotFilter) MemberPropertyField() *PivotField {
-	retVal := this.PropGet(0x00000a81, nil)
-	return NewPivotField(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000a81, nil)
+	return NewPivotField(retVal.IDispatch(), false, true)
 }
 
 func (this *PivotFilter) IsMemberPropertyFilter() bool {
-	retVal := this.PropGet(0x00000a82, nil)
+	retVal, _ := this.PropGet(0x00000a82, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 

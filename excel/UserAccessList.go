@@ -17,6 +17,9 @@ type UserAccessList struct {
 }
 
 func NewUserAccessList(pDisp *win32.IDispatch, addRef bool, scoped bool) *UserAccessList {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &UserAccessList{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewUserAccessList(pDisp *win32.IDispatch, addRef bool, scoped bool) *UserAc
 }
 
 func UserAccessListFromVar(v ole.Variant) *UserAccessList {
-	return NewUserAccessList(v.PdispValVal(), false, false)
+	return NewUserAccessList(v.IDispatch(), false, false)
 }
 
 func (this *UserAccessList) IID() *syscall.GUID {
@@ -43,67 +46,67 @@ func (this *UserAccessList) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *UserAccessList) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *UserAccessList) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *UserAccessList) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *UserAccessList) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *UserAccessList) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *UserAccessList) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *UserAccessList) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *UserAccessList) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
 func (this *UserAccessList) Item(index interface{}) *UserAccess {
-	retVal := this.PropGet(0x000000aa, []interface{}{index})
-	return NewUserAccess(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000000aa, []interface{}{index})
+	return NewUserAccess(retVal.IDispatch(), false, true)
 }
 
 func (this *UserAccessList) Add(name string, allowEdit bool) *UserAccess {
-	retVal := this.Call(0x000000b5, []interface{}{name, allowEdit})
-	return NewUserAccess(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x000000b5, []interface{}{name, allowEdit})
+	return NewUserAccess(retVal.IDispatch(), false, true)
 }
 
 func (this *UserAccessList) DeleteAll()  {
-	retVal := this.Call(0x000008bf, nil)
+	retVal, _ := this.Call(0x000008bf, nil)
 	_= retVal
 }
 
 func (this *UserAccessList) Default_(index interface{}) *UserAccess {
-	retVal := this.PropGet(0x00000000, []interface{}{index})
-	return NewUserAccess(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000000, []interface{}{index})
+	return NewUserAccess(retVal.IDispatch(), false, true)
 }
 
 func (this *UserAccessList) NewEnum_() *com.UnknownClass {
-	retVal := this.PropGet(-4, nil)
+	retVal, _ := this.PropGet(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 

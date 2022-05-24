@@ -16,6 +16,9 @@ type IChartEvents struct {
 }
 
 func NewIChartEvents(pUnk *win32.IUnknown, addRef bool, scoped bool) *IChartEvents {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IChartEvents)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

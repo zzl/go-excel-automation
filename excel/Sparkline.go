@@ -17,6 +17,9 @@ type Sparkline struct {
 }
 
 func NewSparkline(pDisp *win32.IDispatch, addRef bool, scoped bool) *Sparkline {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Sparkline{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewSparkline(pDisp *win32.IDispatch, addRef bool, scoped bool) *Sparkline {
 }
 
 func SparklineFromVar(v ole.Variant) *Sparkline {
-	return NewSparkline(v.PdispValVal(), false, false)
+	return NewSparkline(v.IDispatch(), false, false)
 }
 
 func (this *Sparkline) IID() *syscall.GUID {
@@ -43,82 +46,80 @@ func (this *Sparkline) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *Sparkline) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *Sparkline) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Sparkline) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *Sparkline) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *Sparkline) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *Sparkline) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *Sparkline) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *Sparkline) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *Sparkline) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *Sparkline) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *Sparkline) Location() *Range {
-	retVal := this.PropGet(0x00000575, nil)
-	return NewRange(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000575, nil)
+	return NewRange(retVal.IDispatch(), false, true)
 }
 
 func (this *Sparkline) SetLocation(rhs *Range)  {
-	retVal := this.PropPutRef(0x00000575, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPutRef(0x00000575, []interface{}{rhs})
 }
 
 func (this *Sparkline) SourceData() string {
-	retVal := this.PropGet(0x000002ae, nil)
+	retVal, _ := this.PropGet(0x000002ae, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *Sparkline) SetSourceData(rhs string)  {
-	retVal := this.PropPut(0x000002ae, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000002ae, []interface{}{rhs})
 }
 
 func (this *Sparkline) ModifyLocation(range_ *Range)  {
-	retVal := this.Call(0x00000b85, []interface{}{range_})
+	retVal, _ := this.Call(0x00000b85, []interface{}{range_})
 	_= retVal
 }
 
 func (this *Sparkline) ModifySourceData(formula string)  {
-	retVal := this.Call(0x00000b86, []interface{}{formula})
+	retVal, _ := this.Call(0x00000b86, []interface{}{formula})
 	_= retVal
 }
 

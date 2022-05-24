@@ -16,6 +16,9 @@ type IServerViewableItems struct {
 }
 
 func NewIServerViewableItems(pUnk *win32.IUnknown, addRef bool, scoped bool) *IServerViewableItems {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IServerViewableItems)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IServerViewableItems) IID() *syscall.GUID {
 func (this *IServerViewableItems) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *IServerViewableItems) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IServerViewableItems) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IServerViewableItems) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -60,12 +59,10 @@ func (this *IServerViewableItems) GetCount(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IServerViewableItems) Add(obj interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IServerViewableItems) Add(obj interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&obj)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -81,30 +78,24 @@ func (this *IServerViewableItems) DeleteAll() com.Error {
 	return com.Error(ret)
 }
 
-func (this *IServerViewableItems) Item(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IServerViewableItems) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IServerViewableItems) GetDefault_(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IServerViewableItems) GetDefault_(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[15]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IServerViewableItems) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IServerViewableItems) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

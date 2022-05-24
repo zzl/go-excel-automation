@@ -16,6 +16,9 @@ type OLEObject struct {
 }
 
 func NewOLEObject(pDisp *win32.IDispatch, addRef bool, scoped bool) *OLEObject {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &OLEObject{OLEObject_{ole.OleClient{pDisp}}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewOLEObject(pDisp *win32.IDispatch, addRef bool, scoped bool) *OLEObject {
 }
 
 func NewOLEObjectFromVar(v ole.Variant, addRef bool, scoped bool) *OLEObject {
-	return NewOLEObject(v.PdispValVal(), addRef, scoped)
+	return NewOLEObject(v.IDispatch(), addRef, scoped)
 }
 
 func NewOLEObjectInstance(scoped bool) (*OLEObject, error) {

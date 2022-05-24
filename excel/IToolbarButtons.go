@@ -16,6 +16,9 @@ type IToolbarButtons struct {
 }
 
 func NewIToolbarButtons(pUnk *win32.IUnknown, addRef bool, scoped bool) *IToolbarButtons {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IToolbarButtons)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IToolbarButtons) IID() *syscall.GUID {
 func (this *IToolbarButtons) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,21 +46,17 @@ func (this *IToolbarButtons) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IToolbarButtons) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IToolbarButtons) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IToolbarButtons) Add(button interface{}, before interface{}, onAction interface{}, pushed interface{}, enabled interface{}, statusBar interface{}, helpFile interface{}, helpContextID interface{}, rhs **ToolbarButton) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&button)), (uintptr)(unsafe.Pointer(&before)), (uintptr)(unsafe.Pointer(&onAction)), (uintptr)(unsafe.Pointer(&pushed)), (uintptr)(unsafe.Pointer(&enabled)), (uintptr)(unsafe.Pointer(&statusBar)), (uintptr)(unsafe.Pointer(&helpFile)), (uintptr)(unsafe.Pointer(&helpContextID)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -72,27 +69,21 @@ func (this *IToolbarButtons) GetCount(rhs *int32) com.Error {
 func (this *IToolbarButtons) GetItem(index int32, rhs **ToolbarButton) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(index), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IToolbarButtons) GetNewEnum_(rhs **com.UnknownClass) com.Error {
+func (this *IToolbarButtons) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IToolbarButtons) GetDefault_(index int32, rhs **ToolbarButton) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(index), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

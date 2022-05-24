@@ -17,6 +17,9 @@ type CubeFields struct {
 }
 
 func NewCubeFields(pDisp *win32.IDispatch, addRef bool, scoped bool) *CubeFields {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &CubeFields{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewCubeFields(pDisp *win32.IDispatch, addRef bool, scoped bool) *CubeFields
 }
 
 func CubeFieldsFromVar(v ole.Variant) *CubeFields {
-	return NewCubeFields(v.PdispValVal(), false, false)
+	return NewCubeFields(v.IDispatch(), false, false)
 }
 
 func (this *CubeFields) IID() *syscall.GUID {
@@ -43,37 +46,37 @@ func (this *CubeFields) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *CubeFields) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *CubeFields) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *CubeFields) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *CubeFields) Count() int32 {
-	retVal := this.PropGet(0x00000076, nil)
+	retVal, _ := this.PropGet(0x00000076, nil)
 	return retVal.LValVal()
 }
 
 func (this *CubeFields) Item(index interface{}) *CubeField {
-	retVal := this.PropGet(0x000000aa, []interface{}{index})
-	return NewCubeField(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x000000aa, []interface{}{index})
+	return NewCubeField(retVal.IDispatch(), false, true)
 }
 
 func (this *CubeFields) Default_(index interface{}) *CubeField {
-	retVal := this.PropGet(0x00000000, []interface{}{index})
-	return NewCubeField(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000000, []interface{}{index})
+	return NewCubeField(retVal.IDispatch(), false, true)
 }
 
 func (this *CubeFields) NewEnum_() *com.UnknownClass {
-	retVal := this.PropGet(-4, nil)
+	retVal, _ := this.PropGet(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 
@@ -99,7 +102,7 @@ func (this *CubeFields) ForEach(action func(item *CubeField) bool) {
 }
 
 func (this *CubeFields) AddSet(name string, caption string) *CubeField {
-	retVal := this.Call(0x0000088a, []interface{}{name, caption})
-	return NewCubeField(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x0000088a, []interface{}{name, caption})
+	return NewCubeField(retVal.IDispatch(), false, true)
 }
 

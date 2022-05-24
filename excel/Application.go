@@ -16,6 +16,9 @@ type Application struct {
 }
 
 func NewApplication(pDisp *win32.IDispatch, addRef bool, scoped bool) *Application {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &Application{Application_{ole.OleClient{pDisp}}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewApplication(pDisp *win32.IDispatch, addRef bool, scoped bool) *Applicati
 }
 
 func NewApplicationFromVar(v ole.Variant, addRef bool, scoped bool) *Application {
-	return NewApplication(v.PdispValVal(), addRef, scoped)
+	return NewApplication(v.IDispatch(), addRef, scoped)
 }
 
 func NewApplicationInstance(scoped bool) (*Application, error) {

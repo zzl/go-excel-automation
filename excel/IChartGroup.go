@@ -17,6 +17,9 @@ type IChartGroup struct {
 }
 
 func NewIChartGroup(pUnk *win32.IUnknown, addRef bool, scoped bool) *IChartGroup {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IChartGroup)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IChartGroup) IID() *syscall.GUID {
 func (this *IChartGroup) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IChartGroup) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IChartGroup) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IChartGroup) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -82,18 +81,14 @@ func (this *IChartGroup) SetDoughnutHoleSize(rhs int32) com.Error {
 func (this *IChartGroup) GetDownBars(rhs **DownBars) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IChartGroup) GetDropLines(rhs **DropLines) com.Error {
 	addr := (*this.LpVtbl)[15]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -184,9 +179,7 @@ func (this *IChartGroup) SetHasUpDownBars(rhs bool) com.Error {
 func (this *IChartGroup) GetHiLoLines(rhs **HiLoLines) com.Error {
 	addr := (*this.LpVtbl)[30]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -211,27 +204,21 @@ func (this *IChartGroup) SetOverlap(rhs int32) com.Error {
 func (this *IChartGroup) GetRadarAxisLabels(rhs **TickLabels) com.Error {
 	addr := (*this.LpVtbl)[34]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IChartGroup) SeriesCollection(index interface{}, rhs **com.UnknownClass) com.Error {
+func (this *IChartGroup) SeriesCollection(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[35]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IChartGroup) GetSeriesLines(rhs **SeriesLines) com.Error {
 	addr := (*this.LpVtbl)[36]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -262,9 +249,7 @@ func (this *IChartGroup) SetType(rhs int32) com.Error {
 func (this *IChartGroup) GetUpBars(rhs **UpBars) com.Error {
 	addr := (*this.LpVtbl)[41]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

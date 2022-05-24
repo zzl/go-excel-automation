@@ -17,6 +17,9 @@ type IQueryTable_ struct {
 }
 
 func NewIQueryTable_(pUnk *win32.IUnknown, addRef bool, scoped bool) *IQueryTable_ {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IQueryTable_)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IQueryTable_) IID() *syscall.GUID {
 func (this *IQueryTable_) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IQueryTable_) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IQueryTable_) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IQueryTable_) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -196,9 +195,7 @@ func (this *IQueryTable_) SetSavePassword(rhs bool) com.Error {
 func (this *IQueryTable_) GetDestination(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[33]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -241,9 +238,7 @@ func (this *IQueryTable_) SetPostText(rhs string) com.Error {
 func (this *IQueryTable_) GetResultRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[40]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -262,22 +257,18 @@ func (this *IQueryTable_) Refresh(backgroundQuery interface{}, rhs *win32.VARIAN
 func (this *IQueryTable_) GetParameters(rhs **Parameters) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IQueryTable_) GetRecordset(rhs **com.UnknownClass) com.Error {
+func (this *IQueryTable_) GetRecordset(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[44]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IQueryTable_) SetRecordset(rhs *ole.DispatchClass) com.Error {
+func (this *IQueryTable_) SetRecordset(rhs *win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[45]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
 	return com.Error(ret)
@@ -760,9 +751,7 @@ func (this *IQueryTable_) SaveAsODC(odcfileName string, description interface{},
 func (this *IQueryTable_) GetListObject(rhs **ListObject) com.Error {
 	addr := (*this.LpVtbl)[125]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -781,18 +770,14 @@ func (this *IQueryTable_) SetTextFileVisualLayout(rhs int32) com.Error {
 func (this *IQueryTable_) GetWorkbookConnection(rhs **WorkbookConnection) com.Error {
 	addr := (*this.LpVtbl)[128]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IQueryTable_) GetSort(rhs **Sort) com.Error {
 	addr := (*this.LpVtbl)[129]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

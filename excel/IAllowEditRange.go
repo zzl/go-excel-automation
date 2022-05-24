@@ -16,6 +16,9 @@ type IAllowEditRange struct {
 }
 
 func NewIAllowEditRange(pUnk *win32.IUnknown, addRef bool, scoped bool) *IAllowEditRange {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IAllowEditRange)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -45,9 +48,7 @@ func (this *IAllowEditRange) SetTitle(rhs string) com.Error {
 func (this *IAllowEditRange) GetRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -78,9 +79,7 @@ func (this *IAllowEditRange) Unprotect(password interface{}) com.Error {
 func (this *IAllowEditRange) GetUsers(rhs **UserAccessList) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

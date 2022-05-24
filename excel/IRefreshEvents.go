@@ -16,6 +16,9 @@ type IRefreshEvents struct {
 }
 
 func NewIRefreshEvents(pUnk *win32.IUnknown, addRef bool, scoped bool) *IRefreshEvents {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IRefreshEvents)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()

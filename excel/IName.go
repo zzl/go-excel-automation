@@ -17,6 +17,9 @@ type IName struct {
 }
 
 func NewIName(pUnk *win32.IUnknown, addRef bool, scoped bool) *IName {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IName)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *IName) IID() *syscall.GUID {
 func (this *IName) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *IName) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IName) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IName) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -220,9 +219,7 @@ func (this *IName) SetRefersToR1C1Local(rhs interface{}) com.Error {
 func (this *IName) GetRefersToRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[37]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

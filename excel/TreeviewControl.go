@@ -16,6 +16,9 @@ type TreeviewControl struct {
 }
 
 func NewTreeviewControl(pDisp *win32.IDispatch, addRef bool, scoped bool) *TreeviewControl {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &TreeviewControl{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewTreeviewControl(pDisp *win32.IDispatch, addRef bool, scoped bool) *Treev
 }
 
 func TreeviewControlFromVar(v ole.Variant) *TreeviewControl {
-	return NewTreeviewControl(v.PdispValVal(), false, false)
+	return NewTreeviewControl(v.IDispatch(), false, false)
 }
 
 func (this *TreeviewControl) IID() *syscall.GUID {
@@ -42,39 +45,37 @@ func (this *TreeviewControl) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *TreeviewControl) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *TreeviewControl) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *TreeviewControl) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *TreeviewControl) Hidden() ole.Variant {
-	retVal := this.PropGet(0x0000010c, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x0000010c, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *TreeviewControl) SetHidden(rhs interface{})  {
-	retVal := this.PropPut(0x0000010c, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000010c, []interface{}{rhs})
 }
 
 func (this *TreeviewControl) Drilled() ole.Variant {
-	retVal := this.PropGet(0x0000077d, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x0000077d, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *TreeviewControl) SetDrilled(rhs interface{})  {
-	retVal := this.PropPut(0x0000077d, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000077d, []interface{}{rhs})
 }
 

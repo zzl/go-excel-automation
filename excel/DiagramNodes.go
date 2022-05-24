@@ -17,6 +17,9 @@ type DiagramNodes struct {
 }
 
 func NewDiagramNodes(pDisp *win32.IDispatch, addRef bool, scoped bool) *DiagramNodes {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &DiagramNodes{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -28,7 +31,7 @@ func NewDiagramNodes(pDisp *win32.IDispatch, addRef bool, scoped bool) *DiagramN
 }
 
 func DiagramNodesFromVar(v ole.Variant) *DiagramNodes {
-	return NewDiagramNodes(v.PdispValVal(), false, false)
+	return NewDiagramNodes(v.IDispatch(), false, false)
 }
 
 func (this *DiagramNodes) IID() *syscall.GUID {
@@ -43,17 +46,17 @@ func (this *DiagramNodes) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *DiagramNodes) Application() *ole.DispatchClass {
-	retVal := this.PropGet(0x60020000, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x60020000, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *DiagramNodes) Creator() int32 {
-	retVal := this.PropGet(0x60020001, nil)
+	retVal, _ := this.PropGet(0x60020001, nil)
 	return retVal.LValVal()
 }
 
 func (this *DiagramNodes) NewEnum_() *com.UnknownClass {
-	retVal := this.PropGet(-4, nil)
+	retVal, _ := this.PropGet(-4, nil)
 	return com.NewUnknownClass(retVal.PunkValVal(), true)
 }
 
@@ -79,22 +82,22 @@ func (this *DiagramNodes) ForEach(action func(item *DiagramNode) bool) {
 }
 
 func (this *DiagramNodes) Item(index interface{}) *DiagramNode {
-	retVal := this.Call(0x00000000, []interface{}{index})
-	return NewDiagramNode(retVal.PdispValVal(), false, true)
+	retVal, _ := this.Call(0x00000000, []interface{}{index})
+	return NewDiagramNode(retVal.IDispatch(), false, true)
 }
 
 func (this *DiagramNodes) SelectAll()  {
-	retVal := this.Call(0x0000000a, nil)
+	retVal, _ := this.Call(0x0000000a, nil)
 	_= retVal
 }
 
 func (this *DiagramNodes) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000064, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000064, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *DiagramNodes) Count() int32 {
-	retVal := this.PropGet(0x00000065, nil)
+	retVal, _ := this.PropGet(0x00000065, nil)
 	return retVal.LValVal()
 }
 

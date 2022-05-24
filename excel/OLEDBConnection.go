@@ -18,6 +18,9 @@ type OLEDBConnection struct {
 }
 
 func NewOLEDBConnection(pDisp *win32.IDispatch, addRef bool, scoped bool) *OLEDBConnection {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &OLEDBConnection{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -29,7 +32,7 @@ func NewOLEDBConnection(pDisp *win32.IDispatch, addRef bool, scoped bool) *OLEDB
 }
 
 func OLEDBConnectionFromVar(v ole.Variant) *OLEDBConnection {
-	return NewOLEDBConnection(v.PdispValVal(), false, false)
+	return NewOLEDBConnection(v.IDispatch(), false, false)
 }
 
 func (this *OLEDBConnection) IID() *syscall.GUID {
@@ -44,186 +47,176 @@ func (this *OLEDBConnection) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *OLEDBConnection) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
-	retVal := this.Call(0x60000000, []interface{}{riid, ppvObj})
+	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
 	_= retVal
 }
 
 func (this *OLEDBConnection) AddRef() uint32 {
-	retVal := this.Call(0x60000001, nil)
+	retVal, _ := this.Call(0x60000001, nil)
 	return retVal.UintValVal()
 }
 
 func (this *OLEDBConnection) Release() uint32 {
-	retVal := this.Call(0x60000002, nil)
+	retVal, _ := this.Call(0x60000002, nil)
 	return retVal.UintValVal()
 }
 
 func (this *OLEDBConnection) GetTypeInfoCount(pctinfo *uint32)  {
-	retVal := this.Call(0x60010000, []interface{}{pctinfo})
+	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
 	_= retVal
 }
 
 func (this *OLEDBConnection) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
-	retVal := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
+	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
 	_= retVal
 }
 
 func (this *OLEDBConnection) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
-	retVal := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
+	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
 	_= retVal
 }
 
 func (this *OLEDBConnection) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
-	retVal := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
+	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
 	_= retVal
 }
 
 func (this *OLEDBConnection) Application() *Application {
-	retVal := this.PropGet(0x00000094, nil)
-	return NewApplication(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x00000094, nil)
+	return NewApplication(retVal.IDispatch(), false, true)
 }
 
 func (this *OLEDBConnection) Creator() int32 {
-	retVal := this.PropGet(0x00000095, nil)
+	retVal, _ := this.PropGet(0x00000095, nil)
 	return retVal.LValVal()
 }
 
 func (this *OLEDBConnection) Parent() *ole.DispatchClass {
-	retVal := this.PropGet(0x00000096, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x00000096, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *OLEDBConnection) ADOConnection() *ole.DispatchClass {
-	retVal := this.PropGet(0x0000081a, nil)
-	return ole.NewDispatchClass(retVal.PdispValVal(), true)
+	retVal, _ := this.PropGet(0x0000081a, nil)
+	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
 func (this *OLEDBConnection) BackgroundQuery() bool {
-	retVal := this.PropGet(0x00000593, nil)
+	retVal, _ := this.PropGet(0x00000593, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) SetBackgroundQuery(rhs bool)  {
-	retVal := this.PropPut(0x00000593, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000593, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) CancelRefresh()  {
-	retVal := this.Call(0x00000635, nil)
+	retVal, _ := this.Call(0x00000635, nil)
 	_= retVal
 }
 
 func (this *OLEDBConnection) CommandText() ole.Variant {
-	retVal := this.PropGet(0x00000725, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x00000725, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *OLEDBConnection) SetCommandText(rhs interface{})  {
-	retVal := this.PropPut(0x00000725, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000725, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) CommandType() int32 {
-	retVal := this.PropGet(0x00000726, nil)
+	retVal, _ := this.PropGet(0x00000726, nil)
 	return retVal.LValVal()
 }
 
 func (this *OLEDBConnection) SetCommandType(rhs int32)  {
-	retVal := this.PropPut(0x00000726, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000726, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) Connection() ole.Variant {
-	retVal := this.PropGet(0x00000598, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x00000598, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *OLEDBConnection) SetConnection(rhs interface{})  {
-	retVal := this.PropPut(0x00000598, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000598, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) EnableRefresh() bool {
-	retVal := this.PropGet(0x000005c5, nil)
+	retVal, _ := this.PropGet(0x000005c5, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) SetEnableRefresh(rhs bool)  {
-	retVal := this.PropPut(0x000005c5, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000005c5, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) LocalConnection() ole.Variant {
-	retVal := this.PropGet(0x0000072b, nil)
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.PropGet(0x0000072b, nil)
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *OLEDBConnection) SetLocalConnection(rhs interface{})  {
-	retVal := this.PropPut(0x0000072b, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000072b, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) MaintainConnection() bool {
-	retVal := this.PropGet(0x00000728, nil)
+	retVal, _ := this.PropGet(0x00000728, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) SetMaintainConnection(rhs bool)  {
-	retVal := this.PropPut(0x00000728, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000728, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) MakeConnection()  {
-	retVal := this.Call(0x0000081c, nil)
+	retVal, _ := this.Call(0x0000081c, nil)
 	_= retVal
 }
 
 func (this *OLEDBConnection) Refresh()  {
-	retVal := this.Call(0x00000589, nil)
+	retVal, _ := this.Call(0x00000589, nil)
 	_= retVal
 }
 
 func (this *OLEDBConnection) RefreshDate() time.Time {
-	retVal := this.PropGet(0x000002b8, nil)
+	retVal, _ := this.PropGet(0x000002b8, nil)
 	return ole.Date(retVal.DateVal()).ToGoTime()
 }
 
 func (this *OLEDBConnection) Refreshing() bool {
-	retVal := this.PropGet(0x00000633, nil)
+	retVal, _ := this.PropGet(0x00000633, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) RefreshOnFileOpen() bool {
-	retVal := this.PropGet(0x000005c7, nil)
+	retVal, _ := this.PropGet(0x000005c7, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) SetRefreshOnFileOpen(rhs bool)  {
-	retVal := this.PropPut(0x000005c7, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000005c7, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) RefreshPeriod() int32 {
-	retVal := this.PropGet(0x00000729, nil)
+	retVal, _ := this.PropGet(0x00000729, nil)
 	return retVal.LValVal()
 }
 
 func (this *OLEDBConnection) SetRefreshPeriod(rhs int32)  {
-	retVal := this.PropPut(0x00000729, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000729, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) RobustConnect() int32 {
-	retVal := this.PropGet(0x00000821, nil)
+	retVal, _ := this.PropGet(0x00000821, nil)
 	return retVal.LValVal()
 }
 
 func (this *OLEDBConnection) SetRobustConnect(rhs int32)  {
-	retVal := this.PropPut(0x00000821, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000821, []interface{}{rhs})
 }
 
 var OLEDBConnection_SaveAsODC_OptArgs= []string{
@@ -232,167 +225,153 @@ var OLEDBConnection_SaveAsODC_OptArgs= []string{
 
 func (this *OLEDBConnection) SaveAsODC(odcfileName string, optArgs ...interface{})  {
 	optArgs = ole.ProcessOptArgs(OLEDBConnection_SaveAsODC_OptArgs, optArgs)
-	retVal := this.Call(0x00000822, []interface{}{odcfileName}, optArgs...)
+	retVal, _ := this.Call(0x00000822, []interface{}{odcfileName}, optArgs...)
 	_= retVal
 }
 
 func (this *OLEDBConnection) SavePassword() bool {
-	retVal := this.PropGet(0x000005c9, nil)
+	retVal, _ := this.PropGet(0x000005c9, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) SetSavePassword(rhs bool)  {
-	retVal := this.PropPut(0x000005c9, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x000005c9, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) SourceConnectionFile() string {
-	retVal := this.PropGet(0x0000081f, nil)
+	retVal, _ := this.PropGet(0x0000081f, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *OLEDBConnection) SetSourceConnectionFile(rhs string)  {
-	retVal := this.PropPut(0x0000081f, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000081f, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) SourceDataFile() string {
-	retVal := this.PropGet(0x00000820, nil)
+	retVal, _ := this.PropGet(0x00000820, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *OLEDBConnection) SetSourceDataFile(rhs string)  {
-	retVal := this.PropPut(0x00000820, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000820, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) OLAP() bool {
-	retVal := this.PropGet(0x0000081d, nil)
+	retVal, _ := this.PropGet(0x0000081d, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) UseLocalConnection() bool {
-	retVal := this.PropGet(0x0000072d, nil)
+	retVal, _ := this.PropGet(0x0000072d, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) SetUseLocalConnection(rhs bool)  {
-	retVal := this.PropPut(0x0000072d, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x0000072d, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) MaxDrillthroughRecords() int32 {
-	retVal := this.PropGet(0x00000a8f, nil)
+	retVal, _ := this.PropGet(0x00000a8f, nil)
 	return retVal.LValVal()
 }
 
 func (this *OLEDBConnection) SetMaxDrillthroughRecords(rhs int32)  {
-	retVal := this.PropPut(0x00000a8f, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a8f, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) IsConnected() bool {
-	retVal := this.PropGet(0x0000081b, nil)
+	retVal, _ := this.PropGet(0x0000081b, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) ServerCredentialsMethod() int32 {
-	retVal := this.PropGet(0x00000a90, nil)
+	retVal, _ := this.PropGet(0x00000a90, nil)
 	return retVal.LValVal()
 }
 
 func (this *OLEDBConnection) SetServerCredentialsMethod(rhs int32)  {
-	retVal := this.PropPut(0x00000a90, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a90, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) ServerSSOApplicationID() string {
-	retVal := this.PropGet(0x00000a91, nil)
+	retVal, _ := this.PropGet(0x00000a91, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
 func (this *OLEDBConnection) SetServerSSOApplicationID(rhs string)  {
-	retVal := this.PropPut(0x00000a91, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a91, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) AlwaysUseConnectionFile() bool {
-	retVal := this.PropGet(0x00000a92, nil)
+	retVal, _ := this.PropGet(0x00000a92, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) SetAlwaysUseConnectionFile(rhs bool)  {
-	retVal := this.PropPut(0x00000a92, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a92, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) ServerFillColor() bool {
-	retVal := this.PropGet(0x00000a93, nil)
+	retVal, _ := this.PropGet(0x00000a93, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) SetServerFillColor(rhs bool)  {
-	retVal := this.PropPut(0x00000a93, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a93, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) ServerFontStyle() bool {
-	retVal := this.PropGet(0x00000a94, nil)
+	retVal, _ := this.PropGet(0x00000a94, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) SetServerFontStyle(rhs bool)  {
-	retVal := this.PropPut(0x00000a94, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a94, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) ServerNumberFormat() bool {
-	retVal := this.PropGet(0x00000a95, nil)
+	retVal, _ := this.PropGet(0x00000a95, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) SetServerNumberFormat(rhs bool)  {
-	retVal := this.PropPut(0x00000a95, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a95, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) ServerTextColor() bool {
-	retVal := this.PropGet(0x00000a96, nil)
+	retVal, _ := this.PropGet(0x00000a96, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) SetServerTextColor(rhs bool)  {
-	retVal := this.PropPut(0x00000a96, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a96, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) RetrieveInOfficeUILang() bool {
-	retVal := this.PropGet(0x00000a97, nil)
+	retVal, _ := this.PropGet(0x00000a97, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
 func (this *OLEDBConnection) SetRetrieveInOfficeUILang(rhs bool)  {
-	retVal := this.PropPut(0x00000a97, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000a97, []interface{}{rhs})
 }
 
 func (this *OLEDBConnection) Reconnect()  {
-	retVal := this.Call(0x00000b7b, nil)
+	retVal, _ := this.Call(0x00000b7b, nil)
 	_= retVal
 }
 
 func (this *OLEDBConnection) CalculatedMembers() *CalculatedMembers {
-	retVal := this.PropGet(0x0000084d, nil)
-	return NewCalculatedMembers(retVal.PdispValVal(), false, true)
+	retVal, _ := this.PropGet(0x0000084d, nil)
+	return NewCalculatedMembers(retVal.IDispatch(), false, true)
 }
 
 func (this *OLEDBConnection) LocaleID() int32 {
-	retVal := this.PropGet(0x00000b7c, nil)
+	retVal, _ := this.PropGet(0x00000b7c, nil)
 	return retVal.LValVal()
 }
 
 func (this *OLEDBConnection) SetLocaleID(rhs int32)  {
-	retVal := this.PropPut(0x00000b7c, []interface{}{rhs})
-	_= retVal
+	_ = this.PropPut(0x00000b7c, []interface{}{rhs})
 }
 

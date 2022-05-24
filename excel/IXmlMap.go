@@ -16,6 +16,9 @@ type IXmlMap struct {
 }
 
 func NewIXmlMap(pUnk *win32.IUnknown, addRef bool, scoped bool) *IXmlMap {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*IXmlMap)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -33,9 +36,7 @@ func (this *IXmlMap) IID() *syscall.GUID {
 func (this *IXmlMap) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -45,12 +46,10 @@ func (this *IXmlMap) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IXmlMap) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *IXmlMap) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -159,27 +158,21 @@ func (this *IXmlMap) GetRootElementName(rhs *win32.BSTR) com.Error {
 func (this *IXmlMap) GetRootElementNamespace(rhs **XmlNamespace) com.Error {
 	addr := (*this.LpVtbl)[27]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IXmlMap) GetSchemas(rhs **XmlSchemas) com.Error {
 	addr := (*this.LpVtbl)[28]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IXmlMap) GetDataBinding(rhs **XmlDataBinding) com.Error {
 	addr := (*this.LpVtbl)[29]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -216,9 +209,7 @@ func (this *IXmlMap) ExportXml(data *win32.BSTR, rhs *int32) com.Error {
 func (this *IXmlMap) GetWorkbookConnection(rhs **WorkbookConnection) com.Error {
 	addr := (*this.LpVtbl)[35]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

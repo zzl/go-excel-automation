@@ -17,6 +17,9 @@ type ICorners struct {
 }
 
 func NewICorners(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICorners {
+	 if pUnk == nil {
+		return nil;
+	}
 	p := (*ICorners)(unsafe.Pointer(pUnk))
 	if addRef {
 		pUnk.AddRef()
@@ -34,9 +37,7 @@ func (this *ICorners) IID() *syscall.GUID {
 func (this *ICorners) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -46,12 +47,10 @@ func (this *ICorners) GetCreator(rhs *int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ICorners) GetParent(rhs **com.UnknownClass) com.Error {
+func (this *ICorners) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-	if com.CurrentScope != nil {
-		com.CurrentScope.Add(unsafe.Pointer(&(*rhs).IUnknown))
-	}
+		com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

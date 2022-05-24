@@ -16,6 +16,9 @@ type IRtdServer struct {
 }
 
 func NewIRtdServer(pDisp *win32.IDispatch, addRef bool, scoped bool) *IRtdServer {
+	 if pDisp == nil {
+		return nil;
+	}
 	p := &IRtdServer{ole.OleClient{pDisp}}
 	if addRef {
 		pDisp.AddRef()
@@ -27,7 +30,7 @@ func NewIRtdServer(pDisp *win32.IDispatch, addRef bool, scoped bool) *IRtdServer
 }
 
 func IRtdServerFromVar(v ole.Variant) *IRtdServer {
-	return NewIRtdServer(v.PdispValVal(), false, false)
+	return NewIRtdServer(v.IDispatch(), false, false)
 }
 
 func (this *IRtdServer) IID() *syscall.GUID {
@@ -42,33 +45,33 @@ func (this *IRtdServer) GetIDispatch(addRef bool) *win32.IDispatch {
 }
 
 func (this *IRtdServer) ServerStart(callbackObject *IRTDUpdateEvent) int32 {
-	retVal := this.Call(0x0000000a, []interface{}{callbackObject})
+	retVal, _ := this.Call(0x0000000a, []interface{}{callbackObject})
 	return retVal.LValVal()
 }
 
 func (this *IRtdServer) ConnectData(topicID int32, strings **win32.SAFEARRAY, getNewValues *win32.VARIANT_BOOL) ole.Variant {
-	retVal := this.Call(0x0000000b, []interface{}{topicID, strings, getNewValues})
-	com.CurrentScope.AddVarIfNeeded((*win32.VARIANT)(retVal))
+	retVal, _ := this.Call(0x0000000b, []interface{}{topicID, strings, getNewValues})
+	com.AddToScope(retVal)
 	return *retVal
 }
 
 func (this *IRtdServer) RefreshData(topicCount *int32) *win32.SAFEARRAY {
-	retVal := this.Call(0x0000000c, []interface{}{topicCount})
+	retVal, _ := this.Call(0x0000000c, []interface{}{topicCount})
 	return retVal.ParrayVal()
 }
 
 func (this *IRtdServer) DisconnectData(topicID int32)  {
-	retVal := this.Call(0x0000000d, []interface{}{topicID})
+	retVal, _ := this.Call(0x0000000d, []interface{}{topicID})
 	_= retVal
 }
 
 func (this *IRtdServer) Heartbeat() int32 {
-	retVal := this.Call(0x0000000e, nil)
+	retVal, _ := this.Call(0x0000000e, nil)
 	return retVal.LValVal()
 }
 
 func (this *IRtdServer) ServerTerminate()  {
-	retVal := this.Call(0x0000000f, nil)
+	retVal, _ := this.Call(0x0000000f, nil)
 	_= retVal
 }
 
