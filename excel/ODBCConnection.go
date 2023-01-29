@@ -1,16 +1,16 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
-	"unsafe"
 	"time"
+	"unsafe"
 )
 
 // 0002448E-0000-0000-C000-000000000046
-var IID_ODBCConnection = syscall.GUID{0x0002448E, 0x0000, 0x0000, 
+var IID_ODBCConnection = syscall.GUID{0x0002448E, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ODBCConnection struct {
@@ -18,8 +18,8 @@ type ODBCConnection struct {
 }
 
 func NewODBCConnection(pDisp *win32.IDispatch, addRef bool, scoped bool) *ODBCConnection {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &ODBCConnection{ole.OleClient{pDisp}}
 	if addRef {
@@ -46,9 +46,9 @@ func (this *ODBCConnection) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *ODBCConnection) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *ODBCConnection) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ODBCConnection) AddRef() uint32 {
@@ -61,24 +61,24 @@ func (this *ODBCConnection) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *ODBCConnection) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *ODBCConnection) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ODBCConnection) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *ODBCConnection) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ODBCConnection) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *ODBCConnection) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ODBCConnection) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *ODBCConnection) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ODBCConnection) Application() *Application {
@@ -101,13 +101,13 @@ func (this *ODBCConnection) BackgroundQuery() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ODBCConnection) SetBackgroundQuery(rhs bool)  {
+func (this *ODBCConnection) SetBackgroundQuery(rhs bool) {
 	_ = this.PropPut(0x00000593, []interface{}{rhs})
 }
 
-func (this *ODBCConnection) CancelRefresh()  {
+func (this *ODBCConnection) CancelRefresh() {
 	retVal, _ := this.Call(0x00000635, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *ODBCConnection) CommandText() ole.Variant {
@@ -116,7 +116,7 @@ func (this *ODBCConnection) CommandText() ole.Variant {
 	return *retVal
 }
 
-func (this *ODBCConnection) SetCommandText(rhs interface{})  {
+func (this *ODBCConnection) SetCommandText(rhs interface{}) {
 	_ = this.PropPut(0x00000725, []interface{}{rhs})
 }
 
@@ -125,7 +125,7 @@ func (this *ODBCConnection) CommandType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ODBCConnection) SetCommandType(rhs int32)  {
+func (this *ODBCConnection) SetCommandType(rhs int32) {
 	_ = this.PropPut(0x00000726, []interface{}{rhs})
 }
 
@@ -135,7 +135,7 @@ func (this *ODBCConnection) Connection() ole.Variant {
 	return *retVal
 }
 
-func (this *ODBCConnection) SetConnection(rhs interface{})  {
+func (this *ODBCConnection) SetConnection(rhs interface{}) {
 	_ = this.PropPut(0x00000598, []interface{}{rhs})
 }
 
@@ -144,13 +144,13 @@ func (this *ODBCConnection) EnableRefresh() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ODBCConnection) SetEnableRefresh(rhs bool)  {
+func (this *ODBCConnection) SetEnableRefresh(rhs bool) {
 	_ = this.PropPut(0x000005c5, []interface{}{rhs})
 }
 
-func (this *ODBCConnection) Refresh()  {
+func (this *ODBCConnection) Refresh() {
 	retVal, _ := this.Call(0x00000589, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *ODBCConnection) RefreshDate() time.Time {
@@ -168,7 +168,7 @@ func (this *ODBCConnection) RefreshOnFileOpen() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ODBCConnection) SetRefreshOnFileOpen(rhs bool)  {
+func (this *ODBCConnection) SetRefreshOnFileOpen(rhs bool) {
 	_ = this.PropPut(0x000005c7, []interface{}{rhs})
 }
 
@@ -177,7 +177,7 @@ func (this *ODBCConnection) RefreshPeriod() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ODBCConnection) SetRefreshPeriod(rhs int32)  {
+func (this *ODBCConnection) SetRefreshPeriod(rhs int32) {
 	_ = this.PropPut(0x00000729, []interface{}{rhs})
 }
 
@@ -186,18 +186,18 @@ func (this *ODBCConnection) RobustConnect() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ODBCConnection) SetRobustConnect(rhs int32)  {
+func (this *ODBCConnection) SetRobustConnect(rhs int32) {
 	_ = this.PropPut(0x00000821, []interface{}{rhs})
 }
 
-var ODBCConnection_SaveAsODC_OptArgs= []string{
-	"Description", "Keywords", 
+var ODBCConnection_SaveAsODC_OptArgs = []string{
+	"Description", "Keywords",
 }
 
-func (this *ODBCConnection) SaveAsODC(odcfileName string, optArgs ...interface{})  {
+func (this *ODBCConnection) SaveAsODC(odcfileName string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(ODBCConnection_SaveAsODC_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000822, []interface{}{odcfileName}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *ODBCConnection) SavePassword() bool {
@@ -205,7 +205,7 @@ func (this *ODBCConnection) SavePassword() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ODBCConnection) SetSavePassword(rhs bool)  {
+func (this *ODBCConnection) SetSavePassword(rhs bool) {
 	_ = this.PropPut(0x000005c9, []interface{}{rhs})
 }
 
@@ -214,7 +214,7 @@ func (this *ODBCConnection) SourceConnectionFile() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ODBCConnection) SetSourceConnectionFile(rhs string)  {
+func (this *ODBCConnection) SetSourceConnectionFile(rhs string) {
 	_ = this.PropPut(0x0000081f, []interface{}{rhs})
 }
 
@@ -224,7 +224,7 @@ func (this *ODBCConnection) SourceData() ole.Variant {
 	return *retVal
 }
 
-func (this *ODBCConnection) SetSourceData(rhs interface{})  {
+func (this *ODBCConnection) SetSourceData(rhs interface{}) {
 	_ = this.PropPut(0x000002ae, []interface{}{rhs})
 }
 
@@ -233,7 +233,7 @@ func (this *ODBCConnection) SourceDataFile() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ODBCConnection) SetSourceDataFile(rhs string)  {
+func (this *ODBCConnection) SetSourceDataFile(rhs string) {
 	_ = this.PropPut(0x00000820, []interface{}{rhs})
 }
 
@@ -242,7 +242,7 @@ func (this *ODBCConnection) ServerCredentialsMethod() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ODBCConnection) SetServerCredentialsMethod(rhs int32)  {
+func (this *ODBCConnection) SetServerCredentialsMethod(rhs int32) {
 	_ = this.PropPut(0x00000a90, []interface{}{rhs})
 }
 
@@ -251,7 +251,7 @@ func (this *ODBCConnection) ServerSSOApplicationID() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ODBCConnection) SetServerSSOApplicationID(rhs string)  {
+func (this *ODBCConnection) SetServerSSOApplicationID(rhs string) {
 	_ = this.PropPut(0x00000a91, []interface{}{rhs})
 }
 
@@ -260,7 +260,6 @@ func (this *ODBCConnection) AlwaysUseConnectionFile() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ODBCConnection) SetAlwaysUseConnectionFile(rhs bool)  {
+func (this *ODBCConnection) SetAlwaysUseConnectionFile(rhs bool) {
 	_ = this.PropPut(0x00000a92, []interface{}{rhs})
 }
-

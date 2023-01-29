@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020893-0000-0000-C000-000000000046
-var IID_Window = syscall.GUID{0x00020893, 0x0000, 0x0000, 
+var IID_Window = syscall.GUID{0x00020893, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Window struct {
@@ -17,8 +17,8 @@ type Window struct {
 }
 
 func NewWindow(pDisp *win32.IDispatch, addRef bool, scoped bool) *Window {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Window{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Window) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Window) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Window) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Window) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Window) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Window) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Window) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Window) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Window) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Window) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Window) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Window) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Window) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Window) Application() *Application {
@@ -139,12 +139,12 @@ func (this *Window) Caption() ole.Variant {
 	return *retVal
 }
 
-func (this *Window) SetCaption(rhs interface{})  {
+func (this *Window) SetCaption(rhs interface{}) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var Window_Close_OptArgs= []string{
-	"SaveChanges", "Filename", "RouteWorkbook", 
+var Window_Close_OptArgs = []string{
+	"SaveChanges", "Filename", "RouteWorkbook",
 }
 
 func (this *Window) Close(optArgs ...interface{}) bool {
@@ -158,7 +158,7 @@ func (this *Window) DisplayFormulas() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetDisplayFormulas(rhs bool)  {
+func (this *Window) SetDisplayFormulas(rhs bool) {
 	_ = this.PropPut(0x00000284, []interface{}{rhs})
 }
 
@@ -167,7 +167,7 @@ func (this *Window) DisplayGridlines() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetDisplayGridlines(rhs bool)  {
+func (this *Window) SetDisplayGridlines(rhs bool) {
 	_ = this.PropPut(0x00000285, []interface{}{rhs})
 }
 
@@ -176,7 +176,7 @@ func (this *Window) DisplayHeadings() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetDisplayHeadings(rhs bool)  {
+func (this *Window) SetDisplayHeadings(rhs bool) {
 	_ = this.PropPut(0x00000286, []interface{}{rhs})
 }
 
@@ -185,7 +185,7 @@ func (this *Window) DisplayHorizontalScrollBar() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetDisplayHorizontalScrollBar(rhs bool)  {
+func (this *Window) SetDisplayHorizontalScrollBar(rhs bool) {
 	_ = this.PropPut(0x00000399, []interface{}{rhs})
 }
 
@@ -194,7 +194,7 @@ func (this *Window) DisplayOutline() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetDisplayOutline(rhs bool)  {
+func (this *Window) SetDisplayOutline(rhs bool) {
 	_ = this.PropPut(0x00000287, []interface{}{rhs})
 }
 
@@ -203,7 +203,7 @@ func (this *Window) DisplayRightToLeft_() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetDisplayRightToLeft_(rhs bool)  {
+func (this *Window) SetDisplayRightToLeft_(rhs bool) {
 	_ = this.PropPut(0x00000288, []interface{}{rhs})
 }
 
@@ -212,7 +212,7 @@ func (this *Window) DisplayVerticalScrollBar() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetDisplayVerticalScrollBar(rhs bool)  {
+func (this *Window) SetDisplayVerticalScrollBar(rhs bool) {
 	_ = this.PropPut(0x0000039a, []interface{}{rhs})
 }
 
@@ -221,7 +221,7 @@ func (this *Window) DisplayWorkbookTabs() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetDisplayWorkbookTabs(rhs bool)  {
+func (this *Window) SetDisplayWorkbookTabs(rhs bool) {
 	_ = this.PropPut(0x0000039b, []interface{}{rhs})
 }
 
@@ -230,7 +230,7 @@ func (this *Window) DisplayZeros() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetDisplayZeros(rhs bool)  {
+func (this *Window) SetDisplayZeros(rhs bool) {
 	_ = this.PropPut(0x00000289, []interface{}{rhs})
 }
 
@@ -239,7 +239,7 @@ func (this *Window) EnableResize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetEnableResize(rhs bool)  {
+func (this *Window) SetEnableResize(rhs bool) {
 	_ = this.PropPut(0x000004a8, []interface{}{rhs})
 }
 
@@ -248,7 +248,7 @@ func (this *Window) FreezePanes() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetFreezePanes(rhs bool)  {
+func (this *Window) SetFreezePanes(rhs bool) {
 	_ = this.PropPut(0x0000028a, []interface{}{rhs})
 }
 
@@ -257,7 +257,7 @@ func (this *Window) GridlineColor() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Window) SetGridlineColor(rhs int32)  {
+func (this *Window) SetGridlineColor(rhs int32) {
 	_ = this.PropPut(0x0000028b, []interface{}{rhs})
 }
 
@@ -266,7 +266,7 @@ func (this *Window) GridlineColorIndex() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Window) SetGridlineColorIndex(rhs int32)  {
+func (this *Window) SetGridlineColorIndex(rhs int32) {
 	_ = this.PropPut(0x0000028c, []interface{}{rhs})
 }
 
@@ -275,7 +275,7 @@ func (this *Window) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Window) SetHeight(rhs float64)  {
+func (this *Window) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -284,8 +284,8 @@ func (this *Window) Index() int32 {
 	return retVal.LValVal()
 }
 
-var Window_LargeScroll_OptArgs= []string{
-	"Down", "Up", "ToRight", "ToLeft", 
+var Window_LargeScroll_OptArgs = []string{
+	"Down", "Up", "ToRight", "ToLeft",
 }
 
 func (this *Window) LargeScroll(optArgs ...interface{}) ole.Variant {
@@ -300,7 +300,7 @@ func (this *Window) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Window) SetLeft(rhs float64)  {
+func (this *Window) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -314,7 +314,7 @@ func (this *Window) OnWindow() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Window) SetOnWindow(rhs string)  {
+func (this *Window) SetOnWindow(rhs string) {
 	_ = this.PropPut(0x0000026f, []interface{}{rhs})
 }
 
@@ -323,9 +323,9 @@ func (this *Window) Panes() *Panes {
 	return NewPanes(retVal.IDispatch(), false, true)
 }
 
-var Window_PrintOut__OptArgs= []string{
-	"From", "To", "Copies", "Preview", 
-	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName", 
+var Window_PrintOut__OptArgs = []string{
+	"From", "To", "Copies", "Preview",
+	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName",
 }
 
 func (this *Window) PrintOut_(optArgs ...interface{}) ole.Variant {
@@ -335,8 +335,8 @@ func (this *Window) PrintOut_(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Window_PrintPreview_OptArgs= []string{
-	"EnableChanges", 
+var Window_PrintPreview_OptArgs = []string{
+	"EnableChanges",
 }
 
 func (this *Window) PrintPreview(optArgs ...interface{}) ole.Variant {
@@ -356,7 +356,7 @@ func (this *Window) ScrollColumn() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Window) SetScrollColumn(rhs int32)  {
+func (this *Window) SetScrollColumn(rhs int32) {
 	_ = this.PropPut(0x0000028e, []interface{}{rhs})
 }
 
@@ -365,12 +365,12 @@ func (this *Window) ScrollRow() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Window) SetScrollRow(rhs int32)  {
+func (this *Window) SetScrollRow(rhs int32) {
 	_ = this.PropPut(0x0000028f, []interface{}{rhs})
 }
 
-var Window_ScrollWorkbookTabs_OptArgs= []string{
-	"Sheets", "Position", 
+var Window_ScrollWorkbookTabs_OptArgs = []string{
+	"Sheets", "Position",
 }
 
 func (this *Window) ScrollWorkbookTabs(optArgs ...interface{}) ole.Variant {
@@ -390,8 +390,8 @@ func (this *Window) Selection() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Window_SmallScroll_OptArgs= []string{
-	"Down", "Up", "ToRight", "ToLeft", 
+var Window_SmallScroll_OptArgs = []string{
+	"Down", "Up", "ToRight", "ToLeft",
 }
 
 func (this *Window) SmallScroll(optArgs ...interface{}) ole.Variant {
@@ -406,7 +406,7 @@ func (this *Window) Split() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetSplit(rhs bool)  {
+func (this *Window) SetSplit(rhs bool) {
 	_ = this.PropPut(0x00000291, []interface{}{rhs})
 }
 
@@ -415,7 +415,7 @@ func (this *Window) SplitColumn() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Window) SetSplitColumn(rhs int32)  {
+func (this *Window) SetSplitColumn(rhs int32) {
 	_ = this.PropPut(0x00000292, []interface{}{rhs})
 }
 
@@ -424,7 +424,7 @@ func (this *Window) SplitHorizontal() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Window) SetSplitHorizontal(rhs float64)  {
+func (this *Window) SetSplitHorizontal(rhs float64) {
 	_ = this.PropPut(0x00000293, []interface{}{rhs})
 }
 
@@ -433,7 +433,7 @@ func (this *Window) SplitRow() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Window) SetSplitRow(rhs int32)  {
+func (this *Window) SetSplitRow(rhs int32) {
 	_ = this.PropPut(0x00000294, []interface{}{rhs})
 }
 
@@ -442,7 +442,7 @@ func (this *Window) SplitVertical() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Window) SetSplitVertical(rhs float64)  {
+func (this *Window) SetSplitVertical(rhs float64) {
 	_ = this.PropPut(0x00000295, []interface{}{rhs})
 }
 
@@ -451,7 +451,7 @@ func (this *Window) TabRatio() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Window) SetTabRatio(rhs float64)  {
+func (this *Window) SetTabRatio(rhs float64) {
 	_ = this.PropPut(0x000002a1, []interface{}{rhs})
 }
 
@@ -460,7 +460,7 @@ func (this *Window) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Window) SetTop(rhs float64)  {
+func (this *Window) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -484,7 +484,7 @@ func (this *Window) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetVisible(rhs bool)  {
+func (this *Window) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -498,7 +498,7 @@ func (this *Window) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Window) SetWidth(rhs float64)  {
+func (this *Window) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -512,7 +512,7 @@ func (this *Window) WindowState() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Window) SetWindowState(rhs int32)  {
+func (this *Window) SetWindowState(rhs int32) {
 	_ = this.PropPut(0x0000018c, []interface{}{rhs})
 }
 
@@ -522,7 +522,7 @@ func (this *Window) Zoom() ole.Variant {
 	return *retVal
 }
 
-func (this *Window) SetZoom(rhs interface{})  {
+func (this *Window) SetZoom(rhs interface{}) {
 	_ = this.PropPut(0x00000297, []interface{}{rhs})
 }
 
@@ -531,7 +531,7 @@ func (this *Window) View() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Window) SetView(rhs int32)  {
+func (this *Window) SetView(rhs int32) {
 	_ = this.PropPut(0x000004aa, []interface{}{rhs})
 }
 
@@ -540,7 +540,7 @@ func (this *Window) DisplayRightToLeft() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetDisplayRightToLeft(rhs bool)  {
+func (this *Window) SetDisplayRightToLeft(rhs bool) {
 	_ = this.PropPut(0x000006ee, []interface{}{rhs})
 }
 
@@ -559,14 +559,14 @@ func (this *Window) RangeFromPoint(x int32, y int32) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Window_ScrollIntoView_OptArgs= []string{
-	"Start", 
+var Window_ScrollIntoView_OptArgs = []string{
+	"Start",
 }
 
-func (this *Window) ScrollIntoView(left int32, top int32, width int32, height int32, optArgs ...interface{})  {
+func (this *Window) ScrollIntoView(left int32, top int32, width int32, height int32, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Window_ScrollIntoView_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000006f5, []interface{}{left, top, width, height}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Window) SheetViews() *SheetViews {
@@ -579,9 +579,9 @@ func (this *Window) ActiveSheetView() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Window_PrintOut_OptArgs= []string{
-	"From", "To", "Copies", "Preview", 
-	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName", 
+var Window_PrintOut_OptArgs = []string{
+	"From", "To", "Copies", "Preview",
+	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName",
 }
 
 func (this *Window) PrintOut(optArgs ...interface{}) ole.Variant {
@@ -596,7 +596,7 @@ func (this *Window) DisplayRuler() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetDisplayRuler(rhs bool)  {
+func (this *Window) SetDisplayRuler(rhs bool) {
 	_ = this.PropPut(0x00000942, []interface{}{rhs})
 }
 
@@ -605,7 +605,7 @@ func (this *Window) AutoFilterDateGrouping() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetAutoFilterDateGrouping(rhs bool)  {
+func (this *Window) SetAutoFilterDateGrouping(rhs bool) {
 	_ = this.PropPut(0x00000943, []interface{}{rhs})
 }
 
@@ -614,7 +614,6 @@ func (this *Window) DisplayWhitespace() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Window) SetDisplayWhitespace(rhs bool)  {
+func (this *Window) SetDisplayWhitespace(rhs bool) {
 	_ = this.PropPut(0x00000944, []interface{}{rhs})
 }
-

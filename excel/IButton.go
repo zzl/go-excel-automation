@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 0002087D-0001-0000-C000-000000000046
-var IID_IButton = syscall.GUID{0x0002087D, 0x0001, 0x0000, 
+var IID_IButton = syscall.GUID{0x0002087D, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IButton struct {
@@ -17,8 +17,8 @@ type IButton struct {
 }
 
 func NewIButton(pUnk *win32.IUnknown, addRef bool, scoped bool) *IButton {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IButton)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IButton) IID() *syscall.GUID {
 func (this *IButton) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,14 +50,14 @@ func (this *IButton) GetCreator(rhs *int32) com.Error {
 func (this *IButton) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IButton) GetBottomRightCell(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -94,7 +94,7 @@ func (this *IButton) Delete(rhs *ole.Variant) com.Error {
 func (this *IButton) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -227,7 +227,7 @@ func (this *IButton) SetTop(rhs float64) com.Error {
 func (this *IButton) GetTopLeftCell(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[38]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -264,7 +264,7 @@ func (this *IButton) GetZOrder(rhs *int32) com.Error {
 func (this *IButton) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[44]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -319,7 +319,7 @@ func (this *IButton) SetCaption(rhs string) com.Error {
 func (this *IButton) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[53]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -332,7 +332,7 @@ func (this *IButton) CheckSpelling(customDictionary interface{}, ignoreUppercase
 func (this *IButton) GetFont(rhs **Font) com.Error {
 	addr := (*this.LpVtbl)[55]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

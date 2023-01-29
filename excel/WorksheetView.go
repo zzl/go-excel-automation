@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 00024487-0000-0000-C000-000000000046
-var IID_WorksheetView = syscall.GUID{0x00024487, 0x0000, 0x0000, 
+var IID_WorksheetView = syscall.GUID{0x00024487, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type WorksheetView struct {
@@ -17,8 +17,8 @@ type WorksheetView struct {
 }
 
 func NewWorksheetView(pDisp *win32.IDispatch, addRef bool, scoped bool) *WorksheetView {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &WorksheetView{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *WorksheetView) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *WorksheetView) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *WorksheetView) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *WorksheetView) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *WorksheetView) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *WorksheetView) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *WorksheetView) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *WorksheetView) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *WorksheetView) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *WorksheetView) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *WorksheetView) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *WorksheetView) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *WorksheetView) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *WorksheetView) Application() *Application {
@@ -105,7 +105,7 @@ func (this *WorksheetView) DisplayGridlines() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *WorksheetView) SetDisplayGridlines(rhs bool)  {
+func (this *WorksheetView) SetDisplayGridlines(rhs bool) {
 	_ = this.PropPut(0x00000285, []interface{}{rhs})
 }
 
@@ -114,7 +114,7 @@ func (this *WorksheetView) DisplayFormulas() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *WorksheetView) SetDisplayFormulas(rhs bool)  {
+func (this *WorksheetView) SetDisplayFormulas(rhs bool) {
 	_ = this.PropPut(0x00000284, []interface{}{rhs})
 }
 
@@ -123,7 +123,7 @@ func (this *WorksheetView) DisplayHeadings() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *WorksheetView) SetDisplayHeadings(rhs bool)  {
+func (this *WorksheetView) SetDisplayHeadings(rhs bool) {
 	_ = this.PropPut(0x00000286, []interface{}{rhs})
 }
 
@@ -132,7 +132,7 @@ func (this *WorksheetView) DisplayOutline() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *WorksheetView) SetDisplayOutline(rhs bool)  {
+func (this *WorksheetView) SetDisplayOutline(rhs bool) {
 	_ = this.PropPut(0x00000287, []interface{}{rhs})
 }
 
@@ -141,7 +141,7 @@ func (this *WorksheetView) DisplayZeros() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *WorksheetView) SetDisplayZeros(rhs bool)  {
+func (this *WorksheetView) SetDisplayZeros(rhs bool) {
 	_ = this.PropPut(0x00000289, []interface{}{rhs})
 }
 

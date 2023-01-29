@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000244A1-0000-0000-C000-000000000046
-var IID_HeaderFooter = syscall.GUID{0x000244A1, 0x0000, 0x0000, 
+var IID_HeaderFooter = syscall.GUID{0x000244A1, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type HeaderFooter struct {
@@ -17,8 +17,8 @@ type HeaderFooter struct {
 }
 
 func NewHeaderFooter(pDisp *win32.IDispatch, addRef bool, scoped bool) *HeaderFooter {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &HeaderFooter{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *HeaderFooter) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *HeaderFooter) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *HeaderFooter) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *HeaderFooter) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *HeaderFooter) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *HeaderFooter) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *HeaderFooter) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *HeaderFooter) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *HeaderFooter) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *HeaderFooter) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *HeaderFooter) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *HeaderFooter) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *HeaderFooter) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *HeaderFooter) Text() string {
@@ -85,7 +85,7 @@ func (this *HeaderFooter) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *HeaderFooter) SetText(rhs string)  {
+func (this *HeaderFooter) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -93,4 +93,3 @@ func (this *HeaderFooter) Picture() *Graphic {
 	retVal, _ := this.PropGet(0x000001df, nil)
 	return NewGraphic(retVal.IDispatch(), false, true)
 }
-

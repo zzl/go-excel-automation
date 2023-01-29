@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208A0-0000-0000-C000-000000000046
-var IID_Arc = syscall.GUID{0x000208A0, 0x0000, 0x0000, 
+var IID_Arc = syscall.GUID{0x000208A0, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Arc struct {
@@ -17,8 +17,8 @@ type Arc struct {
 }
 
 func NewArc(pDisp *win32.IDispatch, addRef bool, scoped bool) *Arc {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Arc{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Arc) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Arc) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Arc) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Arc) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Arc) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Arc) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Arc) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Arc) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Arc) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Arc) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Arc) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Arc) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Arc) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Arc) Application() *Application {
@@ -112,8 +112,8 @@ func (this *Arc) Copy() ole.Variant {
 	return *retVal
 }
 
-var Arc_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var Arc_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *Arc) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *Arc) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Arc) SetEnabled(rhs bool)  {
+func (this *Arc) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *Arc) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Arc) SetHeight(rhs float64)  {
+func (this *Arc) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -168,7 +168,7 @@ func (this *Arc) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Arc) SetLeft(rhs float64)  {
+func (this *Arc) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,7 +177,7 @@ func (this *Arc) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Arc) SetLocked(rhs bool)  {
+func (this *Arc) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
@@ -186,7 +186,7 @@ func (this *Arc) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Arc) SetName(rhs string)  {
+func (this *Arc) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -195,7 +195,7 @@ func (this *Arc) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Arc) SetOnAction(rhs string)  {
+func (this *Arc) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -205,7 +205,7 @@ func (this *Arc) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *Arc) SetPlacement(rhs interface{})  {
+func (this *Arc) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -214,12 +214,12 @@ func (this *Arc) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Arc) SetPrintObject(rhs bool)  {
+func (this *Arc) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var Arc_Select_OptArgs= []string{
-	"Replace", 
+var Arc_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *Arc) Select(optArgs ...interface{}) ole.Variant {
@@ -240,7 +240,7 @@ func (this *Arc) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Arc) SetTop(rhs float64)  {
+func (this *Arc) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -254,7 +254,7 @@ func (this *Arc) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Arc) SetVisible(rhs bool)  {
+func (this *Arc) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -263,7 +263,7 @@ func (this *Arc) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Arc) SetWidth(rhs float64)  {
+func (this *Arc) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -282,7 +282,7 @@ func (this *Arc) AddIndent() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Arc) SetAddIndent(rhs bool)  {
+func (this *Arc) SetAddIndent(rhs bool) {
 	_ = this.PropPut(0x00000427, []interface{}{rhs})
 }
 
@@ -292,7 +292,7 @@ func (this *Arc) AutoScaleFont() ole.Variant {
 	return *retVal
 }
 
-func (this *Arc) SetAutoScaleFont(rhs interface{})  {
+func (this *Arc) SetAutoScaleFont(rhs interface{}) {
 	_ = this.PropPut(0x000005f5, []interface{}{rhs})
 }
 
@@ -301,7 +301,7 @@ func (this *Arc) AutoSize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Arc) SetAutoSize(rhs bool)  {
+func (this *Arc) SetAutoSize(rhs bool) {
 	_ = this.PropPut(0x00000266, []interface{}{rhs})
 }
 
@@ -310,12 +310,12 @@ func (this *Arc) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Arc) SetCaption(rhs string)  {
+func (this *Arc) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var Arc_Characters_OptArgs= []string{
-	"Start", "Length", 
+var Arc_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *Arc) Characters(optArgs ...interface{}) *Characters {
@@ -324,8 +324,8 @@ func (this *Arc) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var Arc_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var Arc_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *Arc) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -345,7 +345,7 @@ func (this *Arc) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Arc) SetFormula(rhs string)  {
+func (this *Arc) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -355,7 +355,7 @@ func (this *Arc) HorizontalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *Arc) SetHorizontalAlignment(rhs interface{})  {
+func (this *Arc) SetHorizontalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000088, []interface{}{rhs})
 }
 
@@ -364,7 +364,7 @@ func (this *Arc) LockedText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Arc) SetLockedText(rhs bool)  {
+func (this *Arc) SetLockedText(rhs bool) {
 	_ = this.PropPut(0x00000268, []interface{}{rhs})
 }
 
@@ -374,7 +374,7 @@ func (this *Arc) Orientation() ole.Variant {
 	return *retVal
 }
 
-func (this *Arc) SetOrientation(rhs interface{})  {
+func (this *Arc) SetOrientation(rhs interface{}) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -383,7 +383,7 @@ func (this *Arc) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Arc) SetText(rhs string)  {
+func (this *Arc) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -393,7 +393,7 @@ func (this *Arc) VerticalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *Arc) SetVerticalAlignment(rhs interface{})  {
+func (this *Arc) SetVerticalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000089, []interface{}{rhs})
 }
 
@@ -402,7 +402,7 @@ func (this *Arc) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Arc) SetReadingOrder(rhs int32)  {
+func (this *Arc) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -416,8 +416,7 @@ func (this *Arc) Interior() *Interior {
 	return NewInterior(retVal.IDispatch(), false, true)
 }
 
-func (this *Arc) Dummy43_()  {
+func (this *Arc) Dummy43_() {
 	retVal, _ := this.Call(0x0001002b, nil)
-	_= retVal
+	_ = retVal
 }
-

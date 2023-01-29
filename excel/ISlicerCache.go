@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000244C4-0001-0000-C000-000000000046
-var IID_ISlicerCache = syscall.GUID{0x000244C4, 0x0001, 0x0000, 
+var IID_ISlicerCache = syscall.GUID{0x000244C4, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ISlicerCache struct {
@@ -17,8 +17,8 @@ type ISlicerCache struct {
 }
 
 func NewISlicerCache(pUnk *win32.IUnknown, addRef bool, scoped bool) *ISlicerCache {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ISlicerCache)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *ISlicerCache) IID() *syscall.GUID {
 func (this *ISlicerCache) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,7 +50,7 @@ func (this *ISlicerCache) GetCreator(rhs *int32) com.Error {
 func (this *ISlicerCache) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -75,28 +75,28 @@ func (this *ISlicerCache) GetSourceType(rhs *int32) com.Error {
 func (this *ISlicerCache) GetWorkbookConnection(rhs **WorkbookConnection) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ISlicerCache) GetSlicers(rhs **Slicers) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ISlicerCache) GetPivotTables(rhs **SlicerPivotTables) com.Error {
 	addr := (*this.LpVtbl)[15]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ISlicerCache) GetSlicerCacheLevels(rhs **SlicerCacheLevels) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -115,7 +115,7 @@ func (this *ISlicerCache) SetName(rhs string) com.Error {
 func (this *ISlicerCache) GetVisibleSlicerItems(rhs **SlicerItems) com.Error {
 	addr := (*this.LpVtbl)[19]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -134,7 +134,7 @@ func (this *ISlicerCache) SetVisibleSlicerItemsList(rhs interface{}) com.Error {
 func (this *ISlicerCache) GetSlicerItems(rhs **SlicerItems) com.Error {
 	addr := (*this.LpVtbl)[22]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -203,4 +203,3 @@ func (this *ISlicerCache) Delete() com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 	return com.Error(ret)
 }
-

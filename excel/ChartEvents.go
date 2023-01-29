@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,53 +9,53 @@ import (
 )
 
 // 0002440F-0000-0000-C000-000000000046
-var IID_ChartEvents = syscall.GUID{0x0002440F, 0x0000, 0x0000, 
+var IID_ChartEvents = syscall.GUID{0x0002440F, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ChartEventsDispInterface interface {
-	QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) 
+	QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)
 	AddRef_() uint32
 	Release_() uint32
-	GetTypeInfoCount_(pctinfo *uint32) 
-	GetTypeInfo_(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) 
-	GetIDsOfNames_(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) 
-	Invoke_(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) 
-	Activate() 
-	Deactivate() 
-	Resize() 
-	MouseDown(button int32, shift int32, x int32, y int32) 
-	MouseUp(button int32, shift int32, x int32, y int32) 
-	MouseMove(button int32, shift int32, x int32, y int32) 
-	BeforeRightClick(cancel *win32.VARIANT_BOOL) 
-	DragPlot() 
-	DragOver() 
-	BeforeDoubleClick(elementID int32, arg1 int32, arg2 int32, cancel *win32.VARIANT_BOOL) 
-	Select(elementID int32, arg1 int32, arg2 int32) 
-	SeriesChange(seriesIndex int32, pointIndex int32) 
-	Calculate() 
+	GetTypeInfoCount_(pctinfo *uint32)
+	GetTypeInfo_(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)
+	GetIDsOfNames_(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)
+	Invoke_(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)
+	Activate()
+	Deactivate()
+	Resize()
+	MouseDown(button int32, shift int32, x int32, y int32)
+	MouseUp(button int32, shift int32, x int32, y int32)
+	MouseMove(button int32, shift int32, x int32, y int32)
+	BeforeRightClick(cancel *win32.VARIANT_BOOL)
+	DragPlot()
+	DragOver()
+	BeforeDoubleClick(elementID int32, arg1 int32, arg2 int32, cancel *win32.VARIANT_BOOL)
+	Select(elementID int32, arg1 int32, arg2 int32)
+	SeriesChange(seriesIndex int32, pointIndex int32)
+	Calculate()
 }
 
 type ChartEventsHandlers struct {
-	QueryInterface_ func(riid *syscall.GUID, ppvObj unsafe.Pointer) 
-	AddRef_ func() uint32
-	Release_ func() uint32
-	GetTypeInfoCount_ func(pctinfo *uint32) 
-	GetTypeInfo_ func(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) 
-	GetIDsOfNames_ func(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) 
-	Invoke_ func(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) 
-	Activate func() 
-	Deactivate func() 
-	Resize func() 
-	MouseDown func(button int32, shift int32, x int32, y int32) 
-	MouseUp func(button int32, shift int32, x int32, y int32) 
-	MouseMove func(button int32, shift int32, x int32, y int32) 
-	BeforeRightClick func(cancel *win32.VARIANT_BOOL) 
-	DragPlot func() 
-	DragOver func() 
-	BeforeDoubleClick func(elementID int32, arg1 int32, arg2 int32, cancel *win32.VARIANT_BOOL) 
-	Select func(elementID int32, arg1 int32, arg2 int32) 
-	SeriesChange func(seriesIndex int32, pointIndex int32) 
-	Calculate func() 
+	QueryInterface_   func(riid *syscall.GUID, ppvObj unsafe.Pointer)
+	AddRef_           func() uint32
+	Release_          func() uint32
+	GetTypeInfoCount_ func(pctinfo *uint32)
+	GetTypeInfo_      func(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)
+	GetIDsOfNames_    func(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)
+	Invoke_           func(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)
+	Activate          func()
+	Deactivate        func()
+	Resize            func()
+	MouseDown         func(button int32, shift int32, x int32, y int32)
+	MouseUp           func(button int32, shift int32, x int32, y int32)
+	MouseMove         func(button int32, shift int32, x int32, y int32)
+	BeforeRightClick  func(cancel *win32.VARIANT_BOOL)
+	DragPlot          func()
+	DragOver          func()
+	BeforeDoubleClick func(elementID int32, arg1 int32, arg2 int32, cancel *win32.VARIANT_BOOL)
+	Select            func(elementID int32, arg1 int32, arg2 int32)
+	SeriesChange      func(seriesIndex int32, pointIndex int32)
+	Calculate         func()
 }
 
 type ChartEventsDispImpl struct {
@@ -331,7 +331,7 @@ type ChartEventsComObj struct {
 
 func NewChartEventsComObj(dispImpl ChartEventsDispInterface, scoped bool) *ChartEventsComObj {
 	comObj := com.NewComObj[ChartEventsComObj](
-		&ChartEventsImpl {DispImpl: dispImpl})
+		&ChartEventsImpl{DispImpl: dispImpl})
 	if scoped {
 		com.AddToScope(comObj)
 	}

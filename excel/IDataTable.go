@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 00020843-0001-0000-C000-000000000046
-var IID_IDataTable = syscall.GUID{0x00020843, 0x0001, 0x0000, 
+var IID_IDataTable = syscall.GUID{0x00020843, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IDataTable struct {
@@ -17,8 +17,8 @@ type IDataTable struct {
 }
 
 func NewIDataTable(pUnk *win32.IUnknown, addRef bool, scoped bool) *IDataTable {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IDataTable)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IDataTable) IID() *syscall.GUID {
 func (this *IDataTable) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,7 +50,7 @@ func (this *IDataTable) GetCreator(rhs *int32) com.Error {
 func (this *IDataTable) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -105,14 +105,14 @@ func (this *IDataTable) SetHasBorderOutline(rhs bool) com.Error {
 func (this *IDataTable) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[18]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDataTable) GetFont(rhs **Font) com.Error {
 	addr := (*this.LpVtbl)[19]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -143,7 +143,7 @@ func (this *IDataTable) SetAutoScaleFont(rhs interface{}) com.Error {
 func (this *IDataTable) GetFormat(rhs **ChartFormat) com.Error {
 	addr := (*this.LpVtbl)[24]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

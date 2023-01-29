@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 0002442F-0001-0000-C000-000000000046
-var IID_IValidation = syscall.GUID{0x0002442F, 0x0001, 0x0000, 
+var IID_IValidation = syscall.GUID{0x0002442F, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IValidation struct {
@@ -16,8 +16,8 @@ type IValidation struct {
 }
 
 func NewIValidation(pUnk *win32.IUnknown, addRef bool, scoped bool) *IValidation {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IValidation)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -36,7 +36,7 @@ func (this *IValidation) IID() *syscall.GUID {
 func (this *IValidation) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -49,7 +49,7 @@ func (this *IValidation) GetCreator(rhs *int32) com.Error {
 func (this *IValidation) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000244AC-0001-0000-C000-000000000046
-var IID_IResearch = syscall.GUID{0x000244AC, 0x0001, 0x0000, 
+var IID_IResearch = syscall.GUID{0x000244AC, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IResearch struct {
@@ -17,8 +17,8 @@ type IResearch struct {
 }
 
 func NewIResearch(pUnk *win32.IUnknown, addRef bool, scoped bool) *IResearch {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IResearch)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IResearch) IID() *syscall.GUID {
 func (this *IResearch) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,7 +50,7 @@ func (this *IResearch) GetCreator(rhs *int32) com.Error {
 func (this *IResearch) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -71,4 +71,3 @@ func (this *IResearch) SetLanguagePair(languageFrom int32, languageTo int32, rhs
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(languageFrom), uintptr(languageTo), uintptr(unsafe.Pointer(rhs)))
 	return com.Error(ret)
 }
-

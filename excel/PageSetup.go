@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208B4-0000-0000-C000-000000000046
-var IID_PageSetup = syscall.GUID{0x000208B4, 0x0000, 0x0000, 
+var IID_PageSetup = syscall.GUID{0x000208B4, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type PageSetup struct {
@@ -17,8 +17,8 @@ type PageSetup struct {
 }
 
 func NewPageSetup(pDisp *win32.IDispatch, addRef bool, scoped bool) *PageSetup {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &PageSetup{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *PageSetup) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *PageSetup) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *PageSetup) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PageSetup) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *PageSetup) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *PageSetup) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *PageSetup) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PageSetup) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *PageSetup) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PageSetup) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *PageSetup) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PageSetup) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *PageSetup) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PageSetup) Application() *Application {
@@ -100,7 +100,7 @@ func (this *PageSetup) BlackAndWhite() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PageSetup) SetBlackAndWhite(rhs bool)  {
+func (this *PageSetup) SetBlackAndWhite(rhs bool) {
 	_ = this.PropPut(0x000003f1, []interface{}{rhs})
 }
 
@@ -109,7 +109,7 @@ func (this *PageSetup) BottomMargin() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *PageSetup) SetBottomMargin(rhs float64)  {
+func (this *PageSetup) SetBottomMargin(rhs float64) {
 	_ = this.PropPut(0x000003ea, []interface{}{rhs})
 }
 
@@ -118,7 +118,7 @@ func (this *PageSetup) CenterFooter() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PageSetup) SetCenterFooter(rhs string)  {
+func (this *PageSetup) SetCenterFooter(rhs string) {
 	_ = this.PropPut(0x000003f2, []interface{}{rhs})
 }
 
@@ -127,7 +127,7 @@ func (this *PageSetup) CenterHeader() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PageSetup) SetCenterHeader(rhs string)  {
+func (this *PageSetup) SetCenterHeader(rhs string) {
 	_ = this.PropPut(0x000003f3, []interface{}{rhs})
 }
 
@@ -136,7 +136,7 @@ func (this *PageSetup) CenterHorizontally() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PageSetup) SetCenterHorizontally(rhs bool)  {
+func (this *PageSetup) SetCenterHorizontally(rhs bool) {
 	_ = this.PropPut(0x000003ed, []interface{}{rhs})
 }
 
@@ -145,7 +145,7 @@ func (this *PageSetup) CenterVertically() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PageSetup) SetCenterVertically(rhs bool)  {
+func (this *PageSetup) SetCenterVertically(rhs bool) {
 	_ = this.PropPut(0x000003ee, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *PageSetup) ChartSize() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PageSetup) SetChartSize(rhs int32)  {
+func (this *PageSetup) SetChartSize(rhs int32) {
 	_ = this.PropPut(0x000003f4, []interface{}{rhs})
 }
 
@@ -163,7 +163,7 @@ func (this *PageSetup) Draft() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PageSetup) SetDraft(rhs bool)  {
+func (this *PageSetup) SetDraft(rhs bool) {
 	_ = this.PropPut(0x000003fc, []interface{}{rhs})
 }
 
@@ -172,7 +172,7 @@ func (this *PageSetup) FirstPageNumber() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PageSetup) SetFirstPageNumber(rhs int32)  {
+func (this *PageSetup) SetFirstPageNumber(rhs int32) {
 	_ = this.PropPut(0x000003f0, []interface{}{rhs})
 }
 
@@ -182,7 +182,7 @@ func (this *PageSetup) FitToPagesTall() ole.Variant {
 	return *retVal
 }
 
-func (this *PageSetup) SetFitToPagesTall(rhs interface{})  {
+func (this *PageSetup) SetFitToPagesTall(rhs interface{}) {
 	_ = this.PropPut(0x000003f5, []interface{}{rhs})
 }
 
@@ -192,7 +192,7 @@ func (this *PageSetup) FitToPagesWide() ole.Variant {
 	return *retVal
 }
 
-func (this *PageSetup) SetFitToPagesWide(rhs interface{})  {
+func (this *PageSetup) SetFitToPagesWide(rhs interface{}) {
 	_ = this.PropPut(0x000003f6, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *PageSetup) FooterMargin() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *PageSetup) SetFooterMargin(rhs float64)  {
+func (this *PageSetup) SetFooterMargin(rhs float64) {
 	_ = this.PropPut(0x000003f7, []interface{}{rhs})
 }
 
@@ -210,7 +210,7 @@ func (this *PageSetup) HeaderMargin() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *PageSetup) SetHeaderMargin(rhs float64)  {
+func (this *PageSetup) SetHeaderMargin(rhs float64) {
 	_ = this.PropPut(0x000003f8, []interface{}{rhs})
 }
 
@@ -219,7 +219,7 @@ func (this *PageSetup) LeftFooter() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PageSetup) SetLeftFooter(rhs string)  {
+func (this *PageSetup) SetLeftFooter(rhs string) {
 	_ = this.PropPut(0x000003f9, []interface{}{rhs})
 }
 
@@ -228,7 +228,7 @@ func (this *PageSetup) LeftHeader() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PageSetup) SetLeftHeader(rhs string)  {
+func (this *PageSetup) SetLeftHeader(rhs string) {
 	_ = this.PropPut(0x000003fa, []interface{}{rhs})
 }
 
@@ -237,7 +237,7 @@ func (this *PageSetup) LeftMargin() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *PageSetup) SetLeftMargin(rhs float64)  {
+func (this *PageSetup) SetLeftMargin(rhs float64) {
 	_ = this.PropPut(0x000003e7, []interface{}{rhs})
 }
 
@@ -246,7 +246,7 @@ func (this *PageSetup) Order() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PageSetup) SetOrder(rhs int32)  {
+func (this *PageSetup) SetOrder(rhs int32) {
 	_ = this.PropPut(0x000000c0, []interface{}{rhs})
 }
 
@@ -255,7 +255,7 @@ func (this *PageSetup) Orientation() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PageSetup) SetOrientation(rhs int32)  {
+func (this *PageSetup) SetOrientation(rhs int32) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -264,7 +264,7 @@ func (this *PageSetup) PaperSize() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PageSetup) SetPaperSize(rhs int32)  {
+func (this *PageSetup) SetPaperSize(rhs int32) {
 	_ = this.PropPut(0x000003ef, []interface{}{rhs})
 }
 
@@ -273,7 +273,7 @@ func (this *PageSetup) PrintArea() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PageSetup) SetPrintArea(rhs string)  {
+func (this *PageSetup) SetPrintArea(rhs string) {
 	_ = this.PropPut(0x000003fb, []interface{}{rhs})
 }
 
@@ -282,7 +282,7 @@ func (this *PageSetup) PrintGridlines() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PageSetup) SetPrintGridlines(rhs bool)  {
+func (this *PageSetup) SetPrintGridlines(rhs bool) {
 	_ = this.PropPut(0x000003ec, []interface{}{rhs})
 }
 
@@ -291,7 +291,7 @@ func (this *PageSetup) PrintHeadings() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PageSetup) SetPrintHeadings(rhs bool)  {
+func (this *PageSetup) SetPrintHeadings(rhs bool) {
 	_ = this.PropPut(0x000003eb, []interface{}{rhs})
 }
 
@@ -300,12 +300,12 @@ func (this *PageSetup) PrintNotes() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PageSetup) SetPrintNotes(rhs bool)  {
+func (this *PageSetup) SetPrintNotes(rhs bool) {
 	_ = this.PropPut(0x000003fd, []interface{}{rhs})
 }
 
-var PageSetup_PrintQuality_OptArgs= []string{
-	"Index", 
+var PageSetup_PrintQuality_OptArgs = []string{
+	"Index",
 }
 
 func (this *PageSetup) PrintQuality(optArgs ...interface{}) ole.Variant {
@@ -315,11 +315,11 @@ func (this *PageSetup) PrintQuality(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var PageSetup_SetPrintQuality_OptArgs= []string{
-	"Index", 
+var PageSetup_SetPrintQuality_OptArgs = []string{
+	"Index",
 }
 
-func (this *PageSetup) SetPrintQuality(optArgs ...interface{})  {
+func (this *PageSetup) SetPrintQuality(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(PageSetup_SetPrintQuality_OptArgs, optArgs)
 	_ = this.PropPut(0x000003fe, nil, optArgs...)
 }
@@ -329,7 +329,7 @@ func (this *PageSetup) PrintTitleColumns() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PageSetup) SetPrintTitleColumns(rhs string)  {
+func (this *PageSetup) SetPrintTitleColumns(rhs string) {
 	_ = this.PropPut(0x000003ff, []interface{}{rhs})
 }
 
@@ -338,7 +338,7 @@ func (this *PageSetup) PrintTitleRows() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PageSetup) SetPrintTitleRows(rhs string)  {
+func (this *PageSetup) SetPrintTitleRows(rhs string) {
 	_ = this.PropPut(0x00000400, []interface{}{rhs})
 }
 
@@ -347,7 +347,7 @@ func (this *PageSetup) RightFooter() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PageSetup) SetRightFooter(rhs string)  {
+func (this *PageSetup) SetRightFooter(rhs string) {
 	_ = this.PropPut(0x00000401, []interface{}{rhs})
 }
 
@@ -356,7 +356,7 @@ func (this *PageSetup) RightHeader() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PageSetup) SetRightHeader(rhs string)  {
+func (this *PageSetup) SetRightHeader(rhs string) {
 	_ = this.PropPut(0x00000402, []interface{}{rhs})
 }
 
@@ -365,7 +365,7 @@ func (this *PageSetup) RightMargin() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *PageSetup) SetRightMargin(rhs float64)  {
+func (this *PageSetup) SetRightMargin(rhs float64) {
 	_ = this.PropPut(0x000003e8, []interface{}{rhs})
 }
 
@@ -374,7 +374,7 @@ func (this *PageSetup) TopMargin() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *PageSetup) SetTopMargin(rhs float64)  {
+func (this *PageSetup) SetTopMargin(rhs float64) {
 	_ = this.PropPut(0x000003e9, []interface{}{rhs})
 }
 
@@ -384,7 +384,7 @@ func (this *PageSetup) Zoom() ole.Variant {
 	return *retVal
 }
 
-func (this *PageSetup) SetZoom(rhs interface{})  {
+func (this *PageSetup) SetZoom(rhs interface{}) {
 	_ = this.PropPut(0x00000297, []interface{}{rhs})
 }
 
@@ -393,7 +393,7 @@ func (this *PageSetup) PrintComments() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PageSetup) SetPrintComments(rhs int32)  {
+func (this *PageSetup) SetPrintComments(rhs int32) {
 	_ = this.PropPut(0x000005f4, []interface{}{rhs})
 }
 
@@ -402,7 +402,7 @@ func (this *PageSetup) PrintErrors() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PageSetup) SetPrintErrors(rhs int32)  {
+func (this *PageSetup) SetPrintErrors(rhs int32) {
 	_ = this.PropPut(0x00000865, []interface{}{rhs})
 }
 
@@ -441,7 +441,7 @@ func (this *PageSetup) OddAndEvenPagesHeaderFooter() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PageSetup) SetOddAndEvenPagesHeaderFooter(rhs bool)  {
+func (this *PageSetup) SetOddAndEvenPagesHeaderFooter(rhs bool) {
 	_ = this.PropPut(0x00000a28, []interface{}{rhs})
 }
 
@@ -450,7 +450,7 @@ func (this *PageSetup) DifferentFirstPageHeaderFooter() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PageSetup) SetDifferentFirstPageHeaderFooter(rhs bool)  {
+func (this *PageSetup) SetDifferentFirstPageHeaderFooter(rhs bool) {
 	_ = this.PropPut(0x00000a29, []interface{}{rhs})
 }
 
@@ -459,7 +459,7 @@ func (this *PageSetup) ScaleWithDocHeaderFooter() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PageSetup) SetScaleWithDocHeaderFooter(rhs bool)  {
+func (this *PageSetup) SetScaleWithDocHeaderFooter(rhs bool) {
 	_ = this.PropPut(0x00000a2a, []interface{}{rhs})
 }
 
@@ -468,7 +468,7 @@ func (this *PageSetup) AlignMarginsHeaderFooter() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PageSetup) SetAlignMarginsHeaderFooter(rhs bool)  {
+func (this *PageSetup) SetAlignMarginsHeaderFooter(rhs bool) {
 	_ = this.PropPut(0x00000a2b, []interface{}{rhs})
 }
 
@@ -486,4 +486,3 @@ func (this *PageSetup) FirstPage() *Page {
 	retVal, _ := this.PropGet(0x00000a2e, nil)
 	return NewPage(retVal.IDispatch(), false, true)
 }
-

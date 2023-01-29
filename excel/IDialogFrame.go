@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002088F-0001-0000-C000-000000000046
-var IID_IDialogFrame = syscall.GUID{0x0002088F, 0x0001, 0x0000, 
+var IID_IDialogFrame = syscall.GUID{0x0002088F, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IDialogFrame struct {
@@ -17,8 +17,8 @@ type IDialogFrame struct {
 }
 
 func NewIDialogFrame(pUnk *win32.IUnknown, addRef bool, scoped bool) *IDialogFrame {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IDialogFrame)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IDialogFrame) IID() *syscall.GUID {
 func (this *IDialogFrame) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,21 +50,21 @@ func (this *IDialogFrame) GetCreator(rhs *int32) com.Error {
 func (this *IDialogFrame) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDialogFrame) Dummy3_()  {
+func (this *IDialogFrame) Dummy3_() {
 	addr := (*this.LpVtbl)[10]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogFrame) Dummy4_()  {
+func (this *IDialogFrame) Dummy4_() {
 	addr := (*this.LpVtbl)[11]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogFrame) Dummy5_()  {
+func (this *IDialogFrame) Dummy5_() {
 	addr := (*this.LpVtbl)[12]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -75,22 +75,22 @@ func (this *IDialogFrame) CopyPicture(appearance int32, format int32, rhs *ole.V
 	return com.Error(ret)
 }
 
-func (this *IDialogFrame) Dummy7_()  {
+func (this *IDialogFrame) Dummy7_() {
 	addr := (*this.LpVtbl)[14]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogFrame) Dummy8_()  {
+func (this *IDialogFrame) Dummy8_() {
 	addr := (*this.LpVtbl)[15]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogFrame) Dummy9_()  {
+func (this *IDialogFrame) Dummy9_() {
 	addr := (*this.LpVtbl)[16]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogFrame) Dummy10_()  {
+func (this *IDialogFrame) Dummy10_() {
 	addr := (*this.LpVtbl)[17]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -107,7 +107,7 @@ func (this *IDialogFrame) SetHeight(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDialogFrame) Dummy12_()  {
+func (this *IDialogFrame) Dummy12_() {
 	addr := (*this.LpVtbl)[20]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -160,12 +160,12 @@ func (this *IDialogFrame) SetOnAction(rhs string) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDialogFrame) Dummy17_()  {
+func (this *IDialogFrame) Dummy17_() {
 	addr := (*this.LpVtbl)[29]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogFrame) Dummy18_()  {
+func (this *IDialogFrame) Dummy18_() {
 	addr := (*this.LpVtbl)[30]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -176,7 +176,7 @@ func (this *IDialogFrame) Select(replace interface{}, rhs *ole.Variant) com.Erro
 	return com.Error(ret)
 }
 
-func (this *IDialogFrame) Dummy20_()  {
+func (this *IDialogFrame) Dummy20_() {
 	addr := (*this.LpVtbl)[32]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -193,12 +193,12 @@ func (this *IDialogFrame) SetTop(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDialogFrame) Dummy22_()  {
+func (this *IDialogFrame) Dummy22_() {
 	addr := (*this.LpVtbl)[35]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogFrame) Dummy23_()  {
+func (this *IDialogFrame) Dummy23_() {
 	addr := (*this.LpVtbl)[36]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -215,7 +215,7 @@ func (this *IDialogFrame) SetWidth(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDialogFrame) Dummy25_()  {
+func (this *IDialogFrame) Dummy25_() {
 	addr := (*this.LpVtbl)[39]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -223,7 +223,7 @@ func (this *IDialogFrame) Dummy25_()  {
 func (this *IDialogFrame) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[40]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -242,7 +242,7 @@ func (this *IDialogFrame) SetCaption(rhs string) com.Error {
 func (this *IDialogFrame) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -275,4 +275,3 @@ func (this *IDialogFrame) SetText(rhs string) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(rhs)))
 	return com.Error(ret)
 }
-

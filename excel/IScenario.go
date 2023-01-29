@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020897-0001-0000-C000-000000000046
-var IID_IScenario = syscall.GUID{0x00020897, 0x0001, 0x0000, 
+var IID_IScenario = syscall.GUID{0x00020897, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IScenario struct {
@@ -17,8 +17,8 @@ type IScenario struct {
 }
 
 func NewIScenario(pUnk *win32.IUnknown, addRef bool, scoped bool) *IScenario {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IScenario)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IScenario) IID() *syscall.GUID {
 func (this *IScenario) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,7 +50,7 @@ func (this *IScenario) GetCreator(rhs *int32) com.Error {
 func (this *IScenario) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -63,7 +63,7 @@ func (this *IScenario) ChangeScenario(changingCells interface{}, values interfac
 func (this *IScenario) GetChangingCells(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -138,4 +138,3 @@ func (this *IScenario) GetValues(index interface{}, rhs *ole.Variant) com.Error 
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
 	return com.Error(ret)
 }
-

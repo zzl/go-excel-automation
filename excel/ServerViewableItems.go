@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 000244A4-0000-0000-C000-000000000046
-var IID_ServerViewableItems = syscall.GUID{0x000244A4, 0x0000, 0x0000, 
+var IID_ServerViewableItems = syscall.GUID{0x000244A4, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ServerViewableItems struct {
@@ -17,8 +17,8 @@ type ServerViewableItems struct {
 }
 
 func NewServerViewableItems(pDisp *win32.IDispatch, addRef bool, scoped bool) *ServerViewableItems {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &ServerViewableItems{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *ServerViewableItems) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *ServerViewableItems) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *ServerViewableItems) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ServerViewableItems) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *ServerViewableItems) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *ServerViewableItems) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *ServerViewableItems) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ServerViewableItems) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *ServerViewableItems) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ServerViewableItems) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *ServerViewableItems) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ServerViewableItems) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *ServerViewableItems) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ServerViewableItems) Application() *Application {
@@ -105,14 +105,14 @@ func (this *ServerViewableItems) Add(obj interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *ServerViewableItems) Delete(index interface{})  {
+func (this *ServerViewableItems) Delete(index interface{}) {
 	retVal, _ := this.Call(0x00000075, []interface{}{index})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ServerViewableItems) DeleteAll()  {
+func (this *ServerViewableItems) DeleteAll() {
 	retVal, _ := this.Call(0x000008bf, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *ServerViewableItems) Item(index interface{}) *ole.DispatchClass {
@@ -134,7 +134,7 @@ func (this *ServerViewableItems) ForEach(action func(item *ole.DispatchClass) bo
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant

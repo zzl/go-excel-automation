@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 000C0318-0000-0000-C000-000000000046
-var IID_ShapeNode = syscall.GUID{0x000C0318, 0x0000, 0x0000, 
+var IID_ShapeNode = syscall.GUID{0x000C0318, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ShapeNode struct {
@@ -16,8 +16,8 @@ type ShapeNode struct {
 }
 
 func NewShapeNode(pDisp *win32.IDispatch, addRef bool, scoped bool) *ShapeNode {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &ShapeNode{ole.OleClient{pDisp}}
 	if addRef {
@@ -74,4 +74,3 @@ func (this *ShapeNode) SegmentType() int32 {
 	retVal, _ := this.PropGet(0x00000066, nil)
 	return retVal.LValVal()
 }
-

@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 000C0398-0000-0000-C000-000000000046
-var IID_TextFrame2 = syscall.GUID{0x000C0398, 0x0000, 0x0000, 
+var IID_TextFrame2 = syscall.GUID{0x000C0398, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type TextFrame2 struct {
@@ -16,8 +16,8 @@ type TextFrame2 struct {
 }
 
 func NewTextFrame2(pDisp *win32.IDispatch, addRef bool, scoped bool) *TextFrame2 {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &TextFrame2{ole.OleClient{pDisp}}
 	if addRef {
@@ -64,7 +64,7 @@ func (this *TextFrame2) MarginBottom() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *TextFrame2) SetMarginBottom(rhs float32)  {
+func (this *TextFrame2) SetMarginBottom(rhs float32) {
 	_ = this.PropPut(0x00000064, []interface{}{rhs})
 }
 
@@ -73,7 +73,7 @@ func (this *TextFrame2) MarginLeft() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *TextFrame2) SetMarginLeft(rhs float32)  {
+func (this *TextFrame2) SetMarginLeft(rhs float32) {
 	_ = this.PropPut(0x00000065, []interface{}{rhs})
 }
 
@@ -82,7 +82,7 @@ func (this *TextFrame2) MarginRight() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *TextFrame2) SetMarginRight(rhs float32)  {
+func (this *TextFrame2) SetMarginRight(rhs float32) {
 	_ = this.PropPut(0x00000066, []interface{}{rhs})
 }
 
@@ -91,7 +91,7 @@ func (this *TextFrame2) MarginTop() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *TextFrame2) SetMarginTop(rhs float32)  {
+func (this *TextFrame2) SetMarginTop(rhs float32) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
@@ -100,7 +100,7 @@ func (this *TextFrame2) Orientation() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame2) SetOrientation(rhs int32)  {
+func (this *TextFrame2) SetOrientation(rhs int32) {
 	_ = this.PropPut(0x00000068, []interface{}{rhs})
 }
 
@@ -109,7 +109,7 @@ func (this *TextFrame2) HorizontalAnchor() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame2) SetHorizontalAnchor(rhs int32)  {
+func (this *TextFrame2) SetHorizontalAnchor(rhs int32) {
 	_ = this.PropPut(0x00000069, []interface{}{rhs})
 }
 
@@ -118,7 +118,7 @@ func (this *TextFrame2) VerticalAnchor() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame2) SetVerticalAnchor(rhs int32)  {
+func (this *TextFrame2) SetVerticalAnchor(rhs int32) {
 	_ = this.PropPut(0x0000006a, []interface{}{rhs})
 }
 
@@ -127,7 +127,7 @@ func (this *TextFrame2) PathFormat() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame2) SetPathFormat(rhs int32)  {
+func (this *TextFrame2) SetPathFormat(rhs int32) {
 	_ = this.PropPut(0x0000006b, []interface{}{rhs})
 }
 
@@ -136,7 +136,7 @@ func (this *TextFrame2) WarpFormat() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame2) SetWarpFormat(rhs int32)  {
+func (this *TextFrame2) SetWarpFormat(rhs int32) {
 	_ = this.PropPut(0x0000006c, []interface{}{rhs})
 }
 
@@ -145,7 +145,7 @@ func (this *TextFrame2) WordArtformat() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame2) SetWordArtformat(rhs int32)  {
+func (this *TextFrame2) SetWordArtformat(rhs int32) {
 	_ = this.PropPut(0x0000006d, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *TextFrame2) WordWrap() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame2) SetWordWrap(rhs int32)  {
+func (this *TextFrame2) SetWordWrap(rhs int32) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -163,7 +163,7 @@ func (this *TextFrame2) AutoSize() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame2) SetAutoSize(rhs int32)  {
+func (this *TextFrame2) SetAutoSize(rhs int32) {
 	_ = this.PropPut(0x0000006f, []interface{}{rhs})
 }
 
@@ -192,9 +192,9 @@ func (this *TextFrame2) Ruler() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *TextFrame2) DeleteText()  {
+func (this *TextFrame2) DeleteText() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *TextFrame2) NoTextRotation() int32 {
@@ -202,7 +202,6 @@ func (this *TextFrame2) NoTextRotation() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame2) SetNoTextRotation(rhs int32)  {
+func (this *TextFrame2) SetNoTextRotation(rhs int32) {
 	_ = this.PropPut(0x00000076, []interface{}{rhs})
 }
-

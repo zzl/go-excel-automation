@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020895-0000-0000-C000-000000000046
-var IID_Pane = syscall.GUID{0x00020895, 0x0000, 0x0000, 
+var IID_Pane = syscall.GUID{0x00020895, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Pane struct {
@@ -17,8 +17,8 @@ type Pane struct {
 }
 
 func NewPane(pDisp *win32.IDispatch, addRef bool, scoped bool) *Pane {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Pane{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Pane) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Pane) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Pane) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Pane) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Pane) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Pane) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Pane) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Pane) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Pane) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Pane) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Pane) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Pane) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Pane) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Pane) Application() *Application {
@@ -105,8 +105,8 @@ func (this *Pane) Index() int32 {
 	return retVal.LValVal()
 }
 
-var Pane_LargeScroll_OptArgs= []string{
-	"Down", "Up", "ToRight", "ToLeft", 
+var Pane_LargeScroll_OptArgs = []string{
+	"Down", "Up", "ToRight", "ToLeft",
 }
 
 func (this *Pane) LargeScroll(optArgs ...interface{}) ole.Variant {
@@ -121,7 +121,7 @@ func (this *Pane) ScrollColumn() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Pane) SetScrollColumn(rhs int32)  {
+func (this *Pane) SetScrollColumn(rhs int32) {
 	_ = this.PropPut(0x0000028e, []interface{}{rhs})
 }
 
@@ -130,12 +130,12 @@ func (this *Pane) ScrollRow() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Pane) SetScrollRow(rhs int32)  {
+func (this *Pane) SetScrollRow(rhs int32) {
 	_ = this.PropPut(0x0000028f, []interface{}{rhs})
 }
 
-var Pane_SmallScroll_OptArgs= []string{
-	"Down", "Up", "ToRight", "ToLeft", 
+var Pane_SmallScroll_OptArgs = []string{
+	"Down", "Up", "ToRight", "ToLeft",
 }
 
 func (this *Pane) SmallScroll(optArgs ...interface{}) ole.Variant {
@@ -150,14 +150,14 @@ func (this *Pane) VisibleRange() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var Pane_ScrollIntoView_OptArgs= []string{
-	"Start", 
+var Pane_ScrollIntoView_OptArgs = []string{
+	"Start",
 }
 
-func (this *Pane) ScrollIntoView(left int32, top int32, width int32, height int32, optArgs ...interface{})  {
+func (this *Pane) ScrollIntoView(left int32, top int32, width int32, height int32, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Pane_ScrollIntoView_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000006f5, []interface{}{left, top, width, height}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Pane) PointsToScreenPixelsX(points int32) int32 {
@@ -169,4 +169,3 @@ func (this *Pane) PointsToScreenPixelsY(points int32) int32 {
 	retVal, _ := this.Call(0x000006f1, []interface{}{points})
 	return retVal.LValVal()
 }
-

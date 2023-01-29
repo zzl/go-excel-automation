@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002440F-0001-0000-C000-000000000046
-var IID_IChartEvents = syscall.GUID{0x0002440F, 0x0001, 0x0000, 
+var IID_IChartEvents = syscall.GUID{0x0002440F, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IChartEvents struct {
@@ -16,8 +16,8 @@ type IChartEvents struct {
 }
 
 func NewIChartEvents(pUnk *win32.IUnknown, addRef bool, scoped bool) *IChartEvents {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IChartEvents)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -110,4 +110,3 @@ func (this *IChartEvents) Calculate() com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 	return com.Error(ret)
 }
-

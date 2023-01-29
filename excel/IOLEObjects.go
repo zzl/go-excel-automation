@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208A3-0001-0000-C000-000000000046
-var IID_IOLEObjects = syscall.GUID{0x000208A3, 0x0001, 0x0000, 
+var IID_IOLEObjects = syscall.GUID{0x000208A3, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IOLEObjects struct {
@@ -17,8 +17,8 @@ type IOLEObjects struct {
 }
 
 func NewIOLEObjects(pUnk *win32.IUnknown, addRef bool, scoped bool) *IOLEObjects {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IOLEObjects)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IOLEObjects) IID() *syscall.GUID {
 func (this *IOLEObjects) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,11 +50,11 @@ func (this *IOLEObjects) GetCreator(rhs *int32) com.Error {
 func (this *IOLEObjects) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IOLEObjects) Dummy3_()  {
+func (this *IOLEObjects) Dummy3_() {
 	addr := (*this.LpVtbl)[10]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -92,7 +92,7 @@ func (this *IOLEObjects) Delete(rhs *ole.Variant) com.Error {
 func (this *IOLEObjects) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -120,7 +120,7 @@ func (this *IOLEObjects) SetHeight(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IOLEObjects) Dummy12_()  {
+func (this *IOLEObjects) Dummy12_() {
 	addr := (*this.LpVtbl)[21]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -149,7 +149,7 @@ func (this *IOLEObjects) SetLocked(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IOLEObjects) Dummy15_()  {
+func (this *IOLEObjects) Dummy15_() {
 	addr := (*this.LpVtbl)[26]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -214,7 +214,7 @@ func (this *IOLEObjects) SetTop(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IOLEObjects) Dummy22_()  {
+func (this *IOLEObjects) Dummy22_() {
 	addr := (*this.LpVtbl)[37]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -252,21 +252,21 @@ func (this *IOLEObjects) GetZOrder(rhs *int32) com.Error {
 func (this *IOLEObjects) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IOLEObjects) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[44]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IOLEObjects) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[45]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -282,7 +282,7 @@ func (this *IOLEObjects) SetShadow(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IOLEObjects) Dummy30_()  {
+func (this *IOLEObjects) Dummy30_() {
 	addr := (*this.LpVtbl)[48]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -299,17 +299,17 @@ func (this *IOLEObjects) SetAutoLoad(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IOLEObjects) Dummy32_()  {
+func (this *IOLEObjects) Dummy32_() {
 	addr := (*this.LpVtbl)[51]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IOLEObjects) Dummy33_()  {
+func (this *IOLEObjects) Dummy33_() {
 	addr := (*this.LpVtbl)[52]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IOLEObjects) Dummy34_()  {
+func (this *IOLEObjects) Dummy34_() {
 	addr := (*this.LpVtbl)[53]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -326,32 +326,32 @@ func (this *IOLEObjects) SetSourceName(rhs string) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IOLEObjects) Dummy36_()  {
+func (this *IOLEObjects) Dummy36_() {
 	addr := (*this.LpVtbl)[56]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IOLEObjects) Dummy37_()  {
+func (this *IOLEObjects) Dummy37_() {
 	addr := (*this.LpVtbl)[57]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IOLEObjects) Dummy38_()  {
+func (this *IOLEObjects) Dummy38_() {
 	addr := (*this.LpVtbl)[58]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IOLEObjects) Dummy39_()  {
+func (this *IOLEObjects) Dummy39_() {
 	addr := (*this.LpVtbl)[59]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IOLEObjects) Dummy40_()  {
+func (this *IOLEObjects) Dummy40_() {
 	addr := (*this.LpVtbl)[60]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IOLEObjects) Dummy41_()  {
+func (this *IOLEObjects) Dummy41_() {
 	addr := (*this.LpVtbl)[61]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -359,7 +359,7 @@ func (this *IOLEObjects) Dummy41_()  {
 func (this *IOLEObjects) Add(classType interface{}, filename interface{}, link interface{}, displayAsIcon interface{}, iconFileName interface{}, iconIndex interface{}, iconLabel interface{}, left interface{}, top interface{}, width interface{}, height interface{}, rhs **OLEObject) com.Error {
 	addr := (*this.LpVtbl)[62]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&classType)), (uintptr)(unsafe.Pointer(&filename)), (uintptr)(unsafe.Pointer(&link)), (uintptr)(unsafe.Pointer(&displayAsIcon)), (uintptr)(unsafe.Pointer(&iconFileName)), (uintptr)(unsafe.Pointer(&iconIndex)), (uintptr)(unsafe.Pointer(&iconLabel)), (uintptr)(unsafe.Pointer(&left)), (uintptr)(unsafe.Pointer(&top)), (uintptr)(unsafe.Pointer(&width)), (uintptr)(unsafe.Pointer(&height)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -372,21 +372,20 @@ func (this *IOLEObjects) GetCount(rhs *int32) com.Error {
 func (this *IOLEObjects) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[64]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IOLEObjects) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[65]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IOLEObjects) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[66]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
-

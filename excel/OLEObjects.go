@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208A3-0000-0000-C000-000000000046
-var IID_OLEObjects = syscall.GUID{0x000208A3, 0x0000, 0x0000, 
+var IID_OLEObjects = syscall.GUID{0x000208A3, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type OLEObjects struct {
@@ -17,8 +17,8 @@ type OLEObjects struct {
 }
 
 func NewOLEObjects(pDisp *win32.IDispatch, addRef bool, scoped bool) *OLEObjects {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &OLEObjects{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *OLEObjects) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *OLEObjects) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *OLEObjects) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *OLEObjects) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *OLEObjects) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *OLEObjects) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *OLEObjects) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObjects) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *OLEObjects) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObjects) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *OLEObjects) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObjects) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *OLEObjects) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *OLEObjects) Application() *Application {
@@ -95,9 +95,9 @@ func (this *OLEObjects) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *OLEObjects) Dummy3_()  {
+func (this *OLEObjects) Dummy3_() {
 	retVal, _ := this.Call(0x00010003, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *OLEObjects) BringToFront() ole.Variant {
@@ -112,8 +112,8 @@ func (this *OLEObjects) Copy() ole.Variant {
 	return *retVal
 }
 
-var OLEObjects_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var OLEObjects_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *OLEObjects) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *OLEObjects) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObjects) SetEnabled(rhs bool)  {
+func (this *OLEObjects) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,13 +154,13 @@ func (this *OLEObjects) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *OLEObjects) SetHeight(rhs float64)  {
+func (this *OLEObjects) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
-func (this *OLEObjects) Dummy12_()  {
+func (this *OLEObjects) Dummy12_() {
 	retVal, _ := this.Call(0x0001000c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *OLEObjects) Left() float64 {
@@ -168,7 +168,7 @@ func (this *OLEObjects) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *OLEObjects) SetLeft(rhs float64)  {
+func (this *OLEObjects) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,13 +177,13 @@ func (this *OLEObjects) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObjects) SetLocked(rhs bool)  {
+func (this *OLEObjects) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
-func (this *OLEObjects) Dummy15_()  {
+func (this *OLEObjects) Dummy15_() {
 	retVal, _ := this.Call(0x0001000f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *OLEObjects) OnAction() string {
@@ -191,7 +191,7 @@ func (this *OLEObjects) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *OLEObjects) SetOnAction(rhs string)  {
+func (this *OLEObjects) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *OLEObjects) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *OLEObjects) SetPlacement(rhs interface{})  {
+func (this *OLEObjects) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -210,12 +210,12 @@ func (this *OLEObjects) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObjects) SetPrintObject(rhs bool)  {
+func (this *OLEObjects) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var OLEObjects_Select_OptArgs= []string{
-	"Replace", 
+var OLEObjects_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *OLEObjects) Select(optArgs ...interface{}) ole.Variant {
@@ -236,13 +236,13 @@ func (this *OLEObjects) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *OLEObjects) SetTop(rhs float64)  {
+func (this *OLEObjects) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
-func (this *OLEObjects) Dummy22_()  {
+func (this *OLEObjects) Dummy22_() {
 	retVal, _ := this.Call(0x00010016, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *OLEObjects) Visible() bool {
@@ -250,7 +250,7 @@ func (this *OLEObjects) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObjects) SetVisible(rhs bool)  {
+func (this *OLEObjects) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *OLEObjects) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *OLEObjects) SetWidth(rhs float64)  {
+func (this *OLEObjects) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -288,13 +288,13 @@ func (this *OLEObjects) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObjects) SetShadow(rhs bool)  {
+func (this *OLEObjects) SetShadow(rhs bool) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
-func (this *OLEObjects) Dummy30_()  {
+func (this *OLEObjects) Dummy30_() {
 	retVal, _ := this.Call(0x0001001e, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *OLEObjects) AutoLoad() bool {
@@ -302,23 +302,23 @@ func (this *OLEObjects) AutoLoad() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObjects) SetAutoLoad(rhs bool)  {
+func (this *OLEObjects) SetAutoLoad(rhs bool) {
 	_ = this.PropPut(0x000004a2, []interface{}{rhs})
 }
 
-func (this *OLEObjects) Dummy32_()  {
+func (this *OLEObjects) Dummy32_() {
 	retVal, _ := this.Call(0x00010020, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObjects) Dummy33_()  {
+func (this *OLEObjects) Dummy33_() {
 	retVal, _ := this.Call(0x00010021, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObjects) Dummy34_()  {
+func (this *OLEObjects) Dummy34_() {
 	retVal, _ := this.Call(0x00010022, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *OLEObjects) SourceName() string {
@@ -326,44 +326,44 @@ func (this *OLEObjects) SourceName() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *OLEObjects) SetSourceName(rhs string)  {
+func (this *OLEObjects) SetSourceName(rhs string) {
 	_ = this.PropPut(0x000002d1, []interface{}{rhs})
 }
 
-func (this *OLEObjects) Dummy36_()  {
+func (this *OLEObjects) Dummy36_() {
 	retVal, _ := this.Call(0x00010024, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObjects) Dummy37_()  {
+func (this *OLEObjects) Dummy37_() {
 	retVal, _ := this.Call(0x00010025, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObjects) Dummy38_()  {
+func (this *OLEObjects) Dummy38_() {
 	retVal, _ := this.Call(0x00010026, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObjects) Dummy39_()  {
+func (this *OLEObjects) Dummy39_() {
 	retVal, _ := this.Call(0x00010027, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObjects) Dummy40_()  {
+func (this *OLEObjects) Dummy40_() {
 	retVal, _ := this.Call(0x00010028, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObjects) Dummy41_()  {
+func (this *OLEObjects) Dummy41_() {
 	retVal, _ := this.Call(0x00010029, nil)
-	_= retVal
+	_ = retVal
 }
 
-var OLEObjects_Add_OptArgs= []string{
-	"ClassType", "Filename", "Link", "DisplayAsIcon", 
-	"IconFileName", "IconIndex", "IconLabel", "Left", 
-	"Top", "Width", "Height", 
+var OLEObjects_Add_OptArgs = []string{
+	"ClassType", "Filename", "Link", "DisplayAsIcon",
+	"IconFileName", "IconIndex", "IconLabel", "Left",
+	"Top", "Width", "Height",
 }
 
 func (this *OLEObjects) Add(optArgs ...interface{}) *OLEObject {
@@ -396,7 +396,7 @@ func (this *OLEObjects) ForEach(action func(item *ole.DispatchClass) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -412,4 +412,3 @@ func (this *OLEObjects) ForEach(action func(item *ole.DispatchClass) bool) {
 		}
 	}
 }
-

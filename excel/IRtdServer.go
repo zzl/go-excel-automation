@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // EC0E6191-DB51-11D3-8F3E-00C04F3651B8
-var IID_IRtdServer = syscall.GUID{0xEC0E6191, 0xDB51, 0x11D3, 
+var IID_IRtdServer = syscall.GUID{0xEC0E6191, 0xDB51, 0x11D3,
 	[8]byte{0x8F, 0x3E, 0x00, 0xC0, 0x4F, 0x36, 0x51, 0xB8}}
 
 type IRtdServer struct {
@@ -16,8 +16,8 @@ type IRtdServer struct {
 }
 
 func NewIRtdServer(pDisp *win32.IDispatch, addRef bool, scoped bool) *IRtdServer {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &IRtdServer{ole.OleClient{pDisp}}
 	if addRef {
@@ -60,9 +60,9 @@ func (this *IRtdServer) RefreshData(topicCount *int32) *win32.SAFEARRAY {
 	return retVal.ParrayVal()
 }
 
-func (this *IRtdServer) DisconnectData(topicID int32)  {
+func (this *IRtdServer) DisconnectData(topicID int32) {
 	retVal, _ := this.Call(0x0000000d, []interface{}{topicID})
-	_= retVal
+	_ = retVal
 }
 
 func (this *IRtdServer) Heartbeat() int32 {
@@ -70,8 +70,7 @@ func (this *IRtdServer) Heartbeat() int32 {
 	return retVal.LValVal()
 }
 
-func (this *IRtdServer) ServerTerminate()  {
+func (this *IRtdServer) ServerTerminate() {
 	retVal, _ := this.Call(0x0000000f, nil)
-	_= retVal
+	_ = retVal
 }
-

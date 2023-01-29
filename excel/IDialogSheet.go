@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208AF-0001-0000-C000-000000000046
-var IID_IDialogSheet = syscall.GUID{0x000208AF, 0x0001, 0x0000, 
+var IID_IDialogSheet = syscall.GUID{0x000208AF, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IDialogSheet struct {
@@ -17,8 +17,8 @@ type IDialogSheet struct {
 }
 
 func NewIDialogSheet(pUnk *win32.IUnknown, addRef bool, scoped bool) *IDialogSheet {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IDialogSheet)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IDialogSheet) IID() *syscall.GUID {
 func (this *IDialogSheet) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,7 +50,7 @@ func (this *IDialogSheet) GetCreator(rhs *int32) com.Error {
 func (this *IDialogSheet) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -117,7 +117,7 @@ func (this *IDialogSheet) SetName(rhs string) com.Error {
 func (this *IDialogSheet) GetNext(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[20]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -160,14 +160,14 @@ func (this *IDialogSheet) SetOnSheetDeactivate(lcid int32, rhs string) com.Error
 func (this *IDialogSheet) GetPageSetup(rhs **PageSetup) com.Error {
 	addr := (*this.LpVtbl)[27]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) GetPrevious(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[28]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -246,11 +246,11 @@ func (this *IDialogSheet) SetVisible(lcid int32, rhs int32) com.Error {
 func (this *IDialogSheet) GetShapes(rhs **Shapes) com.Error {
 	addr := (*this.LpVtbl)[41]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy29_()  {
+func (this *IDialogSheet) Dummy29_() {
 	addr := (*this.LpVtbl)[42]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -258,16 +258,16 @@ func (this *IDialogSheet) Dummy29_()  {
 func (this *IDialogSheet) Arcs(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy31_()  {
+func (this *IDialogSheet) Dummy31_() {
 	addr := (*this.LpVtbl)[44]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy32_()  {
+func (this *IDialogSheet) Dummy32_() {
 	addr := (*this.LpVtbl)[45]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -275,11 +275,11 @@ func (this *IDialogSheet) Dummy32_()  {
 func (this *IDialogSheet) Buttons(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[46]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy34_()  {
+func (this *IDialogSheet) Dummy34_() {
 	addr := (*this.LpVtbl)[47]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -296,7 +296,7 @@ func (this *IDialogSheet) SetEnableCalculation(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy36_()  {
+func (this *IDialogSheet) Dummy36_() {
 	addr := (*this.LpVtbl)[50]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -304,14 +304,14 @@ func (this *IDialogSheet) Dummy36_()  {
 func (this *IDialogSheet) ChartObjects(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[51]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) CheckBoxes(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[52]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -321,32 +321,32 @@ func (this *IDialogSheet) CheckSpelling(customDictionary interface{}, ignoreUppe
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy40_()  {
+func (this *IDialogSheet) Dummy40_() {
 	addr := (*this.LpVtbl)[54]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy41_()  {
+func (this *IDialogSheet) Dummy41_() {
 	addr := (*this.LpVtbl)[55]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy42_()  {
+func (this *IDialogSheet) Dummy42_() {
 	addr := (*this.LpVtbl)[56]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy43_()  {
+func (this *IDialogSheet) Dummy43_() {
 	addr := (*this.LpVtbl)[57]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy44_()  {
+func (this *IDialogSheet) Dummy44_() {
 	addr := (*this.LpVtbl)[58]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy45_()  {
+func (this *IDialogSheet) Dummy45_() {
 	addr := (*this.LpVtbl)[59]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -366,21 +366,21 @@ func (this *IDialogSheet) SetDisplayAutomaticPageBreaks(lcid int32, rhs bool) co
 func (this *IDialogSheet) Drawings(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[62]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) DrawingObjects(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[63]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) DropDowns(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[64]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -444,7 +444,7 @@ func (this *IDialogSheet) Evaluate_(name interface{}, lcid int32, rhs *ole.Varia
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy56_()  {
+func (this *IDialogSheet) Dummy56_() {
 	addr := (*this.LpVtbl)[75]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -458,63 +458,63 @@ func (this *IDialogSheet) ResetAllPageBreaks() com.Error {
 func (this *IDialogSheet) GroupBoxes(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[77]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) GroupObjects(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[78]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) Labels(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[79]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) Lines(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[80]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) ListBoxes(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[81]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) GetNames(rhs **Names) com.Error {
 	addr := (*this.LpVtbl)[82]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) OLEObjects(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[83]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy65_()  {
+func (this *IDialogSheet) Dummy65_() {
 	addr := (*this.LpVtbl)[84]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy66_()  {
+func (this *IDialogSheet) Dummy66_() {
 	addr := (*this.LpVtbl)[85]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy67_()  {
+func (this *IDialogSheet) Dummy67_() {
 	addr := (*this.LpVtbl)[86]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -522,11 +522,11 @@ func (this *IDialogSheet) Dummy67_()  {
 func (this *IDialogSheet) OptionButtons(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[87]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy69_()  {
+func (this *IDialogSheet) Dummy69_() {
 	addr := (*this.LpVtbl)[88]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -534,7 +534,7 @@ func (this *IDialogSheet) Dummy69_()  {
 func (this *IDialogSheet) Ovals(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[89]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -553,21 +553,21 @@ func (this *IDialogSheet) PasteSpecial_(format interface{}, link interface{}, di
 func (this *IDialogSheet) Pictures(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[92]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy74_()  {
+func (this *IDialogSheet) Dummy74_() {
 	addr := (*this.LpVtbl)[93]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy75_()  {
+func (this *IDialogSheet) Dummy75_() {
 	addr := (*this.LpVtbl)[94]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy76_()  {
+func (this *IDialogSheet) Dummy76_() {
 	addr := (*this.LpVtbl)[95]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -575,16 +575,16 @@ func (this *IDialogSheet) Dummy76_()  {
 func (this *IDialogSheet) Rectangles(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[96]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy78_()  {
+func (this *IDialogSheet) Dummy78_() {
 	addr := (*this.LpVtbl)[97]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy79_()  {
+func (this *IDialogSheet) Dummy79_() {
 	addr := (*this.LpVtbl)[98]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -604,16 +604,16 @@ func (this *IDialogSheet) SetScrollArea(rhs string) com.Error {
 func (this *IDialogSheet) ScrollBars(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[101]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy82_()  {
+func (this *IDialogSheet) Dummy82_() {
 	addr := (*this.LpVtbl)[102]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy83_()  {
+func (this *IDialogSheet) Dummy83_() {
 	addr := (*this.LpVtbl)[103]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -621,16 +621,16 @@ func (this *IDialogSheet) Dummy83_()  {
 func (this *IDialogSheet) Spinners(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[104]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy85_()  {
+func (this *IDialogSheet) Dummy85_() {
 	addr := (*this.LpVtbl)[105]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy86_()  {
+func (this *IDialogSheet) Dummy86_() {
 	addr := (*this.LpVtbl)[106]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -638,21 +638,21 @@ func (this *IDialogSheet) Dummy86_()  {
 func (this *IDialogSheet) TextBoxes(index interface{}, lcid int32, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[107]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(lcid), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy88_()  {
+func (this *IDialogSheet) Dummy88_() {
 	addr := (*this.LpVtbl)[108]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy89_()  {
+func (this *IDialogSheet) Dummy89_() {
 	addr := (*this.LpVtbl)[109]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy90_()  {
+func (this *IDialogSheet) Dummy90_() {
 	addr := (*this.LpVtbl)[110]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -660,21 +660,21 @@ func (this *IDialogSheet) Dummy90_()  {
 func (this *IDialogSheet) GetHPageBreaks(rhs **HPageBreaks) com.Error {
 	addr := (*this.LpVtbl)[111]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) GetVPageBreaks(rhs **VPageBreaks) com.Error {
 	addr := (*this.LpVtbl)[112]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) GetQueryTables(rhs **QueryTables) com.Error {
 	addr := (*this.LpVtbl)[113]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -693,14 +693,14 @@ func (this *IDialogSheet) SetDisplayPageBreaks(rhs bool) com.Error {
 func (this *IDialogSheet) GetComments(rhs **Comments) com.Error {
 	addr := (*this.LpVtbl)[116]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) GetHyperlinks(rhs **Hyperlinks) com.Error {
 	addr := (*this.LpVtbl)[117]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -731,7 +731,7 @@ func (this *IDialogSheet) SetDisplayRightToLeft_(lcid int32, rhs int32) com.Erro
 func (this *IDialogSheet) GetAutoFilter(rhs **AutoFilter) com.Error {
 	addr := (*this.LpVtbl)[122]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -750,7 +750,7 @@ func (this *IDialogSheet) SetDisplayRightToLeft(lcid int32, rhs bool) com.Error 
 func (this *IDialogSheet) GetScripts(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[125]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -769,14 +769,14 @@ func (this *IDialogSheet) CheckSpelling_(customDictionary interface{}, ignoreUpp
 func (this *IDialogSheet) GetTab(rhs **Tab) com.Error {
 	addr := (*this.LpVtbl)[128]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) GetMailEnvelope(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[129]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -789,21 +789,21 @@ func (this *IDialogSheet) SaveAs(filename string, fileFormat interface{}, passwo
 func (this *IDialogSheet) GetCustomProperties(rhs **CustomProperties) com.Error {
 	addr := (*this.LpVtbl)[131]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) GetSmartTags(rhs **SmartTags) com.Error {
 	addr := (*this.LpVtbl)[132]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) GetProtection(rhs **Protection) com.Error {
 	addr := (*this.LpVtbl)[133]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -819,17 +819,17 @@ func (this *IDialogSheet) Protect(password interface{}, drawingObjects interface
 	return com.Error(ret)
 }
 
-func (this *IDialogSheet) Dummy113_()  {
+func (this *IDialogSheet) Dummy113_() {
 	addr := (*this.LpVtbl)[136]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy114_()  {
+func (this *IDialogSheet) Dummy114_() {
 	addr := (*this.LpVtbl)[137]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IDialogSheet) Dummy115_()  {
+func (this *IDialogSheet) Dummy115_() {
 	addr := (*this.LpVtbl)[138]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -855,7 +855,7 @@ func (this *IDialogSheet) SetEnableFormatConditionsCalculation(rhs bool) com.Err
 func (this *IDialogSheet) GetSort(rhs **Sort) com.Error {
 	addr := (*this.LpVtbl)[142]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -886,14 +886,14 @@ func (this *IDialogSheet) SetDefaultButton(rhs interface{}) com.Error {
 func (this *IDialogSheet) GetDialogFrame(rhs **DialogFrame) com.Error {
 	addr := (*this.LpVtbl)[147]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheet) EditBoxes(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[148]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -920,4 +920,3 @@ func (this *IDialogSheet) Show(rhs *win32.VARIANT_BOOL) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
 	return com.Error(ret)
 }
-

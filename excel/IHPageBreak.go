@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024401-0001-0000-C000-000000000046
-var IID_IHPageBreak = syscall.GUID{0x00024401, 0x0001, 0x0000, 
+var IID_IHPageBreak = syscall.GUID{0x00024401, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IHPageBreak struct {
@@ -16,8 +16,8 @@ type IHPageBreak struct {
 }
 
 func NewIHPageBreak(pUnk *win32.IUnknown, addRef bool, scoped bool) *IHPageBreak {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IHPageBreak)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -36,7 +36,7 @@ func (this *IHPageBreak) IID() *syscall.GUID {
 func (this *IHPageBreak) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -49,7 +49,7 @@ func (this *IHPageBreak) GetCreator(rhs *int32) com.Error {
 func (this *IHPageBreak) GetParent(rhs **Worksheet) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -86,7 +86,7 @@ func (this *IHPageBreak) GetExtent(rhs *int32) com.Error {
 func (this *IHPageBreak) GetLocation(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[15]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -95,4 +95,3 @@ func (this *IHPageBreak) SetLocation(rhs *Range) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
 	return com.Error(ret)
 }
-

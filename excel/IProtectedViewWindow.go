@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000244CD-0001-0000-C000-000000000046
-var IID_IProtectedViewWindow = syscall.GUID{0x000244CD, 0x0001, 0x0000, 
+var IID_IProtectedViewWindow = syscall.GUID{0x000244CD, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IProtectedViewWindow struct {
@@ -16,8 +16,8 @@ type IProtectedViewWindow struct {
 }
 
 func NewIProtectedViewWindow(pUnk *win32.IUnknown, addRef bool, scoped bool) *IProtectedViewWindow {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IProtectedViewWindow)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -150,7 +150,7 @@ func (this *IProtectedViewWindow) SetWindowState(rhs int32) com.Error {
 func (this *IProtectedViewWindow) GetWorkbook(rhs **Workbook) com.Error {
 	addr := (*this.LpVtbl)[26]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -169,7 +169,6 @@ func (this *IProtectedViewWindow) Close(rhs *win32.VARIANT_BOOL) com.Error {
 func (this *IProtectedViewWindow) Edit(writeResPassword interface{}, updateLinks interface{}, rhs **Workbook) com.Error {
 	addr := (*this.LpVtbl)[29]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&writeResPassword)), (uintptr)(unsafe.Pointer(&updateLinks)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
-

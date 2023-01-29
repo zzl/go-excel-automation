@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 000208D6-0000-0000-C000-000000000046
-var IID_Chart_ = syscall.GUID{0x000208D6, 0x0000, 0x0000, 
+var IID_Chart_ = syscall.GUID{0x000208D6, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Chart_ struct {
@@ -16,8 +16,8 @@ type Chart_ struct {
 }
 
 func NewChart_(pDisp *win32.IDispatch, addRef bool, scoped bool) *Chart_ {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Chart_{ole.OleClient{pDisp}}
 	if addRef {
@@ -59,24 +59,24 @@ func (this *Chart_) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Chart_) Activate()  {
+func (this *Chart_) Activate() {
 	retVal, _ := this.Call(0x00000130, nil)
-	_= retVal
+	_ = retVal
 }
 
-var Chart__Copy_OptArgs= []string{
-	"Before", "After", 
+var Chart__Copy_OptArgs = []string{
+	"Before", "After",
 }
 
-func (this *Chart_) Copy(optArgs ...interface{})  {
+func (this *Chart_) Copy(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__Copy_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000227, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Chart_) Delete()  {
+func (this *Chart_) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) CodeName() string {
@@ -89,7 +89,7 @@ func (this *Chart_) CodeName_() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Chart_) SetCodeName_(rhs string)  {
+func (this *Chart_) SetCodeName_(rhs string) {
 	_ = this.PropPut(-2147418112, []interface{}{rhs})
 }
 
@@ -98,14 +98,14 @@ func (this *Chart_) Index() int32 {
 	return retVal.LValVal()
 }
 
-var Chart__Move_OptArgs= []string{
-	"Before", "After", 
+var Chart__Move_OptArgs = []string{
+	"Before", "After",
 }
 
-func (this *Chart_) Move(optArgs ...interface{})  {
+func (this *Chart_) Move(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__Move_OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000027d, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) Name() string {
@@ -113,7 +113,7 @@ func (this *Chart_) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Chart_) SetName(rhs string)  {
+func (this *Chart_) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -127,7 +127,7 @@ func (this *Chart_) OnDoubleClick() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Chart_) SetOnDoubleClick(rhs string)  {
+func (this *Chart_) SetOnDoubleClick(rhs string) {
 	_ = this.PropPut(0x00000274, []interface{}{rhs})
 }
 
@@ -136,7 +136,7 @@ func (this *Chart_) OnSheetActivate() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Chart_) SetOnSheetActivate(rhs string)  {
+func (this *Chart_) SetOnSheetActivate(rhs string) {
 	_ = this.PropPut(0x00000407, []interface{}{rhs})
 }
 
@@ -145,7 +145,7 @@ func (this *Chart_) OnSheetDeactivate() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Chart_) SetOnSheetDeactivate(rhs string)  {
+func (this *Chart_) SetOnSheetDeactivate(rhs string) {
 	_ = this.PropPut(0x00000439, []interface{}{rhs})
 }
 
@@ -159,35 +159,35 @@ func (this *Chart_) Previous() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__PrintOut___OptArgs= []string{
-	"From", "To", "Copies", "Preview", 
-	"ActivePrinter", "PrintToFile", "Collate", 
+var Chart__PrintOut___OptArgs = []string{
+	"From", "To", "Copies", "Preview",
+	"ActivePrinter", "PrintToFile", "Collate",
 }
 
-func (this *Chart_) PrintOut__(optArgs ...interface{})  {
+func (this *Chart_) PrintOut__(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__PrintOut___OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000389, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Chart__PrintPreview_OptArgs= []string{
-	"EnableChanges", 
+var Chart__PrintPreview_OptArgs = []string{
+	"EnableChanges",
 }
 
-func (this *Chart_) PrintPreview(optArgs ...interface{})  {
+func (this *Chart_) PrintPreview(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__PrintPreview_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000119, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Chart__Protect__OptArgs= []string{
-	"Password", "DrawingObjects", "Contents", "Scenarios", "UserInterfaceOnly", 
+var Chart__Protect__OptArgs = []string{
+	"Password", "DrawingObjects", "Contents", "Scenarios", "UserInterfaceOnly",
 }
 
-func (this *Chart_) Protect_(optArgs ...interface{})  {
+func (this *Chart_) Protect_(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__Protect__OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000011a, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) ProtectContents() bool {
@@ -205,40 +205,40 @@ func (this *Chart_) ProtectionMode() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) Dummy23_()  {
+func (this *Chart_) Dummy23_() {
 	retVal, _ := this.Call(0x00010017, nil)
-	_= retVal
+	_ = retVal
 }
 
-var Chart__SaveAs__OptArgs= []string{
-	"FileFormat", "Password", "WriteResPassword", "ReadOnlyRecommended", 
-	"CreateBackup", "AddToMru", "TextCodepage", "TextVisualLayout", 
+var Chart__SaveAs__OptArgs = []string{
+	"FileFormat", "Password", "WriteResPassword", "ReadOnlyRecommended",
+	"CreateBackup", "AddToMru", "TextCodepage", "TextVisualLayout",
 }
 
-func (this *Chart_) SaveAs_(filename string, optArgs ...interface{})  {
+func (this *Chart_) SaveAs_(filename string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__SaveAs__OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000011c, []interface{}{filename}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Chart__Select_OptArgs= []string{
-	"Replace", 
+var Chart__Select_OptArgs = []string{
+	"Replace",
 }
 
-func (this *Chart_) Select(optArgs ...interface{})  {
+func (this *Chart_) Select(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__Select_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000000eb, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Chart__Unprotect_OptArgs= []string{
-	"Password", 
+var Chart__Unprotect_OptArgs = []string{
+	"Password",
 }
 
-func (this *Chart_) Unprotect(optArgs ...interface{})  {
+func (this *Chart_) Unprotect(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__Unprotect_OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000011d, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) Visible() int32 {
@@ -246,7 +246,7 @@ func (this *Chart_) Visible() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Chart_) SetVisible(rhs int32)  {
+func (this *Chart_) SetVisible(rhs int32) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -255,18 +255,18 @@ func (this *Chart_) Shapes() *Shapes {
 	return NewShapes(retVal.IDispatch(), false, true)
 }
 
-var Chart__ApplyDataLabels__OptArgs= []string{
-	"Type", "LegendKey", "AutoText", "HasLeaderLines", 
+var Chart__ApplyDataLabels__OptArgs = []string{
+	"Type", "LegendKey", "AutoText", "HasLeaderLines",
 }
 
-func (this *Chart_) ApplyDataLabels_(optArgs ...interface{})  {
+func (this *Chart_) ApplyDataLabels_(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__ApplyDataLabels__OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000097, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Chart__Arcs_OptArgs= []string{
-	"Index", 
+var Chart__Arcs_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) Arcs(optArgs ...interface{}) *ole.DispatchClass {
@@ -280,8 +280,8 @@ func (this *Chart_) Area3DGroup() *ChartGroup {
 	return NewChartGroup(retVal.IDispatch(), false, true)
 }
 
-var Chart__AreaGroups_OptArgs= []string{
-	"Index", 
+var Chart__AreaGroups_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) AreaGroups(optArgs ...interface{}) *ole.DispatchClass {
@@ -290,14 +290,14 @@ func (this *Chart_) AreaGroups(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__AutoFormat_OptArgs= []string{
-	"Format", 
+var Chart__AutoFormat_OptArgs = []string{
+	"Format",
 }
 
-func (this *Chart_) AutoFormat(gallery int32, optArgs ...interface{})  {
+func (this *Chart_) AutoFormat(gallery int32, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__AutoFormat_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000072, []interface{}{gallery}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) AutoScaling() bool {
@@ -305,12 +305,12 @@ func (this *Chart_) AutoScaling() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetAutoScaling(rhs bool)  {
+func (this *Chart_) SetAutoScaling(rhs bool) {
 	_ = this.PropPut(0x0000006b, []interface{}{rhs})
 }
 
-var Chart__Axes_OptArgs= []string{
-	"Type", "AxisGroup", 
+var Chart__Axes_OptArgs = []string{
+	"Type", "AxisGroup",
 }
 
 func (this *Chart_) Axes(optArgs ...interface{}) *ole.DispatchClass {
@@ -319,9 +319,9 @@ func (this *Chart_) Axes(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Chart_) SetBackgroundPicture(filename string)  {
+func (this *Chart_) SetBackgroundPicture(filename string) {
 	retVal, _ := this.Call(0x000004a4, []interface{}{filename})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) Bar3DGroup() *ChartGroup {
@@ -329,8 +329,8 @@ func (this *Chart_) Bar3DGroup() *ChartGroup {
 	return NewChartGroup(retVal.IDispatch(), false, true)
 }
 
-var Chart__BarGroups_OptArgs= []string{
-	"Index", 
+var Chart__BarGroups_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) BarGroups(optArgs ...interface{}) *ole.DispatchClass {
@@ -339,8 +339,8 @@ func (this *Chart_) BarGroups(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__Buttons_OptArgs= []string{
-	"Index", 
+var Chart__Buttons_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) Buttons(optArgs ...interface{}) *ole.DispatchClass {
@@ -354,8 +354,8 @@ func (this *Chart_) ChartArea() *ChartArea {
 	return NewChartArea(retVal.IDispatch(), false, true)
 }
 
-var Chart__ChartGroups_OptArgs= []string{
-	"Index", 
+var Chart__ChartGroups_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) ChartGroups(optArgs ...interface{}) *ole.DispatchClass {
@@ -364,8 +364,8 @@ func (this *Chart_) ChartGroups(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__ChartObjects_OptArgs= []string{
-	"Index", 
+var Chart__ChartObjects_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) ChartObjects(optArgs ...interface{}) *ole.DispatchClass {
@@ -379,20 +379,20 @@ func (this *Chart_) ChartTitle() *ChartTitle {
 	return NewChartTitle(retVal.IDispatch(), false, true)
 }
 
-var Chart__ChartWizard_OptArgs= []string{
-	"Source", "Gallery", "Format", "PlotBy", 
-	"CategoryLabels", "SeriesLabels", "HasLegend", "Title", 
-	"CategoryTitle", "ValueTitle", "ExtraTitle", 
+var Chart__ChartWizard_OptArgs = []string{
+	"Source", "Gallery", "Format", "PlotBy",
+	"CategoryLabels", "SeriesLabels", "HasLegend", "Title",
+	"CategoryTitle", "ValueTitle", "ExtraTitle",
 }
 
-func (this *Chart_) ChartWizard(optArgs ...interface{})  {
+func (this *Chart_) ChartWizard(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__ChartWizard_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000000c4, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Chart__CheckBoxes_OptArgs= []string{
-	"Index", 
+var Chart__CheckBoxes_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) CheckBoxes(optArgs ...interface{}) *ole.DispatchClass {
@@ -401,14 +401,14 @@ func (this *Chart_) CheckBoxes(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var Chart__CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
-func (this *Chart_) CheckSpelling(optArgs ...interface{})  {
+func (this *Chart_) CheckSpelling(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__CheckSpelling_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000001f9, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) Column3DGroup() *ChartGroup {
@@ -416,8 +416,8 @@ func (this *Chart_) Column3DGroup() *ChartGroup {
 	return NewChartGroup(retVal.IDispatch(), false, true)
 }
 
-var Chart__ColumnGroups_OptArgs= []string{
-	"Index", 
+var Chart__ColumnGroups_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) ColumnGroups(optArgs ...interface{}) *ole.DispatchClass {
@@ -426,14 +426,14 @@ func (this *Chart_) ColumnGroups(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__CopyPicture_OptArgs= []string{
-	"Appearance", "Format", "Size", 
+var Chart__CopyPicture_OptArgs = []string{
+	"Appearance", "Format", "Size",
 }
 
-func (this *Chart_) CopyPicture(optArgs ...interface{})  {
+func (this *Chart_) CopyPicture(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__CopyPicture_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000000d5, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) Corners() *Corners {
@@ -441,15 +441,15 @@ func (this *Chart_) Corners() *Corners {
 	return NewCorners(retVal.IDispatch(), false, true)
 }
 
-var Chart__CreatePublisher_OptArgs= []string{
-	"Edition", "Appearance", "Size", "ContainsPICT", 
-	"ContainsBIFF", "ContainsRTF", "ContainsVALU", 
+var Chart__CreatePublisher_OptArgs = []string{
+	"Edition", "Appearance", "Size", "ContainsPICT",
+	"ContainsBIFF", "ContainsRTF", "ContainsVALU",
 }
 
-func (this *Chart_) CreatePublisher(optArgs ...interface{})  {
+func (this *Chart_) CreatePublisher(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__CreatePublisher_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000001ca, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) DataTable() *DataTable {
@@ -462,13 +462,13 @@ func (this *Chart_) DepthPercent() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Chart_) SetDepthPercent(rhs int32)  {
+func (this *Chart_) SetDepthPercent(rhs int32) {
 	_ = this.PropPut(0x00000030, []interface{}{rhs})
 }
 
-func (this *Chart_) Deselect()  {
+func (this *Chart_) Deselect() {
 	retVal, _ := this.Call(0x00000460, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) DisplayBlanksAs() int32 {
@@ -476,12 +476,12 @@ func (this *Chart_) DisplayBlanksAs() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Chart_) SetDisplayBlanksAs(rhs int32)  {
+func (this *Chart_) SetDisplayBlanksAs(rhs int32) {
 	_ = this.PropPut(0x0000005d, []interface{}{rhs})
 }
 
-var Chart__DoughnutGroups_OptArgs= []string{
-	"Index", 
+var Chart__DoughnutGroups_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) DoughnutGroups(optArgs ...interface{}) *ole.DispatchClass {
@@ -490,8 +490,8 @@ func (this *Chart_) DoughnutGroups(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__Drawings_OptArgs= []string{
-	"Index", 
+var Chart__Drawings_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) Drawings(optArgs ...interface{}) *ole.DispatchClass {
@@ -500,8 +500,8 @@ func (this *Chart_) Drawings(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__DrawingObjects_OptArgs= []string{
-	"Index", 
+var Chart__DrawingObjects_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) DrawingObjects(optArgs ...interface{}) *ole.DispatchClass {
@@ -510,8 +510,8 @@ func (this *Chart_) DrawingObjects(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__DropDowns_OptArgs= []string{
-	"Index", 
+var Chart__DropDowns_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) DropDowns(optArgs ...interface{}) *ole.DispatchClass {
@@ -525,7 +525,7 @@ func (this *Chart_) Elevation() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Chart_) SetElevation(rhs int32)  {
+func (this *Chart_) SetElevation(rhs int32) {
 	_ = this.PropPut(0x00000031, []interface{}{rhs})
 }
 
@@ -551,12 +551,12 @@ func (this *Chart_) GapDepth() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Chart_) SetGapDepth(rhs int32)  {
+func (this *Chart_) SetGapDepth(rhs int32) {
 	_ = this.PropPut(0x00000032, []interface{}{rhs})
 }
 
-var Chart__GroupBoxes_OptArgs= []string{
-	"Index", 
+var Chart__GroupBoxes_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) GroupBoxes(optArgs ...interface{}) *ole.DispatchClass {
@@ -565,8 +565,8 @@ func (this *Chart_) GroupBoxes(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__GroupObjects_OptArgs= []string{
-	"Index", 
+var Chart__GroupObjects_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) GroupObjects(optArgs ...interface{}) *ole.DispatchClass {
@@ -575,8 +575,8 @@ func (this *Chart_) GroupObjects(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__HasAxis_OptArgs= []string{
-	"Index1", "Index2", 
+var Chart__HasAxis_OptArgs = []string{
+	"Index1", "Index2",
 }
 
 func (this *Chart_) HasAxis(optArgs ...interface{}) ole.Variant {
@@ -586,11 +586,11 @@ func (this *Chart_) HasAxis(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Chart__SetHasAxis_OptArgs= []string{
-	"Index1", "Index2", 
+var Chart__SetHasAxis_OptArgs = []string{
+	"Index1", "Index2",
 }
 
-func (this *Chart_) SetHasAxis(optArgs ...interface{})  {
+func (this *Chart_) SetHasAxis(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__SetHasAxis_OptArgs, optArgs)
 	_ = this.PropPut(0x00000034, nil, optArgs...)
 }
@@ -600,7 +600,7 @@ func (this *Chart_) HasDataTable() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetHasDataTable(rhs bool)  {
+func (this *Chart_) SetHasDataTable(rhs bool) {
 	_ = this.PropPut(0x00000574, []interface{}{rhs})
 }
 
@@ -609,7 +609,7 @@ func (this *Chart_) HasLegend() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetHasLegend(rhs bool)  {
+func (this *Chart_) SetHasLegend(rhs bool) {
 	_ = this.PropPut(0x00000035, []interface{}{rhs})
 }
 
@@ -618,7 +618,7 @@ func (this *Chart_) HasTitle() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetHasTitle(rhs bool)  {
+func (this *Chart_) SetHasTitle(rhs bool) {
 	_ = this.PropPut(0x00000036, []interface{}{rhs})
 }
 
@@ -627,7 +627,7 @@ func (this *Chart_) HeightPercent() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Chart_) SetHeightPercent(rhs int32)  {
+func (this *Chart_) SetHeightPercent(rhs int32) {
 	_ = this.PropPut(0x00000037, []interface{}{rhs})
 }
 
@@ -636,8 +636,8 @@ func (this *Chart_) Hyperlinks() *Hyperlinks {
 	return NewHyperlinks(retVal.IDispatch(), false, true)
 }
 
-var Chart__Labels_OptArgs= []string{
-	"Index", 
+var Chart__Labels_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) Labels(optArgs ...interface{}) *ole.DispatchClass {
@@ -656,8 +656,8 @@ func (this *Chart_) Line3DGroup() *ChartGroup {
 	return NewChartGroup(retVal.IDispatch(), false, true)
 }
 
-var Chart__LineGroups_OptArgs= []string{
-	"Index", 
+var Chart__LineGroups_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) LineGroups(optArgs ...interface{}) *ole.DispatchClass {
@@ -666,8 +666,8 @@ func (this *Chart_) LineGroups(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__Lines_OptArgs= []string{
-	"Index", 
+var Chart__Lines_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) Lines(optArgs ...interface{}) *ole.DispatchClass {
@@ -676,8 +676,8 @@ func (this *Chart_) Lines(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__ListBoxes_OptArgs= []string{
-	"Index", 
+var Chart__ListBoxes_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) ListBoxes(optArgs ...interface{}) *ole.DispatchClass {
@@ -686,8 +686,8 @@ func (this *Chart_) ListBoxes(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__Location_OptArgs= []string{
-	"Name", 
+var Chart__Location_OptArgs = []string{
+	"Name",
 }
 
 func (this *Chart_) Location(where int32, optArgs ...interface{}) *Chart {
@@ -696,8 +696,8 @@ func (this *Chart_) Location(where int32, optArgs ...interface{}) *Chart {
 	return NewChart(retVal.IDispatch(), false, true)
 }
 
-var Chart__OLEObjects_OptArgs= []string{
-	"Index", 
+var Chart__OLEObjects_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) OLEObjects(optArgs ...interface{}) *ole.DispatchClass {
@@ -706,8 +706,8 @@ func (this *Chart_) OLEObjects(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__OptionButtons_OptArgs= []string{
-	"Index", 
+var Chart__OptionButtons_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) OptionButtons(optArgs ...interface{}) *ole.DispatchClass {
@@ -716,8 +716,8 @@ func (this *Chart_) OptionButtons(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__Ovals_OptArgs= []string{
-	"Index", 
+var Chart__Ovals_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) Ovals(optArgs ...interface{}) *ole.DispatchClass {
@@ -726,14 +726,14 @@ func (this *Chart_) Ovals(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__Paste_OptArgs= []string{
-	"Type", 
+var Chart__Paste_OptArgs = []string{
+	"Type",
 }
 
-func (this *Chart_) Paste(optArgs ...interface{})  {
+func (this *Chart_) Paste(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__Paste_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000000d3, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) Perspective() int32 {
@@ -741,12 +741,12 @@ func (this *Chart_) Perspective() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Chart_) SetPerspective(rhs int32)  {
+func (this *Chart_) SetPerspective(rhs int32) {
 	_ = this.PropPut(0x00000039, []interface{}{rhs})
 }
 
-var Chart__Pictures_OptArgs= []string{
-	"Index", 
+var Chart__Pictures_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) Pictures(optArgs ...interface{}) *ole.DispatchClass {
@@ -760,8 +760,8 @@ func (this *Chart_) Pie3DGroup() *ChartGroup {
 	return NewChartGroup(retVal.IDispatch(), false, true)
 }
 
-var Chart__PieGroups_OptArgs= []string{
-	"Index", 
+var Chart__PieGroups_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) PieGroups(optArgs ...interface{}) *ole.DispatchClass {
@@ -780,12 +780,12 @@ func (this *Chart_) PlotVisibleOnly() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetPlotVisibleOnly(rhs bool)  {
+func (this *Chart_) SetPlotVisibleOnly(rhs bool) {
 	_ = this.PropPut(0x0000005c, []interface{}{rhs})
 }
 
-var Chart__RadarGroups_OptArgs= []string{
-	"Index", 
+var Chart__RadarGroups_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) RadarGroups(optArgs ...interface{}) *ole.DispatchClass {
@@ -794,8 +794,8 @@ func (this *Chart_) RadarGroups(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__Rectangles_OptArgs= []string{
-	"Index", 
+var Chart__Rectangles_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) Rectangles(optArgs ...interface{}) *ole.DispatchClass {
@@ -810,7 +810,7 @@ func (this *Chart_) RightAngleAxes() ole.Variant {
 	return *retVal
 }
 
-func (this *Chart_) SetRightAngleAxes(rhs interface{})  {
+func (this *Chart_) SetRightAngleAxes(rhs interface{}) {
 	_ = this.PropPut(0x0000003a, []interface{}{rhs})
 }
 
@@ -820,12 +820,12 @@ func (this *Chart_) Rotation() ole.Variant {
 	return *retVal
 }
 
-func (this *Chart_) SetRotation(rhs interface{})  {
+func (this *Chart_) SetRotation(rhs interface{}) {
 	_ = this.PropPut(0x0000003b, []interface{}{rhs})
 }
 
-var Chart__ScrollBars_OptArgs= []string{
-	"Index", 
+var Chart__ScrollBars_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) ScrollBars(optArgs ...interface{}) *ole.DispatchClass {
@@ -834,8 +834,8 @@ func (this *Chart_) ScrollBars(optArgs ...interface{}) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__SeriesCollection_OptArgs= []string{
-	"Index", 
+var Chart__SeriesCollection_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) SeriesCollection(optArgs ...interface{}) *ole.DispatchClass {
@@ -849,7 +849,7 @@ func (this *Chart_) SizeWithWindow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetSizeWithWindow(rhs bool)  {
+func (this *Chart_) SetSizeWithWindow(rhs bool) {
 	_ = this.PropPut(0x0000005e, []interface{}{rhs})
 }
 
@@ -858,12 +858,12 @@ func (this *Chart_) ShowWindow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetShowWindow(rhs bool)  {
+func (this *Chart_) SetShowWindow(rhs bool) {
 	_ = this.PropPut(0x00000577, []interface{}{rhs})
 }
 
-var Chart__Spinners_OptArgs= []string{
-	"Index", 
+var Chart__Spinners_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) Spinners(optArgs ...interface{}) *ole.DispatchClass {
@@ -877,7 +877,7 @@ func (this *Chart_) SubType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Chart_) SetSubType(rhs int32)  {
+func (this *Chart_) SetSubType(rhs int32) {
 	_ = this.PropPut(0x0000006d, []interface{}{rhs})
 }
 
@@ -886,8 +886,8 @@ func (this *Chart_) SurfaceGroup() *ChartGroup {
 	return NewChartGroup(retVal.IDispatch(), false, true)
 }
 
-var Chart__TextBoxes_OptArgs= []string{
-	"Index", 
+var Chart__TextBoxes_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) TextBoxes(optArgs ...interface{}) *ole.DispatchClass {
@@ -901,7 +901,7 @@ func (this *Chart_) Type() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Chart_) SetType(rhs int32)  {
+func (this *Chart_) SetType(rhs int32) {
 	_ = this.PropPut(0x0000006c, []interface{}{rhs})
 }
 
@@ -910,18 +910,18 @@ func (this *Chart_) ChartType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Chart_) SetChartType(rhs int32)  {
+func (this *Chart_) SetChartType(rhs int32) {
 	_ = this.PropPut(0x00000578, []interface{}{rhs})
 }
 
-var Chart__ApplyCustomType_OptArgs= []string{
-	"TypeName", 
+var Chart__ApplyCustomType_OptArgs = []string{
+	"TypeName",
 }
 
-func (this *Chart_) ApplyCustomType(chartType int32, optArgs ...interface{})  {
+func (this *Chart_) ApplyCustomType(chartType int32, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__ApplyCustomType_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000579, []interface{}{chartType}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) Walls() *Walls {
@@ -934,12 +934,12 @@ func (this *Chart_) WallsAndGridlines2D() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetWallsAndGridlines2D(rhs bool)  {
+func (this *Chart_) SetWallsAndGridlines2D(rhs bool) {
 	_ = this.PropPut(0x000000d2, []interface{}{rhs})
 }
 
-var Chart__XYGroups_OptArgs= []string{
-	"Index", 
+var Chart__XYGroups_OptArgs = []string{
+	"Index",
 }
 
 func (this *Chart_) XYGroups(optArgs ...interface{}) *ole.DispatchClass {
@@ -953,7 +953,7 @@ func (this *Chart_) BarShape() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Chart_) SetBarShape(rhs int32)  {
+func (this *Chart_) SetBarShape(rhs int32) {
 	_ = this.PropPut(0x0000057b, []interface{}{rhs})
 }
 
@@ -962,13 +962,13 @@ func (this *Chart_) PlotBy() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Chart_) SetPlotBy(rhs int32)  {
+func (this *Chart_) SetPlotBy(rhs int32) {
 	_ = this.PropPut(0x000000ca, []interface{}{rhs})
 }
 
-func (this *Chart_) CopyChartBuild()  {
+func (this *Chart_) CopyChartBuild() {
 	retVal, _ := this.Call(0x0000057c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) ProtectFormatting() bool {
@@ -976,7 +976,7 @@ func (this *Chart_) ProtectFormatting() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetProtectFormatting(rhs bool)  {
+func (this *Chart_) SetProtectFormatting(rhs bool) {
 	_ = this.PropPut(0x0000057d, []interface{}{rhs})
 }
 
@@ -985,7 +985,7 @@ func (this *Chart_) ProtectData() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetProtectData(rhs bool)  {
+func (this *Chart_) SetProtectData(rhs bool) {
 	_ = this.PropPut(0x0000057e, []interface{}{rhs})
 }
 
@@ -994,7 +994,7 @@ func (this *Chart_) ProtectGoalSeek() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetProtectGoalSeek(rhs bool)  {
+func (this *Chart_) SetProtectGoalSeek(rhs bool) {
 	_ = this.PropPut(0x0000057f, []interface{}{rhs})
 }
 
@@ -1003,27 +1003,27 @@ func (this *Chart_) ProtectSelection() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetProtectSelection(rhs bool)  {
+func (this *Chart_) SetProtectSelection(rhs bool) {
 	_ = this.PropPut(0x00000580, []interface{}{rhs})
 }
 
-func (this *Chart_) GetChartElement(x int32, y int32, elementID *int32, arg1 *int32, arg2 *int32)  {
+func (this *Chart_) GetChartElement(x int32, y int32, elementID *int32, arg1 *int32, arg2 *int32) {
 	retVal, _ := this.Call(0x00000581, []interface{}{x, y, elementID, arg1, arg2})
-	_= retVal
+	_ = retVal
 }
 
-var Chart__SetSourceData_OptArgs= []string{
-	"PlotBy", 
+var Chart__SetSourceData_OptArgs = []string{
+	"PlotBy",
 }
 
-func (this *Chart_) SetSourceData(source *Range, optArgs ...interface{})  {
+func (this *Chart_) SetSourceData(source *Range, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__SetSourceData_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000585, []interface{}{source}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Chart__Export_OptArgs= []string{
-	"FilterName", "Interactive", 
+var Chart__Export_OptArgs = []string{
+	"FilterName", "Interactive",
 }
 
 func (this *Chart_) Export(filename string, optArgs ...interface{}) bool {
@@ -1032,9 +1032,9 @@ func (this *Chart_) Export(filename string, optArgs ...interface{}) bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) Refresh()  {
+func (this *Chart_) Refresh() {
 	retVal, _ := this.Call(0x00000589, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) PivotLayout() *PivotLayout {
@@ -1047,7 +1047,7 @@ func (this *Chart_) HasPivotFields() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetHasPivotFields(rhs bool)  {
+func (this *Chart_) SetHasPivotFields(rhs bool) {
 	_ = this.PropPut(0x00000717, []interface{}{rhs})
 }
 
@@ -1056,15 +1056,15 @@ func (this *Chart_) Scripts() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__PrintOut__OptArgs= []string{
-	"From", "To", "Copies", "Preview", 
-	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName", 
+var Chart__PrintOut__OptArgs = []string{
+	"From", "To", "Copies", "Preview",
+	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName",
 }
 
-func (this *Chart_) PrintOut_(optArgs ...interface{})  {
+func (this *Chart_) PrintOut_(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__PrintOut__OptArgs, optArgs)
 	retVal, _ := this.Call(0x000006ec, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) Tab() *Tab {
@@ -1077,52 +1077,52 @@ func (this *Chart_) MailEnvelope() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Chart__ApplyDataLabels_OptArgs= []string{
-	"Type", "LegendKey", "AutoText", "HasLeaderLines", 
-	"ShowSeriesName", "ShowCategoryName", "ShowValue", "ShowPercentage", 
-	"ShowBubbleSize", "Separator", 
+var Chart__ApplyDataLabels_OptArgs = []string{
+	"Type", "LegendKey", "AutoText", "HasLeaderLines",
+	"ShowSeriesName", "ShowCategoryName", "ShowValue", "ShowPercentage",
+	"ShowBubbleSize", "Separator",
 }
 
-func (this *Chart_) ApplyDataLabels(optArgs ...interface{})  {
+func (this *Chart_) ApplyDataLabels(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__ApplyDataLabels_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000782, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Chart__SaveAs_OptArgs= []string{
-	"FileFormat", "Password", "WriteResPassword", "ReadOnlyRecommended", 
-	"CreateBackup", "AddToMru", "TextCodepage", "TextVisualLayout", "Local", 
+var Chart__SaveAs_OptArgs = []string{
+	"FileFormat", "Password", "WriteResPassword", "ReadOnlyRecommended",
+	"CreateBackup", "AddToMru", "TextCodepage", "TextVisualLayout", "Local",
 }
 
-func (this *Chart_) SaveAs(filename string, optArgs ...interface{})  {
+func (this *Chart_) SaveAs(filename string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__SaveAs_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000785, []interface{}{filename}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Chart__Protect_OptArgs= []string{
-	"Password", "DrawingObjects", "Contents", "Scenarios", "UserInterfaceOnly", 
+var Chart__Protect_OptArgs = []string{
+	"Password", "DrawingObjects", "Contents", "Scenarios", "UserInterfaceOnly",
 }
 
-func (this *Chart_) Protect(optArgs ...interface{})  {
+func (this *Chart_) Protect(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__Protect_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000007ed, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Chart__ApplyLayout_OptArgs= []string{
-	"ChartType", 
+var Chart__ApplyLayout_OptArgs = []string{
+	"ChartType",
 }
 
-func (this *Chart_) ApplyLayout(layout int32, optArgs ...interface{})  {
+func (this *Chart_) ApplyLayout(layout int32, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__ApplyLayout_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000009c4, []interface{}{layout}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Chart_) SetElement(element int32)  {
+func (this *Chart_) SetElement(element int32) {
 	retVal, _ := this.Call(0x000009c6, []interface{}{element})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) ShowDataLabelsOverMaximum() bool {
@@ -1130,7 +1130,7 @@ func (this *Chart_) ShowDataLabelsOverMaximum() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetShowDataLabelsOverMaximum(rhs bool)  {
+func (this *Chart_) SetShowDataLabelsOverMaximum(rhs bool) {
 	_ = this.PropPut(0x000009c8, []interface{}{rhs})
 }
 
@@ -1144,41 +1144,41 @@ func (this *Chart_) BackWall() *Walls {
 	return NewWalls(retVal.IDispatch(), false, true)
 }
 
-var Chart__PrintOut_OptArgs= []string{
-	"From", "To", "Copies", "Preview", 
-	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName", 
+var Chart__PrintOut_OptArgs = []string{
+	"From", "To", "Copies", "Preview",
+	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName",
 }
 
-func (this *Chart_) PrintOut(optArgs ...interface{})  {
+func (this *Chart_) PrintOut(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__PrintOut_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000939, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Chart_) ApplyChartTemplate(filename string)  {
+func (this *Chart_) ApplyChartTemplate(filename string) {
 	retVal, _ := this.Call(0x000009cb, []interface{}{filename})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Chart_) SaveChartTemplate(filename string)  {
+func (this *Chart_) SaveChartTemplate(filename string) {
 	retVal, _ := this.Call(0x000009cc, []interface{}{filename})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Chart_) SetDefaultChart(name interface{})  {
+func (this *Chart_) SetDefaultChart(name interface{}) {
 	retVal, _ := this.Call(0x000000db, []interface{}{name})
-	_= retVal
+	_ = retVal
 }
 
-var Chart__ExportAsFixedFormat_OptArgs= []string{
-	"Filename", "Quality", "IncludeDocProperties", "IgnorePrintAreas", 
-	"From", "To", "OpenAfterPublish", "FixedFormatExtClassPtr", 
+var Chart__ExportAsFixedFormat_OptArgs = []string{
+	"Filename", "Quality", "IncludeDocProperties", "IgnorePrintAreas",
+	"From", "To", "OpenAfterPublish", "FixedFormatExtClassPtr",
 }
 
-func (this *Chart_) ExportAsFixedFormat(type_ int32, optArgs ...interface{})  {
+func (this *Chart_) ExportAsFixedFormat(type_ int32, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Chart__ExportAsFixedFormat_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000009bd, []interface{}{type_}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) ChartStyle() ole.Variant {
@@ -1187,13 +1187,13 @@ func (this *Chart_) ChartStyle() ole.Variant {
 	return *retVal
 }
 
-func (this *Chart_) SetChartStyle(rhs interface{})  {
+func (this *Chart_) SetChartStyle(rhs interface{}) {
 	_ = this.PropPut(0x000009cd, []interface{}{rhs})
 }
 
-func (this *Chart_) ClearToMatchStyle()  {
+func (this *Chart_) ClearToMatchStyle() {
 	retVal, _ := this.Call(0x000009ce, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Chart_) PrintedCommentPages() int32 {
@@ -1206,7 +1206,7 @@ func (this *Chart_) Dummy24() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetDummy24(rhs bool)  {
+func (this *Chart_) SetDummy24(rhs bool) {
 	_ = this.PropPut(0x00000b2a, []interface{}{rhs})
 }
 
@@ -1215,7 +1215,7 @@ func (this *Chart_) Dummy25() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetDummy25(rhs bool)  {
+func (this *Chart_) SetDummy25(rhs bool) {
 	_ = this.PropPut(0x00000b2b, []interface{}{rhs})
 }
 
@@ -1224,7 +1224,7 @@ func (this *Chart_) ShowReportFilterFieldButtons() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetShowReportFilterFieldButtons(rhs bool)  {
+func (this *Chart_) SetShowReportFilterFieldButtons(rhs bool) {
 	_ = this.PropPut(0x00000b2c, []interface{}{rhs})
 }
 
@@ -1233,7 +1233,7 @@ func (this *Chart_) ShowLegendFieldButtons() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetShowLegendFieldButtons(rhs bool)  {
+func (this *Chart_) SetShowLegendFieldButtons(rhs bool) {
 	_ = this.PropPut(0x00000b2d, []interface{}{rhs})
 }
 
@@ -1242,7 +1242,7 @@ func (this *Chart_) ShowAxisFieldButtons() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetShowAxisFieldButtons(rhs bool)  {
+func (this *Chart_) SetShowAxisFieldButtons(rhs bool) {
 	_ = this.PropPut(0x00000b2e, []interface{}{rhs})
 }
 
@@ -1251,7 +1251,7 @@ func (this *Chart_) ShowValueFieldButtons() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetShowValueFieldButtons(rhs bool)  {
+func (this *Chart_) SetShowValueFieldButtons(rhs bool) {
 	_ = this.PropPut(0x00000b2f, []interface{}{rhs})
 }
 
@@ -1260,7 +1260,6 @@ func (this *Chart_) ShowAllFieldButtons() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Chart_) SetShowAllFieldButtons(rhs bool)  {
+func (this *Chart_) SetShowAllFieldButtons(rhs bool) {
 	_ = this.PropPut(0x00000b30, []interface{}{rhs})
 }
-

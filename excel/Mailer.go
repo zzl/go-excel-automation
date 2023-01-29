@@ -1,16 +1,16 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
-	"unsafe"
 	"time"
+	"unsafe"
 )
 
 // 000208D1-0000-0000-C000-000000000046
-var IID_Mailer = syscall.GUID{0x000208D1, 0x0000, 0x0000, 
+var IID_Mailer = syscall.GUID{0x000208D1, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Mailer struct {
@@ -18,8 +18,8 @@ type Mailer struct {
 }
 
 func NewMailer(pDisp *win32.IDispatch, addRef bool, scoped bool) *Mailer {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Mailer{ole.OleClient{pDisp}}
 	if addRef {
@@ -46,9 +46,9 @@ func (this *Mailer) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Mailer) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Mailer) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Mailer) AddRef() uint32 {
@@ -61,24 +61,24 @@ func (this *Mailer) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Mailer) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Mailer) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Mailer) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Mailer) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Mailer) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Mailer) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Mailer) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Mailer) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Mailer) Application() *Application {
@@ -102,7 +102,7 @@ func (this *Mailer) BCCRecipients() ole.Variant {
 	return *retVal
 }
 
-func (this *Mailer) SetBCCRecipients(rhs interface{})  {
+func (this *Mailer) SetBCCRecipients(rhs interface{}) {
 	_ = this.PropPut(0x000003d7, []interface{}{rhs})
 }
 
@@ -112,7 +112,7 @@ func (this *Mailer) CCRecipients() ole.Variant {
 	return *retVal
 }
 
-func (this *Mailer) SetCCRecipients(rhs interface{})  {
+func (this *Mailer) SetCCRecipients(rhs interface{}) {
 	_ = this.PropPut(0x000003d6, []interface{}{rhs})
 }
 
@@ -122,7 +122,7 @@ func (this *Mailer) Enclosures() ole.Variant {
 	return *retVal
 }
 
-func (this *Mailer) SetEnclosures(rhs interface{})  {
+func (this *Mailer) SetEnclosures(rhs interface{}) {
 	_ = this.PropPut(0x000003d8, []interface{}{rhs})
 }
 
@@ -146,7 +146,7 @@ func (this *Mailer) Subject() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Mailer) SetSubject(rhs string)  {
+func (this *Mailer) SetSubject(rhs string) {
 	_ = this.PropPut(0x000003b9, []interface{}{rhs})
 }
 
@@ -156,7 +156,7 @@ func (this *Mailer) ToRecipients() ole.Variant {
 	return *retVal
 }
 
-func (this *Mailer) SetToRecipients(rhs interface{})  {
+func (this *Mailer) SetToRecipients(rhs interface{}) {
 	_ = this.PropPut(0x000003d5, []interface{}{rhs})
 }
 
@@ -166,7 +166,6 @@ func (this *Mailer) WhichAddress() ole.Variant {
 	return *retVal
 }
 
-func (this *Mailer) SetWhichAddress(rhs interface{})  {
+func (this *Mailer) SetWhichAddress(rhs interface{}) {
 	_ = this.PropPut(0x000003ce, []interface{}{rhs})
 }
-

@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002089A-0000-0000-C000-000000000046
-var IID_Line = syscall.GUID{0x0002089A, 0x0000, 0x0000, 
+var IID_Line = syscall.GUID{0x0002089A, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Line struct {
@@ -17,8 +17,8 @@ type Line struct {
 }
 
 func NewLine(pDisp *win32.IDispatch, addRef bool, scoped bool) *Line {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Line{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Line) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Line) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Line) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Line) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Line) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Line) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Line) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Line) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Line) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Line) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Line) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Line) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Line) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Line) Application() *Application {
@@ -112,8 +112,8 @@ func (this *Line) Copy() ole.Variant {
 	return *retVal
 }
 
-var Line_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var Line_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *Line) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *Line) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Line) SetEnabled(rhs bool)  {
+func (this *Line) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *Line) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Line) SetHeight(rhs float64)  {
+func (this *Line) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -168,7 +168,7 @@ func (this *Line) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Line) SetLeft(rhs float64)  {
+func (this *Line) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,7 +177,7 @@ func (this *Line) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Line) SetLocked(rhs bool)  {
+func (this *Line) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
@@ -186,7 +186,7 @@ func (this *Line) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Line) SetName(rhs string)  {
+func (this *Line) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -195,7 +195,7 @@ func (this *Line) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Line) SetOnAction(rhs string)  {
+func (this *Line) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -205,7 +205,7 @@ func (this *Line) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *Line) SetPlacement(rhs interface{})  {
+func (this *Line) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -214,12 +214,12 @@ func (this *Line) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Line) SetPrintObject(rhs bool)  {
+func (this *Line) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var Line_Select_OptArgs= []string{
-	"Replace", 
+var Line_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *Line) Select(optArgs ...interface{}) ole.Variant {
@@ -240,7 +240,7 @@ func (this *Line) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Line) SetTop(rhs float64)  {
+func (this *Line) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -254,7 +254,7 @@ func (this *Line) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Line) SetVisible(rhs bool)  {
+func (this *Line) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -263,7 +263,7 @@ func (this *Line) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Line) SetWidth(rhs float64)  {
+func (this *Line) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -283,7 +283,7 @@ func (this *Line) ArrowHeadLength() ole.Variant {
 	return *retVal
 }
 
-func (this *Line) SetArrowHeadLength(rhs interface{})  {
+func (this *Line) SetArrowHeadLength(rhs interface{}) {
 	_ = this.PropPut(0x00000263, []interface{}{rhs})
 }
 
@@ -293,7 +293,7 @@ func (this *Line) ArrowHeadStyle() ole.Variant {
 	return *retVal
 }
 
-func (this *Line) SetArrowHeadStyle(rhs interface{})  {
+func (this *Line) SetArrowHeadStyle(rhs interface{}) {
 	_ = this.PropPut(0x00000264, []interface{}{rhs})
 }
 
@@ -303,7 +303,7 @@ func (this *Line) ArrowHeadWidth() ole.Variant {
 	return *retVal
 }
 
-func (this *Line) SetArrowHeadWidth(rhs interface{})  {
+func (this *Line) SetArrowHeadWidth(rhs interface{}) {
 	_ = this.PropPut(0x00000265, []interface{}{rhs})
 }
 
@@ -311,4 +311,3 @@ func (this *Line) Border() *Border {
 	retVal, _ := this.PropGet(0x00000080, nil)
 	return NewBorder(retVal.IDispatch(), false, true)
 }
-

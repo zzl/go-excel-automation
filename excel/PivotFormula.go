@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002441E-0000-0000-C000-000000000046
-var IID_PivotFormula = syscall.GUID{0x0002441E, 0x0000, 0x0000, 
+var IID_PivotFormula = syscall.GUID{0x0002441E, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type PivotFormula struct {
@@ -17,8 +17,8 @@ type PivotFormula struct {
 }
 
 func NewPivotFormula(pDisp *win32.IDispatch, addRef bool, scoped bool) *PivotFormula {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &PivotFormula{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *PivotFormula) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *PivotFormula) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *PivotFormula) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotFormula) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *PivotFormula) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *PivotFormula) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *PivotFormula) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotFormula) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *PivotFormula) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotFormula) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *PivotFormula) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotFormula) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *PivotFormula) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotFormula) Application() *Application {
@@ -95,9 +95,9 @@ func (this *PivotFormula) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *PivotFormula) Delete()  {
+func (this *PivotFormula) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotFormula) Default_() string {
@@ -105,7 +105,7 @@ func (this *PivotFormula) Default_() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotFormula) SetDefault_(rhs string)  {
+func (this *PivotFormula) SetDefault_(rhs string) {
 	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
@@ -114,7 +114,7 @@ func (this *PivotFormula) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotFormula) SetFormula(rhs string)  {
+func (this *PivotFormula) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -123,7 +123,7 @@ func (this *PivotFormula) Value() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotFormula) SetValue(rhs string)  {
+func (this *PivotFormula) SetValue(rhs string) {
 	_ = this.PropPut(0x00000006, []interface{}{rhs})
 }
 
@@ -132,7 +132,7 @@ func (this *PivotFormula) Index() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PivotFormula) SetIndex(rhs int32)  {
+func (this *PivotFormula) SetIndex(rhs int32) {
 	_ = this.PropPut(0x000001e6, []interface{}{rhs})
 }
 
@@ -141,7 +141,6 @@ func (this *PivotFormula) StandardFormula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotFormula) SetStandardFormula(rhs string)  {
+func (this *PivotFormula) SetStandardFormula(rhs string) {
 	_ = this.PropPut(0x00000824, []interface{}{rhs})
 }
-

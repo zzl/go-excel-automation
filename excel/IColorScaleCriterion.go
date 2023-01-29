@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024495-0001-0000-C000-000000000046
-var IID_IColorScaleCriterion = syscall.GUID{0x00024495, 0x0001, 0x0000, 
+var IID_IColorScaleCriterion = syscall.GUID{0x00024495, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IColorScaleCriterion struct {
@@ -17,8 +17,8 @@ type IColorScaleCriterion struct {
 }
 
 func NewIColorScaleCriterion(pUnk *win32.IUnknown, addRef bool, scoped bool) *IColorScaleCriterion {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IColorScaleCriterion)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -67,7 +67,6 @@ func (this *IColorScaleCriterion) SetValue(rhs interface{}) com.Error {
 func (this *IColorScaleCriterion) GetFormatColor(rhs **FormatColor) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
-

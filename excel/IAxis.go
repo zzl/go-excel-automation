@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020848-0001-0000-C000-000000000046
-var IID_IAxis = syscall.GUID{0x00020848, 0x0001, 0x0000, 
+var IID_IAxis = syscall.GUID{0x00020848, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IAxis struct {
@@ -17,8 +17,8 @@ type IAxis struct {
 }
 
 func NewIAxis(pUnk *win32.IUnknown, addRef bool, scoped bool) *IAxis {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IAxis)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IAxis) IID() *syscall.GUID {
 func (this *IAxis) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,7 +50,7 @@ func (this *IAxis) GetCreator(rhs *int32) com.Error {
 func (this *IAxis) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -75,14 +75,14 @@ func (this *IAxis) GetAxisGroup(rhs *int32) com.Error {
 func (this *IAxis) GetAxisTitle(rhs **AxisTitle) com.Error {
 	addr := (*this.LpVtbl)[13]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IAxis) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -167,7 +167,7 @@ func (this *IAxis) SetHasTitle(rhs bool) com.Error {
 func (this *IAxis) GetMajorGridlines(rhs **Gridlines) com.Error {
 	addr := (*this.LpVtbl)[28]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -258,7 +258,7 @@ func (this *IAxis) SetMinimumScaleIsAuto(rhs bool) com.Error {
 func (this *IAxis) GetMinorGridlines(rhs **Gridlines) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -343,7 +343,7 @@ func (this *IAxis) SetTickLabelPosition(rhs int32) com.Error {
 func (this *IAxis) GetTickLabels(rhs **TickLabels) com.Error {
 	addr := (*this.LpVtbl)[57]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -506,7 +506,7 @@ func (this *IAxis) SetHasDisplayUnitLabel(rhs bool) com.Error {
 func (this *IAxis) GetDisplayUnitLabel(rhs **DisplayUnitLabel) com.Error {
 	addr := (*this.LpVtbl)[84]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -537,7 +537,6 @@ func (this *IAxis) SetTickLabelSpacingIsAuto(rhs bool) com.Error {
 func (this *IAxis) GetFormat(rhs **ChartFormat) com.Error {
 	addr := (*this.LpVtbl)[89]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
-

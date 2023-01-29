@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208D0-0001-0000-C000-000000000046
-var IID_IChartObjects = syscall.GUID{0x000208D0, 0x0001, 0x0000, 
+var IID_IChartObjects = syscall.GUID{0x000208D0, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IChartObjects struct {
@@ -17,8 +17,8 @@ type IChartObjects struct {
 }
 
 func NewIChartObjects(pUnk *win32.IUnknown, addRef bool, scoped bool) *IChartObjects {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IChartObjects)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IChartObjects) IID() *syscall.GUID {
 func (this *IChartObjects) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,11 +50,11 @@ func (this *IChartObjects) GetCreator(rhs *int32) com.Error {
 func (this *IChartObjects) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IChartObjects) Dummy3_()  {
+func (this *IChartObjects) Dummy3_() {
 	addr := (*this.LpVtbl)[10]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -92,7 +92,7 @@ func (this *IChartObjects) Delete(rhs *ole.Variant) com.Error {
 func (this *IChartObjects) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -120,7 +120,7 @@ func (this *IChartObjects) SetHeight(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IChartObjects) Dummy12_()  {
+func (this *IChartObjects) Dummy12_() {
 	addr := (*this.LpVtbl)[21]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -149,7 +149,7 @@ func (this *IChartObjects) SetLocked(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IChartObjects) Dummy15_()  {
+func (this *IChartObjects) Dummy15_() {
 	addr := (*this.LpVtbl)[26]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -214,7 +214,7 @@ func (this *IChartObjects) SetTop(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IChartObjects) Dummy22_()  {
+func (this *IChartObjects) Dummy22_() {
 	addr := (*this.LpVtbl)[37]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -243,7 +243,7 @@ func (this *IChartObjects) SetWidth(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IChartObjects) Dummy25_()  {
+func (this *IChartObjects) Dummy25_() {
 	addr := (*this.LpVtbl)[42]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -251,16 +251,16 @@ func (this *IChartObjects) Dummy25_()  {
 func (this *IChartObjects) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IChartObjects) Dummy27_()  {
+func (this *IChartObjects) Dummy27_() {
 	addr := (*this.LpVtbl)[44]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IChartObjects) Dummy28_()  {
+func (this *IChartObjects) Dummy28_() {
 	addr := (*this.LpVtbl)[45]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -292,14 +292,14 @@ func (this *IChartObjects) SetRoundedCorners(rhs bool) com.Error {
 func (this *IChartObjects) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[50]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IChartObjects) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[51]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -324,7 +324,7 @@ func (this *IChartObjects) Copy(rhs *ole.Variant) com.Error {
 func (this *IChartObjects) Add(left float64, top float64, width float64, height float64, rhs **ChartObject) com.Error {
 	addr := (*this.LpVtbl)[55]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(left), uintptr(top), uintptr(width), uintptr(height), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -337,28 +337,27 @@ func (this *IChartObjects) GetCount(rhs *int32) com.Error {
 func (this *IChartObjects) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[57]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IChartObjects) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[58]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IChartObjects) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[59]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IChartObjects) Default_(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[60]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
-

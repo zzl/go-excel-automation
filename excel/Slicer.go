@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000244C8-0000-0000-C000-000000000046
-var IID_Slicer = syscall.GUID{0x000244C8, 0x0000, 0x0000, 
+var IID_Slicer = syscall.GUID{0x000244C8, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Slicer struct {
@@ -17,8 +17,8 @@ type Slicer struct {
 }
 
 func NewSlicer(pDisp *win32.IDispatch, addRef bool, scoped bool) *Slicer {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Slicer{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Slicer) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Slicer) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Slicer) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Slicer) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Slicer) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Slicer) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Slicer) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Slicer) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Slicer) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Slicer) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Slicer) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Slicer) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Slicer) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Slicer) Application() *Application {
@@ -100,7 +100,7 @@ func (this *Slicer) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Slicer) SetName(rhs string)  {
+func (this *Slicer) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -109,7 +109,7 @@ func (this *Slicer) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Slicer) SetCaption(rhs string)  {
+func (this *Slicer) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
@@ -118,7 +118,7 @@ func (this *Slicer) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Slicer) SetTop(rhs float64)  {
+func (this *Slicer) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -127,7 +127,7 @@ func (this *Slicer) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Slicer) SetLeft(rhs float64)  {
+func (this *Slicer) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -136,7 +136,7 @@ func (this *Slicer) DisableMoveResizeUI() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Slicer) SetDisableMoveResizeUI(rhs bool)  {
+func (this *Slicer) SetDisableMoveResizeUI(rhs bool) {
 	_ = this.PropPut(0x00000ba7, []interface{}{rhs})
 }
 
@@ -145,7 +145,7 @@ func (this *Slicer) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Slicer) SetWidth(rhs float64)  {
+func (this *Slicer) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *Slicer) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Slicer) SetHeight(rhs float64)  {
+func (this *Slicer) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -163,7 +163,7 @@ func (this *Slicer) RowHeight() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Slicer) SetRowHeight(rhs float64)  {
+func (this *Slicer) SetRowHeight(rhs float64) {
 	_ = this.PropPut(0x00000110, []interface{}{rhs})
 }
 
@@ -172,7 +172,7 @@ func (this *Slicer) ColumnWidth() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Slicer) SetColumnWidth(rhs float64)  {
+func (this *Slicer) SetColumnWidth(rhs float64) {
 	_ = this.PropPut(0x000000f2, []interface{}{rhs})
 }
 
@@ -181,7 +181,7 @@ func (this *Slicer) NumberOfColumns() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Slicer) SetNumberOfColumns(rhs int32)  {
+func (this *Slicer) SetNumberOfColumns(rhs int32) {
 	_ = this.PropPut(0x00000ba8, []interface{}{rhs})
 }
 
@@ -190,7 +190,7 @@ func (this *Slicer) DisplayHeader() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Slicer) SetDisplayHeader(rhs bool)  {
+func (this *Slicer) SetDisplayHeader(rhs bool) {
 	_ = this.PropPut(0x00000ba9, []interface{}{rhs})
 }
 
@@ -199,7 +199,7 @@ func (this *Slicer) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Slicer) SetLocked(rhs bool)  {
+func (this *Slicer) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
@@ -224,27 +224,26 @@ func (this *Slicer) Style() ole.Variant {
 	return *retVal
 }
 
-func (this *Slicer) SetStyle(rhs interface{})  {
+func (this *Slicer) SetStyle(rhs interface{}) {
 	_ = this.PropPut(0x00000104, []interface{}{rhs})
 }
 
-func (this *Slicer) Delete()  {
+func (this *Slicer) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Slicer) Cut()  {
+func (this *Slicer) Cut() {
 	retVal, _ := this.Call(0x00000235, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Slicer) Copy()  {
+func (this *Slicer) Copy() {
 	retVal, _ := this.Call(0x00000227, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Slicer) ActiveItem() *SlicerItem {
 	retVal, _ := this.PropGet(0x00000bac, nil)
 	return NewSlicerItem(retVal.IDispatch(), false, true)
 }
-

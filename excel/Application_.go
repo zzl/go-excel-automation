@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 000208D5-0000-0000-C000-000000000046
-var IID_Application_ = syscall.GUID{0x000208D5, 0x0000, 0x0000, 
+var IID_Application_ = syscall.GUID{0x000208D5, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Application_ struct {
@@ -16,8 +16,8 @@ type Application_ struct {
 }
 
 func NewApplication_(pDisp *win32.IDispatch, addRef bool, scoped bool) *Application_ {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Application_{ole.OleClient{pDisp}}
 	if addRef {
@@ -84,7 +84,7 @@ func (this *Application_) ActivePrinter() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetActivePrinter(rhs string)  {
+func (this *Application_) SetActivePrinter(rhs string) {
 	_ = this.PropPut(0x00000132, []interface{}{rhs})
 }
 
@@ -113,9 +113,9 @@ func (this *Application_) Assistant() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Application_) Calculate()  {
+func (this *Application_) Calculate() {
 	retVal, _ := this.Call(0x00000117, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) Cells() *Range {
@@ -143,9 +143,9 @@ func (this *Application_) DDEAppReturnCode() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) DDEExecute(channel int32, string string)  {
+func (this *Application_) DDEExecute(channel int32, string string) {
 	retVal, _ := this.Call(0x0000014d, []interface{}{channel, string})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) DDEInitiate(app string, topic string) int32 {
@@ -153,9 +153,9 @@ func (this *Application_) DDEInitiate(app string, topic string) int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) DDEPoke(channel int32, item interface{}, data interface{})  {
+func (this *Application_) DDEPoke(channel int32, item interface{}, data interface{}) {
 	retVal, _ := this.Call(0x0000014f, []interface{}{channel, item, data})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) DDERequest(channel int32, item string) ole.Variant {
@@ -164,9 +164,9 @@ func (this *Application_) DDERequest(channel int32, item string) ole.Variant {
 	return *retVal
 }
 
-func (this *Application_) DDETerminate(channel int32)  {
+func (this *Application_) DDETerminate(channel int32) {
 	retVal, _ := this.Call(0x00000151, []interface{}{channel})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) DialogSheets() *Sheets {
@@ -192,14 +192,14 @@ func (this *Application_) ExecuteExcel4Macro(string string) ole.Variant {
 	return *retVal
 }
 
-var Application__Intersect_OptArgs= []string{
-	"Arg3", "Arg4", "Arg5", "Arg6", 
-	"Arg7", "Arg8", "Arg9", "Arg10", 
-	"Arg11", "Arg12", "Arg13", "Arg14", 
-	"Arg15", "Arg16", "Arg17", "Arg18", 
-	"Arg19", "Arg20", "Arg21", "Arg22", 
-	"Arg23", "Arg24", "Arg25", "Arg26", 
-	"Arg27", "Arg28", "Arg29", "Arg30", 
+var Application__Intersect_OptArgs = []string{
+	"Arg3", "Arg4", "Arg5", "Arg6",
+	"Arg7", "Arg8", "Arg9", "Arg10",
+	"Arg11", "Arg12", "Arg13", "Arg14",
+	"Arg15", "Arg16", "Arg17", "Arg18",
+	"Arg19", "Arg20", "Arg21", "Arg22",
+	"Arg23", "Arg24", "Arg25", "Arg26",
+	"Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *Application_) Intersect(arg1 *Range, arg2 *Range, optArgs ...interface{}) *Range {
@@ -223,8 +223,8 @@ func (this *Application_) Names() *Names {
 	return NewNames(retVal.IDispatch(), false, true)
 }
 
-var Application__Range_OptArgs= []string{
-	"Cell2", 
+var Application__Range_OptArgs = []string{
+	"Cell2",
 }
 
 func (this *Application_) Range(cell1 interface{}, optArgs ...interface{}) *Range {
@@ -238,15 +238,15 @@ func (this *Application_) Rows() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var Application__Run_OptArgs= []string{
-	"Macro", "Arg1", "Arg2", "Arg3", 
-	"Arg4", "Arg5", "Arg6", "Arg7", 
-	"Arg8", "Arg9", "Arg10", "Arg11", 
-	"Arg12", "Arg13", "Arg14", "Arg15", 
-	"Arg16", "Arg17", "Arg18", "Arg19", 
-	"Arg20", "Arg21", "Arg22", "Arg23", 
-	"Arg24", "Arg25", "Arg26", "Arg27", 
-	"Arg28", "Arg29", "Arg30", 
+var Application__Run_OptArgs = []string{
+	"Macro", "Arg1", "Arg2", "Arg3",
+	"Arg4", "Arg5", "Arg6", "Arg7",
+	"Arg8", "Arg9", "Arg10", "Arg11",
+	"Arg12", "Arg13", "Arg14", "Arg15",
+	"Arg16", "Arg17", "Arg18", "Arg19",
+	"Arg20", "Arg21", "Arg22", "Arg23",
+	"Arg24", "Arg25", "Arg26", "Arg27",
+	"Arg28", "Arg29", "Arg30",
 }
 
 func (this *Application_) Run(optArgs ...interface{}) ole.Variant {
@@ -256,15 +256,15 @@ func (this *Application_) Run(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Application__Run2__OptArgs= []string{
-	"Macro", "Arg1", "Arg2", "Arg3", 
-	"Arg4", "Arg5", "Arg6", "Arg7", 
-	"Arg8", "Arg9", "Arg10", "Arg11", 
-	"Arg12", "Arg13", "Arg14", "Arg15", 
-	"Arg16", "Arg17", "Arg18", "Arg19", 
-	"Arg20", "Arg21", "Arg22", "Arg23", 
-	"Arg24", "Arg25", "Arg26", "Arg27", 
-	"Arg28", "Arg29", "Arg30", 
+var Application__Run2__OptArgs = []string{
+	"Macro", "Arg1", "Arg2", "Arg3",
+	"Arg4", "Arg5", "Arg6", "Arg7",
+	"Arg8", "Arg9", "Arg10", "Arg11",
+	"Arg12", "Arg13", "Arg14", "Arg15",
+	"Arg16", "Arg17", "Arg18", "Arg19",
+	"Arg20", "Arg21", "Arg22", "Arg23",
+	"Arg24", "Arg25", "Arg26", "Arg27",
+	"Arg28", "Arg29", "Arg30",
 }
 
 func (this *Application_) Run2_(optArgs ...interface{}) ole.Variant {
@@ -279,14 +279,14 @@ func (this *Application_) Selection() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Application__SendKeys_OptArgs= []string{
-	"Wait", 
+var Application__SendKeys_OptArgs = []string{
+	"Wait",
 }
 
-func (this *Application_) SendKeys(keys interface{}, optArgs ...interface{})  {
+func (this *Application_) SendKeys(keys interface{}, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__SendKeys_OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000017f, []interface{}{keys}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) Sheets() *Sheets {
@@ -309,14 +309,14 @@ func (this *Application_) Toolbars() *Toolbars {
 	return NewToolbars(retVal.IDispatch(), false, true)
 }
 
-var Application__Union_OptArgs= []string{
-	"Arg3", "Arg4", "Arg5", "Arg6", 
-	"Arg7", "Arg8", "Arg9", "Arg10", 
-	"Arg11", "Arg12", "Arg13", "Arg14", 
-	"Arg15", "Arg16", "Arg17", "Arg18", 
-	"Arg19", "Arg20", "Arg21", "Arg22", 
-	"Arg23", "Arg24", "Arg25", "Arg26", 
-	"Arg27", "Arg28", "Arg29", "Arg30", 
+var Application__Union_OptArgs = []string{
+	"Arg3", "Arg4", "Arg5", "Arg6",
+	"Arg7", "Arg8", "Arg9", "Arg10",
+	"Arg11", "Arg12", "Arg13", "Arg14",
+	"Arg15", "Arg16", "Arg17", "Arg18",
+	"Arg19", "Arg20", "Arg21", "Arg22",
+	"Arg23", "Arg24", "Arg25", "Arg26",
+	"Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *Application_) Union(arg1 *Range, arg2 *Range, optArgs ...interface{}) *Range {
@@ -355,29 +355,29 @@ func (this *Application_) Excel4MacroSheets() *Sheets {
 	return NewSheets(retVal.IDispatch(), false, true)
 }
 
-func (this *Application_) ActivateMicrosoftApp(index int32)  {
+func (this *Application_) ActivateMicrosoftApp(index int32) {
 	retVal, _ := this.Call(0x00000447, []interface{}{index})
-	_= retVal
+	_ = retVal
 }
 
-var Application__AddChartAutoFormat_OptArgs= []string{
-	"Description", 
+var Application__AddChartAutoFormat_OptArgs = []string{
+	"Description",
 }
 
-func (this *Application_) AddChartAutoFormat(chart interface{}, name string, optArgs ...interface{})  {
+func (this *Application_) AddChartAutoFormat(chart interface{}, name string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__AddChartAutoFormat_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000000d8, []interface{}{chart, name}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Application__AddCustomList_OptArgs= []string{
-	"ByRow", 
+var Application__AddCustomList_OptArgs = []string{
+	"ByRow",
 }
 
-func (this *Application_) AddCustomList(listArray interface{}, optArgs ...interface{})  {
+func (this *Application_) AddCustomList(listArray interface{}, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__AddCustomList_OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000030c, []interface{}{listArray}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) AlertBeforeOverwriting() bool {
@@ -385,7 +385,7 @@ func (this *Application_) AlertBeforeOverwriting() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetAlertBeforeOverwriting(rhs bool)  {
+func (this *Application_) SetAlertBeforeOverwriting(rhs bool) {
 	_ = this.PropPut(0x000003a2, []interface{}{rhs})
 }
 
@@ -394,7 +394,7 @@ func (this *Application_) AltStartupPath() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetAltStartupPath(rhs string)  {
+func (this *Application_) SetAltStartupPath(rhs string) {
 	_ = this.PropPut(0x00000139, []interface{}{rhs})
 }
 
@@ -403,7 +403,7 @@ func (this *Application_) AskToUpdateLinks() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetAskToUpdateLinks(rhs bool)  {
+func (this *Application_) SetAskToUpdateLinks(rhs bool) {
 	_ = this.PropPut(0x000003e0, []interface{}{rhs})
 }
 
@@ -412,7 +412,7 @@ func (this *Application_) EnableAnimations() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetEnableAnimations(rhs bool)  {
+func (this *Application_) SetEnableAnimations(rhs bool) {
 	_ = this.PropPut(0x0000049c, []interface{}{rhs})
 }
 
@@ -431,7 +431,7 @@ func (this *Application_) CalculateBeforeSave() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetCalculateBeforeSave(rhs bool)  {
+func (this *Application_) SetCalculateBeforeSave(rhs bool) {
 	_ = this.PropPut(0x0000013b, []interface{}{rhs})
 }
 
@@ -440,12 +440,12 @@ func (this *Application_) Calculation() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetCalculation(rhs int32)  {
+func (this *Application_) SetCalculation(rhs int32) {
 	_ = this.PropPut(0x0000013c, []interface{}{rhs})
 }
 
-var Application__Caller_OptArgs= []string{
-	"Index", 
+var Application__Caller_OptArgs = []string{
+	"Index",
 }
 
 func (this *Application_) Caller(optArgs ...interface{}) ole.Variant {
@@ -470,7 +470,7 @@ func (this *Application_) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetCaption(rhs string)  {
+func (this *Application_) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
@@ -479,7 +479,7 @@ func (this *Application_) CellDragAndDrop() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetCellDragAndDrop(rhs bool)  {
+func (this *Application_) SetCellDragAndDrop(rhs bool) {
 	_ = this.PropPut(0x00000140, []interface{}{rhs})
 }
 
@@ -488,8 +488,8 @@ func (this *Application_) CentimetersToPoints(centimeters float64) float64 {
 	return retVal.DblValVal()
 }
 
-var Application__CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", 
+var Application__CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase",
 }
 
 func (this *Application_) CheckSpelling(word string, optArgs ...interface{}) bool {
@@ -498,8 +498,8 @@ func (this *Application_) CheckSpelling(word string, optArgs ...interface{}) boo
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-var Application__ClipboardFormats_OptArgs= []string{
-	"Index", 
+var Application__ClipboardFormats_OptArgs = []string{
+	"Index",
 }
 
 func (this *Application_) ClipboardFormats(optArgs ...interface{}) ole.Variant {
@@ -514,7 +514,7 @@ func (this *Application_) DisplayClipboardWindow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayClipboardWindow(rhs bool)  {
+func (this *Application_) SetDisplayClipboardWindow(rhs bool) {
 	_ = this.PropPut(0x00000142, []interface{}{rhs})
 }
 
@@ -523,7 +523,7 @@ func (this *Application_) ColorButtons() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetColorButtons(rhs bool)  {
+func (this *Application_) SetColorButtons(rhs bool) {
 	_ = this.PropPut(0x0000016d, []interface{}{rhs})
 }
 
@@ -532,7 +532,7 @@ func (this *Application_) CommandUnderlines() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetCommandUnderlines(rhs int32)  {
+func (this *Application_) SetCommandUnderlines(rhs int32) {
 	_ = this.PropPut(0x00000143, []interface{}{rhs})
 }
 
@@ -541,12 +541,12 @@ func (this *Application_) ConstrainNumeric() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetConstrainNumeric(rhs bool)  {
+func (this *Application_) SetConstrainNumeric(rhs bool) {
 	_ = this.PropPut(0x00000144, []interface{}{rhs})
 }
 
-var Application__ConvertFormula_OptArgs= []string{
-	"ToReferenceStyle", "ToAbsolute", "RelativeTo", 
+var Application__ConvertFormula_OptArgs = []string{
+	"ToReferenceStyle", "ToAbsolute", "RelativeTo",
 }
 
 func (this *Application_) ConvertFormula(formula interface{}, fromReferenceStyle int32, optArgs ...interface{}) ole.Variant {
@@ -561,7 +561,7 @@ func (this *Application_) CopyObjectsWithCells() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetCopyObjectsWithCells(rhs bool)  {
+func (this *Application_) SetCopyObjectsWithCells(rhs bool) {
 	_ = this.PropPut(0x000003df, []interface{}{rhs})
 }
 
@@ -570,7 +570,7 @@ func (this *Application_) Cursor() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetCursor(rhs int32)  {
+func (this *Application_) SetCursor(rhs int32) {
 	_ = this.PropPut(0x00000489, []interface{}{rhs})
 }
 
@@ -584,7 +584,7 @@ func (this *Application_) CutCopyMode() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetCutCopyMode(rhs int32)  {
+func (this *Application_) SetCutCopyMode(rhs int32) {
 	_ = this.PropPut(0x0000014a, []interface{}{rhs})
 }
 
@@ -593,12 +593,12 @@ func (this *Application_) DataEntryMode() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetDataEntryMode(rhs int32)  {
+func (this *Application_) SetDataEntryMode(rhs int32) {
 	_ = this.PropPut(0x0000014b, []interface{}{rhs})
 }
 
-var Application__Dummy1_OptArgs= []string{
-	"Arg1", "Arg2", "Arg3", "Arg4", 
+var Application__Dummy1_OptArgs = []string{
+	"Arg1", "Arg2", "Arg3", "Arg4",
 }
 
 func (this *Application_) Dummy1(optArgs ...interface{}) ole.Variant {
@@ -608,9 +608,9 @@ func (this *Application_) Dummy1(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Application__Dummy2_OptArgs= []string{
-	"Arg1", "Arg2", "Arg3", "Arg4", 
-	"Arg5", "Arg6", "Arg7", "Arg8", 
+var Application__Dummy2_OptArgs = []string{
+	"Arg1", "Arg2", "Arg3", "Arg4",
+	"Arg5", "Arg6", "Arg7", "Arg8",
 }
 
 func (this *Application_) Dummy2(optArgs ...interface{}) ole.Variant {
@@ -626,11 +626,11 @@ func (this *Application_) Dummy3() ole.Variant {
 	return *retVal
 }
 
-var Application__Dummy4_OptArgs= []string{
-	"Arg1", "Arg2", "Arg3", "Arg4", 
-	"Arg5", "Arg6", "Arg7", "Arg8", 
-	"Arg9", "Arg10", "Arg11", "Arg12", 
-	"Arg13", "Arg14", "Arg15", 
+var Application__Dummy4_OptArgs = []string{
+	"Arg1", "Arg2", "Arg3", "Arg4",
+	"Arg5", "Arg6", "Arg7", "Arg8",
+	"Arg9", "Arg10", "Arg11", "Arg12",
+	"Arg13", "Arg14", "Arg15",
 }
 
 func (this *Application_) Dummy4(optArgs ...interface{}) ole.Variant {
@@ -640,10 +640,10 @@ func (this *Application_) Dummy4(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Application__Dummy5_OptArgs= []string{
-	"Arg1", "Arg2", "Arg3", "Arg4", 
-	"Arg5", "Arg6", "Arg7", "Arg8", 
-	"Arg9", "Arg10", "Arg11", "Arg12", "Arg13", 
+var Application__Dummy5_OptArgs = []string{
+	"Arg1", "Arg2", "Arg3", "Arg4",
+	"Arg5", "Arg6", "Arg7", "Arg8",
+	"Arg9", "Arg10", "Arg11", "Arg12", "Arg13",
 }
 
 func (this *Application_) Dummy5(optArgs ...interface{}) ole.Variant {
@@ -665,8 +665,8 @@ func (this *Application_) Dummy7() ole.Variant {
 	return *retVal
 }
 
-var Application__Dummy8_OptArgs= []string{
-	"Arg1", 
+var Application__Dummy8_OptArgs = []string{
+	"Arg1",
 }
 
 func (this *Application_) Dummy8(optArgs ...interface{}) ole.Variant {
@@ -682,8 +682,8 @@ func (this *Application_) Dummy9() ole.Variant {
 	return *retVal
 }
 
-var Application__Dummy10_OptArgs= []string{
-	"arg", 
+var Application__Dummy10_OptArgs = []string{
+	"arg",
 }
 
 func (this *Application_) Dummy10(optArgs ...interface{}) bool {
@@ -692,9 +692,9 @@ func (this *Application_) Dummy10(optArgs ...interface{}) bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) Dummy11()  {
+func (this *Application_) Dummy11() {
 	retVal, _ := this.Call(0x00000700, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) Default_() string {
@@ -707,18 +707,18 @@ func (this *Application_) DefaultFilePath() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetDefaultFilePath(rhs string)  {
+func (this *Application_) SetDefaultFilePath(rhs string) {
 	_ = this.PropPut(0x0000040e, []interface{}{rhs})
 }
 
-func (this *Application_) DeleteChartAutoFormat(name string)  {
+func (this *Application_) DeleteChartAutoFormat(name string) {
 	retVal, _ := this.Call(0x000000d9, []interface{}{name})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Application_) DeleteCustomList(listNum int32)  {
+func (this *Application_) DeleteCustomList(listNum int32) {
 	retVal, _ := this.Call(0x0000030f, []interface{}{listNum})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) Dialogs() *Dialogs {
@@ -731,7 +731,7 @@ func (this *Application_) DisplayAlerts() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayAlerts(rhs bool)  {
+func (this *Application_) SetDisplayAlerts(rhs bool) {
 	_ = this.PropPut(0x00000157, []interface{}{rhs})
 }
 
@@ -740,7 +740,7 @@ func (this *Application_) DisplayFormulaBar() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayFormulaBar(rhs bool)  {
+func (this *Application_) SetDisplayFormulaBar(rhs bool) {
 	_ = this.PropPut(0x00000158, []interface{}{rhs})
 }
 
@@ -749,7 +749,7 @@ func (this *Application_) DisplayFullScreen() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayFullScreen(rhs bool)  {
+func (this *Application_) SetDisplayFullScreen(rhs bool) {
 	_ = this.PropPut(0x00000425, []interface{}{rhs})
 }
 
@@ -758,7 +758,7 @@ func (this *Application_) DisplayNoteIndicator() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayNoteIndicator(rhs bool)  {
+func (this *Application_) SetDisplayNoteIndicator(rhs bool) {
 	_ = this.PropPut(0x00000159, []interface{}{rhs})
 }
 
@@ -767,7 +767,7 @@ func (this *Application_) DisplayCommentIndicator() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetDisplayCommentIndicator(rhs int32)  {
+func (this *Application_) SetDisplayCommentIndicator(rhs int32) {
 	_ = this.PropPut(0x000004ac, []interface{}{rhs})
 }
 
@@ -776,7 +776,7 @@ func (this *Application_) DisplayExcel4Menus() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayExcel4Menus(rhs bool)  {
+func (this *Application_) SetDisplayExcel4Menus(rhs bool) {
 	_ = this.PropPut(0x0000039f, []interface{}{rhs})
 }
 
@@ -785,7 +785,7 @@ func (this *Application_) DisplayRecentFiles() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayRecentFiles(rhs bool)  {
+func (this *Application_) SetDisplayRecentFiles(rhs bool) {
 	_ = this.PropPut(0x0000039e, []interface{}{rhs})
 }
 
@@ -794,7 +794,7 @@ func (this *Application_) DisplayScrollBars() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayScrollBars(rhs bool)  {
+func (this *Application_) SetDisplayScrollBars(rhs bool) {
 	_ = this.PropPut(0x0000015a, []interface{}{rhs})
 }
 
@@ -803,13 +803,13 @@ func (this *Application_) DisplayStatusBar() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayStatusBar(rhs bool)  {
+func (this *Application_) SetDisplayStatusBar(rhs bool) {
 	_ = this.PropPut(0x0000015b, []interface{}{rhs})
 }
 
-func (this *Application_) DoubleClick()  {
+func (this *Application_) DoubleClick() {
 	retVal, _ := this.Call(0x0000015d, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) EditDirectlyInCell() bool {
@@ -817,7 +817,7 @@ func (this *Application_) EditDirectlyInCell() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetEditDirectlyInCell(rhs bool)  {
+func (this *Application_) SetEditDirectlyInCell(rhs bool) {
 	_ = this.PropPut(0x000003a1, []interface{}{rhs})
 }
 
@@ -826,7 +826,7 @@ func (this *Application_) EnableAutoComplete() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetEnableAutoComplete(rhs bool)  {
+func (this *Application_) SetEnableAutoComplete(rhs bool) {
 	_ = this.PropPut(0x0000049b, []interface{}{rhs})
 }
 
@@ -835,7 +835,7 @@ func (this *Application_) EnableCancelKey() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetEnableCancelKey(rhs int32)  {
+func (this *Application_) SetEnableCancelKey(rhs int32) {
 	_ = this.PropPut(0x00000448, []interface{}{rhs})
 }
 
@@ -844,7 +844,7 @@ func (this *Application_) EnableSound() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetEnableSound(rhs bool)  {
+func (this *Application_) SetEnableSound(rhs bool) {
 	_ = this.PropPut(0x000004ad, []interface{}{rhs})
 }
 
@@ -853,12 +853,12 @@ func (this *Application_) EnableTipWizard() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetEnableTipWizard(rhs bool)  {
+func (this *Application_) SetEnableTipWizard(rhs bool) {
 	_ = this.PropPut(0x00000428, []interface{}{rhs})
 }
 
-var Application__FileConverters_OptArgs= []string{
-	"Index1", "Index2", 
+var Application__FileConverters_OptArgs = []string{
+	"Index1", "Index2",
 }
 
 func (this *Application_) FileConverters(optArgs ...interface{}) ole.Variant {
@@ -878,9 +878,9 @@ func (this *Application_) FileFind() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Application_) FindFile_()  {
+func (this *Application_) FindFile_() {
 	retVal, _ := this.Call(0x0000042c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) FixedDecimal() bool {
@@ -888,7 +888,7 @@ func (this *Application_) FixedDecimal() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetFixedDecimal(rhs bool)  {
+func (this *Application_) SetFixedDecimal(rhs bool) {
 	_ = this.PropPut(0x0000015f, []interface{}{rhs})
 }
 
@@ -897,7 +897,7 @@ func (this *Application_) FixedDecimalPlaces() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetFixedDecimalPlaces(rhs int32)  {
+func (this *Application_) SetFixedDecimalPlaces(rhs int32) {
 	_ = this.PropPut(0x00000160, []interface{}{rhs})
 }
 
@@ -912,8 +912,8 @@ func (this *Application_) GetCustomListNum(listArray interface{}) int32 {
 	return retVal.LValVal()
 }
 
-var Application__GetOpenFilename_OptArgs= []string{
-	"FileFilter", "FilterIndex", "Title", "ButtonText", "MultiSelect", 
+var Application__GetOpenFilename_OptArgs = []string{
+	"FileFilter", "FilterIndex", "Title", "ButtonText", "MultiSelect",
 }
 
 func (this *Application_) GetOpenFilename(optArgs ...interface{}) ole.Variant {
@@ -923,8 +923,8 @@ func (this *Application_) GetOpenFilename(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Application__GetSaveAsFilename_OptArgs= []string{
-	"InitialFilename", "FileFilter", "FilterIndex", "Title", "ButtonText", 
+var Application__GetSaveAsFilename_OptArgs = []string{
+	"InitialFilename", "FileFilter", "FilterIndex", "Title", "ButtonText",
 }
 
 func (this *Application_) GetSaveAsFilename(optArgs ...interface{}) ole.Variant {
@@ -934,14 +934,14 @@ func (this *Application_) GetSaveAsFilename(optArgs ...interface{}) ole.Variant 
 	return *retVal
 }
 
-var Application__Goto_OptArgs= []string{
-	"Reference", "Scroll", 
+var Application__Goto_OptArgs = []string{
+	"Reference", "Scroll",
 }
 
-func (this *Application_) Goto(optArgs ...interface{})  {
+func (this *Application_) Goto(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__Goto_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000001db, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) Height() float64 {
@@ -949,18 +949,18 @@ func (this *Application_) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Application_) SetHeight(rhs float64)  {
+func (this *Application_) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
-var Application__Help_OptArgs= []string{
-	"HelpFile", "HelpContextID", 
+var Application__Help_OptArgs = []string{
+	"HelpFile", "HelpContextID",
 }
 
-func (this *Application_) Help(optArgs ...interface{})  {
+func (this *Application_) Help(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__Help_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000162, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) IgnoreRemoteRequests() bool {
@@ -968,7 +968,7 @@ func (this *Application_) IgnoreRemoteRequests() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetIgnoreRemoteRequests(rhs bool)  {
+func (this *Application_) SetIgnoreRemoteRequests(rhs bool) {
 	_ = this.PropPut(0x00000164, []interface{}{rhs})
 }
 
@@ -977,9 +977,9 @@ func (this *Application_) InchesToPoints(inches float64) float64 {
 	return retVal.DblValVal()
 }
 
-var Application__InputBox_OptArgs= []string{
-	"Title", "Default", "Left", "Top", 
-	"HelpFile", "HelpContextID", "Type", 
+var Application__InputBox_OptArgs = []string{
+	"Title", "Default", "Left", "Top",
+	"HelpFile", "HelpContextID", "Type",
 }
 
 func (this *Application_) InputBox(prompt string, optArgs ...interface{}) ole.Variant {
@@ -994,12 +994,12 @@ func (this *Application_) Interactive() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetInteractive(rhs bool)  {
+func (this *Application_) SetInteractive(rhs bool) {
 	_ = this.PropPut(0x00000169, []interface{}{rhs})
 }
 
-var Application__International_OptArgs= []string{
-	"Index", 
+var Application__International_OptArgs = []string{
+	"Index",
 }
 
 func (this *Application_) International(optArgs ...interface{}) ole.Variant {
@@ -1014,7 +1014,7 @@ func (this *Application_) Iteration() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetIteration(rhs bool)  {
+func (this *Application_) SetIteration(rhs bool) {
 	_ = this.PropPut(0x0000016b, []interface{}{rhs})
 }
 
@@ -1023,7 +1023,7 @@ func (this *Application_) LargeButtons() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetLargeButtons(rhs bool)  {
+func (this *Application_) SetLargeButtons(rhs bool) {
 	_ = this.PropPut(0x0000016c, []interface{}{rhs})
 }
 
@@ -1032,7 +1032,7 @@ func (this *Application_) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Application_) SetLeft(rhs float64)  {
+func (this *Application_) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -1041,31 +1041,31 @@ func (this *Application_) LibraryPath() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var Application__MacroOptions__OptArgs= []string{
-	"Macro", "Description", "HasMenu", "MenuText", 
-	"HasShortcutKey", "ShortcutKey", "Category", "StatusBar", 
-	"HelpContextID", "HelpFile", 
+var Application__MacroOptions__OptArgs = []string{
+	"Macro", "Description", "HasMenu", "MenuText",
+	"HasShortcutKey", "ShortcutKey", "Category", "StatusBar",
+	"HelpContextID", "HelpFile",
 }
 
-func (this *Application_) MacroOptions_(optArgs ...interface{})  {
+func (this *Application_) MacroOptions_(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__MacroOptions__OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000046f, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Application_) MailLogoff()  {
+func (this *Application_) MailLogoff() {
 	retVal, _ := this.Call(0x000003b1, nil)
-	_= retVal
+	_ = retVal
 }
 
-var Application__MailLogon_OptArgs= []string{
-	"Name", "Password", "DownloadNewMail", 
+var Application__MailLogon_OptArgs = []string{
+	"Name", "Password", "DownloadNewMail",
 }
 
-func (this *Application_) MailLogon(optArgs ...interface{})  {
+func (this *Application_) MailLogon(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__MailLogon_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000003af, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) MailSession() ole.Variant {
@@ -1089,7 +1089,7 @@ func (this *Application_) MaxChange() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Application_) SetMaxChange(rhs float64)  {
+func (this *Application_) SetMaxChange(rhs float64) {
 	_ = this.PropPut(0x00000170, []interface{}{rhs})
 }
 
@@ -1098,7 +1098,7 @@ func (this *Application_) MaxIterations() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetMaxIterations(rhs int32)  {
+func (this *Application_) SetMaxIterations(rhs int32) {
 	_ = this.PropPut(0x00000171, []interface{}{rhs})
 }
 
@@ -1127,7 +1127,7 @@ func (this *Application_) MoveAfterReturn() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetMoveAfterReturn(rhs bool)  {
+func (this *Application_) SetMoveAfterReturn(rhs bool) {
 	_ = this.PropPut(0x00000176, []interface{}{rhs})
 }
 
@@ -1136,7 +1136,7 @@ func (this *Application_) MoveAfterReturnDirection() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetMoveAfterReturnDirection(rhs int32)  {
+func (this *Application_) SetMoveAfterReturnDirection(rhs int32) {
 	_ = this.PropPut(0x00000478, []interface{}{rhs})
 }
 
@@ -1170,7 +1170,7 @@ func (this *Application_) ODBCTimeout() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetODBCTimeout(rhs int32)  {
+func (this *Application_) SetODBCTimeout(rhs int32) {
 	_ = this.PropPut(0x000004b4, []interface{}{rhs})
 }
 
@@ -1179,7 +1179,7 @@ func (this *Application_) OnCalculate() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetOnCalculate(rhs string)  {
+func (this *Application_) SetOnCalculate(rhs string) {
 	_ = this.PropPut(0x00000271, []interface{}{rhs})
 }
 
@@ -1188,7 +1188,7 @@ func (this *Application_) OnData() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetOnData(rhs string)  {
+func (this *Application_) SetOnData(rhs string) {
 	_ = this.PropPut(0x00000275, []interface{}{rhs})
 }
 
@@ -1197,7 +1197,7 @@ func (this *Application_) OnDoubleClick() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetOnDoubleClick(rhs string)  {
+func (this *Application_) SetOnDoubleClick(rhs string) {
 	_ = this.PropPut(0x00000274, []interface{}{rhs})
 }
 
@@ -1206,23 +1206,23 @@ func (this *Application_) OnEntry() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetOnEntry(rhs string)  {
+func (this *Application_) SetOnEntry(rhs string) {
 	_ = this.PropPut(0x00000273, []interface{}{rhs})
 }
 
-var Application__OnKey_OptArgs= []string{
-	"Procedure", 
+var Application__OnKey_OptArgs = []string{
+	"Procedure",
 }
 
-func (this *Application_) OnKey(key string, optArgs ...interface{})  {
+func (this *Application_) OnKey(key string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__OnKey_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000272, []interface{}{key}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Application_) OnRepeat(text string, procedure string)  {
+func (this *Application_) OnRepeat(text string, procedure string) {
 	retVal, _ := this.Call(0x00000301, []interface{}{text, procedure})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) OnSheetActivate() string {
@@ -1230,7 +1230,7 @@ func (this *Application_) OnSheetActivate() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetOnSheetActivate(rhs string)  {
+func (this *Application_) SetOnSheetActivate(rhs string) {
 	_ = this.PropPut(0x00000407, []interface{}{rhs})
 }
 
@@ -1239,23 +1239,23 @@ func (this *Application_) OnSheetDeactivate() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetOnSheetDeactivate(rhs string)  {
+func (this *Application_) SetOnSheetDeactivate(rhs string) {
 	_ = this.PropPut(0x00000439, []interface{}{rhs})
 }
 
-var Application__OnTime_OptArgs= []string{
-	"LatestTime", "Schedule", 
+var Application__OnTime_OptArgs = []string{
+	"LatestTime", "Schedule",
 }
 
-func (this *Application_) OnTime(earliestTime interface{}, procedure string, optArgs ...interface{})  {
+func (this *Application_) OnTime(earliestTime interface{}, procedure string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__OnTime_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000270, []interface{}{earliestTime, procedure}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Application_) OnUndo(text string, procedure string)  {
+func (this *Application_) OnUndo(text string, procedure string) {
 	retVal, _ := this.Call(0x00000302, []interface{}{text, procedure})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) OnWindow() string {
@@ -1263,7 +1263,7 @@ func (this *Application_) OnWindow() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetOnWindow(rhs string)  {
+func (this *Application_) SetOnWindow(rhs string) {
 	_ = this.PropPut(0x0000026f, []interface{}{rhs})
 }
 
@@ -1287,8 +1287,8 @@ func (this *Application_) PathSeparator() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var Application__PreviousSelections_OptArgs= []string{
-	"Index", 
+var Application__PreviousSelections_OptArgs = []string{
+	"Index",
 }
 
 func (this *Application_) PreviousSelections(optArgs ...interface{}) ole.Variant {
@@ -1303,7 +1303,7 @@ func (this *Application_) PivotTableSelection() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetPivotTableSelection(rhs bool)  {
+func (this *Application_) SetPivotTableSelection(rhs bool) {
 	_ = this.PropPut(0x000004b5, []interface{}{rhs})
 }
 
@@ -1312,23 +1312,23 @@ func (this *Application_) PromptForSummaryInfo() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetPromptForSummaryInfo(rhs bool)  {
+func (this *Application_) SetPromptForSummaryInfo(rhs bool) {
 	_ = this.PropPut(0x00000426, []interface{}{rhs})
 }
 
-func (this *Application_) Quit()  {
+func (this *Application_) Quit() {
 	retVal, _ := this.Call(0x0000012e, nil)
-	_= retVal
+	_ = retVal
 }
 
-var Application__RecordMacro_OptArgs= []string{
-	"BasicCode", "XlmCode", 
+var Application__RecordMacro_OptArgs = []string{
+	"BasicCode", "XlmCode",
 }
 
-func (this *Application_) RecordMacro(optArgs ...interface{})  {
+func (this *Application_) RecordMacro(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__RecordMacro_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000305, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) RecordRelative() bool {
@@ -1341,12 +1341,12 @@ func (this *Application_) ReferenceStyle() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetReferenceStyle(rhs int32)  {
+func (this *Application_) SetReferenceStyle(rhs int32) {
 	_ = this.PropPut(0x0000017c, []interface{}{rhs})
 }
 
-var Application__RegisteredFunctions_OptArgs= []string{
-	"Index1", "Index2", 
+var Application__RegisteredFunctions_OptArgs = []string{
+	"Index1", "Index2",
 }
 
 func (this *Application_) RegisteredFunctions(optArgs ...interface{}) ole.Variant {
@@ -1361,14 +1361,14 @@ func (this *Application_) RegisterXLL(filename string) bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) Repeat()  {
+func (this *Application_) Repeat() {
 	retVal, _ := this.Call(0x0000012d, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Application_) ResetTipWizard()  {
+func (this *Application_) ResetTipWizard() {
 	retVal, _ := this.Call(0x000003a0, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) RollZoom() bool {
@@ -1376,28 +1376,28 @@ func (this *Application_) RollZoom() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetRollZoom(rhs bool)  {
+func (this *Application_) SetRollZoom(rhs bool) {
 	_ = this.PropPut(0x000004b6, []interface{}{rhs})
 }
 
-var Application__Save_OptArgs= []string{
-	"Filename", 
+var Application__Save_OptArgs = []string{
+	"Filename",
 }
 
-func (this *Application_) Save(optArgs ...interface{})  {
+func (this *Application_) Save(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__Save_OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000011b, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Application__SaveWorkspace_OptArgs= []string{
-	"Filename", 
+var Application__SaveWorkspace_OptArgs = []string{
+	"Filename",
 }
 
-func (this *Application_) SaveWorkspace(optArgs ...interface{})  {
+func (this *Application_) SaveWorkspace(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__SaveWorkspace_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000000d4, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) ScreenUpdating() bool {
@@ -1405,18 +1405,18 @@ func (this *Application_) ScreenUpdating() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetScreenUpdating(rhs bool)  {
+func (this *Application_) SetScreenUpdating(rhs bool) {
 	_ = this.PropPut(0x0000017e, []interface{}{rhs})
 }
 
-var Application__SetDefaultChart_OptArgs= []string{
-	"FormatName", "Gallery", 
+var Application__SetDefaultChart_OptArgs = []string{
+	"FormatName", "Gallery",
 }
 
-func (this *Application_) SetDefaultChart(optArgs ...interface{})  {
+func (this *Application_) SetDefaultChart(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__SetDefaultChart_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000000db, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) SheetsInNewWorkbook() int32 {
@@ -1424,7 +1424,7 @@ func (this *Application_) SheetsInNewWorkbook() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetSheetsInNewWorkbook(rhs int32)  {
+func (this *Application_) SetSheetsInNewWorkbook(rhs int32) {
 	_ = this.PropPut(0x000003e1, []interface{}{rhs})
 }
 
@@ -1433,7 +1433,7 @@ func (this *Application_) ShowChartTipNames() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetShowChartTipNames(rhs bool)  {
+func (this *Application_) SetShowChartTipNames(rhs bool) {
 	_ = this.PropPut(0x000004b7, []interface{}{rhs})
 }
 
@@ -1442,7 +1442,7 @@ func (this *Application_) ShowChartTipValues() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetShowChartTipValues(rhs bool)  {
+func (this *Application_) SetShowChartTipValues(rhs bool) {
 	_ = this.PropPut(0x000004b8, []interface{}{rhs})
 }
 
@@ -1451,7 +1451,7 @@ func (this *Application_) StandardFont() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetStandardFont(rhs string)  {
+func (this *Application_) SetStandardFont(rhs string) {
 	_ = this.PropPut(0x0000039c, []interface{}{rhs})
 }
 
@@ -1460,7 +1460,7 @@ func (this *Application_) StandardFontSize() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Application_) SetStandardFontSize(rhs float64)  {
+func (this *Application_) SetStandardFontSize(rhs float64) {
 	_ = this.PropPut(0x0000039d, []interface{}{rhs})
 }
 
@@ -1475,7 +1475,7 @@ func (this *Application_) StatusBar() ole.Variant {
 	return *retVal
 }
 
-func (this *Application_) SetStatusBar(rhs interface{})  {
+func (this *Application_) SetStatusBar(rhs interface{}) {
 	_ = this.PropPut(0x00000182, []interface{}{rhs})
 }
 
@@ -1489,7 +1489,7 @@ func (this *Application_) ShowToolTips() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetShowToolTips(rhs bool)  {
+func (this *Application_) SetShowToolTips(rhs bool) {
 	_ = this.PropPut(0x00000183, []interface{}{rhs})
 }
 
@@ -1498,7 +1498,7 @@ func (this *Application_) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Application_) SetTop(rhs float64)  {
+func (this *Application_) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -1507,7 +1507,7 @@ func (this *Application_) DefaultSaveFormat() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetDefaultSaveFormat(rhs int32)  {
+func (this *Application_) SetDefaultSaveFormat(rhs int32) {
 	_ = this.PropPut(0x000004b9, []interface{}{rhs})
 }
 
@@ -1516,7 +1516,7 @@ func (this *Application_) TransitionMenuKey() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetTransitionMenuKey(rhs string)  {
+func (this *Application_) SetTransitionMenuKey(rhs string) {
 	_ = this.PropPut(0x00000136, []interface{}{rhs})
 }
 
@@ -1525,7 +1525,7 @@ func (this *Application_) TransitionMenuKeyAction() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetTransitionMenuKeyAction(rhs int32)  {
+func (this *Application_) SetTransitionMenuKeyAction(rhs int32) {
 	_ = this.PropPut(0x00000137, []interface{}{rhs})
 }
 
@@ -1534,13 +1534,13 @@ func (this *Application_) TransitionNavigKeys() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetTransitionNavigKeys(rhs bool)  {
+func (this *Application_) SetTransitionNavigKeys(rhs bool) {
 	_ = this.PropPut(0x00000138, []interface{}{rhs})
 }
 
-func (this *Application_) Undo()  {
+func (this *Application_) Undo() {
 	retVal, _ := this.Call(0x0000012f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) UsableHeight() float64 {
@@ -1558,7 +1558,7 @@ func (this *Application_) UserControl() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetUserControl(rhs bool)  {
+func (this *Application_) SetUserControl(rhs bool) {
 	_ = this.PropPut(0x000004ba, []interface{}{rhs})
 }
 
@@ -1567,7 +1567,7 @@ func (this *Application_) UserName() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetUserName(rhs string)  {
+func (this *Application_) SetUserName(rhs string) {
 	_ = this.PropPut(0x00000187, []interface{}{rhs})
 }
 
@@ -1591,23 +1591,23 @@ func (this *Application_) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetVisible(rhs bool)  {
+func (this *Application_) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
-var Application__Volatile_OptArgs= []string{
-	"Volatile", 
+var Application__Volatile_OptArgs = []string{
+	"Volatile",
 }
 
-func (this *Application_) Volatile(optArgs ...interface{})  {
+func (this *Application_) Volatile(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__Volatile_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000314, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Application_) Wait_(time interface{})  {
+func (this *Application_) Wait_(time interface{}) {
 	retVal, _ := this.Call(0x00000189, []interface{}{time})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) Width() float64 {
@@ -1615,7 +1615,7 @@ func (this *Application_) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Application_) SetWidth(rhs float64)  {
+func (this *Application_) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -1629,7 +1629,7 @@ func (this *Application_) WindowState() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetWindowState(rhs int32)  {
+func (this *Application_) SetWindowState(rhs int32) {
 	_ = this.PropPut(0x0000018c, []interface{}{rhs})
 }
 
@@ -1638,7 +1638,7 @@ func (this *Application_) UILanguage() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetUILanguage(rhs int32)  {
+func (this *Application_) SetUILanguage(rhs int32) {
 	_ = this.PropPut(0x00000002, []interface{}{rhs})
 }
 
@@ -1647,7 +1647,7 @@ func (this *Application_) DefaultSheetDirection() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetDefaultSheetDirection(rhs int32)  {
+func (this *Application_) SetDefaultSheetDirection(rhs int32) {
 	_ = this.PropPut(0x000000e5, []interface{}{rhs})
 }
 
@@ -1656,7 +1656,7 @@ func (this *Application_) CursorMovement() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetCursorMovement(rhs int32)  {
+func (this *Application_) SetCursorMovement(rhs int32) {
 	_ = this.PropPut(0x000000e8, []interface{}{rhs})
 }
 
@@ -1665,19 +1665,19 @@ func (this *Application_) ControlCharacters() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetControlCharacters(rhs bool)  {
+func (this *Application_) SetControlCharacters(rhs bool) {
 	_ = this.PropPut(0x000000e9, []interface{}{rhs})
 }
 
-var Application__WSFunction__OptArgs= []string{
-	"Arg1", "Arg2", "Arg3", "Arg4", 
-	"Arg5", "Arg6", "Arg7", "Arg8", 
-	"Arg9", "Arg10", "Arg11", "Arg12", 
-	"Arg13", "Arg14", "Arg15", "Arg16", 
-	"Arg17", "Arg18", "Arg19", "Arg20", 
-	"Arg21", "Arg22", "Arg23", "Arg24", 
-	"Arg25", "Arg26", "Arg27", "Arg28", 
-	"Arg29", "Arg30", 
+var Application__WSFunction__OptArgs = []string{
+	"Arg1", "Arg2", "Arg3", "Arg4",
+	"Arg5", "Arg6", "Arg7", "Arg8",
+	"Arg9", "Arg10", "Arg11", "Arg12",
+	"Arg13", "Arg14", "Arg15", "Arg16",
+	"Arg17", "Arg18", "Arg19", "Arg20",
+	"Arg21", "Arg22", "Arg23", "Arg24",
+	"Arg25", "Arg26", "Arg27", "Arg28",
+	"Arg29", "Arg30",
 }
 
 func (this *Application_) WSFunction_(optArgs ...interface{}) ole.Variant {
@@ -1692,7 +1692,7 @@ func (this *Application_) EnableEvents() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetEnableEvents(rhs bool)  {
+func (this *Application_) SetEnableEvents(rhs bool) {
 	_ = this.PropPut(0x000004bc, []interface{}{rhs})
 }
 
@@ -1701,7 +1701,7 @@ func (this *Application_) DisplayInfoWindow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayInfoWindow(rhs bool)  {
+func (this *Application_) SetDisplayInfoWindow(rhs bool) {
 	_ = this.PropPut(0x000004bd, []interface{}{rhs})
 }
 
@@ -1715,7 +1715,7 @@ func (this *Application_) ExtendList() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetExtendList(rhs bool)  {
+func (this *Application_) SetExtendList(rhs bool) {
 	_ = this.PropPut(0x00000701, []interface{}{rhs})
 }
 
@@ -1724,8 +1724,8 @@ func (this *Application_) OLEDBErrors() *OLEDBErrors {
 	return NewOLEDBErrors(retVal.IDispatch(), false, true)
 }
 
-var Application__GetPhonetic_OptArgs= []string{
-	"Text", 
+var Application__GetPhonetic_OptArgs = []string{
+	"Text",
 }
 
 func (this *Application_) GetPhonetic(optArgs ...interface{}) string {
@@ -1759,7 +1759,7 @@ func (this *Application_) AutoPercentEntry() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetAutoPercentEntry(rhs bool)  {
+func (this *Application_) SetAutoPercentEntry(rhs bool) {
 	_ = this.PropPut(0x00000708, []interface{}{rhs})
 }
 
@@ -1773,9 +1773,9 @@ func (this *Application_) Dummy101() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Application_) Dummy12(p1 *PivotTable, p2 *PivotTable)  {
+func (this *Application_) Dummy12(p1 *PivotTable, p2 *PivotTable) {
 	retVal, _ := this.Call(0x0000070b, []interface{}{p1, p2})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) AnswerWizard() *ole.DispatchClass {
@@ -1783,9 +1783,9 @@ func (this *Application_) AnswerWizard() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Application_) CalculateFull()  {
+func (this *Application_) CalculateFull() {
 	retVal, _ := this.Call(0x0000070d, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) FindFile() bool {
@@ -1803,7 +1803,7 @@ func (this *Application_) ShowWindowsInTaskbar() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetShowWindowsInTaskbar(rhs bool)  {
+func (this *Application_) SetShowWindowsInTaskbar(rhs bool) {
 	_ = this.PropPut(0x0000070f, []interface{}{rhs})
 }
 
@@ -1812,7 +1812,7 @@ func (this *Application_) FeatureInstall() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetFeatureInstall(rhs int32)  {
+func (this *Application_) SetFeatureInstall(rhs int32) {
 	_ = this.PropPut(0x00000710, []interface{}{rhs})
 }
 
@@ -1821,14 +1821,14 @@ func (this *Application_) Ready() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-var Application__Dummy13_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var Application__Dummy13_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *Application_) Dummy13(arg1 interface{}, optArgs ...interface{}) ole.Variant {
@@ -1843,7 +1843,7 @@ func (this *Application_) FindFormat() *CellFormat {
 	return NewCellFormat(retVal.IDispatch(), false, true)
 }
 
-func (this *Application_) SetFindFormat(rhs *CellFormat)  {
+func (this *Application_) SetFindFormat(rhs *CellFormat) {
 	_ = this.PropPutRef(0x0000078e, []interface{}{rhs})
 }
 
@@ -1852,7 +1852,7 @@ func (this *Application_) ReplaceFormat() *CellFormat {
 	return NewCellFormat(retVal.IDispatch(), false, true)
 }
 
-func (this *Application_) SetReplaceFormat(rhs *CellFormat)  {
+func (this *Application_) SetReplaceFormat(rhs *CellFormat) {
 	_ = this.PropPutRef(0x0000078f, []interface{}{rhs})
 }
 
@@ -1871,7 +1871,7 @@ func (this *Application_) CalculationInterruptKey() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetCalculationInterruptKey(rhs int32)  {
+func (this *Application_) SetCalculationInterruptKey(rhs int32) {
 	_ = this.PropPut(0x00000792, []interface{}{rhs})
 }
 
@@ -1885,7 +1885,7 @@ func (this *Application_) DisplayFunctionToolTips() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayFunctionToolTips(rhs bool)  {
+func (this *Application_) SetDisplayFunctionToolTips(rhs bool) {
 	_ = this.PropPut(0x00000794, []interface{}{rhs})
 }
 
@@ -1894,7 +1894,7 @@ func (this *Application_) AutomationSecurity() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetAutomationSecurity(rhs int32)  {
+func (this *Application_) SetAutomationSecurity(rhs int32) {
 	_ = this.PropPut(0x00000795, []interface{}{rhs})
 }
 
@@ -1903,14 +1903,14 @@ func (this *Application_) FileDialog(fileDialogType int32) *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Application_) Dummy14()  {
+func (this *Application_) Dummy14() {
 	retVal, _ := this.Call(0x00000798, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Application_) CalculateFullRebuild()  {
+func (this *Application_) CalculateFullRebuild() {
 	retVal, _ := this.Call(0x00000799, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) DisplayPasteOptions() bool {
@@ -1918,7 +1918,7 @@ func (this *Application_) DisplayPasteOptions() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayPasteOptions(rhs bool)  {
+func (this *Application_) SetDisplayPasteOptions(rhs bool) {
 	_ = this.PropPut(0x0000079a, []interface{}{rhs})
 }
 
@@ -1927,7 +1927,7 @@ func (this *Application_) DisplayInsertOptions() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayInsertOptions(rhs bool)  {
+func (this *Application_) SetDisplayInsertOptions(rhs bool) {
 	_ = this.PropPut(0x0000079b, []interface{}{rhs})
 }
 
@@ -1936,7 +1936,7 @@ func (this *Application_) GenerateGetPivotData() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetGenerateGetPivotData(rhs bool)  {
+func (this *Application_) SetGenerateGetPivotData(rhs bool) {
 	_ = this.PropPut(0x0000079c, []interface{}{rhs})
 }
 
@@ -1955,14 +1955,14 @@ func (this *Application_) Hinstance() int32 {
 	return retVal.LValVal()
 }
 
-var Application__CheckAbort_OptArgs= []string{
-	"KeepAbort", 
+var Application__CheckAbort_OptArgs = []string{
+	"KeepAbort",
 }
 
-func (this *Application_) CheckAbort(optArgs ...interface{})  {
+func (this *Application_) CheckAbort(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__CheckAbort_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000007a0, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) ErrorCheckingOptions() *ErrorCheckingOptions {
@@ -1975,7 +1975,7 @@ func (this *Application_) AutoFormatAsYouTypeReplaceHyperlinks() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetAutoFormatAsYouTypeReplaceHyperlinks(rhs bool)  {
+func (this *Application_) SetAutoFormatAsYouTypeReplaceHyperlinks(rhs bool) {
 	_ = this.PropPut(0x000007a3, []interface{}{rhs})
 }
 
@@ -2004,7 +2004,7 @@ func (this *Application_) MapPaperSize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetMapPaperSize(rhs bool)  {
+func (this *Application_) SetMapPaperSize(rhs bool) {
 	_ = this.PropPut(0x000007a7, []interface{}{rhs})
 }
 
@@ -2013,7 +2013,7 @@ func (this *Application_) ShowStartupDialog() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetShowStartupDialog(rhs bool)  {
+func (this *Application_) SetShowStartupDialog(rhs bool) {
 	_ = this.PropPut(0x000007a8, []interface{}{rhs})
 }
 
@@ -2022,7 +2022,7 @@ func (this *Application_) DecimalSeparator() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetDecimalSeparator(rhs string)  {
+func (this *Application_) SetDecimalSeparator(rhs string) {
 	_ = this.PropPut(0x00000711, []interface{}{rhs})
 }
 
@@ -2031,7 +2031,7 @@ func (this *Application_) ThousandsSeparator() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetThousandsSeparator(rhs string)  {
+func (this *Application_) SetThousandsSeparator(rhs string) {
 	_ = this.PropPut(0x00000712, []interface{}{rhs})
 }
 
@@ -2040,7 +2040,7 @@ func (this *Application_) UseSystemSeparators() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetUseSystemSeparators(rhs bool)  {
+func (this *Application_) SetUseSystemSeparators(rhs bool) {
 	_ = this.PropPut(0x000007a9, []interface{}{rhs})
 }
 
@@ -2059,18 +2059,18 @@ func (this *Application_) DisplayDocumentActionTaskPane() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayDocumentActionTaskPane(rhs bool)  {
+func (this *Application_) SetDisplayDocumentActionTaskPane(rhs bool) {
 	_ = this.PropPut(0x000008cb, []interface{}{rhs})
 }
 
-var Application__DisplayXMLSourcePane_OptArgs= []string{
-	"XmlMap", 
+var Application__DisplayXMLSourcePane_OptArgs = []string{
+	"XmlMap",
 }
 
-func (this *Application_) DisplayXMLSourcePane(optArgs ...interface{})  {
+func (this *Application_) DisplayXMLSourcePane(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__DisplayXMLSourcePane_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000008cc, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) ArbitraryXMLSupportAvailable() bool {
@@ -2078,8 +2078,8 @@ func (this *Application_) ArbitraryXMLSupportAvailable() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-var Application__Support_OptArgs= []string{
-	"arg", 
+var Application__Support_OptArgs = []string{
+	"arg",
 }
 
 func (this *Application_) Support(object *win32.IUnknown, id int32, optArgs ...interface{}) ole.Variant {
@@ -2100,7 +2100,7 @@ func (this *Application_) MeasurementUnit() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetMeasurementUnit(rhs int32)  {
+func (this *Application_) SetMeasurementUnit(rhs int32) {
 	_ = this.PropPut(0x00000947, []interface{}{rhs})
 }
 
@@ -2109,7 +2109,7 @@ func (this *Application_) ShowSelectionFloaties() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetShowSelectionFloaties(rhs bool)  {
+func (this *Application_) SetShowSelectionFloaties(rhs bool) {
 	_ = this.PropPut(0x00000948, []interface{}{rhs})
 }
 
@@ -2118,7 +2118,7 @@ func (this *Application_) ShowMenuFloaties() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetShowMenuFloaties(rhs bool)  {
+func (this *Application_) SetShowMenuFloaties(rhs bool) {
 	_ = this.PropPut(0x00000949, []interface{}{rhs})
 }
 
@@ -2127,7 +2127,7 @@ func (this *Application_) ShowDevTools() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetShowDevTools(rhs bool)  {
+func (this *Application_) SetShowDevTools(rhs bool) {
 	_ = this.PropPut(0x0000094a, []interface{}{rhs})
 }
 
@@ -2136,7 +2136,7 @@ func (this *Application_) EnableLivePreview() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetEnableLivePreview(rhs bool)  {
+func (this *Application_) SetEnableLivePreview(rhs bool) {
 	_ = this.PropPut(0x0000094b, []interface{}{rhs})
 }
 
@@ -2145,7 +2145,7 @@ func (this *Application_) DisplayDocumentInformationPanel() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayDocumentInformationPanel(rhs bool)  {
+func (this *Application_) SetDisplayDocumentInformationPanel(rhs bool) {
 	_ = this.PropPut(0x0000094c, []interface{}{rhs})
 }
 
@@ -2154,7 +2154,7 @@ func (this *Application_) AlwaysUseClearType() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetAlwaysUseClearType(rhs bool)  {
+func (this *Application_) SetAlwaysUseClearType(rhs bool) {
 	_ = this.PropPut(0x0000094d, []interface{}{rhs})
 }
 
@@ -2163,7 +2163,7 @@ func (this *Application_) WarnOnFunctionNameConflict() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetWarnOnFunctionNameConflict(rhs bool)  {
+func (this *Application_) SetWarnOnFunctionNameConflict(rhs bool) {
 	_ = this.PropPut(0x0000094e, []interface{}{rhs})
 }
 
@@ -2172,7 +2172,7 @@ func (this *Application_) FormulaBarHeight() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetFormulaBarHeight(rhs int32)  {
+func (this *Application_) SetFormulaBarHeight(rhs int32) {
 	_ = this.PropPut(0x0000094f, []interface{}{rhs})
 }
 
@@ -2181,7 +2181,7 @@ func (this *Application_) DisplayFormulaAutoComplete() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDisplayFormulaAutoComplete(rhs bool)  {
+func (this *Application_) SetDisplayFormulaAutoComplete(rhs bool) {
 	_ = this.PropPut(0x00000950, []interface{}{rhs})
 }
 
@@ -2190,7 +2190,7 @@ func (this *Application_) GenerateTableRefs() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetGenerateTableRefs(rhs int32)  {
+func (this *Application_) SetGenerateTableRefs(rhs int32) {
 	_ = this.PropPut(0x00000951, []interface{}{rhs})
 }
 
@@ -2199,9 +2199,9 @@ func (this *Application_) Assistance() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Application_) CalculateUntilAsyncQueriesDone()  {
+func (this *Application_) CalculateUntilAsyncQueriesDone() {
 	retVal, _ := this.Call(0x00000953, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) EnableLargeOperationAlert() bool {
@@ -2209,7 +2209,7 @@ func (this *Application_) EnableLargeOperationAlert() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetEnableLargeOperationAlert(rhs bool)  {
+func (this *Application_) SetEnableLargeOperationAlert(rhs bool) {
 	_ = this.PropPut(0x00000954, []interface{}{rhs})
 }
 
@@ -2218,7 +2218,7 @@ func (this *Application_) LargeOperationCellThousandCount() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetLargeOperationCellThousandCount(rhs int32)  {
+func (this *Application_) SetLargeOperationCellThousandCount(rhs int32) {
 	_ = this.PropPut(0x00000955, []interface{}{rhs})
 }
 
@@ -2227,7 +2227,7 @@ func (this *Application_) DeferAsyncQueries() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDeferAsyncQueries(rhs bool)  {
+func (this *Application_) SetDeferAsyncQueries(rhs bool) {
 	_ = this.PropPut(0x00000956, []interface{}{rhs})
 }
 
@@ -2251,7 +2251,7 @@ func (this *Application_) HighQualityModeForGraphics() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetHighQualityModeForGraphics(rhs bool)  {
+func (this *Application_) SetHighQualityModeForGraphics(rhs bool) {
 	_ = this.PropPut(0x0000095b, []interface{}{rhs})
 }
 
@@ -2285,20 +2285,20 @@ func (this *Application_) PrintCommunication() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetPrintCommunication(rhs bool)  {
+func (this *Application_) SetPrintCommunication(rhs bool) {
 	_ = this.PropPut(0x00000ad8, []interface{}{rhs})
 }
 
-var Application__MacroOptions_OptArgs= []string{
-	"Macro", "Description", "HasMenu", "MenuText", 
-	"HasShortcutKey", "ShortcutKey", "Category", "StatusBar", 
-	"HelpContextID", "HelpFile", "ArgumentDescriptions", 
+var Application__MacroOptions_OptArgs = []string{
+	"Macro", "Description", "HasMenu", "MenuText",
+	"HasShortcutKey", "ShortcutKey", "Category", "StatusBar",
+	"HelpContextID", "HelpFile", "ArgumentDescriptions",
 }
 
-func (this *Application_) MacroOptions(optArgs ...interface{})  {
+func (this *Application_) MacroOptions(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Application__MacroOptions_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000ad2, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Application_) UseClusterConnector() bool {
@@ -2306,7 +2306,7 @@ func (this *Application_) UseClusterConnector() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetUseClusterConnector(rhs bool)  {
+func (this *Application_) SetUseClusterConnector(rhs bool) {
 	_ = this.PropPut(0x00000ada, []interface{}{rhs})
 }
 
@@ -2315,7 +2315,7 @@ func (this *Application_) ClusterConnector() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Application_) SetClusterConnector(rhs string)  {
+func (this *Application_) SetClusterConnector(rhs string) {
 	_ = this.PropPut(0x00000adb, []interface{}{rhs})
 }
 
@@ -2329,7 +2329,7 @@ func (this *Application_) Dummy22() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDummy22(rhs bool)  {
+func (this *Application_) SetDummy22(rhs bool) {
 	_ = this.PropPut(0x00000add, []interface{}{rhs})
 }
 
@@ -2338,7 +2338,7 @@ func (this *Application_) Dummy23() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetDummy23(rhs bool)  {
+func (this *Application_) SetDummy23(rhs bool) {
 	_ = this.PropPut(0x00000ade, []interface{}{rhs})
 }
 
@@ -2362,7 +2362,7 @@ func (this *Application_) SaveISO8601Dates() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Application_) SetSaveISO8601Dates(rhs bool)  {
+func (this *Application_) SetSaveISO8601Dates(rhs bool) {
 	_ = this.PropPut(0x00000ae2, []interface{}{rhs})
 }
 
@@ -2377,7 +2377,7 @@ func (this *Application_) FileValidation() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetFileValidation(rhs int32)  {
+func (this *Application_) SetFileValidation(rhs int32) {
 	_ = this.PropPut(0x00000ae4, []interface{}{rhs})
 }
 
@@ -2386,7 +2386,6 @@ func (this *Application_) FileValidationPivot() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Application_) SetFileValidationPivot(rhs int32)  {
+func (this *Application_) SetFileValidationPivot(rhs int32) {
 	_ = this.PropPut(0x00000ae5, []interface{}{rhs})
 }
-

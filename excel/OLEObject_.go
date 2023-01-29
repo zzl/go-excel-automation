@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208A2-0000-0000-C000-000000000046
-var IID_OLEObject_ = syscall.GUID{0x000208A2, 0x0000, 0x0000, 
+var IID_OLEObject_ = syscall.GUID{0x000208A2, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type OLEObject_ struct {
@@ -17,8 +17,8 @@ type OLEObject_ struct {
 }
 
 func NewOLEObject_(pDisp *win32.IDispatch, addRef bool, scoped bool) *OLEObject_ {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &OLEObject_{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *OLEObject_) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *OLEObject_) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *OLEObject_) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *OLEObject_) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *OLEObject_) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *OLEObject_) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *OLEObject_) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObject_) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *OLEObject_) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObject_) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *OLEObject_) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *OLEObject_) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *OLEObject_) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *OLEObject_) Application() *Application {
@@ -112,8 +112,8 @@ func (this *OLEObject_) Copy() ole.Variant {
 	return *retVal
 }
 
-var OLEObject__CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var OLEObject__CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *OLEObject_) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *OLEObject_) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObject_) SetEnabled(rhs bool)  {
+func (this *OLEObject_) SetEnabled(rhs bool) {
 	_ = this.PropPut(-2147417512, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *OLEObject_) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *OLEObject_) SetHeight(rhs float64)  {
+func (this *OLEObject_) SetHeight(rhs float64) {
 	_ = this.PropPut(-2147417989, []interface{}{rhs})
 }
 
@@ -168,7 +168,7 @@ func (this *OLEObject_) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *OLEObject_) SetLeft(rhs float64)  {
+func (this *OLEObject_) SetLeft(rhs float64) {
 	_ = this.PropPut(-2147417985, []interface{}{rhs})
 }
 
@@ -177,7 +177,7 @@ func (this *OLEObject_) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObject_) SetLocked(rhs bool)  {
+func (this *OLEObject_) SetLocked(rhs bool) {
 	_ = this.PropPut(-2147417843, []interface{}{rhs})
 }
 
@@ -186,7 +186,7 @@ func (this *OLEObject_) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *OLEObject_) SetName(rhs string)  {
+func (this *OLEObject_) SetName(rhs string) {
 	_ = this.PropPut(-2147418002, []interface{}{rhs})
 }
 
@@ -195,7 +195,7 @@ func (this *OLEObject_) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *OLEObject_) SetOnAction(rhs string)  {
+func (this *OLEObject_) SetOnAction(rhs string) {
 	_ = this.PropPut(-2147417516, []interface{}{rhs})
 }
 
@@ -205,7 +205,7 @@ func (this *OLEObject_) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *OLEObject_) SetPlacement(rhs interface{})  {
+func (this *OLEObject_) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(-2147417495, []interface{}{rhs})
 }
 
@@ -214,12 +214,12 @@ func (this *OLEObject_) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObject_) SetPrintObject(rhs bool)  {
+func (this *OLEObject_) SetPrintObject(rhs bool) {
 	_ = this.PropPut(-2147417494, []interface{}{rhs})
 }
 
-var OLEObject__Select_OptArgs= []string{
-	"Replace", 
+var OLEObject__Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *OLEObject_) Select(optArgs ...interface{}) ole.Variant {
@@ -240,7 +240,7 @@ func (this *OLEObject_) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *OLEObject_) SetTop(rhs float64)  {
+func (this *OLEObject_) SetTop(rhs float64) {
 	_ = this.PropPut(-2147417986, []interface{}{rhs})
 }
 
@@ -254,7 +254,7 @@ func (this *OLEObject_) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObject_) SetVisible(rhs bool)  {
+func (this *OLEObject_) SetVisible(rhs bool) {
 	_ = this.PropPut(-2147417554, []interface{}{rhs})
 }
 
@@ -263,7 +263,7 @@ func (this *OLEObject_) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *OLEObject_) SetWidth(rhs float64)  {
+func (this *OLEObject_) SetWidth(rhs float64) {
 	_ = this.PropPut(-2147417990, []interface{}{rhs})
 }
 
@@ -292,7 +292,7 @@ func (this *OLEObject_) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObject_) SetShadow(rhs bool)  {
+func (this *OLEObject_) SetShadow(rhs bool) {
 	_ = this.PropPut(-2147418009, []interface{}{rhs})
 }
 
@@ -307,7 +307,7 @@ func (this *OLEObject_) AutoLoad() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObject_) SetAutoLoad(rhs bool)  {
+func (this *OLEObject_) SetAutoLoad(rhs bool) {
 	_ = this.PropPut(-2147416926, []interface{}{rhs})
 }
 
@@ -316,7 +316,7 @@ func (this *OLEObject_) AutoUpdate() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OLEObject_) SetAutoUpdate(rhs bool)  {
+func (this *OLEObject_) SetAutoUpdate(rhs bool) {
 	_ = this.PropPut(-2147417064, []interface{}{rhs})
 }
 
@@ -336,7 +336,7 @@ func (this *OLEObject_) SourceName() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *OLEObject_) SetSourceName(rhs string)  {
+func (this *OLEObject_) SetSourceName(rhs string) {
 	_ = this.PropPut(-2147417391, []interface{}{rhs})
 }
 
@@ -346,8 +346,8 @@ func (this *OLEObject_) Update() ole.Variant {
 	return *retVal
 }
 
-var OLEObject__Verb_OptArgs= []string{
-	"Verb", 
+var OLEObject__Verb_OptArgs = []string{
+	"Verb",
 }
 
 func (this *OLEObject_) Verb(optArgs ...interface{}) ole.Variant {
@@ -362,7 +362,7 @@ func (this *OLEObject_) LinkedCell() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *OLEObject_) SetLinkedCell(rhs string)  {
+func (this *OLEObject_) SetLinkedCell(rhs string) {
 	_ = this.PropPut(-2147417054, []interface{}{rhs})
 }
 
@@ -371,7 +371,7 @@ func (this *OLEObject_) ListFillRange() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *OLEObject_) SetListFillRange(rhs string)  {
+func (this *OLEObject_) SetListFillRange(rhs string) {
 	_ = this.PropPut(-2147417265, []interface{}{rhs})
 }
 
@@ -385,7 +385,6 @@ func (this *OLEObject_) AltHTML() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *OLEObject_) SetAltHTML(rhs string)  {
+func (this *OLEObject_) SetAltHTML(rhs string) {
 	_ = this.PropPut(-2147416259, []interface{}{rhs})
 }
-

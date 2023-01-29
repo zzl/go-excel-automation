@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024465-0001-0000-C000-000000000046
-var IID_ISpellingOptions = syscall.GUID{0x00024465, 0x0001, 0x0000, 
+var IID_ISpellingOptions = syscall.GUID{0x00024465, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ISpellingOptions struct {
@@ -16,8 +16,8 @@ type ISpellingOptions struct {
 }
 
 func NewISpellingOptions(pUnk *win32.IUnknown, addRef bool, scoped bool) *ISpellingOptions {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ISpellingOptions)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -260,4 +260,3 @@ func (this *ISpellingOptions) SetBrazilReform(rhs int32) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(rhs))
 	return com.Error(ret)
 }
-

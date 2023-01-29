@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208BD-0000-0000-C000-000000000046
-var IID_Trendlines = syscall.GUID{0x000208BD, 0x0000, 0x0000, 
+var IID_Trendlines = syscall.GUID{0x000208BD, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Trendlines struct {
@@ -17,8 +17,8 @@ type Trendlines struct {
 }
 
 func NewTrendlines(pDisp *win32.IDispatch, addRef bool, scoped bool) *Trendlines {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Trendlines{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Trendlines) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Trendlines) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Trendlines) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Trendlines) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Trendlines) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Trendlines) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Trendlines) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Trendlines) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Trendlines) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Trendlines) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Trendlines) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Trendlines) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Trendlines) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Trendlines) Application() *Application {
@@ -95,9 +95,9 @@ func (this *Trendlines) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Trendlines_Add_OptArgs= []string{
-	"Type", "Order", "Period", "Forward", 
-	"Backward", "Intercept", "DisplayEquation", "DisplayRSquared", "Name", 
+var Trendlines_Add_OptArgs = []string{
+	"Type", "Order", "Period", "Forward",
+	"Backward", "Intercept", "DisplayEquation", "DisplayRSquared", "Name",
 }
 
 func (this *Trendlines) Add(optArgs ...interface{}) *Trendline {
@@ -111,8 +111,8 @@ func (this *Trendlines) Count() int32 {
 	return retVal.LValVal()
 }
 
-var Trendlines_Item_OptArgs= []string{
-	"Index", 
+var Trendlines_Item_OptArgs = []string{
+	"Index",
 }
 
 func (this *Trendlines) Item(optArgs ...interface{}) *Trendline {
@@ -130,7 +130,7 @@ func (this *Trendlines) ForEach(action func(item *Trendline) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -147,8 +147,8 @@ func (this *Trendlines) ForEach(action func(item *Trendline) bool) {
 	}
 }
 
-var Trendlines_Default__OptArgs= []string{
-	"Index", 
+var Trendlines_Default__OptArgs = []string{
+	"Index",
 }
 
 func (this *Trendlines) Default_(optArgs ...interface{}) *Trendline {
@@ -156,4 +156,3 @@ func (this *Trendlines) Default_(optArgs ...interface{}) *Trendline {
 	retVal, _ := this.Call(0x00000000, nil, optArgs...)
 	return NewTrendline(retVal.IDispatch(), false, true)
 }
-

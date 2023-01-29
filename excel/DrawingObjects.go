@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002086F-0000-0000-C000-000000000046
-var IID_DrawingObjects = syscall.GUID{0x0002086F, 0x0000, 0x0000, 
+var IID_DrawingObjects = syscall.GUID{0x0002086F, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type DrawingObjects struct {
@@ -17,8 +17,8 @@ type DrawingObjects struct {
 }
 
 func NewDrawingObjects(pDisp *win32.IDispatch, addRef bool, scoped bool) *DrawingObjects {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &DrawingObjects{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *DrawingObjects) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *DrawingObjects) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *DrawingObjects) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *DrawingObjects) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *DrawingObjects) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *DrawingObjects) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *DrawingObjects) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DrawingObjects) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *DrawingObjects) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DrawingObjects) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *DrawingObjects) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DrawingObjects) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *DrawingObjects) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *DrawingObjects) Application() *Application {
@@ -95,9 +95,9 @@ func (this *DrawingObjects) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *DrawingObjects) Dummy3_()  {
+func (this *DrawingObjects) Dummy3_() {
 	retVal, _ := this.Call(0x00010003, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DrawingObjects) BringToFront() ole.Variant {
@@ -112,8 +112,8 @@ func (this *DrawingObjects) Copy() ole.Variant {
 	return *retVal
 }
 
-var DrawingObjects_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var DrawingObjects_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *DrawingObjects) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *DrawingObjects) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetEnabled(rhs bool)  {
+func (this *DrawingObjects) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,13 +154,13 @@ func (this *DrawingObjects) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *DrawingObjects) SetHeight(rhs float64)  {
+func (this *DrawingObjects) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
-func (this *DrawingObjects) Dummy12_()  {
+func (this *DrawingObjects) Dummy12_() {
 	retVal, _ := this.Call(0x0001000c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DrawingObjects) Left() float64 {
@@ -168,7 +168,7 @@ func (this *DrawingObjects) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *DrawingObjects) SetLeft(rhs float64)  {
+func (this *DrawingObjects) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,13 +177,13 @@ func (this *DrawingObjects) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetLocked(rhs bool)  {
+func (this *DrawingObjects) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
-func (this *DrawingObjects) Dummy15_()  {
+func (this *DrawingObjects) Dummy15_() {
 	retVal, _ := this.Call(0x0001000f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DrawingObjects) OnAction() string {
@@ -191,7 +191,7 @@ func (this *DrawingObjects) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DrawingObjects) SetOnAction(rhs string)  {
+func (this *DrawingObjects) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *DrawingObjects) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *DrawingObjects) SetPlacement(rhs interface{})  {
+func (this *DrawingObjects) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -210,12 +210,12 @@ func (this *DrawingObjects) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetPrintObject(rhs bool)  {
+func (this *DrawingObjects) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var DrawingObjects_Select_OptArgs= []string{
-	"Replace", 
+var DrawingObjects_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *DrawingObjects) Select(optArgs ...interface{}) ole.Variant {
@@ -236,13 +236,13 @@ func (this *DrawingObjects) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *DrawingObjects) SetTop(rhs float64)  {
+func (this *DrawingObjects) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
-func (this *DrawingObjects) Dummy22_()  {
+func (this *DrawingObjects) Dummy22_() {
 	retVal, _ := this.Call(0x00010016, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DrawingObjects) Visible() bool {
@@ -250,7 +250,7 @@ func (this *DrawingObjects) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetVisible(rhs bool)  {
+func (this *DrawingObjects) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *DrawingObjects) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *DrawingObjects) SetWidth(rhs float64)  {
+func (this *DrawingObjects) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -279,13 +279,13 @@ func (this *DrawingObjects) Accelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *DrawingObjects) SetAccelerator(rhs interface{})  {
+func (this *DrawingObjects) SetAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x0000034e, []interface{}{rhs})
 }
 
-func (this *DrawingObjects) Dummy28_()  {
+func (this *DrawingObjects) Dummy28_() {
 	retVal, _ := this.Call(0x0001001c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DrawingObjects) AddIndent() bool {
@@ -293,12 +293,12 @@ func (this *DrawingObjects) AddIndent() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetAddIndent(rhs bool)  {
+func (this *DrawingObjects) SetAddIndent(rhs bool) {
 	_ = this.PropPut(0x00000427, []interface{}{rhs})
 }
 
-var DrawingObjects_AddItem_OptArgs= []string{
-	"Index", 
+var DrawingObjects_AddItem_OptArgs = []string{
+	"Index",
 }
 
 func (this *DrawingObjects) AddItem(text interface{}, optArgs ...interface{}) ole.Variant {
@@ -314,7 +314,7 @@ func (this *DrawingObjects) ArrowHeadLength() ole.Variant {
 	return *retVal
 }
 
-func (this *DrawingObjects) SetArrowHeadLength(rhs interface{})  {
+func (this *DrawingObjects) SetArrowHeadLength(rhs interface{}) {
 	_ = this.PropPut(0x00000263, []interface{}{rhs})
 }
 
@@ -324,7 +324,7 @@ func (this *DrawingObjects) ArrowHeadStyle() ole.Variant {
 	return *retVal
 }
 
-func (this *DrawingObjects) SetArrowHeadStyle(rhs interface{})  {
+func (this *DrawingObjects) SetArrowHeadStyle(rhs interface{}) {
 	_ = this.PropPut(0x00000264, []interface{}{rhs})
 }
 
@@ -334,7 +334,7 @@ func (this *DrawingObjects) ArrowHeadWidth() ole.Variant {
 	return *retVal
 }
 
-func (this *DrawingObjects) SetArrowHeadWidth(rhs interface{})  {
+func (this *DrawingObjects) SetArrowHeadWidth(rhs interface{}) {
 	_ = this.PropPut(0x00000265, []interface{}{rhs})
 }
 
@@ -343,7 +343,7 @@ func (this *DrawingObjects) AutoSize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetAutoSize(rhs bool)  {
+func (this *DrawingObjects) SetAutoSize(rhs bool) {
 	_ = this.PropPut(0x00000266, []interface{}{rhs})
 }
 
@@ -357,7 +357,7 @@ func (this *DrawingObjects) CancelButton() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetCancelButton(rhs bool)  {
+func (this *DrawingObjects) SetCancelButton(rhs bool) {
 	_ = this.PropPut(0x0000035a, []interface{}{rhs})
 }
 
@@ -366,12 +366,12 @@ func (this *DrawingObjects) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DrawingObjects) SetCaption(rhs string)  {
+func (this *DrawingObjects) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var DrawingObjects_Characters_OptArgs= []string{
-	"Start", "Length", 
+var DrawingObjects_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *DrawingObjects) Characters(optArgs ...interface{}) *Characters {
@@ -380,8 +380,8 @@ func (this *DrawingObjects) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var DrawingObjects_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var DrawingObjects_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *DrawingObjects) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -396,7 +396,7 @@ func (this *DrawingObjects) Default_() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DrawingObjects) SetDefault_(rhs int32)  {
+func (this *DrawingObjects) SetDefault_(rhs int32) {
 	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
@@ -405,7 +405,7 @@ func (this *DrawingObjects) DefaultButton() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetDefaultButton(rhs bool)  {
+func (this *DrawingObjects) SetDefaultButton(rhs bool) {
 	_ = this.PropPut(0x00000359, []interface{}{rhs})
 }
 
@@ -414,7 +414,7 @@ func (this *DrawingObjects) DismissButton() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetDismissButton(rhs bool)  {
+func (this *DrawingObjects) SetDismissButton(rhs bool) {
 	_ = this.PropPut(0x0000035b, []interface{}{rhs})
 }
 
@@ -423,7 +423,7 @@ func (this *DrawingObjects) Display3DShading() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetDisplay3DShading(rhs bool)  {
+func (this *DrawingObjects) SetDisplay3DShading(rhs bool) {
 	_ = this.PropPut(0x00000462, []interface{}{rhs})
 }
 
@@ -432,7 +432,7 @@ func (this *DrawingObjects) DisplayVerticalScrollBar() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetDisplayVerticalScrollBar(rhs bool)  {
+func (this *DrawingObjects) SetDisplayVerticalScrollBar(rhs bool) {
 	_ = this.PropPut(0x0000039a, []interface{}{rhs})
 }
 
@@ -441,7 +441,7 @@ func (this *DrawingObjects) DropDownLines() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DrawingObjects) SetDropDownLines(rhs int32)  {
+func (this *DrawingObjects) SetDropDownLines(rhs int32) {
 	_ = this.PropPut(0x00000350, []interface{}{rhs})
 }
 
@@ -450,9 +450,9 @@ func (this *DrawingObjects) Font() *Font {
 	return NewFont(retVal.IDispatch(), false, true)
 }
 
-func (this *DrawingObjects) Dummy47_()  {
+func (this *DrawingObjects) Dummy47_() {
 	retVal, _ := this.Call(0x0001002f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DrawingObjects) HelpButton() bool {
@@ -460,7 +460,7 @@ func (this *DrawingObjects) HelpButton() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetHelpButton(rhs bool)  {
+func (this *DrawingObjects) SetHelpButton(rhs bool) {
 	_ = this.PropPut(0x0000035c, []interface{}{rhs})
 }
 
@@ -470,7 +470,7 @@ func (this *DrawingObjects) HorizontalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *DrawingObjects) SetHorizontalAlignment(rhs interface{})  {
+func (this *DrawingObjects) SetHorizontalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000088, []interface{}{rhs})
 }
 
@@ -479,7 +479,7 @@ func (this *DrawingObjects) InputType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DrawingObjects) SetInputType(rhs int32)  {
+func (this *DrawingObjects) SetInputType(rhs int32) {
 	_ = this.PropPut(0x00000356, []interface{}{rhs})
 }
 
@@ -493,7 +493,7 @@ func (this *DrawingObjects) LargeChange() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DrawingObjects) SetLargeChange(rhs int32)  {
+func (this *DrawingObjects) SetLargeChange(rhs int32) {
 	_ = this.PropPut(0x0000034d, []interface{}{rhs})
 }
 
@@ -502,17 +502,17 @@ func (this *DrawingObjects) LinkedCell() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DrawingObjects) SetLinkedCell(rhs string)  {
+func (this *DrawingObjects) SetLinkedCell(rhs string) {
 	_ = this.PropPut(0x00000422, []interface{}{rhs})
 }
 
-func (this *DrawingObjects) Dummy54_()  {
+func (this *DrawingObjects) Dummy54_() {
 	retVal, _ := this.Call(0x00010036, nil)
-	_= retVal
+	_ = retVal
 }
 
-var DrawingObjects_List_OptArgs= []string{
-	"Index", 
+var DrawingObjects_List_OptArgs = []string{
+	"Index",
 }
 
 func (this *DrawingObjects) List(optArgs ...interface{}) ole.Variant {
@@ -522,9 +522,9 @@ func (this *DrawingObjects) List(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-func (this *DrawingObjects) Dummy56_()  {
+func (this *DrawingObjects) Dummy56_() {
 	retVal, _ := this.Call(0x00010038, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DrawingObjects) ListFillRange() string {
@@ -532,7 +532,7 @@ func (this *DrawingObjects) ListFillRange() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DrawingObjects) SetListFillRange(rhs string)  {
+func (this *DrawingObjects) SetListFillRange(rhs string) {
 	_ = this.PropPut(0x0000034f, []interface{}{rhs})
 }
 
@@ -541,7 +541,7 @@ func (this *DrawingObjects) ListIndex() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DrawingObjects) SetListIndex(rhs int32)  {
+func (this *DrawingObjects) SetListIndex(rhs int32) {
 	_ = this.PropPut(0x00000352, []interface{}{rhs})
 }
 
@@ -550,7 +550,7 @@ func (this *DrawingObjects) LockedText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetLockedText(rhs bool)  {
+func (this *DrawingObjects) SetLockedText(rhs bool) {
 	_ = this.PropPut(0x00000268, []interface{}{rhs})
 }
 
@@ -559,7 +559,7 @@ func (this *DrawingObjects) Max() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DrawingObjects) SetMax(rhs int32)  {
+func (this *DrawingObjects) SetMax(rhs int32) {
 	_ = this.PropPut(0x0000034a, []interface{}{rhs})
 }
 
@@ -568,7 +568,7 @@ func (this *DrawingObjects) Min() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DrawingObjects) SetMin(rhs int32)  {
+func (this *DrawingObjects) SetMin(rhs int32) {
 	_ = this.PropPut(0x0000034b, []interface{}{rhs})
 }
 
@@ -577,7 +577,7 @@ func (this *DrawingObjects) MultiLine() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetMultiLine(rhs bool)  {
+func (this *DrawingObjects) SetMultiLine(rhs bool) {
 	_ = this.PropPut(0x00000357, []interface{}{rhs})
 }
 
@@ -586,7 +586,7 @@ func (this *DrawingObjects) MultiSelect() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetMultiSelect(rhs bool)  {
+func (this *DrawingObjects) SetMultiSelect(rhs bool) {
 	_ = this.PropPut(0x00000020, []interface{}{rhs})
 }
 
@@ -596,7 +596,7 @@ func (this *DrawingObjects) Orientation() ole.Variant {
 	return *retVal
 }
 
-func (this *DrawingObjects) SetOrientation(rhs interface{})  {
+func (this *DrawingObjects) SetOrientation(rhs interface{}) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -606,7 +606,7 @@ func (this *DrawingObjects) PhoneticAccelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *DrawingObjects) SetPhoneticAccelerator(rhs interface{})  {
+func (this *DrawingObjects) SetPhoneticAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x00000461, []interface{}{rhs})
 }
 
@@ -616,8 +616,8 @@ func (this *DrawingObjects) RemoveAllItems() ole.Variant {
 	return *retVal
 }
 
-var DrawingObjects_RemoveItem_OptArgs= []string{
-	"Count", 
+var DrawingObjects_RemoveItem_OptArgs = []string{
+	"Count",
 }
 
 func (this *DrawingObjects) RemoveItem(index int32, optArgs ...interface{}) ole.Variant {
@@ -627,8 +627,8 @@ func (this *DrawingObjects) RemoveItem(index int32, optArgs ...interface{}) ole.
 	return *retVal
 }
 
-var DrawingObjects_Reshape_OptArgs= []string{
-	"Left", "Top", 
+var DrawingObjects_Reshape_OptArgs = []string{
+	"Left", "Top",
 }
 
 func (this *DrawingObjects) Reshape(vertex int32, insert interface{}, optArgs ...interface{}) ole.Variant {
@@ -643,12 +643,12 @@ func (this *DrawingObjects) RoundedCorners() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetRoundedCorners(rhs bool)  {
+func (this *DrawingObjects) SetRoundedCorners(rhs bool) {
 	_ = this.PropPut(0x0000026b, []interface{}{rhs})
 }
 
-var DrawingObjects_Selected_OptArgs= []string{
-	"Index", 
+var DrawingObjects_Selected_OptArgs = []string{
+	"Index",
 }
 
 func (this *DrawingObjects) Selected(optArgs ...interface{}) ole.Variant {
@@ -663,7 +663,7 @@ func (this *DrawingObjects) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DrawingObjects) SetShadow(rhs bool)  {
+func (this *DrawingObjects) SetShadow(rhs bool) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
@@ -672,7 +672,7 @@ func (this *DrawingObjects) SmallChange() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DrawingObjects) SetSmallChange(rhs int32)  {
+func (this *DrawingObjects) SetSmallChange(rhs int32) {
 	_ = this.PropPut(0x0000034c, []interface{}{rhs})
 }
 
@@ -681,7 +681,7 @@ func (this *DrawingObjects) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DrawingObjects) SetText(rhs string)  {
+func (this *DrawingObjects) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -695,7 +695,7 @@ func (this *DrawingObjects) Value() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DrawingObjects) SetValue(rhs int32)  {
+func (this *DrawingObjects) SetValue(rhs int32) {
 	_ = this.PropPut(0x00000006, []interface{}{rhs})
 }
 
@@ -705,12 +705,12 @@ func (this *DrawingObjects) VerticalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *DrawingObjects) SetVerticalAlignment(rhs interface{})  {
+func (this *DrawingObjects) SetVerticalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000089, []interface{}{rhs})
 }
 
-var DrawingObjects_Vertices_OptArgs= []string{
-	"Index1", "Index2", 
+var DrawingObjects_Vertices_OptArgs = []string{
+	"Index1", "Index2",
 }
 
 func (this *DrawingObjects) Vertices(optArgs ...interface{}) ole.Variant {
@@ -725,7 +725,7 @@ func (this *DrawingObjects) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DrawingObjects) SetReadingOrder(rhs int32)  {
+func (this *DrawingObjects) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -744,8 +744,8 @@ func (this *DrawingObjects) Group() *GroupObject {
 	return NewGroupObject(retVal.IDispatch(), false, true)
 }
 
-var DrawingObjects_LinkCombo_OptArgs= []string{
-	"Link", 
+var DrawingObjects_LinkCombo_OptArgs = []string{
+	"Link",
 }
 
 func (this *DrawingObjects) LinkCombo(optArgs ...interface{}) ole.Variant {
@@ -764,7 +764,7 @@ func (this *DrawingObjects) ForEach(action func(item int32) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -779,4 +779,3 @@ func (this *DrawingObjects) ForEach(action func(item int32) bool) {
 		}
 	}
 }
-

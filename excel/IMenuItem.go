@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 00020868-0001-0000-C000-000000000046
-var IID_IMenuItem = syscall.GUID{0x00020868, 0x0001, 0x0000, 
+var IID_IMenuItem = syscall.GUID{0x00020868, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IMenuItem struct {
@@ -16,8 +16,8 @@ type IMenuItem struct {
 }
 
 func NewIMenuItem(pUnk *win32.IUnknown, addRef bool, scoped bool) *IMenuItem {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IMenuItem)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -36,7 +36,7 @@ func (this *IMenuItem) IID() *syscall.GUID {
 func (this *IMenuItem) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -49,7 +49,7 @@ func (this *IMenuItem) GetCreator(rhs *int32) com.Error {
 func (this *IMenuItem) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

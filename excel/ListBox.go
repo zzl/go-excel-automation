@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020887-0000-0000-C000-000000000046
-var IID_ListBox = syscall.GUID{0x00020887, 0x0000, 0x0000, 
+var IID_ListBox = syscall.GUID{0x00020887, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ListBox struct {
@@ -17,8 +17,8 @@ type ListBox struct {
 }
 
 func NewListBox(pDisp *win32.IDispatch, addRef bool, scoped bool) *ListBox {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &ListBox{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *ListBox) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *ListBox) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *ListBox) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ListBox) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *ListBox) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *ListBox) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *ListBox) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ListBox) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *ListBox) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ListBox) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *ListBox) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ListBox) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *ListBox) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ListBox) Application() *Application {
@@ -112,8 +112,8 @@ func (this *ListBox) Copy() ole.Variant {
 	return *retVal
 }
 
-var ListBox_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var ListBox_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *ListBox) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *ListBox) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ListBox) SetEnabled(rhs bool)  {
+func (this *ListBox) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *ListBox) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *ListBox) SetHeight(rhs float64)  {
+func (this *ListBox) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -168,7 +168,7 @@ func (this *ListBox) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *ListBox) SetLeft(rhs float64)  {
+func (this *ListBox) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,7 +177,7 @@ func (this *ListBox) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ListBox) SetLocked(rhs bool)  {
+func (this *ListBox) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
@@ -186,7 +186,7 @@ func (this *ListBox) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ListBox) SetName(rhs string)  {
+func (this *ListBox) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -195,7 +195,7 @@ func (this *ListBox) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ListBox) SetOnAction(rhs string)  {
+func (this *ListBox) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -205,7 +205,7 @@ func (this *ListBox) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *ListBox) SetPlacement(rhs interface{})  {
+func (this *ListBox) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -214,12 +214,12 @@ func (this *ListBox) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ListBox) SetPrintObject(rhs bool)  {
+func (this *ListBox) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var ListBox_Select_OptArgs= []string{
-	"Replace", 
+var ListBox_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *ListBox) Select(optArgs ...interface{}) ole.Variant {
@@ -240,7 +240,7 @@ func (this *ListBox) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *ListBox) SetTop(rhs float64)  {
+func (this *ListBox) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -254,7 +254,7 @@ func (this *ListBox) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ListBox) SetVisible(rhs bool)  {
+func (this *ListBox) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -263,7 +263,7 @@ func (this *ListBox) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *ListBox) SetWidth(rhs float64)  {
+func (this *ListBox) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -277,8 +277,8 @@ func (this *ListBox) ShapeRange() *ShapeRange {
 	return NewShapeRange(retVal.IDispatch(), false, true)
 }
 
-var ListBox_AddItem_OptArgs= []string{
-	"Index", 
+var ListBox_AddItem_OptArgs = []string{
+	"Index",
 }
 
 func (this *ListBox) AddItem(text interface{}, optArgs ...interface{}) ole.Variant {
@@ -293,7 +293,7 @@ func (this *ListBox) Display3DShading() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ListBox) SetDisplay3DShading(rhs bool)  {
+func (this *ListBox) SetDisplay3DShading(rhs bool) {
 	_ = this.PropPut(0x00000462, []interface{}{rhs})
 }
 
@@ -302,7 +302,7 @@ func (this *ListBox) Default_() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ListBox) SetDefault_(rhs int32)  {
+func (this *ListBox) SetDefault_(rhs int32) {
 	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
@@ -311,7 +311,7 @@ func (this *ListBox) LinkedCell() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ListBox) SetLinkedCell(rhs string)  {
+func (this *ListBox) SetLinkedCell(rhs string) {
 	_ = this.PropPut(0x00000422, []interface{}{rhs})
 }
 
@@ -321,8 +321,8 @@ func (this *ListBox) LinkedObject() ole.Variant {
 	return *retVal
 }
 
-var ListBox_List_OptArgs= []string{
-	"Index", 
+var ListBox_List_OptArgs = []string{
+	"Index",
 }
 
 func (this *ListBox) List(optArgs ...interface{}) ole.Variant {
@@ -332,11 +332,11 @@ func (this *ListBox) List(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var ListBox_SetList_OptArgs= []string{
-	"Index", 
+var ListBox_SetList_OptArgs = []string{
+	"Index",
 }
 
-func (this *ListBox) SetList(optArgs ...interface{})  {
+func (this *ListBox) SetList(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(ListBox_SetList_OptArgs, optArgs)
 	_ = this.PropPut(0x0000035d, nil, optArgs...)
 }
@@ -351,7 +351,7 @@ func (this *ListBox) ListFillRange() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ListBox) SetListFillRange(rhs string)  {
+func (this *ListBox) SetListFillRange(rhs string) {
 	_ = this.PropPut(0x0000034f, []interface{}{rhs})
 }
 
@@ -360,7 +360,7 @@ func (this *ListBox) ListIndex() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ListBox) SetListIndex(rhs int32)  {
+func (this *ListBox) SetListIndex(rhs int32) {
 	_ = this.PropPut(0x00000352, []interface{}{rhs})
 }
 
@@ -369,7 +369,7 @@ func (this *ListBox) MultiSelect() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ListBox) SetMultiSelect(rhs int32)  {
+func (this *ListBox) SetMultiSelect(rhs int32) {
 	_ = this.PropPut(0x00000020, []interface{}{rhs})
 }
 
@@ -379,8 +379,8 @@ func (this *ListBox) RemoveAllItems() ole.Variant {
 	return *retVal
 }
 
-var ListBox_RemoveItem_OptArgs= []string{
-	"Count", 
+var ListBox_RemoveItem_OptArgs = []string{
+	"Count",
 }
 
 func (this *ListBox) RemoveItem(index int32, optArgs ...interface{}) ole.Variant {
@@ -390,8 +390,8 @@ func (this *ListBox) RemoveItem(index int32, optArgs ...interface{}) ole.Variant
 	return *retVal
 }
 
-var ListBox_Selected_OptArgs= []string{
-	"Index", 
+var ListBox_Selected_OptArgs = []string{
+	"Index",
 }
 
 func (this *ListBox) Selected(optArgs ...interface{}) ole.Variant {
@@ -401,11 +401,11 @@ func (this *ListBox) Selected(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var ListBox_SetSelected_OptArgs= []string{
-	"Index", 
+var ListBox_SetSelected_OptArgs = []string{
+	"Index",
 }
 
-func (this *ListBox) SetSelected(optArgs ...interface{})  {
+func (this *ListBox) SetSelected(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(ListBox_SetSelected_OptArgs, optArgs)
 	_ = this.PropPut(0x00000463, nil, optArgs...)
 }
@@ -415,7 +415,6 @@ func (this *ListBox) Value() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ListBox) SetValue(rhs int32)  {
+func (this *ListBox) SetValue(rhs int32) {
 	_ = this.PropPut(0x00000006, []interface{}{rhs})
 }
-

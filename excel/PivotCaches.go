@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 0002441D-0000-0000-C000-000000000046
-var IID_PivotCaches = syscall.GUID{0x0002441D, 0x0000, 0x0000, 
+var IID_PivotCaches = syscall.GUID{0x0002441D, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type PivotCaches struct {
@@ -17,8 +17,8 @@ type PivotCaches struct {
 }
 
 func NewPivotCaches(pDisp *win32.IDispatch, addRef bool, scoped bool) *PivotCaches {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &PivotCaches{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *PivotCaches) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *PivotCaches) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *PivotCaches) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotCaches) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *PivotCaches) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *PivotCaches) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *PivotCaches) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotCaches) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *PivotCaches) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotCaches) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *PivotCaches) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotCaches) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *PivotCaches) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotCaches) Application() *Application {
@@ -119,7 +119,7 @@ func (this *PivotCaches) ForEach(action func(item *PivotCache) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -136,8 +136,8 @@ func (this *PivotCaches) ForEach(action func(item *PivotCache) bool) {
 	}
 }
 
-var PivotCaches_Add_OptArgs= []string{
-	"SourceData", 
+var PivotCaches_Add_OptArgs = []string{
+	"SourceData",
 }
 
 func (this *PivotCaches) Add(sourceType int32, optArgs ...interface{}) *PivotCache {
@@ -146,8 +146,8 @@ func (this *PivotCaches) Add(sourceType int32, optArgs ...interface{}) *PivotCac
 	return NewPivotCache(retVal.IDispatch(), false, true)
 }
 
-var PivotCaches_Create_OptArgs= []string{
-	"SourceData", "Version", 
+var PivotCaches_Create_OptArgs = []string{
+	"SourceData", "Version",
 }
 
 func (this *PivotCaches) Create(sourceType int32, optArgs ...interface{}) *PivotCache {

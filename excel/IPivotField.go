@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020874-0001-0000-C000-000000000046
-var IID_IPivotField = syscall.GUID{0x00020874, 0x0001, 0x0000, 
+var IID_IPivotField = syscall.GUID{0x00020874, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IPivotField struct {
@@ -17,8 +17,8 @@ type IPivotField struct {
 }
 
 func NewIPivotField(pUnk *win32.IUnknown, addRef bool, scoped bool) *IPivotField {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IPivotField)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IPivotField) IID() *syscall.GUID {
 func (this *IPivotField) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,7 +50,7 @@ func (this *IPivotField) GetCreator(rhs *int32) com.Error {
 func (this *IPivotField) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -69,7 +69,7 @@ func (this *IPivotField) SetCalculation(rhs int32) com.Error {
 func (this *IPivotField) GetChildField(rhs **PivotField) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -94,7 +94,7 @@ func (this *IPivotField) SetCurrentPage(rhs interface{}) com.Error {
 func (this *IPivotField) GetDataRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -143,7 +143,7 @@ func (this *IPivotField) GetHiddenItems(index interface{}, rhs *ole.Variant) com
 func (this *IPivotField) GetLabelRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[24]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -198,7 +198,7 @@ func (this *IPivotField) SetShowAllItems(rhs bool) com.Error {
 func (this *IPivotField) GetParentField(rhs **PivotField) com.Error {
 	addr := (*this.LpVtbl)[33]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -295,7 +295,7 @@ func (this *IPivotField) GetVisibleItems(index interface{}, rhs *ole.Variant) co
 func (this *IPivotField) CalculatedItems(rhs **CalculatedItems) com.Error {
 	addr := (*this.LpVtbl)[49]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -536,7 +536,7 @@ func (this *IPivotField) SetDrilledDown(rhs bool) com.Error {
 func (this *IPivotField) GetCubeField(rhs **CubeField) com.Error {
 	addr := (*this.LpVtbl)[89]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -597,7 +597,7 @@ func (this *IPivotField) GetIsMemberProperty(rhs *win32.VARIANT_BOOL) com.Error 
 func (this *IPivotField) GetPropertyParentField(rhs **PivotField) com.Error {
 	addr := (*this.LpVtbl)[99]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -754,14 +754,14 @@ func (this *IPivotField) SetVisibleItemsList(rhs interface{}) com.Error {
 func (this *IPivotField) GetPivotFilters(rhs **PivotFilters) com.Error {
 	addr := (*this.LpVtbl)[125]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPivotField) GetAutoSortPivotLine(rhs **PivotLine) com.Error {
 	addr := (*this.LpVtbl)[126]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -854,4 +854,3 @@ func (this *IPivotField) SetRepeatLabels(rhs bool) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(*(*uint8)(unsafe.Pointer(&rhs))))
 	return com.Error(ret)
 }
-

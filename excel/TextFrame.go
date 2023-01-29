@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002443D-0000-0000-C000-000000000046
-var IID_TextFrame = syscall.GUID{0x0002443D, 0x0000, 0x0000, 
+var IID_TextFrame = syscall.GUID{0x0002443D, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type TextFrame struct {
@@ -17,8 +17,8 @@ type TextFrame struct {
 }
 
 func NewTextFrame(pDisp *win32.IDispatch, addRef bool, scoped bool) *TextFrame {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &TextFrame{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *TextFrame) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *TextFrame) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *TextFrame) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *TextFrame) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *TextFrame) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *TextFrame) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *TextFrame) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *TextFrame) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *TextFrame) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *TextFrame) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *TextFrame) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *TextFrame) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *TextFrame) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *TextFrame) Application() *Application {
@@ -100,7 +100,7 @@ func (this *TextFrame) MarginBottom() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *TextFrame) SetMarginBottom(rhs float32)  {
+func (this *TextFrame) SetMarginBottom(rhs float32) {
 	_ = this.PropPut(0x000006d1, []interface{}{rhs})
 }
 
@@ -109,7 +109,7 @@ func (this *TextFrame) MarginLeft() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *TextFrame) SetMarginLeft(rhs float32)  {
+func (this *TextFrame) SetMarginLeft(rhs float32) {
 	_ = this.PropPut(0x000006d2, []interface{}{rhs})
 }
 
@@ -118,7 +118,7 @@ func (this *TextFrame) MarginRight() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *TextFrame) SetMarginRight(rhs float32)  {
+func (this *TextFrame) SetMarginRight(rhs float32) {
 	_ = this.PropPut(0x000006d3, []interface{}{rhs})
 }
 
@@ -127,7 +127,7 @@ func (this *TextFrame) MarginTop() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *TextFrame) SetMarginTop(rhs float32)  {
+func (this *TextFrame) SetMarginTop(rhs float32) {
 	_ = this.PropPut(0x000006d4, []interface{}{rhs})
 }
 
@@ -136,12 +136,12 @@ func (this *TextFrame) Orientation() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame) SetOrientation(rhs int32)  {
+func (this *TextFrame) SetOrientation(rhs int32) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
-var TextFrame_Characters_OptArgs= []string{
-	"Start", "Length", 
+var TextFrame_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *TextFrame) Characters(optArgs ...interface{}) *Characters {
@@ -155,7 +155,7 @@ func (this *TextFrame) HorizontalAlignment() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame) SetHorizontalAlignment(rhs int32)  {
+func (this *TextFrame) SetHorizontalAlignment(rhs int32) {
 	_ = this.PropPut(0x00000088, []interface{}{rhs})
 }
 
@@ -164,7 +164,7 @@ func (this *TextFrame) VerticalAlignment() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame) SetVerticalAlignment(rhs int32)  {
+func (this *TextFrame) SetVerticalAlignment(rhs int32) {
 	_ = this.PropPut(0x00000089, []interface{}{rhs})
 }
 
@@ -173,7 +173,7 @@ func (this *TextFrame) AutoSize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TextFrame) SetAutoSize(rhs bool)  {
+func (this *TextFrame) SetAutoSize(rhs bool) {
 	_ = this.PropPut(0x00000266, []interface{}{rhs})
 }
 
@@ -182,7 +182,7 @@ func (this *TextFrame) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame) SetReadingOrder(rhs int32)  {
+func (this *TextFrame) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -191,7 +191,7 @@ func (this *TextFrame) AutoMargins() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TextFrame) SetAutoMargins(rhs bool)  {
+func (this *TextFrame) SetAutoMargins(rhs bool) {
 	_ = this.PropPut(0x000006d5, []interface{}{rhs})
 }
 
@@ -200,7 +200,7 @@ func (this *TextFrame) VerticalOverflow() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame) SetVerticalOverflow(rhs int32)  {
+func (this *TextFrame) SetVerticalOverflow(rhs int32) {
 	_ = this.PropPut(0x00000b6a, []interface{}{rhs})
 }
 
@@ -209,7 +209,6 @@ func (this *TextFrame) HorizontalOverflow() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextFrame) SetHorizontalOverflow(rhs int32)  {
+func (this *TextFrame) SetHorizontalOverflow(rhs int32) {
 	_ = this.PropPut(0x00000b6b, []interface{}{rhs})
 }
-

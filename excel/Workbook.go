@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
-var CLSID_Workbook = syscall.GUID{0x00020819, 0x0000, 0x0000, 
+var CLSID_Workbook = syscall.GUID{0x00020819, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Workbook struct {
@@ -16,8 +16,8 @@ type Workbook struct {
 }
 
 func NewWorkbook(pDisp *win32.IDispatch, addRef bool, scoped bool) *Workbook {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Workbook{Workbook_{ole.OleClient{pDisp}}}
 	if addRef {
@@ -35,7 +35,7 @@ func NewWorkbookFromVar(v ole.Variant, addRef bool, scoped bool) *Workbook {
 
 func NewWorkbookInstance(scoped bool) (*Workbook, error) {
 	var p *win32.IDispatch
-	hr := win32.CoCreateInstance(&CLSID_Workbook, nil, 
+	hr := win32.CoCreateInstance(&CLSID_Workbook, nil,
 		win32.CLSCTX_INPROC_SERVER|win32.CLSCTX_LOCAL_SERVER,
 		&IID_Workbook_, unsafe.Pointer(&p))
 	if win32.FAILED(hr) {
@@ -55,7 +55,7 @@ func (this *Workbook) RegisterEventHandlers(handlers WorkbookEventsHandlers) uin
 
 	dispImpl := &WorkbookEventsDispImpl{Handlers: handlers}
 	disp := NewWorkbookEventsComObj(dispImpl, false)
-	
+
 	var cookie uint32
 	hr = cp.Advise(disp.IUnknown(), &cookie)
 	win32.ASSERT_SUCCEEDED(hr)
@@ -81,4 +81,3 @@ func (this *Workbook) UnRegisterEventHandlers(cookie uint32) {
 	cp.Release()
 	cpc.Release()
 }
-

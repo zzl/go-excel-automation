@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 000C0310-0000-0000-C000-000000000046
-var IID_Adjustments = syscall.GUID{0x000C0310, 0x0000, 0x0000, 
+var IID_Adjustments = syscall.GUID{0x000C0310, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Adjustments struct {
@@ -16,8 +16,8 @@ type Adjustments struct {
 }
 
 func NewAdjustments(pDisp *win32.IDispatch, addRef bool, scoped bool) *Adjustments {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Adjustments{ole.OleClient{pDisp}}
 	if addRef {
@@ -69,7 +69,6 @@ func (this *Adjustments) Item(index int32) float32 {
 	return retVal.FltValVal()
 }
 
-func (this *Adjustments) SetItem(index int32, rhs float32)  {
+func (this *Adjustments) SetItem(index int32, rhs float32) {
 	_ = this.PropPut(0x00000000, []interface{}{index, rhs})
 }
-

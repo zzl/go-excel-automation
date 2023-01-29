@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 0002086F-0001-0000-C000-000000000046
-var IID_IDrawingObjects = syscall.GUID{0x0002086F, 0x0001, 0x0000, 
+var IID_IDrawingObjects = syscall.GUID{0x0002086F, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IDrawingObjects struct {
@@ -17,8 +17,8 @@ type IDrawingObjects struct {
 }
 
 func NewIDrawingObjects(pUnk *win32.IUnknown, addRef bool, scoped bool) *IDrawingObjects {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IDrawingObjects)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IDrawingObjects) IID() *syscall.GUID {
 func (this *IDrawingObjects) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,11 +50,11 @@ func (this *IDrawingObjects) GetCreator(rhs *int32) com.Error {
 func (this *IDrawingObjects) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) Dummy3_()  {
+func (this *IDrawingObjects) Dummy3_() {
 	addr := (*this.LpVtbl)[10]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -92,7 +92,7 @@ func (this *IDrawingObjects) Delete(rhs *ole.Variant) com.Error {
 func (this *IDrawingObjects) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -120,7 +120,7 @@ func (this *IDrawingObjects) SetHeight(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) Dummy12_()  {
+func (this *IDrawingObjects) Dummy12_() {
 	addr := (*this.LpVtbl)[21]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -149,7 +149,7 @@ func (this *IDrawingObjects) SetLocked(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) Dummy15_()  {
+func (this *IDrawingObjects) Dummy15_() {
 	addr := (*this.LpVtbl)[26]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -214,7 +214,7 @@ func (this *IDrawingObjects) SetTop(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) Dummy22_()  {
+func (this *IDrawingObjects) Dummy22_() {
 	addr := (*this.LpVtbl)[37]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -252,7 +252,7 @@ func (this *IDrawingObjects) GetZOrder(rhs *int32) com.Error {
 func (this *IDrawingObjects) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -268,7 +268,7 @@ func (this *IDrawingObjects) SetAccelerator(rhs interface{}) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) Dummy28_()  {
+func (this *IDrawingObjects) Dummy28_() {
 	addr := (*this.LpVtbl)[46]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -342,7 +342,7 @@ func (this *IDrawingObjects) SetAutoSize(rhs bool) com.Error {
 func (this *IDrawingObjects) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[58]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -373,7 +373,7 @@ func (this *IDrawingObjects) SetCaption(rhs string) com.Error {
 func (this *IDrawingObjects) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[63]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -458,11 +458,11 @@ func (this *IDrawingObjects) SetDropDownLines(rhs int32) com.Error {
 func (this *IDrawingObjects) GetFont(rhs **Font) com.Error {
 	addr := (*this.LpVtbl)[77]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) Dummy47_()  {
+func (this *IDrawingObjects) Dummy47_() {
 	addr := (*this.LpVtbl)[78]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -506,7 +506,7 @@ func (this *IDrawingObjects) SetInputType(rhs int32) com.Error {
 func (this *IDrawingObjects) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[85]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -534,7 +534,7 @@ func (this *IDrawingObjects) SetLinkedCell(rhs string) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) Dummy54_()  {
+func (this *IDrawingObjects) Dummy54_() {
 	addr := (*this.LpVtbl)[90]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -545,7 +545,7 @@ func (this *IDrawingObjects) List(index interface{}, rhs *ole.Variant) com.Error
 	return com.Error(ret)
 }
 
-func (this *IDrawingObjects) Dummy56_()  {
+func (this *IDrawingObjects) Dummy56_() {
 	addr := (*this.LpVtbl)[92]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -733,7 +733,7 @@ func (this *IDrawingObjects) SetText(rhs string) com.Error {
 func (this *IDrawingObjects) Ungroup(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[123]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -788,14 +788,14 @@ func (this *IDrawingObjects) GetCount(rhs *int32) com.Error {
 func (this *IDrawingObjects) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[132]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDrawingObjects) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[133]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -808,7 +808,7 @@ func (this *IDrawingObjects) LinkCombo(link interface{}, rhs *ole.Variant) com.E
 func (this *IDrawingObjects) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[135]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 000208AD-0001-0000-C000-000000000046
-var IID_IModule = syscall.GUID{0x000208AD, 0x0001, 0x0000, 
+var IID_IModule = syscall.GUID{0x000208AD, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IModule struct {
@@ -17,8 +17,8 @@ type IModule struct {
 }
 
 func NewIModule(pUnk *win32.IUnknown, addRef bool, scoped bool) *IModule {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IModule)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IModule) IID() *syscall.GUID {
 func (this *IModule) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,7 +50,7 @@ func (this *IModule) GetCreator(rhs *int32) com.Error {
 func (this *IModule) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -117,7 +117,7 @@ func (this *IModule) SetName(rhs string) com.Error {
 func (this *IModule) GetNext(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[20]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -160,14 +160,14 @@ func (this *IModule) SetOnSheetDeactivate(lcid int32, rhs string) com.Error {
 func (this *IModule) GetPageSetup(rhs **PageSetup) com.Error {
 	addr := (*this.LpVtbl)[27]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IModule) GetPrevious(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[28]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -177,7 +177,7 @@ func (this *IModule) PrintOut__(from interface{}, to interface{}, copies interfa
 	return com.Error(ret)
 }
 
-func (this *IModule) Dummy18_()  {
+func (this *IModule) Dummy18_() {
 	addr := (*this.LpVtbl)[30]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -194,7 +194,7 @@ func (this *IModule) GetProtectContents(lcid int32, rhs *win32.VARIANT_BOOL) com
 	return com.Error(ret)
 }
 
-func (this *IModule) Dummy21_()  {
+func (this *IModule) Dummy21_() {
 	addr := (*this.LpVtbl)[33]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -205,7 +205,7 @@ func (this *IModule) GetProtectionMode(lcid int32, rhs *win32.VARIANT_BOOL) com.
 	return com.Error(ret)
 }
 
-func (this *IModule) Dummy23_()  {
+func (this *IModule) Dummy23_() {
 	addr := (*this.LpVtbl)[35]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -243,7 +243,7 @@ func (this *IModule) SetVisible(lcid int32, rhs int32) com.Error {
 func (this *IModule) GetShapes(rhs **Shapes) com.Error {
 	addr := (*this.LpVtbl)[41]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002086A-0000-0000-C000-000000000046
-var IID_Point = syscall.GUID{0x0002086A, 0x0000, 0x0000, 
+var IID_Point = syscall.GUID{0x0002086A, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Point struct {
@@ -17,8 +17,8 @@ type Point struct {
 }
 
 func NewPoint(pDisp *win32.IDispatch, addRef bool, scoped bool) *Point {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Point{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Point) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Point) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Point) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Point) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Point) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Point) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Point) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Point) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Point) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Point) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Point) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Point) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Point) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Point) Application() *Application {
@@ -95,8 +95,8 @@ func (this *Point) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Point_ApplyDataLabels__OptArgs= []string{
-	"Type", "LegendKey", "AutoText", "HasLeaderLines", 
+var Point_ApplyDataLabels__OptArgs = []string{
+	"Type", "LegendKey", "AutoText", "HasLeaderLines",
 }
 
 func (this *Point) ApplyDataLabels_(optArgs ...interface{}) ole.Variant {
@@ -139,7 +139,7 @@ func (this *Point) Explosion() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Point) SetExplosion(rhs int32)  {
+func (this *Point) SetExplosion(rhs int32) {
 	_ = this.PropPut(0x000000b6, []interface{}{rhs})
 }
 
@@ -148,7 +148,7 @@ func (this *Point) HasDataLabel() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Point) SetHasDataLabel(rhs bool)  {
+func (this *Point) SetHasDataLabel(rhs bool) {
 	_ = this.PropPut(0x0000004d, []interface{}{rhs})
 }
 
@@ -162,7 +162,7 @@ func (this *Point) InvertIfNegative() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Point) SetInvertIfNegative(rhs bool)  {
+func (this *Point) SetInvertIfNegative(rhs bool) {
 	_ = this.PropPut(0x00000084, []interface{}{rhs})
 }
 
@@ -171,7 +171,7 @@ func (this *Point) MarkerBackgroundColor() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Point) SetMarkerBackgroundColor(rhs int32)  {
+func (this *Point) SetMarkerBackgroundColor(rhs int32) {
 	_ = this.PropPut(0x00000049, []interface{}{rhs})
 }
 
@@ -180,7 +180,7 @@ func (this *Point) MarkerBackgroundColorIndex() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Point) SetMarkerBackgroundColorIndex(rhs int32)  {
+func (this *Point) SetMarkerBackgroundColorIndex(rhs int32) {
 	_ = this.PropPut(0x0000004a, []interface{}{rhs})
 }
 
@@ -189,7 +189,7 @@ func (this *Point) MarkerForegroundColor() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Point) SetMarkerForegroundColor(rhs int32)  {
+func (this *Point) SetMarkerForegroundColor(rhs int32) {
 	_ = this.PropPut(0x0000004b, []interface{}{rhs})
 }
 
@@ -198,7 +198,7 @@ func (this *Point) MarkerForegroundColorIndex() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Point) SetMarkerForegroundColorIndex(rhs int32)  {
+func (this *Point) SetMarkerForegroundColorIndex(rhs int32) {
 	_ = this.PropPut(0x0000004c, []interface{}{rhs})
 }
 
@@ -207,7 +207,7 @@ func (this *Point) MarkerSize() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Point) SetMarkerSize(rhs int32)  {
+func (this *Point) SetMarkerSize(rhs int32) {
 	_ = this.PropPut(0x000000e7, []interface{}{rhs})
 }
 
@@ -216,7 +216,7 @@ func (this *Point) MarkerStyle() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Point) SetMarkerStyle(rhs int32)  {
+func (this *Point) SetMarkerStyle(rhs int32) {
 	_ = this.PropPut(0x00000048, []interface{}{rhs})
 }
 
@@ -231,7 +231,7 @@ func (this *Point) PictureType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Point) SetPictureType(rhs int32)  {
+func (this *Point) SetPictureType(rhs int32) {
 	_ = this.PropPut(0x000000a1, []interface{}{rhs})
 }
 
@@ -240,7 +240,7 @@ func (this *Point) PictureUnit() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Point) SetPictureUnit(rhs int32)  {
+func (this *Point) SetPictureUnit(rhs int32) {
 	_ = this.PropPut(0x000000a2, []interface{}{rhs})
 }
 
@@ -255,7 +255,7 @@ func (this *Point) ApplyPictToSides() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Point) SetApplyPictToSides(rhs bool)  {
+func (this *Point) SetApplyPictToSides(rhs bool) {
 	_ = this.PropPut(0x0000067b, []interface{}{rhs})
 }
 
@@ -264,7 +264,7 @@ func (this *Point) ApplyPictToFront() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Point) SetApplyPictToFront(rhs bool)  {
+func (this *Point) SetApplyPictToFront(rhs bool) {
 	_ = this.PropPut(0x0000067c, []interface{}{rhs})
 }
 
@@ -273,7 +273,7 @@ func (this *Point) ApplyPictToEnd() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Point) SetApplyPictToEnd(rhs bool)  {
+func (this *Point) SetApplyPictToEnd(rhs bool) {
 	_ = this.PropPut(0x0000067d, []interface{}{rhs})
 }
 
@@ -282,7 +282,7 @@ func (this *Point) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Point) SetShadow(rhs bool)  {
+func (this *Point) SetShadow(rhs bool) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
@@ -291,7 +291,7 @@ func (this *Point) SecondaryPlot() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Point) SetSecondaryPlot(rhs bool)  {
+func (this *Point) SetSecondaryPlot(rhs bool) {
 	_ = this.PropPut(0x0000067e, []interface{}{rhs})
 }
 
@@ -300,10 +300,10 @@ func (this *Point) Fill() *ChartFillFormat {
 	return NewChartFillFormat(retVal.IDispatch(), false, true)
 }
 
-var Point_ApplyDataLabels_OptArgs= []string{
-	"Type", "LegendKey", "AutoText", "HasLeaderLines", 
-	"ShowSeriesName", "ShowCategoryName", "ShowValue", "ShowPercentage", 
-	"ShowBubbleSize", "Separator", 
+var Point_ApplyDataLabels_OptArgs = []string{
+	"Type", "LegendKey", "AutoText", "HasLeaderLines",
+	"ShowSeriesName", "ShowCategoryName", "ShowValue", "ShowPercentage",
+	"ShowBubbleSize", "Separator",
 }
 
 func (this *Point) ApplyDataLabels(optArgs ...interface{}) ole.Variant {
@@ -318,7 +318,7 @@ func (this *Point) Has3DEffect() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Point) SetHas3DEffect(rhs bool)  {
+func (this *Point) SetHas3DEffect(rhs bool) {
 	_ = this.PropPut(0x00000681, []interface{}{rhs})
 }
 
@@ -327,7 +327,7 @@ func (this *Point) PictureUnit2() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Point) SetPictureUnit2(rhs float64)  {
+func (this *Point) SetPictureUnit2(rhs float64) {
 	_ = this.PropPut(0x00000a59, []interface{}{rhs})
 }
 
@@ -361,8 +361,8 @@ func (this *Point) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var Point_PieSliceLocation_OptArgs= []string{
-	"Index", 
+var Point_PieSliceLocation_OptArgs = []string{
+	"Index",
 }
 
 func (this *Point) PieSliceLocation(loc int32, optArgs ...interface{}) float64 {
@@ -370,4 +370,3 @@ func (this *Point) PieSliceLocation(loc int32, optArgs ...interface{}) float64 {
 	retVal, _ := this.Call(0x00000b61, []interface{}{loc}, optArgs...)
 	return retVal.DblValVal()
 }
-

@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208A7-0000-0000-C000-000000000046
-var IID_Pictures = syscall.GUID{0x000208A7, 0x0000, 0x0000, 
+var IID_Pictures = syscall.GUID{0x000208A7, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Pictures struct {
@@ -17,8 +17,8 @@ type Pictures struct {
 }
 
 func NewPictures(pDisp *win32.IDispatch, addRef bool, scoped bool) *Pictures {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Pictures{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Pictures) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Pictures) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Pictures) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Pictures) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Pictures) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Pictures) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Pictures) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Pictures) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Pictures) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Pictures) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Pictures) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Pictures) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Pictures) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Pictures) Application() *Application {
@@ -95,9 +95,9 @@ func (this *Pictures) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Pictures) Dummy3_()  {
+func (this *Pictures) Dummy3_() {
 	retVal, _ := this.Call(0x00010003, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Pictures) BringToFront() ole.Variant {
@@ -112,8 +112,8 @@ func (this *Pictures) Copy() ole.Variant {
 	return *retVal
 }
 
-var Pictures_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var Pictures_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *Pictures) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *Pictures) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Pictures) SetEnabled(rhs bool)  {
+func (this *Pictures) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,13 +154,13 @@ func (this *Pictures) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Pictures) SetHeight(rhs float64)  {
+func (this *Pictures) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
-func (this *Pictures) Dummy12_()  {
+func (this *Pictures) Dummy12_() {
 	retVal, _ := this.Call(0x0001000c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Pictures) Left() float64 {
@@ -168,7 +168,7 @@ func (this *Pictures) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Pictures) SetLeft(rhs float64)  {
+func (this *Pictures) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,13 +177,13 @@ func (this *Pictures) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Pictures) SetLocked(rhs bool)  {
+func (this *Pictures) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
-func (this *Pictures) Dummy15_()  {
+func (this *Pictures) Dummy15_() {
 	retVal, _ := this.Call(0x0001000f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Pictures) OnAction() string {
@@ -191,7 +191,7 @@ func (this *Pictures) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Pictures) SetOnAction(rhs string)  {
+func (this *Pictures) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *Pictures) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *Pictures) SetPlacement(rhs interface{})  {
+func (this *Pictures) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -210,12 +210,12 @@ func (this *Pictures) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Pictures) SetPrintObject(rhs bool)  {
+func (this *Pictures) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var Pictures_Select_OptArgs= []string{
-	"Replace", 
+var Pictures_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *Pictures) Select(optArgs ...interface{}) ole.Variant {
@@ -236,13 +236,13 @@ func (this *Pictures) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Pictures) SetTop(rhs float64)  {
+func (this *Pictures) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
-func (this *Pictures) Dummy22_()  {
+func (this *Pictures) Dummy22_() {
 	retVal, _ := this.Call(0x00010016, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Pictures) Visible() bool {
@@ -250,7 +250,7 @@ func (this *Pictures) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Pictures) SetVisible(rhs bool)  {
+func (this *Pictures) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *Pictures) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Pictures) SetWidth(rhs float64)  {
+func (this *Pictures) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -288,7 +288,7 @@ func (this *Pictures) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Pictures) SetShadow(rhs bool)  {
+func (this *Pictures) SetShadow(rhs bool) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
@@ -297,7 +297,7 @@ func (this *Pictures) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Pictures) SetFormula(rhs string)  {
+func (this *Pictures) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -316,8 +316,8 @@ func (this *Pictures) Group() *GroupObject {
 	return NewGroupObject(retVal.IDispatch(), false, true)
 }
 
-var Pictures_Insert_OptArgs= []string{
-	"Converter", 
+var Pictures_Insert_OptArgs = []string{
+	"Converter",
 }
 
 func (this *Pictures) Insert(filename string, optArgs ...interface{}) *Picture {
@@ -340,7 +340,7 @@ func (this *Pictures) ForEach(action func(item *ole.DispatchClass) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -357,8 +357,8 @@ func (this *Pictures) ForEach(action func(item *ole.DispatchClass) bool) {
 	}
 }
 
-var Pictures_Paste_OptArgs= []string{
-	"Link", 
+var Pictures_Paste_OptArgs = []string{
+	"Link",
 }
 
 func (this *Pictures) Paste(optArgs ...interface{}) *Picture {
@@ -366,4 +366,3 @@ func (this *Pictures) Paste(optArgs ...interface{}) *Picture {
 	retVal, _ := this.Call(0x000000d3, nil, optArgs...)
 	return NewPicture(retVal.IDispatch(), false, true)
 }
-

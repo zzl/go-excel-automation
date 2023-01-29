@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002088D-0000-0000-C000-000000000046
-var IID_Spinner = syscall.GUID{0x0002088D, 0x0000, 0x0000, 
+var IID_Spinner = syscall.GUID{0x0002088D, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Spinner struct {
@@ -17,8 +17,8 @@ type Spinner struct {
 }
 
 func NewSpinner(pDisp *win32.IDispatch, addRef bool, scoped bool) *Spinner {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Spinner{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Spinner) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Spinner) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Spinner) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Spinner) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Spinner) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Spinner) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Spinner) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Spinner) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Spinner) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Spinner) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Spinner) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Spinner) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Spinner) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Spinner) Application() *Application {
@@ -112,8 +112,8 @@ func (this *Spinner) Copy() ole.Variant {
 	return *retVal
 }
 
-var Spinner_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var Spinner_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *Spinner) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *Spinner) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Spinner) SetEnabled(rhs bool)  {
+func (this *Spinner) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *Spinner) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Spinner) SetHeight(rhs float64)  {
+func (this *Spinner) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -168,7 +168,7 @@ func (this *Spinner) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Spinner) SetLeft(rhs float64)  {
+func (this *Spinner) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,7 +177,7 @@ func (this *Spinner) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Spinner) SetLocked(rhs bool)  {
+func (this *Spinner) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
@@ -186,7 +186,7 @@ func (this *Spinner) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Spinner) SetName(rhs string)  {
+func (this *Spinner) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -195,7 +195,7 @@ func (this *Spinner) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Spinner) SetOnAction(rhs string)  {
+func (this *Spinner) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -205,7 +205,7 @@ func (this *Spinner) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *Spinner) SetPlacement(rhs interface{})  {
+func (this *Spinner) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -214,12 +214,12 @@ func (this *Spinner) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Spinner) SetPrintObject(rhs bool)  {
+func (this *Spinner) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var Spinner_Select_OptArgs= []string{
-	"Replace", 
+var Spinner_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *Spinner) Select(optArgs ...interface{}) ole.Variant {
@@ -240,7 +240,7 @@ func (this *Spinner) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Spinner) SetTop(rhs float64)  {
+func (this *Spinner) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -254,7 +254,7 @@ func (this *Spinner) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Spinner) SetVisible(rhs bool)  {
+func (this *Spinner) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -263,7 +263,7 @@ func (this *Spinner) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Spinner) SetWidth(rhs float64)  {
+func (this *Spinner) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -282,7 +282,7 @@ func (this *Spinner) Default_() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Spinner) SetDefault_(rhs int32)  {
+func (this *Spinner) SetDefault_(rhs int32) {
 	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
@@ -291,7 +291,7 @@ func (this *Spinner) Display3DShading() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Spinner) SetDisplay3DShading(rhs bool)  {
+func (this *Spinner) SetDisplay3DShading(rhs bool) {
 	_ = this.PropPut(0x00000462, []interface{}{rhs})
 }
 
@@ -300,7 +300,7 @@ func (this *Spinner) LinkedCell() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Spinner) SetLinkedCell(rhs string)  {
+func (this *Spinner) SetLinkedCell(rhs string) {
 	_ = this.PropPut(0x00000422, []interface{}{rhs})
 }
 
@@ -309,7 +309,7 @@ func (this *Spinner) Max() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Spinner) SetMax(rhs int32)  {
+func (this *Spinner) SetMax(rhs int32) {
 	_ = this.PropPut(0x0000034a, []interface{}{rhs})
 }
 
@@ -318,7 +318,7 @@ func (this *Spinner) Min() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Spinner) SetMin(rhs int32)  {
+func (this *Spinner) SetMin(rhs int32) {
 	_ = this.PropPut(0x0000034b, []interface{}{rhs})
 }
 
@@ -327,7 +327,7 @@ func (this *Spinner) SmallChange() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Spinner) SetSmallChange(rhs int32)  {
+func (this *Spinner) SetSmallChange(rhs int32) {
 	_ = this.PropPut(0x0000034c, []interface{}{rhs})
 }
 
@@ -336,7 +336,6 @@ func (this *Spinner) Value() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Spinner) SetValue(rhs int32)  {
+func (this *Spinner) SetValue(rhs int32) {
 	_ = this.PropPut(0x00000006, []interface{}{rhs})
 }
-

@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020876-0001-0000-C000-000000000046
-var IID_IPivotItem = syscall.GUID{0x00020876, 0x0001, 0x0000, 
+var IID_IPivotItem = syscall.GUID{0x00020876, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IPivotItem struct {
@@ -17,8 +17,8 @@ type IPivotItem struct {
 }
 
 func NewIPivotItem(pUnk *win32.IUnknown, addRef bool, scoped bool) *IPivotItem {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IPivotItem)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IPivotItem) IID() *syscall.GUID {
 func (this *IPivotItem) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,7 +50,7 @@ func (this *IPivotItem) GetCreator(rhs *int32) com.Error {
 func (this *IPivotItem) GetParent(rhs **PivotField) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -63,7 +63,7 @@ func (this *IPivotItem) GetChildItems(index interface{}, rhs *ole.Variant) com.E
 func (this *IPivotItem) GetDataRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[11]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -82,7 +82,7 @@ func (this *IPivotItem) SetDefault_(rhs string) com.Error {
 func (this *IPivotItem) GetLabelRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -101,7 +101,7 @@ func (this *IPivotItem) SetName(rhs string) com.Error {
 func (this *IPivotItem) GetParentItem(rhs **PivotItem) com.Error {
 	addr := (*this.LpVtbl)[17]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -242,4 +242,3 @@ func (this *IPivotItem) DrillTo(field string) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(field)))
 	return com.Error(ret)
 }
-

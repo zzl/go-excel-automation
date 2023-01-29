@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020859-0000-0000-C000-000000000046
-var IID_ChartGroup = syscall.GUID{0x00020859, 0x0000, 0x0000, 
+var IID_ChartGroup = syscall.GUID{0x00020859, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ChartGroup struct {
@@ -17,8 +17,8 @@ type ChartGroup struct {
 }
 
 func NewChartGroup(pDisp *win32.IDispatch, addRef bool, scoped bool) *ChartGroup {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &ChartGroup{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *ChartGroup) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *ChartGroup) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *ChartGroup) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ChartGroup) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *ChartGroup) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *ChartGroup) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *ChartGroup) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ChartGroup) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *ChartGroup) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ChartGroup) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *ChartGroup) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ChartGroup) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *ChartGroup) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ChartGroup) Application() *Application {
@@ -100,7 +100,7 @@ func (this *ChartGroup) AxisGroup() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ChartGroup) SetAxisGroup(rhs int32)  {
+func (this *ChartGroup) SetAxisGroup(rhs int32) {
 	_ = this.PropPut(0x0000002f, []interface{}{rhs})
 }
 
@@ -109,7 +109,7 @@ func (this *ChartGroup) DoughnutHoleSize() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ChartGroup) SetDoughnutHoleSize(rhs int32)  {
+func (this *ChartGroup) SetDoughnutHoleSize(rhs int32) {
 	_ = this.PropPut(0x00000466, []interface{}{rhs})
 }
 
@@ -128,7 +128,7 @@ func (this *ChartGroup) FirstSliceAngle() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ChartGroup) SetFirstSliceAngle(rhs int32)  {
+func (this *ChartGroup) SetFirstSliceAngle(rhs int32) {
 	_ = this.PropPut(0x0000003f, []interface{}{rhs})
 }
 
@@ -137,7 +137,7 @@ func (this *ChartGroup) GapWidth() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ChartGroup) SetGapWidth(rhs int32)  {
+func (this *ChartGroup) SetGapWidth(rhs int32) {
 	_ = this.PropPut(0x00000033, []interface{}{rhs})
 }
 
@@ -146,7 +146,7 @@ func (this *ChartGroup) HasDropLines() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ChartGroup) SetHasDropLines(rhs bool)  {
+func (this *ChartGroup) SetHasDropLines(rhs bool) {
 	_ = this.PropPut(0x0000003d, []interface{}{rhs})
 }
 
@@ -155,7 +155,7 @@ func (this *ChartGroup) HasHiLoLines() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ChartGroup) SetHasHiLoLines(rhs bool)  {
+func (this *ChartGroup) SetHasHiLoLines(rhs bool) {
 	_ = this.PropPut(0x0000003e, []interface{}{rhs})
 }
 
@@ -164,7 +164,7 @@ func (this *ChartGroup) HasRadarAxisLabels() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ChartGroup) SetHasRadarAxisLabels(rhs bool)  {
+func (this *ChartGroup) SetHasRadarAxisLabels(rhs bool) {
 	_ = this.PropPut(0x00000040, []interface{}{rhs})
 }
 
@@ -173,7 +173,7 @@ func (this *ChartGroup) HasSeriesLines() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ChartGroup) SetHasSeriesLines(rhs bool)  {
+func (this *ChartGroup) SetHasSeriesLines(rhs bool) {
 	_ = this.PropPut(0x00000041, []interface{}{rhs})
 }
 
@@ -182,7 +182,7 @@ func (this *ChartGroup) HasUpDownBars() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ChartGroup) SetHasUpDownBars(rhs bool)  {
+func (this *ChartGroup) SetHasUpDownBars(rhs bool) {
 	_ = this.PropPut(0x00000042, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *ChartGroup) Overlap() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ChartGroup) SetOverlap(rhs int32)  {
+func (this *ChartGroup) SetOverlap(rhs int32) {
 	_ = this.PropPut(0x00000038, []interface{}{rhs})
 }
 
@@ -210,8 +210,8 @@ func (this *ChartGroup) RadarAxisLabels() *TickLabels {
 	return NewTickLabels(retVal.IDispatch(), false, true)
 }
 
-var ChartGroup_SeriesCollection_OptArgs= []string{
-	"Index", 
+var ChartGroup_SeriesCollection_OptArgs = []string{
+	"Index",
 }
 
 func (this *ChartGroup) SeriesCollection(optArgs ...interface{}) *ole.DispatchClass {
@@ -230,7 +230,7 @@ func (this *ChartGroup) SubType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ChartGroup) SetSubType(rhs int32)  {
+func (this *ChartGroup) SetSubType(rhs int32) {
 	_ = this.PropPut(0x0000006d, []interface{}{rhs})
 }
 
@@ -239,7 +239,7 @@ func (this *ChartGroup) Type() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ChartGroup) SetType(rhs int32)  {
+func (this *ChartGroup) SetType(rhs int32) {
 	_ = this.PropPut(0x0000006c, []interface{}{rhs})
 }
 
@@ -253,7 +253,7 @@ func (this *ChartGroup) VaryByCategories() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ChartGroup) SetVaryByCategories(rhs bool)  {
+func (this *ChartGroup) SetVaryByCategories(rhs bool) {
 	_ = this.PropPut(0x0000003c, []interface{}{rhs})
 }
 
@@ -262,7 +262,7 @@ func (this *ChartGroup) SizeRepresents() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ChartGroup) SetSizeRepresents(rhs int32)  {
+func (this *ChartGroup) SetSizeRepresents(rhs int32) {
 	_ = this.PropPut(0x00000674, []interface{}{rhs})
 }
 
@@ -271,7 +271,7 @@ func (this *ChartGroup) BubbleScale() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ChartGroup) SetBubbleScale(rhs int32)  {
+func (this *ChartGroup) SetBubbleScale(rhs int32) {
 	_ = this.PropPut(0x00000675, []interface{}{rhs})
 }
 
@@ -280,7 +280,7 @@ func (this *ChartGroup) ShowNegativeBubbles() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ChartGroup) SetShowNegativeBubbles(rhs bool)  {
+func (this *ChartGroup) SetShowNegativeBubbles(rhs bool) {
 	_ = this.PropPut(0x00000676, []interface{}{rhs})
 }
 
@@ -289,7 +289,7 @@ func (this *ChartGroup) SplitType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ChartGroup) SetSplitType(rhs int32)  {
+func (this *ChartGroup) SetSplitType(rhs int32) {
 	_ = this.PropPut(0x00000677, []interface{}{rhs})
 }
 
@@ -299,7 +299,7 @@ func (this *ChartGroup) SplitValue() ole.Variant {
 	return *retVal
 }
 
-func (this *ChartGroup) SetSplitValue(rhs interface{})  {
+func (this *ChartGroup) SetSplitValue(rhs interface{}) {
 	_ = this.PropPut(0x00000678, []interface{}{rhs})
 }
 
@@ -308,7 +308,7 @@ func (this *ChartGroup) SecondPlotSize() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ChartGroup) SetSecondPlotSize(rhs int32)  {
+func (this *ChartGroup) SetSecondPlotSize(rhs int32) {
 	_ = this.PropPut(0x00000679, []interface{}{rhs})
 }
 
@@ -317,7 +317,6 @@ func (this *ChartGroup) Has3DShading() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ChartGroup) SetHas3DShading(rhs bool)  {
+func (this *ChartGroup) SetHas3DShading(rhs bool) {
 	_ = this.PropPut(0x0000067a, []interface{}{rhs})
 }
-

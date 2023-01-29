@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002443B-0000-0000-C000-000000000046
-var IID_ShapeRange = syscall.GUID{0x0002443B, 0x0000, 0x0000, 
+var IID_ShapeRange = syscall.GUID{0x0002443B, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ShapeRange struct {
@@ -17,8 +17,8 @@ type ShapeRange struct {
 }
 
 func NewShapeRange(pDisp *win32.IDispatch, addRef bool, scoped bool) *ShapeRange {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &ShapeRange{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *ShapeRange) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *ShapeRange) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *ShapeRange) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ShapeRange) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *ShapeRange) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *ShapeRange) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *ShapeRange) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *ShapeRange) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *ShapeRange) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *ShapeRange) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ShapeRange) Application() *Application {
@@ -119,7 +119,7 @@ func (this *ShapeRange) ForEach(action func(item *Shape) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -136,24 +136,24 @@ func (this *ShapeRange) ForEach(action func(item *Shape) bool) {
 	}
 }
 
-func (this *ShapeRange) Align(alignCmd int32, relativeTo int32)  {
+func (this *ShapeRange) Align(alignCmd int32, relativeTo int32) {
 	retVal, _ := this.Call(0x000006cc, []interface{}{alignCmd, relativeTo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) Apply()  {
+func (this *ShapeRange) Apply() {
 	retVal, _ := this.Call(0x0000068b, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) Delete()  {
+func (this *ShapeRange) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) Distribute(distributeCmd int32, relativeTo int32)  {
+func (this *ShapeRange) Distribute(distributeCmd int32, relativeTo int32) {
 	retVal, _ := this.Call(0x000006ce, []interface{}{distributeCmd, relativeTo})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ShapeRange) Duplicate() *ShapeRange {
@@ -161,24 +161,24 @@ func (this *ShapeRange) Duplicate() *ShapeRange {
 	return NewShapeRange(retVal.IDispatch(), false, true)
 }
 
-func (this *ShapeRange) Flip(flipCmd int32)  {
+func (this *ShapeRange) Flip(flipCmd int32) {
 	retVal, _ := this.Call(0x0000068c, []interface{}{flipCmd})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) IncrementLeft(increment float32)  {
+func (this *ShapeRange) IncrementLeft(increment float32) {
 	retVal, _ := this.Call(0x0000068e, []interface{}{increment})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) IncrementRotation(increment float32)  {
+func (this *ShapeRange) IncrementRotation(increment float32) {
 	retVal, _ := this.Call(0x00000690, []interface{}{increment})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) IncrementTop(increment float32)  {
+func (this *ShapeRange) IncrementTop(increment float32) {
 	retVal, _ := this.Call(0x00000691, []interface{}{increment})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ShapeRange) Group() *Shape {
@@ -186,14 +186,14 @@ func (this *ShapeRange) Group() *Shape {
 	return NewShape(retVal.IDispatch(), false, true)
 }
 
-func (this *ShapeRange) PickUp()  {
+func (this *ShapeRange) PickUp() {
 	retVal, _ := this.Call(0x00000692, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) RerouteConnections()  {
+func (this *ShapeRange) RerouteConnections() {
 	retVal, _ := this.Call(0x00000693, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *ShapeRange) Regroup() *Shape {
@@ -201,39 +201,39 @@ func (this *ShapeRange) Regroup() *Shape {
 	return NewShape(retVal.IDispatch(), false, true)
 }
 
-var ShapeRange_ScaleHeight_OptArgs= []string{
-	"Scale", 
+var ShapeRange_ScaleHeight_OptArgs = []string{
+	"Scale",
 }
 
-func (this *ShapeRange) ScaleHeight(factor float32, relativeToOriginalSize int32, optArgs ...interface{})  {
+func (this *ShapeRange) ScaleHeight(factor float32, relativeToOriginalSize int32, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(ShapeRange_ScaleHeight_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000694, []interface{}{factor, relativeToOriginalSize}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var ShapeRange_ScaleWidth_OptArgs= []string{
-	"Scale", 
+var ShapeRange_ScaleWidth_OptArgs = []string{
+	"Scale",
 }
 
-func (this *ShapeRange) ScaleWidth(factor float32, relativeToOriginalSize int32, optArgs ...interface{})  {
+func (this *ShapeRange) ScaleWidth(factor float32, relativeToOriginalSize int32, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(ShapeRange_ScaleWidth_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000698, []interface{}{factor, relativeToOriginalSize}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var ShapeRange_Select_OptArgs= []string{
-	"Replace", 
+var ShapeRange_Select_OptArgs = []string{
+	"Replace",
 }
 
-func (this *ShapeRange) Select(optArgs ...interface{})  {
+func (this *ShapeRange) Select(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(ShapeRange_Select_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000000eb, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) SetShapesDefaultProperties()  {
+func (this *ShapeRange) SetShapesDefaultProperties() {
 	retVal, _ := this.Call(0x00000699, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *ShapeRange) Ungroup() *ShapeRange {
@@ -241,9 +241,9 @@ func (this *ShapeRange) Ungroup() *ShapeRange {
 	return NewShapeRange(retVal.IDispatch(), false, true)
 }
 
-func (this *ShapeRange) ZOrder(zorderCmd int32)  {
+func (this *ShapeRange) ZOrder(zorderCmd int32) {
 	retVal, _ := this.Call(0x0000026e, []interface{}{zorderCmd})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ShapeRange) Adjustments() *Adjustments {
@@ -261,7 +261,7 @@ func (this *ShapeRange) AutoShapeType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ShapeRange) SetAutoShapeType(rhs int32)  {
+func (this *ShapeRange) SetAutoShapeType(rhs int32) {
 	_ = this.PropPut(0x0000069d, []interface{}{rhs})
 }
 
@@ -300,7 +300,7 @@ func (this *ShapeRange) Height() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ShapeRange) SetHeight(rhs float32)  {
+func (this *ShapeRange) SetHeight(rhs float32) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -314,7 +314,7 @@ func (this *ShapeRange) Left() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ShapeRange) SetLeft(rhs float32)  {
+func (this *ShapeRange) SetLeft(rhs float32) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -328,7 +328,7 @@ func (this *ShapeRange) LockAspectRatio() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ShapeRange) SetLockAspectRatio(rhs int32)  {
+func (this *ShapeRange) SetLockAspectRatio(rhs int32) {
 	_ = this.PropPut(0x000006a4, []interface{}{rhs})
 }
 
@@ -337,7 +337,7 @@ func (this *ShapeRange) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ShapeRange) SetName(rhs string)  {
+func (this *ShapeRange) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -351,7 +351,7 @@ func (this *ShapeRange) Rotation() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ShapeRange) SetRotation(rhs float32)  {
+func (this *ShapeRange) SetRotation(rhs float32) {
 	_ = this.PropPut(0x0000003b, []interface{}{rhs})
 }
 
@@ -380,7 +380,7 @@ func (this *ShapeRange) Top() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ShapeRange) SetTop(rhs float32)  {
+func (this *ShapeRange) SetTop(rhs float32) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -405,7 +405,7 @@ func (this *ShapeRange) Visible() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ShapeRange) SetVisible(rhs int32)  {
+func (this *ShapeRange) SetVisible(rhs int32) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -414,7 +414,7 @@ func (this *ShapeRange) Width() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ShapeRange) SetWidth(rhs float32)  {
+func (this *ShapeRange) SetWidth(rhs float32) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -428,7 +428,7 @@ func (this *ShapeRange) BlackWhiteMode() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ShapeRange) SetBlackWhiteMode(rhs int32)  {
+func (this *ShapeRange) SetBlackWhiteMode(rhs int32) {
 	_ = this.PropPut(0x000006ab, []interface{}{rhs})
 }
 
@@ -437,7 +437,7 @@ func (this *ShapeRange) AlternativeText() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ShapeRange) SetAlternativeText(rhs string)  {
+func (this *ShapeRange) SetAlternativeText(rhs string) {
 	_ = this.PropPut(0x00000763, []interface{}{rhs})
 }
 
@@ -481,24 +481,24 @@ func (this *ShapeRange) ID() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ShapeRange) CanvasCropLeft(increment float32)  {
+func (this *ShapeRange) CanvasCropLeft(increment float32) {
 	retVal, _ := this.Call(0x0000087c, []interface{}{increment})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) CanvasCropTop(increment float32)  {
+func (this *ShapeRange) CanvasCropTop(increment float32) {
 	retVal, _ := this.Call(0x0000087d, []interface{}{increment})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) CanvasCropRight(increment float32)  {
+func (this *ShapeRange) CanvasCropRight(increment float32) {
 	retVal, _ := this.Call(0x0000087e, []interface{}{increment})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ShapeRange) CanvasCropBottom(increment float32)  {
+func (this *ShapeRange) CanvasCropBottom(increment float32) {
 	retVal, _ := this.Call(0x0000087f, []interface{}{increment})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ShapeRange) Chart() *Chart {
@@ -521,7 +521,7 @@ func (this *ShapeRange) ShapeStyle() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ShapeRange) SetShapeStyle(rhs int32)  {
+func (this *ShapeRange) SetShapeStyle(rhs int32) {
 	_ = this.PropPut(0x00000a64, []interface{}{rhs})
 }
 
@@ -530,7 +530,7 @@ func (this *ShapeRange) BackgroundStyle() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ShapeRange) SetBackgroundStyle(rhs int32)  {
+func (this *ShapeRange) SetBackgroundStyle(rhs int32) {
 	_ = this.PropPut(0x00000a65, []interface{}{rhs})
 }
 
@@ -554,7 +554,6 @@ func (this *ShapeRange) Title() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ShapeRange) SetTitle(rhs string)  {
+func (this *ShapeRange) SetTitle(rhs string) {
 	_ = this.PropPut(0x000000c7, []interface{}{rhs})
 }
-

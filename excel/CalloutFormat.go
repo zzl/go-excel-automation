@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 000C0311-0000-0000-C000-000000000046
-var IID_CalloutFormat = syscall.GUID{0x000C0311, 0x0000, 0x0000, 
+var IID_CalloutFormat = syscall.GUID{0x000C0311, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type CalloutFormat struct {
@@ -16,8 +16,8 @@ type CalloutFormat struct {
 }
 
 func NewCalloutFormat(pDisp *win32.IDispatch, addRef bool, scoped bool) *CalloutFormat {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &CalloutFormat{ole.OleClient{pDisp}}
 	if addRef {
@@ -59,24 +59,24 @@ func (this *CalloutFormat) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *CalloutFormat) AutomaticLength()  {
+func (this *CalloutFormat) AutomaticLength() {
 	retVal, _ := this.Call(0x0000000a, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *CalloutFormat) CustomDrop(drop float32)  {
+func (this *CalloutFormat) CustomDrop(drop float32) {
 	retVal, _ := this.Call(0x0000000b, []interface{}{drop})
-	_= retVal
+	_ = retVal
 }
 
-func (this *CalloutFormat) CustomLength(length float32)  {
+func (this *CalloutFormat) CustomLength(length float32) {
 	retVal, _ := this.Call(0x0000000c, []interface{}{length})
-	_= retVal
+	_ = retVal
 }
 
-func (this *CalloutFormat) PresetDrop(dropType int32)  {
+func (this *CalloutFormat) PresetDrop(dropType int32) {
 	retVal, _ := this.Call(0x0000000d, []interface{}{dropType})
-	_= retVal
+	_ = retVal
 }
 
 func (this *CalloutFormat) Accent() int32 {
@@ -84,7 +84,7 @@ func (this *CalloutFormat) Accent() int32 {
 	return retVal.LValVal()
 }
 
-func (this *CalloutFormat) SetAccent(rhs int32)  {
+func (this *CalloutFormat) SetAccent(rhs int32) {
 	_ = this.PropPut(0x00000064, []interface{}{rhs})
 }
 
@@ -93,7 +93,7 @@ func (this *CalloutFormat) Angle() int32 {
 	return retVal.LValVal()
 }
 
-func (this *CalloutFormat) SetAngle(rhs int32)  {
+func (this *CalloutFormat) SetAngle(rhs int32) {
 	_ = this.PropPut(0x00000065, []interface{}{rhs})
 }
 
@@ -102,7 +102,7 @@ func (this *CalloutFormat) AutoAttach() int32 {
 	return retVal.LValVal()
 }
 
-func (this *CalloutFormat) SetAutoAttach(rhs int32)  {
+func (this *CalloutFormat) SetAutoAttach(rhs int32) {
 	_ = this.PropPut(0x00000066, []interface{}{rhs})
 }
 
@@ -116,7 +116,7 @@ func (this *CalloutFormat) Border() int32 {
 	return retVal.LValVal()
 }
 
-func (this *CalloutFormat) SetBorder(rhs int32)  {
+func (this *CalloutFormat) SetBorder(rhs int32) {
 	_ = this.PropPut(0x00000068, []interface{}{rhs})
 }
 
@@ -135,7 +135,7 @@ func (this *CalloutFormat) Gap() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *CalloutFormat) SetGap(rhs float32)  {
+func (this *CalloutFormat) SetGap(rhs float32) {
 	_ = this.PropPut(0x0000006b, []interface{}{rhs})
 }
 
@@ -149,7 +149,6 @@ func (this *CalloutFormat) Type() int32 {
 	return retVal.LValVal()
 }
 
-func (this *CalloutFormat) SetType(rhs int32)  {
+func (this *CalloutFormat) SetType(rhs int32) {
 	_ = this.PropPut(0x0000006d, []interface{}{rhs})
 }
-

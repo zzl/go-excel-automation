@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208A5-0001-0000-C000-000000000046
-var IID_ITextBoxes = syscall.GUID{0x000208A5, 0x0001, 0x0000, 
+var IID_ITextBoxes = syscall.GUID{0x000208A5, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ITextBoxes struct {
@@ -17,8 +17,8 @@ type ITextBoxes struct {
 }
 
 func NewITextBoxes(pUnk *win32.IUnknown, addRef bool, scoped bool) *ITextBoxes {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ITextBoxes)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *ITextBoxes) IID() *syscall.GUID {
 func (this *ITextBoxes) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,11 +50,11 @@ func (this *ITextBoxes) GetCreator(rhs *int32) com.Error {
 func (this *ITextBoxes) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *ITextBoxes) Dummy3_()  {
+func (this *ITextBoxes) Dummy3_() {
 	addr := (*this.LpVtbl)[10]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -92,7 +92,7 @@ func (this *ITextBoxes) Delete(rhs *ole.Variant) com.Error {
 func (this *ITextBoxes) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -120,7 +120,7 @@ func (this *ITextBoxes) SetHeight(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ITextBoxes) Dummy12_()  {
+func (this *ITextBoxes) Dummy12_() {
 	addr := (*this.LpVtbl)[21]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -149,7 +149,7 @@ func (this *ITextBoxes) SetLocked(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ITextBoxes) Dummy15_()  {
+func (this *ITextBoxes) Dummy15_() {
 	addr := (*this.LpVtbl)[26]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -214,7 +214,7 @@ func (this *ITextBoxes) SetTop(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ITextBoxes) Dummy22_()  {
+func (this *ITextBoxes) Dummy22_() {
 	addr := (*this.LpVtbl)[37]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -252,7 +252,7 @@ func (this *ITextBoxes) GetZOrder(rhs *int32) com.Error {
 func (this *ITextBoxes) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -307,7 +307,7 @@ func (this *ITextBoxes) SetCaption(rhs string) com.Error {
 func (this *ITextBoxes) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[52]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -320,7 +320,7 @@ func (this *ITextBoxes) CheckSpelling(customDictionary interface{}, ignoreUpperc
 func (this *ITextBoxes) GetFont(rhs **Font) com.Error {
 	addr := (*this.LpVtbl)[54]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -411,14 +411,14 @@ func (this *ITextBoxes) SetReadingOrder(rhs int32) com.Error {
 func (this *ITextBoxes) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[69]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ITextBoxes) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[70]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -449,7 +449,7 @@ func (this *ITextBoxes) SetShadow(rhs bool) com.Error {
 func (this *ITextBoxes) Add(left float64, top float64, width float64, height float64, rhs **TextBox) com.Error {
 	addr := (*this.LpVtbl)[75]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(left), uintptr(top), uintptr(width), uintptr(height), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -462,21 +462,20 @@ func (this *ITextBoxes) GetCount(rhs *int32) com.Error {
 func (this *ITextBoxes) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[77]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ITextBoxes) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[78]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ITextBoxes) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[79]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
-

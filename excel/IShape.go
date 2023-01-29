@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024439-0001-0000-C000-000000000046
-var IID_IShape = syscall.GUID{0x00024439, 0x0001, 0x0000, 
+var IID_IShape = syscall.GUID{0x00024439, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IShape struct {
@@ -17,8 +17,8 @@ type IShape struct {
 }
 
 func NewIShape(pUnk *win32.IUnknown, addRef bool, scoped bool) *IShape {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IShape)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IShape) IID() *syscall.GUID {
 func (this *IShape) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,7 +50,7 @@ func (this *IShape) GetCreator(rhs *int32) com.Error {
 func (this *IShape) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -69,7 +69,7 @@ func (this *IShape) Delete() com.Error {
 func (this *IShape) Duplicate(rhs **Shape) com.Error {
 	addr := (*this.LpVtbl)[12]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -136,7 +136,7 @@ func (this *IShape) SetShapesDefaultProperties() com.Error {
 func (this *IShape) Ungroup(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[23]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -149,14 +149,14 @@ func (this *IShape) ZOrder(zorderCmd int32) com.Error {
 func (this *IShape) GetAdjustments(rhs **Adjustments) com.Error {
 	addr := (*this.LpVtbl)[25]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetTextFrame(rhs **TextFrame) com.Error {
 	addr := (*this.LpVtbl)[26]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -175,7 +175,7 @@ func (this *IShape) SetAutoShapeType(rhs int32) com.Error {
 func (this *IShape) GetCallout(rhs **CalloutFormat) com.Error {
 	addr := (*this.LpVtbl)[29]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -194,21 +194,21 @@ func (this *IShape) GetConnector(rhs *int32) com.Error {
 func (this *IShape) GetConnectorFormat(rhs **ConnectorFormat) com.Error {
 	addr := (*this.LpVtbl)[32]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetFill(rhs **FillFormat) com.Error {
 	addr := (*this.LpVtbl)[33]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetGroupItems(rhs **GroupShapes) com.Error {
 	addr := (*this.LpVtbl)[34]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -245,7 +245,7 @@ func (this *IShape) SetLeft(rhs float32) com.Error {
 func (this *IShape) GetLine(rhs **LineFormat) com.Error {
 	addr := (*this.LpVtbl)[40]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -276,7 +276,7 @@ func (this *IShape) SetName(rhs string) com.Error {
 func (this *IShape) GetNodes(rhs **ShapeNodes) com.Error {
 	addr := (*this.LpVtbl)[45]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -295,28 +295,28 @@ func (this *IShape) SetRotation(rhs float32) com.Error {
 func (this *IShape) GetPictureFormat(rhs **PictureFormat) com.Error {
 	addr := (*this.LpVtbl)[48]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetShadow(rhs **ShadowFormat) com.Error {
 	addr := (*this.LpVtbl)[49]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetTextEffect(rhs **TextEffectFormat) com.Error {
 	addr := (*this.LpVtbl)[50]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetThreeD(rhs **ThreeDFormat) com.Error {
 	addr := (*this.LpVtbl)[51]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -383,7 +383,7 @@ func (this *IShape) GetZOrderPosition(rhs *int32) com.Error {
 func (this *IShape) GetHyperlink(rhs **Hyperlink) com.Error {
 	addr := (*this.LpVtbl)[62]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -402,7 +402,7 @@ func (this *IShape) SetBlackWhiteMode(rhs int32) com.Error {
 func (this *IShape) GetDrawingObject(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[65]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -433,14 +433,14 @@ func (this *IShape) SetLocked(rhs bool) com.Error {
 func (this *IShape) GetTopLeftCell(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[70]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetBottomRightCell(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[71]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -477,21 +477,21 @@ func (this *IShape) CopyPicture(appearance interface{}, format interface{}) com.
 func (this *IShape) GetControlFormat(rhs **ControlFormat) com.Error {
 	addr := (*this.LpVtbl)[77]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetLinkFormat(rhs **LinkFormat) com.Error {
 	addr := (*this.LpVtbl)[78]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetOLEFormat(rhs **OLEFormat) com.Error {
 	addr := (*this.LpVtbl)[79]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -516,14 +516,14 @@ func (this *IShape) SetAlternativeText(rhs string) com.Error {
 func (this *IShape) GetScript(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[83]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetDiagramNode(rhs **DiagramNode) com.Error {
 	addr := (*this.LpVtbl)[84]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -536,7 +536,7 @@ func (this *IShape) GetHasDiagramNode(rhs *int32) com.Error {
 func (this *IShape) GetDiagram(rhs **Diagram) com.Error {
 	addr := (*this.LpVtbl)[86]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -555,14 +555,14 @@ func (this *IShape) GetChild(rhs *int32) com.Error {
 func (this *IShape) GetParentGroup(rhs **Shape) com.Error {
 	addr := (*this.LpVtbl)[89]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetCanvasItems(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[90]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -599,7 +599,7 @@ func (this *IShape) CanvasCropBottom(increment float32) com.Error {
 func (this *IShape) GetChart(rhs **Chart) com.Error {
 	addr := (*this.LpVtbl)[96]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -612,7 +612,7 @@ func (this *IShape) GetHasChart(rhs *int32) com.Error {
 func (this *IShape) GetTextFrame2(rhs **TextFrame2) com.Error {
 	addr := (*this.LpVtbl)[98]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -643,21 +643,21 @@ func (this *IShape) SetBackgroundStyle(rhs int32) com.Error {
 func (this *IShape) GetSoftEdge(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[103]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetGlow(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[104]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IShape) GetReflection(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[105]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -670,7 +670,7 @@ func (this *IShape) GetHasSmartArt(rhs *int32) com.Error {
 func (this *IShape) GetSmartArt(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[107]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -685,4 +685,3 @@ func (this *IShape) SetTitle(rhs string) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(rhs)))
 	return com.Error(ret)
 }
-

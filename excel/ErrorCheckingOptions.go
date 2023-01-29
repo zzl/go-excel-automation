@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002445B-0000-0000-C000-000000000046
-var IID_ErrorCheckingOptions = syscall.GUID{0x0002445B, 0x0000, 0x0000, 
+var IID_ErrorCheckingOptions = syscall.GUID{0x0002445B, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ErrorCheckingOptions struct {
@@ -17,8 +17,8 @@ type ErrorCheckingOptions struct {
 }
 
 func NewErrorCheckingOptions(pDisp *win32.IDispatch, addRef bool, scoped bool) *ErrorCheckingOptions {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &ErrorCheckingOptions{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *ErrorCheckingOptions) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *ErrorCheckingOptions) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *ErrorCheckingOptions) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ErrorCheckingOptions) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *ErrorCheckingOptions) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *ErrorCheckingOptions) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *ErrorCheckingOptions) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ErrorCheckingOptions) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *ErrorCheckingOptions) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ErrorCheckingOptions) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *ErrorCheckingOptions) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ErrorCheckingOptions) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *ErrorCheckingOptions) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ErrorCheckingOptions) Application() *Application {
@@ -100,7 +100,7 @@ func (this *ErrorCheckingOptions) BackgroundChecking() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ErrorCheckingOptions) SetBackgroundChecking(rhs bool)  {
+func (this *ErrorCheckingOptions) SetBackgroundChecking(rhs bool) {
 	_ = this.PropPut(0x00000899, []interface{}{rhs})
 }
 
@@ -109,7 +109,7 @@ func (this *ErrorCheckingOptions) IndicatorColorIndex() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ErrorCheckingOptions) SetIndicatorColorIndex(rhs int32)  {
+func (this *ErrorCheckingOptions) SetIndicatorColorIndex(rhs int32) {
 	_ = this.PropPut(0x0000089a, []interface{}{rhs})
 }
 
@@ -118,7 +118,7 @@ func (this *ErrorCheckingOptions) EvaluateToError() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ErrorCheckingOptions) SetEvaluateToError(rhs bool)  {
+func (this *ErrorCheckingOptions) SetEvaluateToError(rhs bool) {
 	_ = this.PropPut(0x0000089b, []interface{}{rhs})
 }
 
@@ -127,7 +127,7 @@ func (this *ErrorCheckingOptions) TextDate() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ErrorCheckingOptions) SetTextDate(rhs bool)  {
+func (this *ErrorCheckingOptions) SetTextDate(rhs bool) {
 	_ = this.PropPut(0x0000089c, []interface{}{rhs})
 }
 
@@ -136,7 +136,7 @@ func (this *ErrorCheckingOptions) NumberAsText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ErrorCheckingOptions) SetNumberAsText(rhs bool)  {
+func (this *ErrorCheckingOptions) SetNumberAsText(rhs bool) {
 	_ = this.PropPut(0x0000089d, []interface{}{rhs})
 }
 
@@ -145,7 +145,7 @@ func (this *ErrorCheckingOptions) InconsistentFormula() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ErrorCheckingOptions) SetInconsistentFormula(rhs bool)  {
+func (this *ErrorCheckingOptions) SetInconsistentFormula(rhs bool) {
 	_ = this.PropPut(0x0000089e, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *ErrorCheckingOptions) OmittedCells() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ErrorCheckingOptions) SetOmittedCells(rhs bool)  {
+func (this *ErrorCheckingOptions) SetOmittedCells(rhs bool) {
 	_ = this.PropPut(0x0000089f, []interface{}{rhs})
 }
 
@@ -163,7 +163,7 @@ func (this *ErrorCheckingOptions) UnlockedFormulaCells() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ErrorCheckingOptions) SetUnlockedFormulaCells(rhs bool)  {
+func (this *ErrorCheckingOptions) SetUnlockedFormulaCells(rhs bool) {
 	_ = this.PropPut(0x000008a0, []interface{}{rhs})
 }
 
@@ -172,7 +172,7 @@ func (this *ErrorCheckingOptions) EmptyCellReferences() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ErrorCheckingOptions) SetEmptyCellReferences(rhs bool)  {
+func (this *ErrorCheckingOptions) SetEmptyCellReferences(rhs bool) {
 	_ = this.PropPut(0x000008a1, []interface{}{rhs})
 }
 
@@ -181,7 +181,7 @@ func (this *ErrorCheckingOptions) ListDataValidation() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ErrorCheckingOptions) SetListDataValidation(rhs bool)  {
+func (this *ErrorCheckingOptions) SetListDataValidation(rhs bool) {
 	_ = this.PropPut(0x000008f8, []interface{}{rhs})
 }
 
@@ -190,7 +190,6 @@ func (this *ErrorCheckingOptions) InconsistentTableFormula() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ErrorCheckingOptions) SetInconsistentTableFormula(rhs bool)  {
+func (this *ErrorCheckingOptions) SetInconsistentTableFormula(rhs bool) {
 	_ = this.PropPut(0x00000a73, []interface{}{rhs})
 }
-

@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002085C-0000-0000-C000-000000000046
-var IID_Toolbar = syscall.GUID{0x0002085C, 0x0000, 0x0000, 
+var IID_Toolbar = syscall.GUID{0x0002085C, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Toolbar struct {
@@ -17,8 +17,8 @@ type Toolbar struct {
 }
 
 func NewToolbar(pDisp *win32.IDispatch, addRef bool, scoped bool) *Toolbar {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Toolbar{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Toolbar) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Toolbar) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Toolbar) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Toolbar) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Toolbar) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Toolbar) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Toolbar) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Toolbar) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Toolbar) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Toolbar) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Toolbar) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Toolbar) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Toolbar) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Toolbar) Application() *Application {
@@ -100,9 +100,9 @@ func (this *Toolbar) BuiltIn() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Toolbar) Delete()  {
+func (this *Toolbar) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Toolbar) Height() int32 {
@@ -110,7 +110,7 @@ func (this *Toolbar) Height() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Toolbar) SetHeight(rhs int32)  {
+func (this *Toolbar) SetHeight(rhs int32) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -119,7 +119,7 @@ func (this *Toolbar) Left() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Toolbar) SetLeft(rhs int32)  {
+func (this *Toolbar) SetLeft(rhs int32) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -133,7 +133,7 @@ func (this *Toolbar) Position() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Toolbar) SetPosition(rhs int32)  {
+func (this *Toolbar) SetPosition(rhs int32) {
 	_ = this.PropPut(0x00000085, []interface{}{rhs})
 }
 
@@ -142,13 +142,13 @@ func (this *Toolbar) Protection() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Toolbar) SetProtection(rhs int32)  {
+func (this *Toolbar) SetProtection(rhs int32) {
 	_ = this.PropPut(0x000000b0, []interface{}{rhs})
 }
 
-func (this *Toolbar) Reset()  {
+func (this *Toolbar) Reset() {
 	retVal, _ := this.Call(0x0000022b, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Toolbar) ToolbarButtons() *ToolbarButtons {
@@ -161,7 +161,7 @@ func (this *Toolbar) Top() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Toolbar) SetTop(rhs int32)  {
+func (this *Toolbar) SetTop(rhs int32) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -170,7 +170,7 @@ func (this *Toolbar) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Toolbar) SetVisible(rhs bool)  {
+func (this *Toolbar) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -179,7 +179,6 @@ func (this *Toolbar) Width() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Toolbar) SetWidth(rhs int32)  {
+func (this *Toolbar) SetWidth(rhs int32) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
-

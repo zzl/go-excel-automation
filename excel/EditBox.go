@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020883-0000-0000-C000-000000000046
-var IID_EditBox = syscall.GUID{0x00020883, 0x0000, 0x0000, 
+var IID_EditBox = syscall.GUID{0x00020883, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type EditBox struct {
@@ -17,8 +17,8 @@ type EditBox struct {
 }
 
 func NewEditBox(pDisp *win32.IDispatch, addRef bool, scoped bool) *EditBox {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &EditBox{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *EditBox) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *EditBox) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *EditBox) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *EditBox) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *EditBox) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *EditBox) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *EditBox) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *EditBox) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *EditBox) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *EditBox) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *EditBox) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *EditBox) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *EditBox) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *EditBox) Application() *Application {
@@ -112,8 +112,8 @@ func (this *EditBox) Copy() ole.Variant {
 	return *retVal
 }
 
-var EditBox_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var EditBox_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *EditBox) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *EditBox) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *EditBox) SetEnabled(rhs bool)  {
+func (this *EditBox) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *EditBox) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *EditBox) SetHeight(rhs float64)  {
+func (this *EditBox) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -168,7 +168,7 @@ func (this *EditBox) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *EditBox) SetLeft(rhs float64)  {
+func (this *EditBox) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,7 +177,7 @@ func (this *EditBox) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *EditBox) SetLocked(rhs bool)  {
+func (this *EditBox) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
@@ -186,7 +186,7 @@ func (this *EditBox) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *EditBox) SetName(rhs string)  {
+func (this *EditBox) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -195,7 +195,7 @@ func (this *EditBox) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *EditBox) SetOnAction(rhs string)  {
+func (this *EditBox) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -205,7 +205,7 @@ func (this *EditBox) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *EditBox) SetPlacement(rhs interface{})  {
+func (this *EditBox) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -214,12 +214,12 @@ func (this *EditBox) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *EditBox) SetPrintObject(rhs bool)  {
+func (this *EditBox) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var EditBox_Select_OptArgs= []string{
-	"Replace", 
+var EditBox_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *EditBox) Select(optArgs ...interface{}) ole.Variant {
@@ -240,7 +240,7 @@ func (this *EditBox) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *EditBox) SetTop(rhs float64)  {
+func (this *EditBox) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -254,7 +254,7 @@ func (this *EditBox) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *EditBox) SetVisible(rhs bool)  {
+func (this *EditBox) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -263,7 +263,7 @@ func (this *EditBox) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *EditBox) SetWidth(rhs float64)  {
+func (this *EditBox) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -282,12 +282,12 @@ func (this *EditBox) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *EditBox) SetCaption(rhs string)  {
+func (this *EditBox) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var EditBox_Characters_OptArgs= []string{
-	"Start", "Length", 
+var EditBox_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *EditBox) Characters(optArgs ...interface{}) *Characters {
@@ -296,8 +296,8 @@ func (this *EditBox) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var EditBox_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var EditBox_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *EditBox) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -312,7 +312,7 @@ func (this *EditBox) LockedText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *EditBox) SetLockedText(rhs bool)  {
+func (this *EditBox) SetLockedText(rhs bool) {
 	_ = this.PropPut(0x00000268, []interface{}{rhs})
 }
 
@@ -321,7 +321,7 @@ func (this *EditBox) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *EditBox) SetText(rhs string)  {
+func (this *EditBox) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -330,7 +330,7 @@ func (this *EditBox) DisplayVerticalScrollBar() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *EditBox) SetDisplayVerticalScrollBar(rhs bool)  {
+func (this *EditBox) SetDisplayVerticalScrollBar(rhs bool) {
 	_ = this.PropPut(0x0000039a, []interface{}{rhs})
 }
 
@@ -339,7 +339,7 @@ func (this *EditBox) InputType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *EditBox) SetInputType(rhs int32)  {
+func (this *EditBox) SetInputType(rhs int32) {
 	_ = this.PropPut(0x00000356, []interface{}{rhs})
 }
 
@@ -353,7 +353,7 @@ func (this *EditBox) MultiLine() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *EditBox) SetMultiLine(rhs bool)  {
+func (this *EditBox) SetMultiLine(rhs bool) {
 	_ = this.PropPut(0x00000357, []interface{}{rhs})
 }
 
@@ -362,7 +362,6 @@ func (this *EditBox) PasswordEdit() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *EditBox) SetPasswordEdit(rhs bool)  {
+func (this *EditBox) SetPasswordEdit(rhs bool) {
 	_ = this.PropPut(0x0000048a, []interface{}{rhs})
 }
-

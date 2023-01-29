@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208A6-0000-0000-C000-000000000046
-var IID_Picture = syscall.GUID{0x000208A6, 0x0000, 0x0000, 
+var IID_Picture = syscall.GUID{0x000208A6, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Picture struct {
@@ -17,8 +17,8 @@ type Picture struct {
 }
 
 func NewPicture(pDisp *win32.IDispatch, addRef bool, scoped bool) *Picture {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Picture{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Picture) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Picture) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Picture) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Picture) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Picture) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Picture) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Picture) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Picture) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Picture) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Picture) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Picture) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Picture) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Picture) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Picture) Application() *Application {
@@ -112,8 +112,8 @@ func (this *Picture) Copy() ole.Variant {
 	return *retVal
 }
 
-var Picture_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var Picture_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *Picture) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *Picture) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Picture) SetEnabled(rhs bool)  {
+func (this *Picture) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *Picture) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Picture) SetHeight(rhs float64)  {
+func (this *Picture) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -168,7 +168,7 @@ func (this *Picture) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Picture) SetLeft(rhs float64)  {
+func (this *Picture) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,7 +177,7 @@ func (this *Picture) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Picture) SetLocked(rhs bool)  {
+func (this *Picture) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
@@ -186,7 +186,7 @@ func (this *Picture) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Picture) SetName(rhs string)  {
+func (this *Picture) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -195,7 +195,7 @@ func (this *Picture) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Picture) SetOnAction(rhs string)  {
+func (this *Picture) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -205,7 +205,7 @@ func (this *Picture) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *Picture) SetPlacement(rhs interface{})  {
+func (this *Picture) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -214,12 +214,12 @@ func (this *Picture) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Picture) SetPrintObject(rhs bool)  {
+func (this *Picture) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var Picture_Select_OptArgs= []string{
-	"Replace", 
+var Picture_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *Picture) Select(optArgs ...interface{}) ole.Variant {
@@ -240,7 +240,7 @@ func (this *Picture) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Picture) SetTop(rhs float64)  {
+func (this *Picture) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -254,7 +254,7 @@ func (this *Picture) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Picture) SetVisible(rhs bool)  {
+func (this *Picture) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -263,7 +263,7 @@ func (this *Picture) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Picture) SetWidth(rhs float64)  {
+func (this *Picture) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -292,7 +292,7 @@ func (this *Picture) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Picture) SetShadow(rhs bool)  {
+func (this *Picture) SetShadow(rhs bool) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
@@ -301,7 +301,6 @@ func (this *Picture) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Picture) SetFormula(rhs string)  {
+func (this *Picture) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
-

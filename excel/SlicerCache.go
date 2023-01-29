@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000244C4-0000-0000-C000-000000000046
-var IID_SlicerCache = syscall.GUID{0x000244C4, 0x0000, 0x0000, 
+var IID_SlicerCache = syscall.GUID{0x000244C4, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type SlicerCache struct {
@@ -17,8 +17,8 @@ type SlicerCache struct {
 }
 
 func NewSlicerCache(pDisp *win32.IDispatch, addRef bool, scoped bool) *SlicerCache {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &SlicerCache{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *SlicerCache) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *SlicerCache) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *SlicerCache) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *SlicerCache) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *SlicerCache) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *SlicerCache) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *SlicerCache) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *SlicerCache) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *SlicerCache) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *SlicerCache) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *SlicerCache) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *SlicerCache) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *SlicerCache) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *SlicerCache) Application() *Application {
@@ -135,7 +135,7 @@ func (this *SlicerCache) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *SlicerCache) SetName(rhs string)  {
+func (this *SlicerCache) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -150,7 +150,7 @@ func (this *SlicerCache) VisibleSlicerItemsList() ole.Variant {
 	return *retVal
 }
 
-func (this *SlicerCache) SetVisibleSlicerItemsList(rhs interface{})  {
+func (this *SlicerCache) SetVisibleSlicerItemsList(rhs interface{}) {
 	_ = this.PropPut(0x00000ba0, []interface{}{rhs})
 }
 
@@ -164,7 +164,7 @@ func (this *SlicerCache) CrossFilterType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *SlicerCache) SetCrossFilterType(rhs int32)  {
+func (this *SlicerCache) SetCrossFilterType(rhs int32) {
 	_ = this.PropPut(0x00000ba2, []interface{}{rhs})
 }
 
@@ -173,7 +173,7 @@ func (this *SlicerCache) SortItems() int32 {
 	return retVal.LValVal()
 }
 
-func (this *SlicerCache) SetSortItems(rhs int32)  {
+func (this *SlicerCache) SetSortItems(rhs int32) {
 	_ = this.PropPut(0x00000ba3, []interface{}{rhs})
 }
 
@@ -187,7 +187,7 @@ func (this *SlicerCache) SortUsingCustomLists() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *SlicerCache) SetSortUsingCustomLists(rhs bool)  {
+func (this *SlicerCache) SetSortUsingCustomLists(rhs bool) {
 	_ = this.PropPut(0x00000a0e, []interface{}{rhs})
 }
 
@@ -196,17 +196,16 @@ func (this *SlicerCache) ShowAllItems() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *SlicerCache) SetShowAllItems(rhs bool)  {
+func (this *SlicerCache) SetShowAllItems(rhs bool) {
 	_ = this.PropPut(0x000001c4, []interface{}{rhs})
 }
 
-func (this *SlicerCache) ClearManualFilter()  {
+func (this *SlicerCache) ClearManualFilter() {
 	retVal, _ := this.Call(0x00000a22, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *SlicerCache) Delete()  {
+func (this *SlicerCache) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
-

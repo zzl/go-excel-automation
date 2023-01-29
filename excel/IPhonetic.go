@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024438-0001-0000-C000-000000000046
-var IID_IPhonetic = syscall.GUID{0x00024438, 0x0001, 0x0000, 
+var IID_IPhonetic = syscall.GUID{0x00024438, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IPhonetic struct {
@@ -16,8 +16,8 @@ type IPhonetic struct {
 }
 
 func NewIPhonetic(pUnk *win32.IUnknown, addRef bool, scoped bool) *IPhonetic {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IPhonetic)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -36,7 +36,7 @@ func (this *IPhonetic) IID() *syscall.GUID {
 func (this *IPhonetic) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -49,7 +49,7 @@ func (this *IPhonetic) GetCreator(rhs *int32) com.Error {
 func (this *IPhonetic) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -92,7 +92,7 @@ func (this *IPhonetic) SetAlignment(rhs int32) com.Error {
 func (this *IPhonetic) GetFont(rhs **Font) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -107,4 +107,3 @@ func (this *IPhonetic) SetText(rhs string) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(rhs)))
 	return com.Error(ret)
 }
-

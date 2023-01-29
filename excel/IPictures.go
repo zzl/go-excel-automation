@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208A7-0001-0000-C000-000000000046
-var IID_IPictures = syscall.GUID{0x000208A7, 0x0001, 0x0000, 
+var IID_IPictures = syscall.GUID{0x000208A7, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IPictures struct {
@@ -17,8 +17,8 @@ type IPictures struct {
 }
 
 func NewIPictures(pUnk *win32.IUnknown, addRef bool, scoped bool) *IPictures {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IPictures)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IPictures) IID() *syscall.GUID {
 func (this *IPictures) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,11 +50,11 @@ func (this *IPictures) GetCreator(rhs *int32) com.Error {
 func (this *IPictures) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IPictures) Dummy3_()  {
+func (this *IPictures) Dummy3_() {
 	addr := (*this.LpVtbl)[10]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -92,7 +92,7 @@ func (this *IPictures) Delete(rhs *ole.Variant) com.Error {
 func (this *IPictures) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -120,7 +120,7 @@ func (this *IPictures) SetHeight(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPictures) Dummy12_()  {
+func (this *IPictures) Dummy12_() {
 	addr := (*this.LpVtbl)[21]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -149,7 +149,7 @@ func (this *IPictures) SetLocked(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPictures) Dummy15_()  {
+func (this *IPictures) Dummy15_() {
 	addr := (*this.LpVtbl)[26]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -214,7 +214,7 @@ func (this *IPictures) SetTop(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IPictures) Dummy22_()  {
+func (this *IPictures) Dummy22_() {
 	addr := (*this.LpVtbl)[37]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -252,21 +252,21 @@ func (this *IPictures) GetZOrder(rhs *int32) com.Error {
 func (this *IPictures) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPictures) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[44]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPictures) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[45]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -297,7 +297,7 @@ func (this *IPictures) SetFormula(rhs string) com.Error {
 func (this *IPictures) Add(left float64, top float64, width float64, height float64, rhs **Picture) com.Error {
 	addr := (*this.LpVtbl)[50]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(left), uintptr(top), uintptr(width), uintptr(height), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -310,35 +310,34 @@ func (this *IPictures) GetCount(rhs *int32) com.Error {
 func (this *IPictures) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[52]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPictures) Insert(filename string, converter interface{}, rhs **Picture) com.Error {
 	addr := (*this.LpVtbl)[53]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(filename)), (uintptr)(unsafe.Pointer(&converter)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPictures) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[54]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPictures) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[55]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IPictures) Paste(link interface{}, rhs **Picture) com.Error {
 	addr := (*this.LpVtbl)[56]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&link)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
-

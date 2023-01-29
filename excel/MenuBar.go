@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020864-0000-0000-C000-000000000046
-var IID_MenuBar = syscall.GUID{0x00020864, 0x0000, 0x0000, 
+var IID_MenuBar = syscall.GUID{0x00020864, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type MenuBar struct {
@@ -17,8 +17,8 @@ type MenuBar struct {
 }
 
 func NewMenuBar(pDisp *win32.IDispatch, addRef bool, scoped bool) *MenuBar {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &MenuBar{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *MenuBar) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *MenuBar) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *MenuBar) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *MenuBar) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *MenuBar) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *MenuBar) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *MenuBar) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *MenuBar) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *MenuBar) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *MenuBar) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *MenuBar) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *MenuBar) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *MenuBar) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *MenuBar) Application() *Application {
@@ -95,9 +95,9 @@ func (this *MenuBar) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *MenuBar) Activate()  {
+func (this *MenuBar) Activate() {
 	retVal, _ := this.Call(0x00000130, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *MenuBar) BuiltIn() bool {
@@ -110,13 +110,13 @@ func (this *MenuBar) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *MenuBar) SetCaption(rhs string)  {
+func (this *MenuBar) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-func (this *MenuBar) Delete()  {
+func (this *MenuBar) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *MenuBar) Index() int32 {
@@ -129,8 +129,7 @@ func (this *MenuBar) Menus() *Menus {
 	return NewMenus(retVal.IDispatch(), false, true)
 }
 
-func (this *MenuBar) Reset()  {
+func (this *MenuBar) Reset() {
 	retVal, _ := this.Call(0x0000022b, nil)
-	_= retVal
+	_ = retVal
 }
-

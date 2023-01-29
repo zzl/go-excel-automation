@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020889-0000-0000-C000-000000000046
-var IID_GroupBox = syscall.GUID{0x00020889, 0x0000, 0x0000, 
+var IID_GroupBox = syscall.GUID{0x00020889, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type GroupBox struct {
@@ -17,8 +17,8 @@ type GroupBox struct {
 }
 
 func NewGroupBox(pDisp *win32.IDispatch, addRef bool, scoped bool) *GroupBox {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &GroupBox{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *GroupBox) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *GroupBox) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *GroupBox) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupBox) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *GroupBox) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *GroupBox) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *GroupBox) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupBox) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *GroupBox) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupBox) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *GroupBox) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupBox) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *GroupBox) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupBox) Application() *Application {
@@ -112,8 +112,8 @@ func (this *GroupBox) Copy() ole.Variant {
 	return *retVal
 }
 
-var GroupBox_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var GroupBox_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *GroupBox) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *GroupBox) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupBox) SetEnabled(rhs bool)  {
+func (this *GroupBox) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *GroupBox) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *GroupBox) SetHeight(rhs float64)  {
+func (this *GroupBox) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -168,7 +168,7 @@ func (this *GroupBox) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *GroupBox) SetLeft(rhs float64)  {
+func (this *GroupBox) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,7 +177,7 @@ func (this *GroupBox) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupBox) SetLocked(rhs bool)  {
+func (this *GroupBox) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
@@ -186,7 +186,7 @@ func (this *GroupBox) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *GroupBox) SetName(rhs string)  {
+func (this *GroupBox) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -195,7 +195,7 @@ func (this *GroupBox) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *GroupBox) SetOnAction(rhs string)  {
+func (this *GroupBox) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -205,7 +205,7 @@ func (this *GroupBox) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *GroupBox) SetPlacement(rhs interface{})  {
+func (this *GroupBox) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -214,12 +214,12 @@ func (this *GroupBox) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupBox) SetPrintObject(rhs bool)  {
+func (this *GroupBox) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var GroupBox_Select_OptArgs= []string{
-	"Replace", 
+var GroupBox_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *GroupBox) Select(optArgs ...interface{}) ole.Variant {
@@ -240,7 +240,7 @@ func (this *GroupBox) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *GroupBox) SetTop(rhs float64)  {
+func (this *GroupBox) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -254,7 +254,7 @@ func (this *GroupBox) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupBox) SetVisible(rhs bool)  {
+func (this *GroupBox) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -263,7 +263,7 @@ func (this *GroupBox) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *GroupBox) SetWidth(rhs float64)  {
+func (this *GroupBox) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -282,12 +282,12 @@ func (this *GroupBox) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *GroupBox) SetCaption(rhs string)  {
+func (this *GroupBox) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var GroupBox_Characters_OptArgs= []string{
-	"Start", "Length", 
+var GroupBox_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *GroupBox) Characters(optArgs ...interface{}) *Characters {
@@ -296,8 +296,8 @@ func (this *GroupBox) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var GroupBox_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var GroupBox_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *GroupBox) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -312,7 +312,7 @@ func (this *GroupBox) LockedText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupBox) SetLockedText(rhs bool)  {
+func (this *GroupBox) SetLockedText(rhs bool) {
 	_ = this.PropPut(0x00000268, []interface{}{rhs})
 }
 
@@ -321,7 +321,7 @@ func (this *GroupBox) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *GroupBox) SetText(rhs string)  {
+func (this *GroupBox) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -331,7 +331,7 @@ func (this *GroupBox) Accelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *GroupBox) SetAccelerator(rhs interface{})  {
+func (this *GroupBox) SetAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x0000034e, []interface{}{rhs})
 }
 
@@ -340,7 +340,7 @@ func (this *GroupBox) Display3DShading() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupBox) SetDisplay3DShading(rhs bool)  {
+func (this *GroupBox) SetDisplay3DShading(rhs bool) {
 	_ = this.PropPut(0x00000462, []interface{}{rhs})
 }
 
@@ -350,7 +350,6 @@ func (this *GroupBox) PhoneticAccelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *GroupBox) SetPhoneticAccelerator(rhs interface{})  {
+func (this *GroupBox) SetPhoneticAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x00000461, []interface{}{rhs})
 }
-

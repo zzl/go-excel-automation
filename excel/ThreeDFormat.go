@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
 )
 
 // 000C0321-0000-0000-C000-000000000046
-var IID_ThreeDFormat = syscall.GUID{0x000C0321, 0x0000, 0x0000, 
+var IID_ThreeDFormat = syscall.GUID{0x000C0321, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ThreeDFormat struct {
@@ -16,8 +16,8 @@ type ThreeDFormat struct {
 }
 
 func NewThreeDFormat(pDisp *win32.IDispatch, addRef bool, scoped bool) *ThreeDFormat {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &ThreeDFormat{ole.OleClient{pDisp}}
 	if addRef {
@@ -59,29 +59,29 @@ func (this *ThreeDFormat) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *ThreeDFormat) IncrementRotationX(increment float32)  {
+func (this *ThreeDFormat) IncrementRotationX(increment float32) {
 	retVal, _ := this.Call(0x0000000a, []interface{}{increment})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ThreeDFormat) IncrementRotationY(increment float32)  {
+func (this *ThreeDFormat) IncrementRotationY(increment float32) {
 	retVal, _ := this.Call(0x0000000b, []interface{}{increment})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ThreeDFormat) ResetRotation()  {
+func (this *ThreeDFormat) ResetRotation() {
 	retVal, _ := this.Call(0x0000000c, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *ThreeDFormat) SetThreeDFormat(presetThreeDFormat int32)  {
+func (this *ThreeDFormat) SetThreeDFormat(presetThreeDFormat int32) {
 	retVal, _ := this.Call(0x0000000d, []interface{}{presetThreeDFormat})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ThreeDFormat) SetExtrusionDirection(presetExtrusionDirection int32)  {
+func (this *ThreeDFormat) SetExtrusionDirection(presetExtrusionDirection int32) {
 	retVal, _ := this.Call(0x0000000e, []interface{}{presetExtrusionDirection})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ThreeDFormat) Depth() float32 {
@@ -89,7 +89,7 @@ func (this *ThreeDFormat) Depth() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ThreeDFormat) SetDepth(rhs float32)  {
+func (this *ThreeDFormat) SetDepth(rhs float32) {
 	_ = this.PropPut(0x00000064, []interface{}{rhs})
 }
 
@@ -103,7 +103,7 @@ func (this *ThreeDFormat) ExtrusionColorType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ThreeDFormat) SetExtrusionColorType(rhs int32)  {
+func (this *ThreeDFormat) SetExtrusionColorType(rhs int32) {
 	_ = this.PropPut(0x00000066, []interface{}{rhs})
 }
 
@@ -112,7 +112,7 @@ func (this *ThreeDFormat) Perspective() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ThreeDFormat) SetPerspective(rhs int32)  {
+func (this *ThreeDFormat) SetPerspective(rhs int32) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
@@ -126,7 +126,7 @@ func (this *ThreeDFormat) PresetLightingDirection() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ThreeDFormat) SetPresetLightingDirection(rhs int32)  {
+func (this *ThreeDFormat) SetPresetLightingDirection(rhs int32) {
 	_ = this.PropPut(0x00000069, []interface{}{rhs})
 }
 
@@ -135,7 +135,7 @@ func (this *ThreeDFormat) PresetLightingSoftness() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ThreeDFormat) SetPresetLightingSoftness(rhs int32)  {
+func (this *ThreeDFormat) SetPresetLightingSoftness(rhs int32) {
 	_ = this.PropPut(0x0000006a, []interface{}{rhs})
 }
 
@@ -144,7 +144,7 @@ func (this *ThreeDFormat) PresetMaterial() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ThreeDFormat) SetPresetMaterial(rhs int32)  {
+func (this *ThreeDFormat) SetPresetMaterial(rhs int32) {
 	_ = this.PropPut(0x0000006b, []interface{}{rhs})
 }
 
@@ -158,7 +158,7 @@ func (this *ThreeDFormat) RotationX() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ThreeDFormat) SetRotationX(rhs float32)  {
+func (this *ThreeDFormat) SetRotationX(rhs float32) {
 	_ = this.PropPut(0x0000006d, []interface{}{rhs})
 }
 
@@ -167,7 +167,7 @@ func (this *ThreeDFormat) RotationY() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ThreeDFormat) SetRotationY(rhs float32)  {
+func (this *ThreeDFormat) SetRotationY(rhs float32) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -176,28 +176,28 @@ func (this *ThreeDFormat) Visible() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ThreeDFormat) SetVisible(rhs int32)  {
+func (this *ThreeDFormat) SetVisible(rhs int32) {
 	_ = this.PropPut(0x0000006f, []interface{}{rhs})
 }
 
-func (this *ThreeDFormat) SetPresetCamera(presetCamera int32)  {
+func (this *ThreeDFormat) SetPresetCamera(presetCamera int32) {
 	retVal, _ := this.Call(0x0000000f, []interface{}{presetCamera})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ThreeDFormat) IncrementRotationZ(increment float32)  {
+func (this *ThreeDFormat) IncrementRotationZ(increment float32) {
 	retVal, _ := this.Call(0x00000010, []interface{}{increment})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ThreeDFormat) IncrementRotationHorizontal(increment float32)  {
+func (this *ThreeDFormat) IncrementRotationHorizontal(increment float32) {
 	retVal, _ := this.Call(0x00000011, []interface{}{increment})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ThreeDFormat) IncrementRotationVertical(increment float32)  {
+func (this *ThreeDFormat) IncrementRotationVertical(increment float32) {
 	retVal, _ := this.Call(0x00000012, []interface{}{increment})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ThreeDFormat) PresetLighting() int32 {
@@ -205,7 +205,7 @@ func (this *ThreeDFormat) PresetLighting() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ThreeDFormat) SetPresetLighting(rhs int32)  {
+func (this *ThreeDFormat) SetPresetLighting(rhs int32) {
 	_ = this.PropPut(0x00000070, []interface{}{rhs})
 }
 
@@ -214,7 +214,7 @@ func (this *ThreeDFormat) Z() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ThreeDFormat) SetZ(rhs float32)  {
+func (this *ThreeDFormat) SetZ(rhs float32) {
 	_ = this.PropPut(0x00000071, []interface{}{rhs})
 }
 
@@ -223,7 +223,7 @@ func (this *ThreeDFormat) BevelTopType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ThreeDFormat) SetBevelTopType(rhs int32)  {
+func (this *ThreeDFormat) SetBevelTopType(rhs int32) {
 	_ = this.PropPut(0x00000072, []interface{}{rhs})
 }
 
@@ -232,7 +232,7 @@ func (this *ThreeDFormat) BevelTopInset() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ThreeDFormat) SetBevelTopInset(rhs float32)  {
+func (this *ThreeDFormat) SetBevelTopInset(rhs float32) {
 	_ = this.PropPut(0x00000073, []interface{}{rhs})
 }
 
@@ -241,7 +241,7 @@ func (this *ThreeDFormat) BevelTopDepth() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ThreeDFormat) SetBevelTopDepth(rhs float32)  {
+func (this *ThreeDFormat) SetBevelTopDepth(rhs float32) {
 	_ = this.PropPut(0x00000074, []interface{}{rhs})
 }
 
@@ -250,7 +250,7 @@ func (this *ThreeDFormat) BevelBottomType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ThreeDFormat) SetBevelBottomType(rhs int32)  {
+func (this *ThreeDFormat) SetBevelBottomType(rhs int32) {
 	_ = this.PropPut(0x00000075, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *ThreeDFormat) BevelBottomInset() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ThreeDFormat) SetBevelBottomInset(rhs float32)  {
+func (this *ThreeDFormat) SetBevelBottomInset(rhs float32) {
 	_ = this.PropPut(0x00000076, []interface{}{rhs})
 }
 
@@ -268,7 +268,7 @@ func (this *ThreeDFormat) BevelBottomDepth() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ThreeDFormat) SetBevelBottomDepth(rhs float32)  {
+func (this *ThreeDFormat) SetBevelBottomDepth(rhs float32) {
 	_ = this.PropPut(0x00000077, []interface{}{rhs})
 }
 
@@ -282,7 +282,7 @@ func (this *ThreeDFormat) RotationZ() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ThreeDFormat) SetRotationZ(rhs float32)  {
+func (this *ThreeDFormat) SetRotationZ(rhs float32) {
 	_ = this.PropPut(0x00000079, []interface{}{rhs})
 }
 
@@ -291,7 +291,7 @@ func (this *ThreeDFormat) ContourWidth() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ThreeDFormat) SetContourWidth(rhs float32)  {
+func (this *ThreeDFormat) SetContourWidth(rhs float32) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -305,7 +305,7 @@ func (this *ThreeDFormat) FieldOfView() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ThreeDFormat) SetFieldOfView(rhs float32)  {
+func (this *ThreeDFormat) SetFieldOfView(rhs float32) {
 	_ = this.PropPut(0x0000007c, []interface{}{rhs})
 }
 
@@ -314,7 +314,7 @@ func (this *ThreeDFormat) ProjectText() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ThreeDFormat) SetProjectText(rhs int32)  {
+func (this *ThreeDFormat) SetProjectText(rhs int32) {
 	_ = this.PropPut(0x0000007d, []interface{}{rhs})
 }
 
@@ -323,7 +323,7 @@ func (this *ThreeDFormat) LightAngle() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ThreeDFormat) SetLightAngle(rhs float32)  {
+func (this *ThreeDFormat) SetLightAngle(rhs float32) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 

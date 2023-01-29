@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002443A-0000-0000-C000-000000000046
-var IID_Shapes = syscall.GUID{0x0002443A, 0x0000, 0x0000, 
+var IID_Shapes = syscall.GUID{0x0002443A, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Shapes struct {
@@ -17,8 +17,8 @@ type Shapes struct {
 }
 
 func NewShapes(pDisp *win32.IDispatch, addRef bool, scoped bool) *Shapes {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Shapes{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Shapes) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Shapes) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Shapes) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Shapes) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Shapes) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Shapes) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Shapes) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Shapes) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Shapes) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Shapes) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Shapes) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Shapes) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Shapes) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Shapes) Application() *Application {
@@ -119,7 +119,7 @@ func (this *Shapes) ForEach(action func(item *Shape) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -196,9 +196,9 @@ func (this *Shapes) Range(index interface{}) *ShapeRange {
 	return NewShapeRange(retVal.IDispatch(), false, true)
 }
 
-func (this *Shapes) SelectAll()  {
+func (this *Shapes) SelectAll() {
 	retVal, _ := this.Call(0x000006c9, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Shapes) AddFormControl(type_ int32, left int32, top int32, width int32, height int32) *Shape {
@@ -206,10 +206,10 @@ func (this *Shapes) AddFormControl(type_ int32, left int32, top int32, width int
 	return NewShape(retVal.IDispatch(), false, true)
 }
 
-var Shapes_AddOLEObject_OptArgs= []string{
-	"ClassType", "Filename", "Link", "DisplayAsIcon", 
-	"IconFileName", "IconIndex", "IconLabel", "Left", 
-	"Top", "Width", "Height", 
+var Shapes_AddOLEObject_OptArgs = []string{
+	"ClassType", "Filename", "Link", "DisplayAsIcon",
+	"IconFileName", "IconIndex", "IconLabel", "Left",
+	"Top", "Width", "Height",
 }
 
 func (this *Shapes) AddOLEObject(optArgs ...interface{}) *Shape {
@@ -228,8 +228,8 @@ func (this *Shapes) AddCanvas(left float32, top float32, width float32, height f
 	return NewShape(retVal.IDispatch(), false, true)
 }
 
-var Shapes_AddChart_OptArgs= []string{
-	"XlChartType", "Left", "Top", "Width", "Height", 
+var Shapes_AddChart_OptArgs = []string{
+	"XlChartType", "Left", "Top", "Width", "Height",
 }
 
 func (this *Shapes) AddChart(optArgs ...interface{}) *Shape {
@@ -238,8 +238,8 @@ func (this *Shapes) AddChart(optArgs ...interface{}) *Shape {
 	return NewShape(retVal.IDispatch(), false, true)
 }
 
-var Shapes_AddSmartArt_OptArgs= []string{
-	"Left", "Top", "Width", "Height", 
+var Shapes_AddSmartArt_OptArgs = []string{
+	"Left", "Top", "Width", "Height",
 }
 
 func (this *Shapes) AddSmartArt(layout *win32.IDispatch, optArgs ...interface{}) *Shape {
@@ -247,4 +247,3 @@ func (this *Shapes) AddSmartArt(layout *win32.IDispatch, optArgs ...interface{})
 	retVal, _ := this.Call(0x00000b68, []interface{}{layout}, optArgs...)
 	return NewShape(retVal.IDispatch(), false, true)
 }
-

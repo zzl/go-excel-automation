@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024483-0000-0000-C000-000000000046
-var IID_PivotFilter = syscall.GUID{0x00024483, 0x0000, 0x0000, 
+var IID_PivotFilter = syscall.GUID{0x00024483, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type PivotFilter struct {
@@ -17,8 +17,8 @@ type PivotFilter struct {
 }
 
 func NewPivotFilter(pDisp *win32.IDispatch, addRef bool, scoped bool) *PivotFilter {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &PivotFilter{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *PivotFilter) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *PivotFilter) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *PivotFilter) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotFilter) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *PivotFilter) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *PivotFilter) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *PivotFilter) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotFilter) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *PivotFilter) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotFilter) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *PivotFilter) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotFilter) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *PivotFilter) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotFilter) Application() *Application {
@@ -100,7 +100,7 @@ func (this *PivotFilter) Order() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PivotFilter) SetOrder(rhs int32)  {
+func (this *PivotFilter) SetOrder(rhs int32) {
 	_ = this.PropPut(0x000000c0, []interface{}{rhs})
 }
 
@@ -119,9 +119,9 @@ func (this *PivotFilter) Description() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotFilter) Delete()  {
+func (this *PivotFilter) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotFilter) Active() bool {
@@ -165,4 +165,3 @@ func (this *PivotFilter) IsMemberPropertyFilter() bool {
 	retVal, _ := this.PropGet(0x00000a82, nil)
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
-

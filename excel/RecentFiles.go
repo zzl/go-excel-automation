@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024406-0000-0000-C000-000000000046
-var IID_RecentFiles = syscall.GUID{0x00024406, 0x0000, 0x0000, 
+var IID_RecentFiles = syscall.GUID{0x00024406, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type RecentFiles struct {
@@ -17,8 +17,8 @@ type RecentFiles struct {
 }
 
 func NewRecentFiles(pDisp *win32.IDispatch, addRef bool, scoped bool) *RecentFiles {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &RecentFiles{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *RecentFiles) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *RecentFiles) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *RecentFiles) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *RecentFiles) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *RecentFiles) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *RecentFiles) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *RecentFiles) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *RecentFiles) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *RecentFiles) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *RecentFiles) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *RecentFiles) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *RecentFiles) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *RecentFiles) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *RecentFiles) Application() *Application {
@@ -100,7 +100,7 @@ func (this *RecentFiles) Maximum() int32 {
 	return retVal.LValVal()
 }
 
-func (this *RecentFiles) SetMaximum(rhs int32)  {
+func (this *RecentFiles) SetMaximum(rhs int32) {
 	_ = this.PropPut(0x0000058f, []interface{}{rhs})
 }
 
@@ -133,7 +133,7 @@ func (this *RecentFiles) ForEach(action func(item *RecentFile) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -149,4 +149,3 @@ func (this *RecentFiles) ForEach(action func(item *RecentFile) bool) {
 		}
 	}
 }
-

@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 000208B3-0000-0000-C000-000000000046
-var IID_DataLabels = syscall.GUID{0x000208B3, 0x0000, 0x0000, 
+var IID_DataLabels = syscall.GUID{0x000208B3, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type DataLabels struct {
@@ -17,8 +17,8 @@ type DataLabels struct {
 }
 
 func NewDataLabels(pDisp *win32.IDispatch, addRef bool, scoped bool) *DataLabels {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &DataLabels{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *DataLabels) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *DataLabels) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *DataLabels) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *DataLabels) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *DataLabels) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *DataLabels) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *DataLabels) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DataLabels) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *DataLabels) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DataLabels) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *DataLabels) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DataLabels) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *DataLabels) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *DataLabels) Application() *Application {
@@ -127,14 +127,14 @@ func (this *DataLabels) Fill() *ChartFillFormat {
 	return NewChartFillFormat(retVal.IDispatch(), false, true)
 }
 
-func (this *DataLabels) Dummy9_()  {
+func (this *DataLabels) Dummy9_() {
 	retVal, _ := this.Call(0x00010009, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *DataLabels) Dummy10_()  {
+func (this *DataLabels) Dummy10_() {
 	retVal, _ := this.Call(0x0001000a, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DataLabels) Font() *Font {
@@ -148,13 +148,13 @@ func (this *DataLabels) HorizontalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabels) SetHorizontalAlignment(rhs interface{})  {
+func (this *DataLabels) SetHorizontalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000088, []interface{}{rhs})
 }
 
-func (this *DataLabels) Dummy13_()  {
+func (this *DataLabels) Dummy13_() {
 	retVal, _ := this.Call(0x0001000d, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DataLabels) Orientation() ole.Variant {
@@ -163,7 +163,7 @@ func (this *DataLabels) Orientation() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabels) SetOrientation(rhs interface{})  {
+func (this *DataLabels) SetOrientation(rhs interface{}) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -172,18 +172,18 @@ func (this *DataLabels) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabels) SetShadow(rhs bool)  {
+func (this *DataLabels) SetShadow(rhs bool) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
-func (this *DataLabels) Dummy16_()  {
+func (this *DataLabels) Dummy16_() {
 	retVal, _ := this.Call(0x00010010, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *DataLabels) Dummy17_()  {
+func (this *DataLabels) Dummy17_() {
 	retVal, _ := this.Call(0x00010011, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DataLabels) VerticalAlignment() ole.Variant {
@@ -192,7 +192,7 @@ func (this *DataLabels) VerticalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabels) SetVerticalAlignment(rhs interface{})  {
+func (this *DataLabels) SetVerticalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000089, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *DataLabels) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DataLabels) SetReadingOrder(rhs int32)  {
+func (this *DataLabels) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -211,7 +211,7 @@ func (this *DataLabels) AutoScaleFont() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabels) SetAutoScaleFont(rhs interface{})  {
+func (this *DataLabels) SetAutoScaleFont(rhs interface{}) {
 	_ = this.PropPut(0x000005f5, []interface{}{rhs})
 }
 
@@ -220,7 +220,7 @@ func (this *DataLabels) AutoText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabels) SetAutoText(rhs bool)  {
+func (this *DataLabels) SetAutoText(rhs bool) {
 	_ = this.PropPut(0x00000087, []interface{}{rhs})
 }
 
@@ -229,7 +229,7 @@ func (this *DataLabels) NumberFormat() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DataLabels) SetNumberFormat(rhs string)  {
+func (this *DataLabels) SetNumberFormat(rhs string) {
 	_ = this.PropPut(0x000000c1, []interface{}{rhs})
 }
 
@@ -238,7 +238,7 @@ func (this *DataLabels) NumberFormatLinked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabels) SetNumberFormatLinked(rhs bool)  {
+func (this *DataLabels) SetNumberFormatLinked(rhs bool) {
 	_ = this.PropPut(0x000000c2, []interface{}{rhs})
 }
 
@@ -248,7 +248,7 @@ func (this *DataLabels) NumberFormatLocal() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabels) SetNumberFormatLocal(rhs interface{})  {
+func (this *DataLabels) SetNumberFormatLocal(rhs interface{}) {
 	_ = this.PropPut(0x00000449, []interface{}{rhs})
 }
 
@@ -257,7 +257,7 @@ func (this *DataLabels) ShowLegendKey() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabels) SetShowLegendKey(rhs bool)  {
+func (this *DataLabels) SetShowLegendKey(rhs bool) {
 	_ = this.PropPut(0x000000ab, []interface{}{rhs})
 }
 
@@ -267,7 +267,7 @@ func (this *DataLabels) Type() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabels) SetType(rhs interface{})  {
+func (this *DataLabels) SetType(rhs interface{}) {
 	_ = this.PropPut(0x0000006c, []interface{}{rhs})
 }
 
@@ -276,7 +276,7 @@ func (this *DataLabels) Position() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DataLabels) SetPosition(rhs int32)  {
+func (this *DataLabels) SetPosition(rhs int32) {
 	_ = this.PropPut(0x00000085, []interface{}{rhs})
 }
 
@@ -285,7 +285,7 @@ func (this *DataLabels) ShowSeriesName() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabels) SetShowSeriesName(rhs bool)  {
+func (this *DataLabels) SetShowSeriesName(rhs bool) {
 	_ = this.PropPut(0x000007e6, []interface{}{rhs})
 }
 
@@ -294,7 +294,7 @@ func (this *DataLabels) ShowCategoryName() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabels) SetShowCategoryName(rhs bool)  {
+func (this *DataLabels) SetShowCategoryName(rhs bool) {
 	_ = this.PropPut(0x000007e7, []interface{}{rhs})
 }
 
@@ -303,7 +303,7 @@ func (this *DataLabels) ShowValue() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabels) SetShowValue(rhs bool)  {
+func (this *DataLabels) SetShowValue(rhs bool) {
 	_ = this.PropPut(0x000007e8, []interface{}{rhs})
 }
 
@@ -312,7 +312,7 @@ func (this *DataLabels) ShowPercentage() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabels) SetShowPercentage(rhs bool)  {
+func (this *DataLabels) SetShowPercentage(rhs bool) {
 	_ = this.PropPut(0x000007e9, []interface{}{rhs})
 }
 
@@ -321,7 +321,7 @@ func (this *DataLabels) ShowBubbleSize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabels) SetShowBubbleSize(rhs bool)  {
+func (this *DataLabels) SetShowBubbleSize(rhs bool) {
 	_ = this.PropPut(0x000007ea, []interface{}{rhs})
 }
 
@@ -331,7 +331,7 @@ func (this *DataLabels) Separator() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabels) SetSeparator(rhs interface{})  {
+func (this *DataLabels) SetSeparator(rhs interface{}) {
 	_ = this.PropPut(0x000007eb, []interface{}{rhs})
 }
 
@@ -354,7 +354,7 @@ func (this *DataLabels) ForEach(action func(item *DataLabel) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant

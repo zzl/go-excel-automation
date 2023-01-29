@@ -17,4 +17,6 @@ vendor/
 _test/
 _bak/
 
+go.work
+go.work.sum
 *.iml

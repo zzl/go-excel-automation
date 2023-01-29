@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 0002088C-0000-0000-C000-000000000046
-var IID_DropDowns = syscall.GUID{0x0002088C, 0x0000, 0x0000, 
+var IID_DropDowns = syscall.GUID{0x0002088C, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type DropDowns struct {
@@ -17,8 +17,8 @@ type DropDowns struct {
 }
 
 func NewDropDowns(pDisp *win32.IDispatch, addRef bool, scoped bool) *DropDowns {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &DropDowns{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *DropDowns) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *DropDowns) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *DropDowns) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *DropDowns) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *DropDowns) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *DropDowns) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *DropDowns) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DropDowns) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *DropDowns) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DropDowns) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *DropDowns) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DropDowns) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *DropDowns) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *DropDowns) Application() *Application {
@@ -95,9 +95,9 @@ func (this *DropDowns) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *DropDowns) Dummy3_()  {
+func (this *DropDowns) Dummy3_() {
 	retVal, _ := this.Call(0x00010003, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DropDowns) BringToFront() ole.Variant {
@@ -112,8 +112,8 @@ func (this *DropDowns) Copy() ole.Variant {
 	return *retVal
 }
 
-var DropDowns_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var DropDowns_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *DropDowns) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *DropDowns) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DropDowns) SetEnabled(rhs bool)  {
+func (this *DropDowns) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,13 +154,13 @@ func (this *DropDowns) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *DropDowns) SetHeight(rhs float64)  {
+func (this *DropDowns) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
-func (this *DropDowns) Dummy12_()  {
+func (this *DropDowns) Dummy12_() {
 	retVal, _ := this.Call(0x0001000c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DropDowns) Left() float64 {
@@ -168,7 +168,7 @@ func (this *DropDowns) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *DropDowns) SetLeft(rhs float64)  {
+func (this *DropDowns) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,13 +177,13 @@ func (this *DropDowns) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DropDowns) SetLocked(rhs bool)  {
+func (this *DropDowns) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
-func (this *DropDowns) Dummy15_()  {
+func (this *DropDowns) Dummy15_() {
 	retVal, _ := this.Call(0x0001000f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DropDowns) OnAction() string {
@@ -191,7 +191,7 @@ func (this *DropDowns) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DropDowns) SetOnAction(rhs string)  {
+func (this *DropDowns) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *DropDowns) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *DropDowns) SetPlacement(rhs interface{})  {
+func (this *DropDowns) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -210,12 +210,12 @@ func (this *DropDowns) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DropDowns) SetPrintObject(rhs bool)  {
+func (this *DropDowns) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var DropDowns_Select_OptArgs= []string{
-	"Replace", 
+var DropDowns_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *DropDowns) Select(optArgs ...interface{}) ole.Variant {
@@ -236,13 +236,13 @@ func (this *DropDowns) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *DropDowns) SetTop(rhs float64)  {
+func (this *DropDowns) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
-func (this *DropDowns) Dummy22_()  {
+func (this *DropDowns) Dummy22_() {
 	retVal, _ := this.Call(0x00010016, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DropDowns) Visible() bool {
@@ -250,7 +250,7 @@ func (this *DropDowns) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DropDowns) SetVisible(rhs bool)  {
+func (this *DropDowns) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *DropDowns) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *DropDowns) SetWidth(rhs float64)  {
+func (this *DropDowns) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -273,8 +273,8 @@ func (this *DropDowns) ShapeRange() *ShapeRange {
 	return NewShapeRange(retVal.IDispatch(), false, true)
 }
 
-var DropDowns_AddItem_OptArgs= []string{
-	"Index", 
+var DropDowns_AddItem_OptArgs = []string{
+	"Index",
 }
 
 func (this *DropDowns) AddItem(text interface{}, optArgs ...interface{}) ole.Variant {
@@ -289,7 +289,7 @@ func (this *DropDowns) Display3DShading() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DropDowns) SetDisplay3DShading(rhs bool)  {
+func (this *DropDowns) SetDisplay3DShading(rhs bool) {
 	_ = this.PropPut(0x00000462, []interface{}{rhs})
 }
 
@@ -298,7 +298,7 @@ func (this *DropDowns) Default_() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DropDowns) SetDefault_(rhs int32)  {
+func (this *DropDowns) SetDefault_(rhs int32) {
 	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
@@ -307,17 +307,17 @@ func (this *DropDowns) LinkedCell() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DropDowns) SetLinkedCell(rhs string)  {
+func (this *DropDowns) SetLinkedCell(rhs string) {
 	_ = this.PropPut(0x00000422, []interface{}{rhs})
 }
 
-func (this *DropDowns) Dummy31_()  {
+func (this *DropDowns) Dummy31_() {
 	retVal, _ := this.Call(0x0001001f, nil)
-	_= retVal
+	_ = retVal
 }
 
-var DropDowns_List_OptArgs= []string{
-	"Index", 
+var DropDowns_List_OptArgs = []string{
+	"Index",
 }
 
 func (this *DropDowns) List(optArgs ...interface{}) ole.Variant {
@@ -327,18 +327,18 @@ func (this *DropDowns) List(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var DropDowns_SetList_OptArgs= []string{
-	"Index", 
+var DropDowns_SetList_OptArgs = []string{
+	"Index",
 }
 
-func (this *DropDowns) SetList(optArgs ...interface{})  {
+func (this *DropDowns) SetList(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(DropDowns_SetList_OptArgs, optArgs)
 	_ = this.PropPut(0x0000035d, nil, optArgs...)
 }
 
-func (this *DropDowns) Dummy33_()  {
+func (this *DropDowns) Dummy33_() {
 	retVal, _ := this.Call(0x00010021, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DropDowns) ListFillRange() string {
@@ -346,7 +346,7 @@ func (this *DropDowns) ListFillRange() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DropDowns) SetListFillRange(rhs string)  {
+func (this *DropDowns) SetListFillRange(rhs string) {
 	_ = this.PropPut(0x0000034f, []interface{}{rhs})
 }
 
@@ -355,13 +355,13 @@ func (this *DropDowns) ListIndex() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DropDowns) SetListIndex(rhs int32)  {
+func (this *DropDowns) SetListIndex(rhs int32) {
 	_ = this.PropPut(0x00000352, []interface{}{rhs})
 }
 
-func (this *DropDowns) Dummy36_()  {
+func (this *DropDowns) Dummy36_() {
 	retVal, _ := this.Call(0x00010024, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *DropDowns) RemoveAllItems() ole.Variant {
@@ -370,8 +370,8 @@ func (this *DropDowns) RemoveAllItems() ole.Variant {
 	return *retVal
 }
 
-var DropDowns_RemoveItem_OptArgs= []string{
-	"Count", 
+var DropDowns_RemoveItem_OptArgs = []string{
+	"Count",
 }
 
 func (this *DropDowns) RemoveItem(index int32, optArgs ...interface{}) ole.Variant {
@@ -381,8 +381,8 @@ func (this *DropDowns) RemoveItem(index int32, optArgs ...interface{}) ole.Varia
 	return *retVal
 }
 
-var DropDowns_Selected_OptArgs= []string{
-	"Index", 
+var DropDowns_Selected_OptArgs = []string{
+	"Index",
 }
 
 func (this *DropDowns) Selected(optArgs ...interface{}) ole.Variant {
@@ -392,11 +392,11 @@ func (this *DropDowns) Selected(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var DropDowns_SetSelected_OptArgs= []string{
-	"Index", 
+var DropDowns_SetSelected_OptArgs = []string{
+	"Index",
 }
 
-func (this *DropDowns) SetSelected(optArgs ...interface{})  {
+func (this *DropDowns) SetSelected(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(DropDowns_SetSelected_OptArgs, optArgs)
 	_ = this.PropPut(0x00000463, nil, optArgs...)
 }
@@ -406,7 +406,7 @@ func (this *DropDowns) Value() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DropDowns) SetValue(rhs int32)  {
+func (this *DropDowns) SetValue(rhs int32) {
 	_ = this.PropPut(0x00000006, []interface{}{rhs})
 }
 
@@ -415,12 +415,12 @@ func (this *DropDowns) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DropDowns) SetCaption(rhs string)  {
+func (this *DropDowns) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var DropDowns_Characters_OptArgs= []string{
-	"Start", "Length", 
+var DropDowns_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *DropDowns) Characters(optArgs ...interface{}) *Characters {
@@ -434,7 +434,7 @@ func (this *DropDowns) DropDownLines() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DropDowns) SetDropDownLines(rhs int32)  {
+func (this *DropDowns) SetDropDownLines(rhs int32) {
 	_ = this.PropPut(0x00000350, []interface{}{rhs})
 }
 
@@ -443,12 +443,12 @@ func (this *DropDowns) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DropDowns) SetText(rhs string)  {
+func (this *DropDowns) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
-var DropDowns_Add_OptArgs= []string{
-	"Editable", 
+var DropDowns_Add_OptArgs = []string{
+	"Editable",
 }
 
 func (this *DropDowns) Add(left float64, top float64, width float64, height float64, optArgs ...interface{}) *DropDown {
@@ -481,7 +481,7 @@ func (this *DropDowns) ForEach(action func(item int32) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant

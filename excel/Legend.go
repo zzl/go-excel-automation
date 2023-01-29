@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 000208CD-0000-0000-C000-000000000046
-var IID_Legend = syscall.GUID{0x000208CD, 0x0000, 0x0000, 
+var IID_Legend = syscall.GUID{0x000208CD, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Legend struct {
@@ -17,8 +17,8 @@ type Legend struct {
 }
 
 func NewLegend(pDisp *win32.IDispatch, addRef bool, scoped bool) *Legend {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Legend{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Legend) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Legend) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Legend) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Legend) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Legend) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Legend) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Legend) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Legend) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Legend) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Legend) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Legend) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Legend) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Legend) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Legend) Application() *Application {
@@ -122,8 +122,8 @@ func (this *Legend) Font() *Font {
 	return NewFont(retVal.IDispatch(), false, true)
 }
 
-var Legend_LegendEntries_OptArgs= []string{
-	"Index", 
+var Legend_LegendEntries_OptArgs = []string{
+	"Index",
 }
 
 func (this *Legend) LegendEntries(optArgs ...interface{}) *ole.DispatchClass {
@@ -137,7 +137,7 @@ func (this *Legend) Position() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Legend) SetPosition(rhs int32)  {
+func (this *Legend) SetPosition(rhs int32) {
 	_ = this.PropPut(0x00000085, []interface{}{rhs})
 }
 
@@ -146,7 +146,7 @@ func (this *Legend) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Legend) SetShadow(rhs bool)  {
+func (this *Legend) SetShadow(rhs bool) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
@@ -161,7 +161,7 @@ func (this *Legend) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Legend) SetHeight(rhs float64)  {
+func (this *Legend) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -180,7 +180,7 @@ func (this *Legend) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Legend) SetLeft(rhs float64)  {
+func (this *Legend) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -189,7 +189,7 @@ func (this *Legend) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Legend) SetTop(rhs float64)  {
+func (this *Legend) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -198,7 +198,7 @@ func (this *Legend) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Legend) SetWidth(rhs float64)  {
+func (this *Legend) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -208,7 +208,7 @@ func (this *Legend) AutoScaleFont() ole.Variant {
 	return *retVal
 }
 
-func (this *Legend) SetAutoScaleFont(rhs interface{})  {
+func (this *Legend) SetAutoScaleFont(rhs interface{}) {
 	_ = this.PropPut(0x000005f5, []interface{}{rhs})
 }
 
@@ -217,7 +217,7 @@ func (this *Legend) IncludeInLayout() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Legend) SetIncludeInLayout(rhs bool)  {
+func (this *Legend) SetIncludeInLayout(rhs bool) {
 	_ = this.PropPut(0x00000a58, []interface{}{rhs})
 }
 

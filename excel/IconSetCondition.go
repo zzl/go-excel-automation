@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024497-0000-0000-C000-000000000046
-var IID_IconSetCondition = syscall.GUID{0x00024497, 0x0000, 0x0000, 
+var IID_IconSetCondition = syscall.GUID{0x00024497, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IconSetCondition struct {
@@ -17,8 +17,8 @@ type IconSetCondition struct {
 }
 
 func NewIconSetCondition(pDisp *win32.IDispatch, addRef bool, scoped bool) *IconSetCondition {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &IconSetCondition{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *IconSetCondition) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *IconSetCondition) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *IconSetCondition) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *IconSetCondition) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *IconSetCondition) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *IconSetCondition) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *IconSetCondition) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *IconSetCondition) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *IconSetCondition) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *IconSetCondition) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *IconSetCondition) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *IconSetCondition) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *IconSetCondition) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *IconSetCondition) Application() *Application {
@@ -100,7 +100,7 @@ func (this *IconSetCondition) Priority() int32 {
 	return retVal.LValVal()
 }
 
-func (this *IconSetCondition) SetPriority(rhs int32)  {
+func (this *IconSetCondition) SetPriority(rhs int32) {
 	_ = this.PropPut(0x000003d9, []interface{}{rhs})
 }
 
@@ -119,9 +119,9 @@ func (this *IconSetCondition) Type() int32 {
 	return retVal.LValVal()
 }
 
-func (this *IconSetCondition) ModifyAppliesToRange(range_ *Range)  {
+func (this *IconSetCondition) ModifyAppliesToRange(range_ *Range) {
 	retVal, _ := this.Call(0x00000a43, []interface{}{range_})
-	_= retVal
+	_ = retVal
 }
 
 func (this *IconSetCondition) PTCondition() bool {
@@ -134,23 +134,23 @@ func (this *IconSetCondition) ScopeType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *IconSetCondition) SetScopeType(rhs int32)  {
+func (this *IconSetCondition) SetScopeType(rhs int32) {
 	_ = this.PropPut(0x00000a37, []interface{}{rhs})
 }
 
-func (this *IconSetCondition) SetFirstPriority()  {
+func (this *IconSetCondition) SetFirstPriority() {
 	retVal, _ := this.Call(0x00000a45, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *IconSetCondition) SetLastPriority()  {
+func (this *IconSetCondition) SetLastPriority() {
 	retVal, _ := this.Call(0x00000a46, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *IconSetCondition) Delete()  {
+func (this *IconSetCondition) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *IconSetCondition) ReverseOrder() bool {
@@ -158,7 +158,7 @@ func (this *IconSetCondition) ReverseOrder() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *IconSetCondition) SetReverseOrder(rhs bool)  {
+func (this *IconSetCondition) SetReverseOrder(rhs bool) {
 	_ = this.PropPut(0x00000aa3, []interface{}{rhs})
 }
 
@@ -167,7 +167,7 @@ func (this *IconSetCondition) PercentileValues() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *IconSetCondition) SetPercentileValues(rhs bool)  {
+func (this *IconSetCondition) SetPercentileValues(rhs bool) {
 	_ = this.PropPut(0x00000aa4, []interface{}{rhs})
 }
 
@@ -176,7 +176,7 @@ func (this *IconSetCondition) ShowIconOnly() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *IconSetCondition) SetShowIconOnly(rhs bool)  {
+func (this *IconSetCondition) SetShowIconOnly(rhs bool) {
 	_ = this.PropPut(0x00000aa5, []interface{}{rhs})
 }
 
@@ -185,7 +185,7 @@ func (this *IconSetCondition) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *IconSetCondition) SetFormula(rhs string)  {
+func (this *IconSetCondition) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -195,7 +195,7 @@ func (this *IconSetCondition) IconSet() ole.Variant {
 	return *retVal
 }
 
-func (this *IconSetCondition) SetIconSet(rhs interface{})  {
+func (this *IconSetCondition) SetIconSet(rhs interface{}) {
 	_ = this.PropPut(0x00000aa6, []interface{}{rhs})
 }
 
@@ -203,4 +203,3 @@ func (this *IconSetCondition) IconCriteria() *IconCriteria {
 	retVal, _ := this.PropGet(0x00000aa7, nil)
 	return NewIconCriteria(retVal.IDispatch(), false, true)
 }
-

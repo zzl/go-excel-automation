@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000244B0-0001-0000-C000-000000000046
-var IID_IRectangularGradient = syscall.GUID{0x000244B0, 0x0001, 0x0000, 
+var IID_IRectangularGradient = syscall.GUID{0x000244B0, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IRectangularGradient struct {
@@ -16,8 +16,8 @@ type IRectangularGradient struct {
 }
 
 func NewIRectangularGradient(pUnk *win32.IUnknown, addRef bool, scoped bool) *IRectangularGradient {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IRectangularGradient)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -36,7 +36,7 @@ func (this *IRectangularGradient) IID() *syscall.GUID {
 func (this *IRectangularGradient) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -49,14 +49,14 @@ func (this *IRectangularGradient) GetCreator(rhs *int32) com.Error {
 func (this *IRectangularGradient) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IRectangularGradient) GetColorStops(rhs **ColorStops) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -107,4 +107,3 @@ func (this *IRectangularGradient) SetRectangleRight(rhs float64) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(rhs))
 	return com.Error(ret)
 }
-

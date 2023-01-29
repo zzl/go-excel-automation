@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
 )
 
 // 00024444-0000-0000-C000-000000000046
-var IID_PublishObject = syscall.GUID{0x00024444, 0x0000, 0x0000, 
+var IID_PublishObject = syscall.GUID{0x00024444, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type PublishObject struct {
@@ -16,8 +16,8 @@ type PublishObject struct {
 }
 
 func NewPublishObject(pDisp *win32.IDispatch, addRef bool, scoped bool) *PublishObject {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &PublishObject{ole.OleClient{pDisp}}
 	if addRef {
@@ -59,19 +59,19 @@ func (this *PublishObject) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *PublishObject) Delete()  {
+func (this *PublishObject) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
-var PublishObject_Publish_OptArgs= []string{
-	"Create", 
+var PublishObject_Publish_OptArgs = []string{
+	"Create",
 }
 
-func (this *PublishObject) Publish(optArgs ...interface{})  {
+func (this *PublishObject) Publish(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(PublishObject_Publish_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000767, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *PublishObject) DivID() string {
@@ -99,7 +99,7 @@ func (this *PublishObject) HtmlType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PublishObject) SetHtmlType(rhs int32)  {
+func (this *PublishObject) SetHtmlType(rhs int32) {
 	_ = this.PropPut(0x00000765, []interface{}{rhs})
 }
 
@@ -108,7 +108,7 @@ func (this *PublishObject) Title() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PublishObject) SetTitle(rhs string)  {
+func (this *PublishObject) SetTitle(rhs string) {
 	_ = this.PropPut(0x000000c7, []interface{}{rhs})
 }
 
@@ -117,7 +117,7 @@ func (this *PublishObject) Filename() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PublishObject) SetFilename(rhs string)  {
+func (this *PublishObject) SetFilename(rhs string) {
 	_ = this.PropPut(0x00000587, []interface{}{rhs})
 }
 
@@ -126,7 +126,7 @@ func (this *PublishObject) AutoRepublish() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PublishObject) SetAutoRepublish(rhs bool)  {
+func (this *PublishObject) SetAutoRepublish(rhs bool) {
 	_ = this.PropPut(0x00000882, []interface{}{rhs})
 }
 

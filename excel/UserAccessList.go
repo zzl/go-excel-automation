@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002446C-0000-0000-C000-000000000046
-var IID_UserAccessList = syscall.GUID{0x0002446C, 0x0000, 0x0000, 
+var IID_UserAccessList = syscall.GUID{0x0002446C, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type UserAccessList struct {
@@ -17,8 +17,8 @@ type UserAccessList struct {
 }
 
 func NewUserAccessList(pDisp *win32.IDispatch, addRef bool, scoped bool) *UserAccessList {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &UserAccessList{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *UserAccessList) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *UserAccessList) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *UserAccessList) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *UserAccessList) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *UserAccessList) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *UserAccessList) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *UserAccessList) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *UserAccessList) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *UserAccessList) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *UserAccessList) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *UserAccessList) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *UserAccessList) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *UserAccessList) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *UserAccessList) Count() int32 {
@@ -95,9 +95,9 @@ func (this *UserAccessList) Add(name string, allowEdit bool) *UserAccess {
 	return NewUserAccess(retVal.IDispatch(), false, true)
 }
 
-func (this *UserAccessList) DeleteAll()  {
+func (this *UserAccessList) DeleteAll() {
 	retVal, _ := this.Call(0x000008bf, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *UserAccessList) Default_(index interface{}) *UserAccess {
@@ -114,7 +114,7 @@ func (this *UserAccessList) ForEach(action func(item *UserAccess) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -130,4 +130,3 @@ func (this *UserAccessList) ForEach(action func(item *UserAccess) bool) {
 		}
 	}
 }
-

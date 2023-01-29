@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208B0-0001-0000-C000-000000000046
-var IID_IDialogSheets = syscall.GUID{0x000208B0, 0x0001, 0x0000, 
+var IID_IDialogSheets = syscall.GUID{0x000208B0, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IDialogSheets struct {
@@ -17,8 +17,8 @@ type IDialogSheets struct {
 }
 
 func NewIDialogSheets(pUnk *win32.IUnknown, addRef bool, scoped bool) *IDialogSheets {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IDialogSheets)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IDialogSheets) IID() *syscall.GUID {
 func (this *IDialogSheets) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,14 +50,14 @@ func (this *IDialogSheets) GetCreator(rhs *int32) com.Error {
 func (this *IDialogSheets) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheets) Add(before interface{}, after interface{}, count interface{}, rhs **DialogSheet) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&before)), (uintptr)(unsafe.Pointer(&after)), (uintptr)(unsafe.Pointer(&count)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -79,7 +79,7 @@ func (this *IDialogSheets) Delete(lcid int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDialogSheets) Dummy7_()  {
+func (this *IDialogSheets) Dummy7_() {
 	addr := (*this.LpVtbl)[14]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -87,7 +87,7 @@ func (this *IDialogSheets) Dummy7_()  {
 func (this *IDialogSheets) GetItem(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[15]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -100,7 +100,7 @@ func (this *IDialogSheets) Move(before interface{}, after interface{}, lcid int3
 func (this *IDialogSheets) GetNewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[17]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -125,14 +125,14 @@ func (this *IDialogSheets) Select(replace interface{}, lcid int32) com.Error {
 func (this *IDialogSheets) GetHPageBreaks(rhs **HPageBreaks) com.Error {
 	addr := (*this.LpVtbl)[21]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDialogSheets) GetVPageBreaks(rhs **VPageBreaks) com.Error {
 	addr := (*this.LpVtbl)[22]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -151,7 +151,7 @@ func (this *IDialogSheets) SetVisible(lcid int32, rhs interface{}) com.Error {
 func (this *IDialogSheets) GetDefault_(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[25]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -166,4 +166,3 @@ func (this *IDialogSheets) PrintOut(from interface{}, to interface{}, copies int
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&from)), (uintptr)(unsafe.Pointer(&to)), (uintptr)(unsafe.Pointer(&copies)), (uintptr)(unsafe.Pointer(&preview)), (uintptr)(unsafe.Pointer(&activePrinter)), (uintptr)(unsafe.Pointer(&printToFile)), (uintptr)(unsafe.Pointer(&collate)), (uintptr)(unsafe.Pointer(&prToFileName)))
 	return com.Error(ret)
 }
-

@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024428-0000-0000-C000-000000000046
-var IID_QueryTable_ = syscall.GUID{0x00024428, 0x0000, 0x0000, 
+var IID_QueryTable_ = syscall.GUID{0x00024428, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type QueryTable_ struct {
@@ -17,8 +17,8 @@ type QueryTable_ struct {
 }
 
 func NewQueryTable_(pDisp *win32.IDispatch, addRef bool, scoped bool) *QueryTable_ {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &QueryTable_{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *QueryTable_) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *QueryTable_) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *QueryTable_) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *QueryTable_) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *QueryTable_) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *QueryTable_) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *QueryTable_) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *QueryTable_) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *QueryTable_) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *QueryTable_) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *QueryTable_) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *QueryTable_) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *QueryTable_) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *QueryTable_) Application() *Application {
@@ -100,7 +100,7 @@ func (this *QueryTable_) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *QueryTable_) SetName(rhs string)  {
+func (this *QueryTable_) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -109,7 +109,7 @@ func (this *QueryTable_) FieldNames() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetFieldNames(rhs bool)  {
+func (this *QueryTable_) SetFieldNames(rhs bool) {
 	_ = this.PropPut(0x00000630, []interface{}{rhs})
 }
 
@@ -118,7 +118,7 @@ func (this *QueryTable_) RowNumbers() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetRowNumbers(rhs bool)  {
+func (this *QueryTable_) SetRowNumbers(rhs bool) {
 	_ = this.PropPut(0x00000631, []interface{}{rhs})
 }
 
@@ -127,7 +127,7 @@ func (this *QueryTable_) FillAdjacentFormulas() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetFillAdjacentFormulas(rhs bool)  {
+func (this *QueryTable_) SetFillAdjacentFormulas(rhs bool) {
 	_ = this.PropPut(0x00000632, []interface{}{rhs})
 }
 
@@ -136,7 +136,7 @@ func (this *QueryTable_) HasAutoFormat() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetHasAutoFormat(rhs bool)  {
+func (this *QueryTable_) SetHasAutoFormat(rhs bool) {
 	_ = this.PropPut(0x000002b7, []interface{}{rhs})
 }
 
@@ -145,7 +145,7 @@ func (this *QueryTable_) RefreshOnFileOpen() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetRefreshOnFileOpen(rhs bool)  {
+func (this *QueryTable_) SetRefreshOnFileOpen(rhs bool) {
 	_ = this.PropPut(0x000005c7, []interface{}{rhs})
 }
 
@@ -164,13 +164,13 @@ func (this *QueryTable_) BackgroundQuery() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetBackgroundQuery(rhs bool)  {
+func (this *QueryTable_) SetBackgroundQuery(rhs bool) {
 	_ = this.PropPut(0x00000593, []interface{}{rhs})
 }
 
-func (this *QueryTable_) CancelRefresh()  {
+func (this *QueryTable_) CancelRefresh() {
 	retVal, _ := this.Call(0x00000635, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *QueryTable_) RefreshStyle() int32 {
@@ -178,7 +178,7 @@ func (this *QueryTable_) RefreshStyle() int32 {
 	return retVal.LValVal()
 }
 
-func (this *QueryTable_) SetRefreshStyle(rhs int32)  {
+func (this *QueryTable_) SetRefreshStyle(rhs int32) {
 	_ = this.PropPut(0x00000636, []interface{}{rhs})
 }
 
@@ -187,7 +187,7 @@ func (this *QueryTable_) EnableRefresh() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetEnableRefresh(rhs bool)  {
+func (this *QueryTable_) SetEnableRefresh(rhs bool) {
 	_ = this.PropPut(0x000005c5, []interface{}{rhs})
 }
 
@@ -196,7 +196,7 @@ func (this *QueryTable_) SavePassword() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetSavePassword(rhs bool)  {
+func (this *QueryTable_) SetSavePassword(rhs bool) {
 	_ = this.PropPut(0x000005c9, []interface{}{rhs})
 }
 
@@ -211,7 +211,7 @@ func (this *QueryTable_) Connection() ole.Variant {
 	return *retVal
 }
 
-func (this *QueryTable_) SetConnection(rhs interface{})  {
+func (this *QueryTable_) SetConnection(rhs interface{}) {
 	_ = this.PropPut(0x00000598, []interface{}{rhs})
 }
 
@@ -221,7 +221,7 @@ func (this *QueryTable_) Sql() ole.Variant {
 	return *retVal
 }
 
-func (this *QueryTable_) SetSql(rhs interface{})  {
+func (this *QueryTable_) SetSql(rhs interface{}) {
 	_ = this.PropPut(0x000005c8, []interface{}{rhs})
 }
 
@@ -230,7 +230,7 @@ func (this *QueryTable_) PostText() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *QueryTable_) SetPostText(rhs string)  {
+func (this *QueryTable_) SetPostText(rhs string) {
 	_ = this.PropPut(0x00000637, []interface{}{rhs})
 }
 
@@ -239,13 +239,13 @@ func (this *QueryTable_) ResultRange() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-func (this *QueryTable_) Delete()  {
+func (this *QueryTable_) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
-var QueryTable__Refresh_OptArgs= []string{
-	"BackgroundQuery", 
+var QueryTable__Refresh_OptArgs = []string{
+	"BackgroundQuery",
 }
 
 func (this *QueryTable_) Refresh(optArgs ...interface{}) bool {
@@ -264,7 +264,7 @@ func (this *QueryTable_) Recordset() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *QueryTable_) SetRecordset(rhs *win32.IUnknown)  {
+func (this *QueryTable_) SetRecordset(rhs *win32.IUnknown) {
 	_ = this.PropPutRef(0x0000048d, []interface{}{rhs})
 }
 
@@ -273,7 +273,7 @@ func (this *QueryTable_) SaveData() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetSaveData(rhs bool)  {
+func (this *QueryTable_) SetSaveData(rhs bool) {
 	_ = this.PropPut(0x000002b4, []interface{}{rhs})
 }
 
@@ -282,7 +282,7 @@ func (this *QueryTable_) TablesOnlyFromHTML() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetTablesOnlyFromHTML(rhs bool)  {
+func (this *QueryTable_) SetTablesOnlyFromHTML(rhs bool) {
 	_ = this.PropPut(0x0000063a, []interface{}{rhs})
 }
 
@@ -291,7 +291,7 @@ func (this *QueryTable_) EnableEditing() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetEnableEditing(rhs bool)  {
+func (this *QueryTable_) SetEnableEditing(rhs bool) {
 	_ = this.PropPut(0x0000063b, []interface{}{rhs})
 }
 
@@ -300,7 +300,7 @@ func (this *QueryTable_) TextFilePlatform() int32 {
 	return retVal.LValVal()
 }
 
-func (this *QueryTable_) SetTextFilePlatform(rhs int32)  {
+func (this *QueryTable_) SetTextFilePlatform(rhs int32) {
 	_ = this.PropPut(0x0000073f, []interface{}{rhs})
 }
 
@@ -309,7 +309,7 @@ func (this *QueryTable_) TextFileStartRow() int32 {
 	return retVal.LValVal()
 }
 
-func (this *QueryTable_) SetTextFileStartRow(rhs int32)  {
+func (this *QueryTable_) SetTextFileStartRow(rhs int32) {
 	_ = this.PropPut(0x00000740, []interface{}{rhs})
 }
 
@@ -318,7 +318,7 @@ func (this *QueryTable_) TextFileParseType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *QueryTable_) SetTextFileParseType(rhs int32)  {
+func (this *QueryTable_) SetTextFileParseType(rhs int32) {
 	_ = this.PropPut(0x00000741, []interface{}{rhs})
 }
 
@@ -327,7 +327,7 @@ func (this *QueryTable_) TextFileTextQualifier() int32 {
 	return retVal.LValVal()
 }
 
-func (this *QueryTable_) SetTextFileTextQualifier(rhs int32)  {
+func (this *QueryTable_) SetTextFileTextQualifier(rhs int32) {
 	_ = this.PropPut(0x00000742, []interface{}{rhs})
 }
 
@@ -336,7 +336,7 @@ func (this *QueryTable_) TextFileConsecutiveDelimiter() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetTextFileConsecutiveDelimiter(rhs bool)  {
+func (this *QueryTable_) SetTextFileConsecutiveDelimiter(rhs bool) {
 	_ = this.PropPut(0x00000743, []interface{}{rhs})
 }
 
@@ -345,7 +345,7 @@ func (this *QueryTable_) TextFileTabDelimiter() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetTextFileTabDelimiter(rhs bool)  {
+func (this *QueryTable_) SetTextFileTabDelimiter(rhs bool) {
 	_ = this.PropPut(0x00000744, []interface{}{rhs})
 }
 
@@ -354,7 +354,7 @@ func (this *QueryTable_) TextFileSemicolonDelimiter() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetTextFileSemicolonDelimiter(rhs bool)  {
+func (this *QueryTable_) SetTextFileSemicolonDelimiter(rhs bool) {
 	_ = this.PropPut(0x00000745, []interface{}{rhs})
 }
 
@@ -363,7 +363,7 @@ func (this *QueryTable_) TextFileCommaDelimiter() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetTextFileCommaDelimiter(rhs bool)  {
+func (this *QueryTable_) SetTextFileCommaDelimiter(rhs bool) {
 	_ = this.PropPut(0x00000746, []interface{}{rhs})
 }
 
@@ -372,7 +372,7 @@ func (this *QueryTable_) TextFileSpaceDelimiter() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetTextFileSpaceDelimiter(rhs bool)  {
+func (this *QueryTable_) SetTextFileSpaceDelimiter(rhs bool) {
 	_ = this.PropPut(0x00000747, []interface{}{rhs})
 }
 
@@ -381,7 +381,7 @@ func (this *QueryTable_) TextFileOtherDelimiter() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *QueryTable_) SetTextFileOtherDelimiter(rhs string)  {
+func (this *QueryTable_) SetTextFileOtherDelimiter(rhs string) {
 	_ = this.PropPut(0x00000748, []interface{}{rhs})
 }
 
@@ -391,7 +391,7 @@ func (this *QueryTable_) TextFileColumnDataTypes() ole.Variant {
 	return *retVal
 }
 
-func (this *QueryTable_) SetTextFileColumnDataTypes(rhs interface{})  {
+func (this *QueryTable_) SetTextFileColumnDataTypes(rhs interface{}) {
 	_ = this.PropPut(0x00000749, []interface{}{rhs})
 }
 
@@ -401,7 +401,7 @@ func (this *QueryTable_) TextFileFixedColumnWidths() ole.Variant {
 	return *retVal
 }
 
-func (this *QueryTable_) SetTextFileFixedColumnWidths(rhs interface{})  {
+func (this *QueryTable_) SetTextFileFixedColumnWidths(rhs interface{}) {
 	_ = this.PropPut(0x0000074a, []interface{}{rhs})
 }
 
@@ -410,7 +410,7 @@ func (this *QueryTable_) PreserveColumnInfo() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetPreserveColumnInfo(rhs bool)  {
+func (this *QueryTable_) SetPreserveColumnInfo(rhs bool) {
 	_ = this.PropPut(0x0000074b, []interface{}{rhs})
 }
 
@@ -419,7 +419,7 @@ func (this *QueryTable_) PreserveFormatting() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetPreserveFormatting(rhs bool)  {
+func (this *QueryTable_) SetPreserveFormatting(rhs bool) {
 	_ = this.PropPut(0x000005dc, []interface{}{rhs})
 }
 
@@ -428,7 +428,7 @@ func (this *QueryTable_) AdjustColumnWidth() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetAdjustColumnWidth(rhs bool)  {
+func (this *QueryTable_) SetAdjustColumnWidth(rhs bool) {
 	_ = this.PropPut(0x0000074c, []interface{}{rhs})
 }
 
@@ -438,7 +438,7 @@ func (this *QueryTable_) CommandText() ole.Variant {
 	return *retVal
 }
 
-func (this *QueryTable_) SetCommandText(rhs interface{})  {
+func (this *QueryTable_) SetCommandText(rhs interface{}) {
 	_ = this.PropPut(0x00000725, []interface{}{rhs})
 }
 
@@ -447,7 +447,7 @@ func (this *QueryTable_) CommandType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *QueryTable_) SetCommandType(rhs int32)  {
+func (this *QueryTable_) SetCommandType(rhs int32) {
 	_ = this.PropPut(0x00000726, []interface{}{rhs})
 }
 
@@ -456,7 +456,7 @@ func (this *QueryTable_) TextFilePromptOnRefresh() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetTextFilePromptOnRefresh(rhs bool)  {
+func (this *QueryTable_) SetTextFilePromptOnRefresh(rhs bool) {
 	_ = this.PropPut(0x0000074d, []interface{}{rhs})
 }
 
@@ -470,7 +470,7 @@ func (this *QueryTable_) MaintainConnection() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetMaintainConnection(rhs bool)  {
+func (this *QueryTable_) SetMaintainConnection(rhs bool) {
 	_ = this.PropPut(0x00000728, []interface{}{rhs})
 }
 
@@ -479,7 +479,7 @@ func (this *QueryTable_) TextFileDecimalSeparator() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *QueryTable_) SetTextFileDecimalSeparator(rhs string)  {
+func (this *QueryTable_) SetTextFileDecimalSeparator(rhs string) {
 	_ = this.PropPut(0x0000074e, []interface{}{rhs})
 }
 
@@ -488,7 +488,7 @@ func (this *QueryTable_) TextFileThousandsSeparator() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *QueryTable_) SetTextFileThousandsSeparator(rhs string)  {
+func (this *QueryTable_) SetTextFileThousandsSeparator(rhs string) {
 	_ = this.PropPut(0x0000074f, []interface{}{rhs})
 }
 
@@ -497,13 +497,13 @@ func (this *QueryTable_) RefreshPeriod() int32 {
 	return retVal.LValVal()
 }
 
-func (this *QueryTable_) SetRefreshPeriod(rhs int32)  {
+func (this *QueryTable_) SetRefreshPeriod(rhs int32) {
 	_ = this.PropPut(0x00000729, []interface{}{rhs})
 }
 
-func (this *QueryTable_) ResetTimer()  {
+func (this *QueryTable_) ResetTimer() {
 	retVal, _ := this.Call(0x0000072a, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *QueryTable_) WebSelectionType() int32 {
@@ -511,7 +511,7 @@ func (this *QueryTable_) WebSelectionType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *QueryTable_) SetWebSelectionType(rhs int32)  {
+func (this *QueryTable_) SetWebSelectionType(rhs int32) {
 	_ = this.PropPut(0x00000750, []interface{}{rhs})
 }
 
@@ -520,7 +520,7 @@ func (this *QueryTable_) WebFormatting() int32 {
 	return retVal.LValVal()
 }
 
-func (this *QueryTable_) SetWebFormatting(rhs int32)  {
+func (this *QueryTable_) SetWebFormatting(rhs int32) {
 	_ = this.PropPut(0x00000751, []interface{}{rhs})
 }
 
@@ -529,7 +529,7 @@ func (this *QueryTable_) WebTables() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *QueryTable_) SetWebTables(rhs string)  {
+func (this *QueryTable_) SetWebTables(rhs string) {
 	_ = this.PropPut(0x00000752, []interface{}{rhs})
 }
 
@@ -538,7 +538,7 @@ func (this *QueryTable_) WebPreFormattedTextToColumns() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetWebPreFormattedTextToColumns(rhs bool)  {
+func (this *QueryTable_) SetWebPreFormattedTextToColumns(rhs bool) {
 	_ = this.PropPut(0x00000753, []interface{}{rhs})
 }
 
@@ -547,7 +547,7 @@ func (this *QueryTable_) WebSingleBlockTextImport() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetWebSingleBlockTextImport(rhs bool)  {
+func (this *QueryTable_) SetWebSingleBlockTextImport(rhs bool) {
 	_ = this.PropPut(0x00000754, []interface{}{rhs})
 }
 
@@ -556,7 +556,7 @@ func (this *QueryTable_) WebDisableDateRecognition() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetWebDisableDateRecognition(rhs bool)  {
+func (this *QueryTable_) SetWebDisableDateRecognition(rhs bool) {
 	_ = this.PropPut(0x00000755, []interface{}{rhs})
 }
 
@@ -565,7 +565,7 @@ func (this *QueryTable_) WebConsecutiveDelimitersAsOne() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetWebConsecutiveDelimitersAsOne(rhs bool)  {
+func (this *QueryTable_) SetWebConsecutiveDelimitersAsOne(rhs bool) {
 	_ = this.PropPut(0x00000756, []interface{}{rhs})
 }
 
@@ -574,7 +574,7 @@ func (this *QueryTable_) WebDisableRedirections() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetWebDisableRedirections(rhs bool)  {
+func (this *QueryTable_) SetWebDisableRedirections(rhs bool) {
 	_ = this.PropPut(0x00000872, []interface{}{rhs})
 }
 
@@ -584,7 +584,7 @@ func (this *QueryTable_) EditWebPage() ole.Variant {
 	return *retVal
 }
 
-func (this *QueryTable_) SetEditWebPage(rhs interface{})  {
+func (this *QueryTable_) SetEditWebPage(rhs interface{}) {
 	_ = this.PropPut(0x00000873, []interface{}{rhs})
 }
 
@@ -593,7 +593,7 @@ func (this *QueryTable_) SourceConnectionFile() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *QueryTable_) SetSourceConnectionFile(rhs string)  {
+func (this *QueryTable_) SetSourceConnectionFile(rhs string) {
 	_ = this.PropPut(0x0000081f, []interface{}{rhs})
 }
 
@@ -602,7 +602,7 @@ func (this *QueryTable_) SourceDataFile() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *QueryTable_) SetSourceDataFile(rhs string)  {
+func (this *QueryTable_) SetSourceDataFile(rhs string) {
 	_ = this.PropPut(0x00000820, []interface{}{rhs})
 }
 
@@ -611,7 +611,7 @@ func (this *QueryTable_) RobustConnect() int32 {
 	return retVal.LValVal()
 }
 
-func (this *QueryTable_) SetRobustConnect(rhs int32)  {
+func (this *QueryTable_) SetRobustConnect(rhs int32) {
 	_ = this.PropPut(0x00000821, []interface{}{rhs})
 }
 
@@ -620,18 +620,18 @@ func (this *QueryTable_) TextFileTrailingMinusNumbers() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *QueryTable_) SetTextFileTrailingMinusNumbers(rhs bool)  {
+func (this *QueryTable_) SetTextFileTrailingMinusNumbers(rhs bool) {
 	_ = this.PropPut(0x00000874, []interface{}{rhs})
 }
 
-var QueryTable__SaveAsODC_OptArgs= []string{
-	"Description", "Keywords", 
+var QueryTable__SaveAsODC_OptArgs = []string{
+	"Description", "Keywords",
 }
 
-func (this *QueryTable_) SaveAsODC(odcfileName string, optArgs ...interface{})  {
+func (this *QueryTable_) SaveAsODC(odcfileName string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(QueryTable__SaveAsODC_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000822, []interface{}{odcfileName}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *QueryTable_) ListObject() *ListObject {
@@ -644,7 +644,7 @@ func (this *QueryTable_) TextFileVisualLayout() int32 {
 	return retVal.LValVal()
 }
 
-func (this *QueryTable_) SetTextFileVisualLayout(rhs int32)  {
+func (this *QueryTable_) SetTextFileVisualLayout(rhs int32) {
 	_ = this.PropPut(0x000008c5, []interface{}{rhs})
 }
 
@@ -657,4 +657,3 @@ func (this *QueryTable_) Sort() *Sort {
 	retVal, _ := this.PropGet(0x00000370, nil)
 	return NewSort(retVal.IDispatch(), false, true)
 }
-

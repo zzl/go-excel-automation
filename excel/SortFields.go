@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000244AA-0000-0000-C000-000000000046
-var IID_SortFields = syscall.GUID{0x000244AA, 0x0000, 0x0000, 
+var IID_SortFields = syscall.GUID{0x000244AA, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type SortFields struct {
@@ -17,8 +17,8 @@ type SortFields struct {
 }
 
 func NewSortFields(pDisp *win32.IDispatch, addRef bool, scoped bool) *SortFields {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &SortFields{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *SortFields) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *SortFields) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *SortFields) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *SortFields) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *SortFields) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *SortFields) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *SortFields) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *SortFields) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *SortFields) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *SortFields) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *SortFields) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *SortFields) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *SortFields) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *SortFields) Application() *Application {
@@ -95,8 +95,8 @@ func (this *SortFields) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var SortFields_Add_OptArgs= []string{
-	"SortOn", "Order", "CustomOrder", "DataOption", 
+var SortFields_Add_OptArgs = []string{
+	"SortOn", "Order", "CustomOrder", "DataOption",
 }
 
 func (this *SortFields) Add(key *Range, optArgs ...interface{}) *SortField {
@@ -115,9 +115,9 @@ func (this *SortFields) Count() int32 {
 	return retVal.LValVal()
 }
 
-func (this *SortFields) Clear()  {
+func (this *SortFields) Clear() {
 	retVal, _ := this.Call(0x0000006f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *SortFields) Default_(index interface{}) *SortField {
@@ -134,7 +134,7 @@ func (this *SortFields) ForEach(action func(item *SortField) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -150,4 +150,3 @@ func (this *SortFields) ForEach(action func(item *SortField) bool) {
 		}
 	}
 }
-

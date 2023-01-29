@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020876-0000-0000-C000-000000000046
-var IID_PivotItem = syscall.GUID{0x00020876, 0x0000, 0x0000, 
+var IID_PivotItem = syscall.GUID{0x00020876, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type PivotItem struct {
@@ -17,8 +17,8 @@ type PivotItem struct {
 }
 
 func NewPivotItem(pDisp *win32.IDispatch, addRef bool, scoped bool) *PivotItem {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &PivotItem{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *PivotItem) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *PivotItem) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *PivotItem) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotItem) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *PivotItem) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *PivotItem) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *PivotItem) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotItem) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *PivotItem) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotItem) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *PivotItem) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotItem) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *PivotItem) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotItem) Application() *Application {
@@ -95,8 +95,8 @@ func (this *PivotItem) Parent() *PivotField {
 	return NewPivotField(retVal.IDispatch(), false, true)
 }
 
-var PivotItem_ChildItems_OptArgs= []string{
-	"Index", 
+var PivotItem_ChildItems_OptArgs = []string{
+	"Index",
 }
 
 func (this *PivotItem) ChildItems(optArgs ...interface{}) ole.Variant {
@@ -116,7 +116,7 @@ func (this *PivotItem) Default_() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotItem) SetDefault_(rhs string)  {
+func (this *PivotItem) SetDefault_(rhs string) {
 	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
@@ -130,7 +130,7 @@ func (this *PivotItem) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotItem) SetName(rhs string)  {
+func (this *PivotItem) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -149,7 +149,7 @@ func (this *PivotItem) Position() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PivotItem) SetPosition(rhs int32)  {
+func (this *PivotItem) SetPosition(rhs int32) {
 	_ = this.PropPut(0x00000085, []interface{}{rhs})
 }
 
@@ -158,7 +158,7 @@ func (this *PivotItem) ShowDetail() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotItem) SetShowDetail(rhs bool)  {
+func (this *PivotItem) SetShowDetail(rhs bool) {
 	_ = this.PropPut(0x00000249, []interface{}{rhs})
 }
 
@@ -173,7 +173,7 @@ func (this *PivotItem) Value() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotItem) SetValue(rhs string)  {
+func (this *PivotItem) SetValue(rhs string) {
 	_ = this.PropPut(0x00000006, []interface{}{rhs})
 }
 
@@ -182,13 +182,13 @@ func (this *PivotItem) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotItem) SetVisible(rhs bool)  {
+func (this *PivotItem) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
-func (this *PivotItem) Delete()  {
+func (this *PivotItem) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotItem) IsCalculated() bool {
@@ -206,7 +206,7 @@ func (this *PivotItem) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotItem) SetFormula(rhs string)  {
+func (this *PivotItem) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -215,7 +215,7 @@ func (this *PivotItem) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotItem) SetCaption(rhs string)  {
+func (this *PivotItem) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
@@ -224,7 +224,7 @@ func (this *PivotItem) DrilledDown() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotItem) SetDrilledDown(rhs bool)  {
+func (this *PivotItem) SetDrilledDown(rhs bool) {
 	_ = this.PropPut(0x0000073a, []interface{}{rhs})
 }
 
@@ -233,7 +233,7 @@ func (this *PivotItem) StandardFormula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotItem) SetStandardFormula(rhs string)  {
+func (this *PivotItem) SetStandardFormula(rhs string) {
 	_ = this.PropPut(0x00000824, []interface{}{rhs})
 }
 
@@ -242,8 +242,7 @@ func (this *PivotItem) SourceNameStandard() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotItem) DrillTo(field string)  {
+func (this *PivotItem) DrillTo(field string) {
 	retVal, _ := this.Call(0x00000a14, []interface{}{field})
-	_= retVal
+	_ = retVal
 }
-

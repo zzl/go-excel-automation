@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002445A-0000-0000-C000-000000000046
-var IID_AutoRecover = syscall.GUID{0x0002445A, 0x0000, 0x0000, 
+var IID_AutoRecover = syscall.GUID{0x0002445A, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type AutoRecover struct {
@@ -17,8 +17,8 @@ type AutoRecover struct {
 }
 
 func NewAutoRecover(pDisp *win32.IDispatch, addRef bool, scoped bool) *AutoRecover {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &AutoRecover{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *AutoRecover) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *AutoRecover) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *AutoRecover) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *AutoRecover) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *AutoRecover) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *AutoRecover) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *AutoRecover) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *AutoRecover) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *AutoRecover) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *AutoRecover) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *AutoRecover) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *AutoRecover) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *AutoRecover) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *AutoRecover) Application() *Application {
@@ -100,7 +100,7 @@ func (this *AutoRecover) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *AutoRecover) SetEnabled(rhs bool)  {
+func (this *AutoRecover) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -109,7 +109,7 @@ func (this *AutoRecover) Time() int32 {
 	return retVal.LValVal()
 }
 
-func (this *AutoRecover) SetTime(rhs int32)  {
+func (this *AutoRecover) SetTime(rhs int32) {
 	_ = this.PropPut(0x0000018a, []interface{}{rhs})
 }
 
@@ -118,7 +118,6 @@ func (this *AutoRecover) Path() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *AutoRecover) SetPath(rhs string)  {
+func (this *AutoRecover) SetPath(rhs string) {
 	_ = this.PropPut(0x00000123, []interface{}{rhs})
 }
-

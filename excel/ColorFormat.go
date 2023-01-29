@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 000C0312-0000-0000-C000-000000000046
-var IID_ColorFormat = syscall.GUID{0x000C0312, 0x0000, 0x0000, 
+var IID_ColorFormat = syscall.GUID{0x000C0312, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ColorFormat struct {
@@ -16,8 +16,8 @@ type ColorFormat struct {
 }
 
 func NewColorFormat(pDisp *win32.IDispatch, addRef bool, scoped bool) *ColorFormat {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &ColorFormat{ole.OleClient{pDisp}}
 	if addRef {
@@ -64,7 +64,7 @@ func (this *ColorFormat) RGB() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ColorFormat) SetRGB(rhs int32)  {
+func (this *ColorFormat) SetRGB(rhs int32) {
 	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
@@ -73,7 +73,7 @@ func (this *ColorFormat) SchemeColor() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ColorFormat) SetSchemeColor(rhs int32)  {
+func (this *ColorFormat) SetSchemeColor(rhs int32) {
 	_ = this.PropPut(0x00000064, []interface{}{rhs})
 }
 
@@ -87,7 +87,7 @@ func (this *ColorFormat) TintAndShade() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ColorFormat) SetTintAndShade(rhs float32)  {
+func (this *ColorFormat) SetTintAndShade(rhs float32) {
 	_ = this.PropPut(0x00000066, []interface{}{rhs})
 }
 
@@ -96,7 +96,7 @@ func (this *ColorFormat) ObjectThemeColor() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ColorFormat) SetObjectThemeColor(rhs int32)  {
+func (this *ColorFormat) SetObjectThemeColor(rhs int32) {
 	_ = this.PropPut(0x00000068, []interface{}{rhs})
 }
 
@@ -105,7 +105,6 @@ func (this *ColorFormat) Brightness() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *ColorFormat) SetBrightness(rhs float32)  {
+func (this *ColorFormat) SetBrightness(rhs float32) {
 	_ = this.PropPut(0x00000069, []interface{}{rhs})
 }
-

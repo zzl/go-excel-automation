@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024427-0000-0000-C000-000000000046
-var IID_Comment = syscall.GUID{0x00024427, 0x0000, 0x0000, 
+var IID_Comment = syscall.GUID{0x00024427, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Comment struct {
@@ -17,8 +17,8 @@ type Comment struct {
 }
 
 func NewComment(pDisp *win32.IDispatch, addRef bool, scoped bool) *Comment {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Comment{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Comment) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Comment) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Comment) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Comment) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Comment) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Comment) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Comment) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Comment) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Comment) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Comment) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Comment) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Comment) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Comment) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Comment) Application() *Application {
@@ -110,12 +110,12 @@ func (this *Comment) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Comment) SetVisible(rhs bool)  {
+func (this *Comment) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
-var Comment_Text_OptArgs= []string{
-	"Text", "Start", "Overwrite", 
+var Comment_Text_OptArgs = []string{
+	"Text", "Start", "Overwrite",
 }
 
 func (this *Comment) Text(optArgs ...interface{}) string {
@@ -124,9 +124,9 @@ func (this *Comment) Text(optArgs ...interface{}) string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Comment) Delete()  {
+func (this *Comment) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Comment) Next() *Comment {
@@ -138,4 +138,3 @@ func (this *Comment) Previous() *Comment {
 	retVal, _ := this.Call(0x000001f7, nil)
 	return NewComment(retVal.IDispatch(), false, true)
 }
-

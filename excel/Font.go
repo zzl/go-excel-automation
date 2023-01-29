@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002084D-0000-0000-C000-000000000046
-var IID_Font = syscall.GUID{0x0002084D, 0x0000, 0x0000, 
+var IID_Font = syscall.GUID{0x0002084D, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Font struct {
@@ -17,8 +17,8 @@ type Font struct {
 }
 
 func NewFont(pDisp *win32.IDispatch, addRef bool, scoped bool) *Font {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Font{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Font) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Font) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Font) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Font) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Font) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Font) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Font) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Font) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Font) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Font) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Font) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Font) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Font) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Font) Application() *Application {
@@ -101,7 +101,7 @@ func (this *Font) Background() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetBackground(rhs interface{})  {
+func (this *Font) SetBackground(rhs interface{}) {
 	_ = this.PropPut(0x000000b4, []interface{}{rhs})
 }
 
@@ -111,7 +111,7 @@ func (this *Font) Bold() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetBold(rhs interface{})  {
+func (this *Font) SetBold(rhs interface{}) {
 	_ = this.PropPut(0x00000060, []interface{}{rhs})
 }
 
@@ -121,7 +121,7 @@ func (this *Font) Color() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetColor(rhs interface{})  {
+func (this *Font) SetColor(rhs interface{}) {
 	_ = this.PropPut(0x00000063, []interface{}{rhs})
 }
 
@@ -131,7 +131,7 @@ func (this *Font) ColorIndex() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetColorIndex(rhs interface{})  {
+func (this *Font) SetColorIndex(rhs interface{}) {
 	_ = this.PropPut(0x00000061, []interface{}{rhs})
 }
 
@@ -141,7 +141,7 @@ func (this *Font) FontStyle() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetFontStyle(rhs interface{})  {
+func (this *Font) SetFontStyle(rhs interface{}) {
 	_ = this.PropPut(0x000000b1, []interface{}{rhs})
 }
 
@@ -151,7 +151,7 @@ func (this *Font) Italic() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetItalic(rhs interface{})  {
+func (this *Font) SetItalic(rhs interface{}) {
 	_ = this.PropPut(0x00000065, []interface{}{rhs})
 }
 
@@ -161,7 +161,7 @@ func (this *Font) Name() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetName(rhs interface{})  {
+func (this *Font) SetName(rhs interface{}) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -171,7 +171,7 @@ func (this *Font) OutlineFont() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetOutlineFont(rhs interface{})  {
+func (this *Font) SetOutlineFont(rhs interface{}) {
 	_ = this.PropPut(0x000000dd, []interface{}{rhs})
 }
 
@@ -181,7 +181,7 @@ func (this *Font) Shadow() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetShadow(rhs interface{})  {
+func (this *Font) SetShadow(rhs interface{}) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
@@ -191,7 +191,7 @@ func (this *Font) Size() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetSize(rhs interface{})  {
+func (this *Font) SetSize(rhs interface{}) {
 	_ = this.PropPut(0x00000068, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *Font) Strikethrough() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetStrikethrough(rhs interface{})  {
+func (this *Font) SetStrikethrough(rhs interface{}) {
 	_ = this.PropPut(0x00000069, []interface{}{rhs})
 }
 
@@ -211,7 +211,7 @@ func (this *Font) Subscript() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetSubscript(rhs interface{})  {
+func (this *Font) SetSubscript(rhs interface{}) {
 	_ = this.PropPut(0x000000b3, []interface{}{rhs})
 }
 
@@ -221,7 +221,7 @@ func (this *Font) Superscript() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetSuperscript(rhs interface{})  {
+func (this *Font) SetSuperscript(rhs interface{}) {
 	_ = this.PropPut(0x000000b2, []interface{}{rhs})
 }
 
@@ -231,7 +231,7 @@ func (this *Font) Underline() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetUnderline(rhs interface{})  {
+func (this *Font) SetUnderline(rhs interface{}) {
 	_ = this.PropPut(0x0000006a, []interface{}{rhs})
 }
 
@@ -241,7 +241,7 @@ func (this *Font) ThemeColor() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetThemeColor(rhs interface{})  {
+func (this *Font) SetThemeColor(rhs interface{}) {
 	_ = this.PropPut(0x0000093d, []interface{}{rhs})
 }
 
@@ -251,7 +251,7 @@ func (this *Font) TintAndShade() ole.Variant {
 	return *retVal
 }
 
-func (this *Font) SetTintAndShade(rhs interface{})  {
+func (this *Font) SetTintAndShade(rhs interface{}) {
 	_ = this.PropPut(0x0000093e, []interface{}{rhs})
 }
 
@@ -260,7 +260,6 @@ func (this *Font) ThemeFont() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Font) SetThemeFont(rhs int32)  {
+func (this *Font) SetThemeFont(rhs int32) {
 	_ = this.PropPut(0x0000093f, []interface{}{rhs})
 }
-

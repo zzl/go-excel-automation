@@ -1,39 +1,39 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002441B-0000-0000-C000-000000000046
-var IID_RefreshEvents = syscall.GUID{0x0002441B, 0x0000, 0x0000, 
+var IID_RefreshEvents = syscall.GUID{0x0002441B, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type RefreshEventsDispInterface interface {
-	QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) 
+	QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)
 	AddRef_() uint32
 	Release_() uint32
-	GetTypeInfoCount_(pctinfo *uint32) 
-	GetTypeInfo_(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) 
-	GetIDsOfNames_(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) 
-	Invoke_(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) 
-	BeforeRefresh(cancel *win32.VARIANT_BOOL) 
-	AfterRefresh(success bool) 
+	GetTypeInfoCount_(pctinfo *uint32)
+	GetTypeInfo_(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)
+	GetIDsOfNames_(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)
+	Invoke_(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)
+	BeforeRefresh(cancel *win32.VARIANT_BOOL)
+	AfterRefresh(success bool)
 }
 
 type RefreshEventsHandlers struct {
-	QueryInterface_ func(riid *syscall.GUID, ppvObj unsafe.Pointer) 
-	AddRef_ func() uint32
-	Release_ func() uint32
-	GetTypeInfoCount_ func(pctinfo *uint32) 
-	GetTypeInfo_ func(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) 
-	GetIDsOfNames_ func(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) 
-	Invoke_ func(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) 
-	BeforeRefresh func(cancel *win32.VARIANT_BOOL) 
-	AfterRefresh func(success bool) 
+	QueryInterface_   func(riid *syscall.GUID, ppvObj unsafe.Pointer)
+	AddRef_           func() uint32
+	Release_          func() uint32
+	GetTypeInfoCount_ func(pctinfo *uint32)
+	GetTypeInfo_      func(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)
+	GetIDsOfNames_    func(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)
+	Invoke_           func(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)
+	BeforeRefresh     func(cancel *win32.VARIANT_BOOL)
+	AfterRefresh      func(success bool)
 }
 
 type RefreshEventsDispImpl struct {
@@ -185,10 +185,9 @@ type RefreshEventsComObj struct {
 
 func NewRefreshEventsComObj(dispImpl RefreshEventsDispInterface, scoped bool) *RefreshEventsComObj {
 	comObj := com.NewComObj[RefreshEventsComObj](
-		&RefreshEventsImpl {DispImpl: dispImpl})
+		&RefreshEventsImpl{DispImpl: dispImpl})
 	if scoped {
 		com.AddToScope(comObj)
 	}
 	return comObj
 }
-

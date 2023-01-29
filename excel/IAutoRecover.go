@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002445A-0001-0000-C000-000000000046
-var IID_IAutoRecover = syscall.GUID{0x0002445A, 0x0001, 0x0000, 
+var IID_IAutoRecover = syscall.GUID{0x0002445A, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IAutoRecover struct {
@@ -16,8 +16,8 @@ type IAutoRecover struct {
 }
 
 func NewIAutoRecover(pUnk *win32.IUnknown, addRef bool, scoped bool) *IAutoRecover {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IAutoRecover)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -36,7 +36,7 @@ func (this *IAutoRecover) IID() *syscall.GUID {
 func (this *IAutoRecover) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -49,7 +49,7 @@ func (this *IAutoRecover) GetCreator(rhs *int32) com.Error {
 func (this *IAutoRecover) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -88,4 +88,3 @@ func (this *IAutoRecover) SetPath(rhs string) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(win32.StrToPointer(rhs)))
 	return com.Error(ret)
 }
-

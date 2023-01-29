@@ -1,16 +1,16 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
-	"unsafe"
 	"time"
+	"unsafe"
 )
 
 // 00020872-0000-0000-C000-000000000046
-var IID_PivotTable = syscall.GUID{0x00020872, 0x0000, 0x0000, 
+var IID_PivotTable = syscall.GUID{0x00020872, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type PivotTable struct {
@@ -18,8 +18,8 @@ type PivotTable struct {
 }
 
 func NewPivotTable(pDisp *win32.IDispatch, addRef bool, scoped bool) *PivotTable {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &PivotTable{ole.OleClient{pDisp}}
 	if addRef {
@@ -46,9 +46,9 @@ func (this *PivotTable) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *PivotTable) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *PivotTable) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) AddRef() uint32 {
@@ -61,24 +61,24 @@ func (this *PivotTable) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *PivotTable) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *PivotTable) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotTable) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *PivotTable) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotTable) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *PivotTable) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotTable) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *PivotTable) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) Application() *Application {
@@ -96,8 +96,8 @@ func (this *PivotTable) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var PivotTable_AddFields_OptArgs= []string{
-	"RowFields", "ColumnFields", "PageFields", "AddToTable", 
+var PivotTable_AddFields_OptArgs = []string{
+	"RowFields", "ColumnFields", "PageFields", "AddToTable",
 }
 
 func (this *PivotTable) AddFields(optArgs ...interface{}) ole.Variant {
@@ -107,8 +107,8 @@ func (this *PivotTable) AddFields(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var PivotTable_ColumnFields_OptArgs= []string{
-	"Index", 
+var PivotTable_ColumnFields_OptArgs = []string{
+	"Index",
 }
 
 func (this *PivotTable) ColumnFields(optArgs ...interface{}) *ole.DispatchClass {
@@ -122,7 +122,7 @@ func (this *PivotTable) ColumnGrand() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetColumnGrand(rhs bool)  {
+func (this *PivotTable) SetColumnGrand(rhs bool) {
 	_ = this.PropPut(0x000002b6, []interface{}{rhs})
 }
 
@@ -131,8 +131,8 @@ func (this *PivotTable) ColumnRange() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var PivotTable_ShowPages_OptArgs= []string{
-	"PageField", 
+var PivotTable_ShowPages_OptArgs = []string{
+	"PageField",
 }
 
 func (this *PivotTable) ShowPages(optArgs ...interface{}) ole.Variant {
@@ -147,8 +147,8 @@ func (this *PivotTable) DataBodyRange() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var PivotTable_DataFields_OptArgs= []string{
-	"Index", 
+var PivotTable_DataFields_OptArgs = []string{
+	"Index",
 }
 
 func (this *PivotTable) DataFields(optArgs ...interface{}) *ole.DispatchClass {
@@ -167,7 +167,7 @@ func (this *PivotTable) Default_() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetDefault_(rhs string)  {
+func (this *PivotTable) SetDefault_(rhs string) {
 	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
@@ -176,12 +176,12 @@ func (this *PivotTable) HasAutoFormat() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetHasAutoFormat(rhs bool)  {
+func (this *PivotTable) SetHasAutoFormat(rhs bool) {
 	_ = this.PropPut(0x000002b7, []interface{}{rhs})
 }
 
-var PivotTable_HiddenFields_OptArgs= []string{
-	"Index", 
+var PivotTable_HiddenFields_OptArgs = []string{
+	"Index",
 }
 
 func (this *PivotTable) HiddenFields(optArgs ...interface{}) *ole.DispatchClass {
@@ -195,7 +195,7 @@ func (this *PivotTable) InnerDetail() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetInnerDetail(rhs string)  {
+func (this *PivotTable) SetInnerDetail(rhs string) {
 	_ = this.PropPut(0x000002ba, []interface{}{rhs})
 }
 
@@ -204,12 +204,12 @@ func (this *PivotTable) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetName(rhs string)  {
+func (this *PivotTable) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
-var PivotTable_PageFields_OptArgs= []string{
-	"Index", 
+var PivotTable_PageFields_OptArgs = []string{
+	"Index",
 }
 
 func (this *PivotTable) PageFields(optArgs ...interface{}) *ole.DispatchClass {
@@ -228,8 +228,8 @@ func (this *PivotTable) PageRangeCells() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var PivotTable_PivotFields_OptArgs= []string{
-	"Index", 
+var PivotTable_PivotFields_OptArgs = []string{
+	"Index",
 }
 
 func (this *PivotTable) PivotFields(optArgs ...interface{}) *ole.DispatchClass {
@@ -253,8 +253,8 @@ func (this *PivotTable) RefreshTable() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-var PivotTable_RowFields_OptArgs= []string{
-	"Index", 
+var PivotTable_RowFields_OptArgs = []string{
+	"Index",
 }
 
 func (this *PivotTable) RowFields(optArgs ...interface{}) *ole.DispatchClass {
@@ -268,7 +268,7 @@ func (this *PivotTable) RowGrand() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetRowGrand(rhs bool)  {
+func (this *PivotTable) SetRowGrand(rhs bool) {
 	_ = this.PropPut(0x000002b5, []interface{}{rhs})
 }
 
@@ -282,7 +282,7 @@ func (this *PivotTable) SaveData() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetSaveData(rhs bool)  {
+func (this *PivotTable) SetSaveData(rhs bool) {
 	_ = this.PropPut(0x000002b4, []interface{}{rhs})
 }
 
@@ -292,7 +292,7 @@ func (this *PivotTable) SourceData() ole.Variant {
 	return *retVal
 }
 
-func (this *PivotTable) SetSourceData(rhs interface{})  {
+func (this *PivotTable) SetSourceData(rhs interface{}) {
 	_ = this.PropPut(0x000002ae, []interface{}{rhs})
 }
 
@@ -311,12 +311,12 @@ func (this *PivotTable) Value() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetValue(rhs string)  {
+func (this *PivotTable) SetValue(rhs string) {
 	_ = this.PropPut(0x00000006, []interface{}{rhs})
 }
 
-var PivotTable_VisibleFields_OptArgs= []string{
-	"Index", 
+var PivotTable_VisibleFields_OptArgs = []string{
+	"Index",
 }
 
 func (this *PivotTable) VisibleFields(optArgs ...interface{}) *ole.DispatchClass {
@@ -330,7 +330,7 @@ func (this *PivotTable) CacheIndex() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PivotTable) SetCacheIndex(rhs int32)  {
+func (this *PivotTable) SetCacheIndex(rhs int32) {
 	_ = this.PropPut(0x000005cb, []interface{}{rhs})
 }
 
@@ -344,7 +344,7 @@ func (this *PivotTable) DisplayErrorString() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetDisplayErrorString(rhs bool)  {
+func (this *PivotTable) SetDisplayErrorString(rhs bool) {
 	_ = this.PropPut(0x000005cd, []interface{}{rhs})
 }
 
@@ -353,7 +353,7 @@ func (this *PivotTable) DisplayNullString() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetDisplayNullString(rhs bool)  {
+func (this *PivotTable) SetDisplayNullString(rhs bool) {
 	_ = this.PropPut(0x000005ce, []interface{}{rhs})
 }
 
@@ -362,7 +362,7 @@ func (this *PivotTable) EnableDrilldown() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetEnableDrilldown(rhs bool)  {
+func (this *PivotTable) SetEnableDrilldown(rhs bool) {
 	_ = this.PropPut(0x000005cf, []interface{}{rhs})
 }
 
@@ -371,7 +371,7 @@ func (this *PivotTable) EnableFieldDialog() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetEnableFieldDialog(rhs bool)  {
+func (this *PivotTable) SetEnableFieldDialog(rhs bool) {
 	_ = this.PropPut(0x000005d0, []interface{}{rhs})
 }
 
@@ -380,7 +380,7 @@ func (this *PivotTable) EnableWizard() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetEnableWizard(rhs bool)  {
+func (this *PivotTable) SetEnableWizard(rhs bool) {
 	_ = this.PropPut(0x000005d1, []interface{}{rhs})
 }
 
@@ -389,7 +389,7 @@ func (this *PivotTable) ErrorString() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetErrorString(rhs string)  {
+func (this *PivotTable) SetErrorString(rhs string) {
 	_ = this.PropPut(0x000005d2, []interface{}{rhs})
 }
 
@@ -398,9 +398,9 @@ func (this *PivotTable) GetData(name string) float64 {
 	return retVal.DblValVal()
 }
 
-func (this *PivotTable) ListFormulas()  {
+func (this *PivotTable) ListFormulas() {
 	retVal, _ := this.Call(0x000005d4, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) ManualUpdate() bool {
@@ -408,7 +408,7 @@ func (this *PivotTable) ManualUpdate() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetManualUpdate(rhs bool)  {
+func (this *PivotTable) SetManualUpdate(rhs bool) {
 	_ = this.PropPut(0x000005d5, []interface{}{rhs})
 }
 
@@ -417,7 +417,7 @@ func (this *PivotTable) MergeLabels() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetMergeLabels(rhs bool)  {
+func (this *PivotTable) SetMergeLabels(rhs bool) {
 	_ = this.PropPut(0x000005d6, []interface{}{rhs})
 }
 
@@ -426,7 +426,7 @@ func (this *PivotTable) NullString() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetNullString(rhs string)  {
+func (this *PivotTable) SetNullString(rhs string) {
 	_ = this.PropPut(0x000005d7, []interface{}{rhs})
 }
 
@@ -440,17 +440,17 @@ func (this *PivotTable) PivotFormulas() *PivotFormulas {
 	return NewPivotFormulas(retVal.IDispatch(), false, true)
 }
 
-var PivotTable_PivotTableWizard_OptArgs= []string{
-	"SourceType", "SourceData", "TableDestination", "TableName", 
-	"RowGrand", "ColumnGrand", "SaveData", "HasAutoFormat", 
-	"AutoPage", "Reserved", "BackgroundQuery", "OptimizeCache", 
-	"PageFieldOrder", "PageFieldWrapCount", "ReadData", "Connection", 
+var PivotTable_PivotTableWizard_OptArgs = []string{
+	"SourceType", "SourceData", "TableDestination", "TableName",
+	"RowGrand", "ColumnGrand", "SaveData", "HasAutoFormat",
+	"AutoPage", "Reserved", "BackgroundQuery", "OptimizeCache",
+	"PageFieldOrder", "PageFieldWrapCount", "ReadData", "Connection",
 }
 
-func (this *PivotTable) PivotTableWizard(optArgs ...interface{})  {
+func (this *PivotTable) PivotTableWizard(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(PivotTable_PivotTableWizard_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000002ac, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) SubtotalHiddenPageItems() bool {
@@ -458,7 +458,7 @@ func (this *PivotTable) SubtotalHiddenPageItems() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetSubtotalHiddenPageItems(rhs bool)  {
+func (this *PivotTable) SetSubtotalHiddenPageItems(rhs bool) {
 	_ = this.PropPut(0x000005da, []interface{}{rhs})
 }
 
@@ -467,7 +467,7 @@ func (this *PivotTable) PageFieldOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PivotTable) SetPageFieldOrder(rhs int32)  {
+func (this *PivotTable) SetPageFieldOrder(rhs int32) {
 	_ = this.PropPut(0x00000595, []interface{}{rhs})
 }
 
@@ -476,7 +476,7 @@ func (this *PivotTable) PageFieldStyle() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetPageFieldStyle(rhs string)  {
+func (this *PivotTable) SetPageFieldStyle(rhs string) {
 	_ = this.PropPut(0x000005db, []interface{}{rhs})
 }
 
@@ -485,7 +485,7 @@ func (this *PivotTable) PageFieldWrapCount() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PivotTable) SetPageFieldWrapCount(rhs int32)  {
+func (this *PivotTable) SetPageFieldWrapCount(rhs int32) {
 	_ = this.PropPut(0x00000596, []interface{}{rhs})
 }
 
@@ -494,18 +494,18 @@ func (this *PivotTable) PreserveFormatting() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetPreserveFormatting(rhs bool)  {
+func (this *PivotTable) SetPreserveFormatting(rhs bool) {
 	_ = this.PropPut(0x000005dc, []interface{}{rhs})
 }
 
-var PivotTable_PivotSelect__OptArgs= []string{
-	"Mode", 
+var PivotTable_PivotSelect__OptArgs = []string{
+	"Mode",
 }
 
-func (this *PivotTable) PivotSelect_(name string, optArgs ...interface{})  {
+func (this *PivotTable) PivotSelect_(name string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(PivotTable_PivotSelect__OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000827, []interface{}{name}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) PivotSelection() string {
@@ -513,7 +513,7 @@ func (this *PivotTable) PivotSelection() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetPivotSelection(rhs string)  {
+func (this *PivotTable) SetPivotSelection(rhs string) {
 	_ = this.PropPut(0x000005de, []interface{}{rhs})
 }
 
@@ -522,7 +522,7 @@ func (this *PivotTable) SelectionMode() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PivotTable) SetSelectionMode(rhs int32)  {
+func (this *PivotTable) SetSelectionMode(rhs int32) {
 	_ = this.PropPut(0x000005df, []interface{}{rhs})
 }
 
@@ -531,7 +531,7 @@ func (this *PivotTable) TableStyle() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetTableStyle(rhs string)  {
+func (this *PivotTable) SetTableStyle(rhs string) {
 	_ = this.PropPut(0x000005e0, []interface{}{rhs})
 }
 
@@ -540,13 +540,13 @@ func (this *PivotTable) Tag() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetTag(rhs string)  {
+func (this *PivotTable) SetTag(rhs string) {
 	_ = this.PropPut(0x000005e1, []interface{}{rhs})
 }
 
-func (this *PivotTable) Update()  {
+func (this *PivotTable) Update() {
 	retVal, _ := this.Call(0x000002a8, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) VacatedStyle() string {
@@ -554,13 +554,13 @@ func (this *PivotTable) VacatedStyle() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetVacatedStyle(rhs string)  {
+func (this *PivotTable) SetVacatedStyle(rhs string) {
 	_ = this.PropPut(0x000005e2, []interface{}{rhs})
 }
 
-func (this *PivotTable) Format(format int32)  {
+func (this *PivotTable) Format(format int32) {
 	retVal, _ := this.Call(0x00000074, []interface{}{format})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) PrintTitles() bool {
@@ -568,7 +568,7 @@ func (this *PivotTable) PrintTitles() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetPrintTitles(rhs bool)  {
+func (this *PivotTable) SetPrintTitles(rhs bool) {
 	_ = this.PropPut(0x0000072e, []interface{}{rhs})
 }
 
@@ -582,7 +582,7 @@ func (this *PivotTable) GrandTotalName() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetGrandTotalName(rhs string)  {
+func (this *PivotTable) SetGrandTotalName(rhs string) {
 	_ = this.PropPut(0x00000730, []interface{}{rhs})
 }
 
@@ -591,7 +591,7 @@ func (this *PivotTable) SmallGrid() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetSmallGrid(rhs bool)  {
+func (this *PivotTable) SetSmallGrid(rhs bool) {
 	_ = this.PropPut(0x00000731, []interface{}{rhs})
 }
 
@@ -600,7 +600,7 @@ func (this *PivotTable) RepeatItemsOnEachPrintedPage() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetRepeatItemsOnEachPrintedPage(rhs bool)  {
+func (this *PivotTable) SetRepeatItemsOnEachPrintedPage(rhs bool) {
 	_ = this.PropPut(0x00000732, []interface{}{rhs})
 }
 
@@ -609,18 +609,18 @@ func (this *PivotTable) TotalsAnnotation() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetTotalsAnnotation(rhs bool)  {
+func (this *PivotTable) SetTotalsAnnotation(rhs bool) {
 	_ = this.PropPut(0x00000733, []interface{}{rhs})
 }
 
-var PivotTable_PivotSelect_OptArgs= []string{
-	"Mode", "UseStandardName", 
+var PivotTable_PivotSelect_OptArgs = []string{
+	"Mode", "UseStandardName",
 }
 
-func (this *PivotTable) PivotSelect(name string, optArgs ...interface{})  {
+func (this *PivotTable) PivotSelect(name string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(PivotTable_PivotSelect_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000005dd, []interface{}{name}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) PivotSelectionStandard() string {
@@ -628,18 +628,18 @@ func (this *PivotTable) PivotSelectionStandard() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetPivotSelectionStandard(rhs string)  {
+func (this *PivotTable) SetPivotSelectionStandard(rhs string) {
 	_ = this.PropPut(0x00000829, []interface{}{rhs})
 }
 
-var PivotTable_GetPivotData_OptArgs= []string{
-	"DataField", "Field1", "Item1", "Field2", 
-	"Item2", "Field3", "Item3", "Field4", 
-	"Item4", "Field5", "Item5", "Field6", 
-	"Item6", "Field7", "Item7", "Field8", 
-	"Item8", "Field9", "Item9", "Field10", 
-	"Item10", "Field11", "Item11", "Field12", 
-	"Item12", "Field13", "Item13", "Field14", "Item14", 
+var PivotTable_GetPivotData_OptArgs = []string{
+	"DataField", "Field1", "Item1", "Field2",
+	"Item2", "Field3", "Item3", "Field4",
+	"Item4", "Field5", "Item5", "Field6",
+	"Item6", "Field7", "Item7", "Field8",
+	"Item8", "Field9", "Item9", "Field10",
+	"Item10", "Field11", "Item11", "Field12",
+	"Item12", "Field13", "Item13", "Field14", "Item14",
 }
 
 func (this *PivotTable) GetPivotData(optArgs ...interface{}) *Range {
@@ -658,12 +658,12 @@ func (this *PivotTable) EnableDataValueEditing() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetEnableDataValueEditing(rhs bool)  {
+func (this *PivotTable) SetEnableDataValueEditing(rhs bool) {
 	_ = this.PropPut(0x00000849, []interface{}{rhs})
 }
 
-var PivotTable_AddDataField_OptArgs= []string{
-	"Caption", "Function", 
+var PivotTable_AddDataField_OptArgs = []string{
+	"Caption", "Function",
 }
 
 func (this *PivotTable) AddDataField(field *win32.IUnknown, optArgs ...interface{}) *PivotField {
@@ -682,7 +682,7 @@ func (this *PivotTable) ViewCalculatedMembers() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetViewCalculatedMembers(rhs bool)  {
+func (this *PivotTable) SetViewCalculatedMembers(rhs bool) {
 	_ = this.PropPut(0x0000084c, []interface{}{rhs})
 }
 
@@ -696,18 +696,18 @@ func (this *PivotTable) DisplayImmediateItems() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetDisplayImmediateItems(rhs bool)  {
+func (this *PivotTable) SetDisplayImmediateItems(rhs bool) {
 	_ = this.PropPut(0x0000084e, []interface{}{rhs})
 }
 
-var PivotTable_Dummy15_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var PivotTable_Dummy15_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *PivotTable) Dummy15(arg1 interface{}, optArgs ...interface{}) ole.Variant {
@@ -722,7 +722,7 @@ func (this *PivotTable) EnableFieldList() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetEnableFieldList(rhs bool)  {
+func (this *PivotTable) SetEnableFieldList(rhs bool) {
 	_ = this.PropPut(0x00000850, []interface{}{rhs})
 }
 
@@ -731,7 +731,7 @@ func (this *PivotTable) VisualTotals() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetVisualTotals(rhs bool)  {
+func (this *PivotTable) SetVisualTotals(rhs bool) {
 	_ = this.PropPut(0x00000851, []interface{}{rhs})
 }
 
@@ -740,7 +740,7 @@ func (this *PivotTable) ShowPageMultipleItemLabel() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetShowPageMultipleItemLabel(rhs bool)  {
+func (this *PivotTable) SetShowPageMultipleItemLabel(rhs bool) {
 	_ = this.PropPut(0x00000852, []interface{}{rhs})
 }
 
@@ -749,8 +749,8 @@ func (this *PivotTable) Version() int32 {
 	return retVal.LValVal()
 }
 
-var PivotTable_CreateCubeFile_OptArgs= []string{
-	"Measures", "Levels", "Members", "Properties", 
+var PivotTable_CreateCubeFile_OptArgs = []string{
+	"Measures", "Levels", "Members", "Properties",
 }
 
 func (this *PivotTable) CreateCubeFile(file string, optArgs ...interface{}) string {
@@ -764,7 +764,7 @@ func (this *PivotTable) DisplayEmptyRow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetDisplayEmptyRow(rhs bool)  {
+func (this *PivotTable) SetDisplayEmptyRow(rhs bool) {
 	_ = this.PropPut(0x00000858, []interface{}{rhs})
 }
 
@@ -773,7 +773,7 @@ func (this *PivotTable) DisplayEmptyColumn() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetDisplayEmptyColumn(rhs bool)  {
+func (this *PivotTable) SetDisplayEmptyColumn(rhs bool) {
 	_ = this.PropPut(0x00000859, []interface{}{rhs})
 }
 
@@ -782,7 +782,7 @@ func (this *PivotTable) ShowCellBackgroundFromOLAP() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetShowCellBackgroundFromOLAP(rhs bool)  {
+func (this *PivotTable) SetShowCellBackgroundFromOLAP(rhs bool) {
 	_ = this.PropPut(0x0000085a, []interface{}{rhs})
 }
 
@@ -801,7 +801,7 @@ func (this *PivotTable) ShowDrillIndicators() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetShowDrillIndicators(rhs bool)  {
+func (this *PivotTable) SetShowDrillIndicators(rhs bool) {
 	_ = this.PropPut(0x000009f4, []interface{}{rhs})
 }
 
@@ -810,7 +810,7 @@ func (this *PivotTable) PrintDrillIndicators() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetPrintDrillIndicators(rhs bool)  {
+func (this *PivotTable) SetPrintDrillIndicators(rhs bool) {
 	_ = this.PropPut(0x000009f5, []interface{}{rhs})
 }
 
@@ -819,7 +819,7 @@ func (this *PivotTable) DisplayMemberPropertyTooltips() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetDisplayMemberPropertyTooltips(rhs bool)  {
+func (this *PivotTable) SetDisplayMemberPropertyTooltips(rhs bool) {
 	_ = this.PropPut(0x000009f6, []interface{}{rhs})
 }
 
@@ -828,13 +828,13 @@ func (this *PivotTable) DisplayContextTooltips() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetDisplayContextTooltips(rhs bool)  {
+func (this *PivotTable) SetDisplayContextTooltips(rhs bool) {
 	_ = this.PropPut(0x000009f7, []interface{}{rhs})
 }
 
-func (this *PivotTable) ClearTable()  {
+func (this *PivotTable) ClearTable() {
 	retVal, _ := this.Call(0x000009f8, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) CompactRowIndent() int32 {
@@ -842,7 +842,7 @@ func (this *PivotTable) CompactRowIndent() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PivotTable) SetCompactRowIndent(rhs int32)  {
+func (this *PivotTable) SetCompactRowIndent(rhs int32) {
 	_ = this.PropPut(0x000009f9, []interface{}{rhs})
 }
 
@@ -851,7 +851,7 @@ func (this *PivotTable) LayoutRowDefault() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PivotTable) SetLayoutRowDefault(rhs int32)  {
+func (this *PivotTable) SetLayoutRowDefault(rhs int32) {
 	_ = this.PropPut(0x000009fa, []interface{}{rhs})
 }
 
@@ -860,18 +860,18 @@ func (this *PivotTable) DisplayFieldCaptions() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetDisplayFieldCaptions(rhs bool)  {
+func (this *PivotTable) SetDisplayFieldCaptions(rhs bool) {
 	_ = this.PropPut(0x000009fb, []interface{}{rhs})
 }
 
-func (this *PivotTable) RowAxisLayout(rowLayout int32)  {
+func (this *PivotTable) RowAxisLayout(rowLayout int32) {
 	retVal, _ := this.Call(0x000009fc, []interface{}{rowLayout})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotTable) SubtotalLocation(location int32)  {
+func (this *PivotTable) SubtotalLocation(location int32) {
 	retVal, _ := this.Call(0x000009fe, []interface{}{location})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) ActiveFilters() *PivotFilters {
@@ -884,13 +884,13 @@ func (this *PivotTable) InGridDropZones() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetInGridDropZones(rhs bool)  {
+func (this *PivotTable) SetInGridDropZones(rhs bool) {
 	_ = this.PropPut(0x00000a00, []interface{}{rhs})
 }
 
-func (this *PivotTable) ClearAllFilters()  {
+func (this *PivotTable) ClearAllFilters() {
 	retVal, _ := this.Call(0x00000a01, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) TableStyle2() ole.Variant {
@@ -899,7 +899,7 @@ func (this *PivotTable) TableStyle2() ole.Variant {
 	return *retVal
 }
 
-func (this *PivotTable) SetTableStyle2(rhs interface{})  {
+func (this *PivotTable) SetTableStyle2(rhs interface{}) {
 	_ = this.PropPut(0x00000a02, []interface{}{rhs})
 }
 
@@ -908,7 +908,7 @@ func (this *PivotTable) ShowTableStyleLastColumn() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetShowTableStyleLastColumn(rhs bool)  {
+func (this *PivotTable) SetShowTableStyleLastColumn(rhs bool) {
 	_ = this.PropPut(0x00000a03, []interface{}{rhs})
 }
 
@@ -917,7 +917,7 @@ func (this *PivotTable) ShowTableStyleRowStripes() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetShowTableStyleRowStripes(rhs bool)  {
+func (this *PivotTable) SetShowTableStyleRowStripes(rhs bool) {
 	_ = this.PropPut(0x00000a04, []interface{}{rhs})
 }
 
@@ -926,7 +926,7 @@ func (this *PivotTable) ShowTableStyleColumnStripes() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetShowTableStyleColumnStripes(rhs bool)  {
+func (this *PivotTable) SetShowTableStyleColumnStripes(rhs bool) {
 	_ = this.PropPut(0x00000a05, []interface{}{rhs})
 }
 
@@ -935,7 +935,7 @@ func (this *PivotTable) ShowTableStyleRowHeaders() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetShowTableStyleRowHeaders(rhs bool)  {
+func (this *PivotTable) SetShowTableStyleRowHeaders(rhs bool) {
 	_ = this.PropPut(0x00000a06, []interface{}{rhs})
 }
 
@@ -944,13 +944,13 @@ func (this *PivotTable) ShowTableStyleColumnHeaders() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetShowTableStyleColumnHeaders(rhs bool)  {
+func (this *PivotTable) SetShowTableStyleColumnHeaders(rhs bool) {
 	_ = this.PropPut(0x00000a07, []interface{}{rhs})
 }
 
-func (this *PivotTable) ConvertToFormulas(convertFilters bool)  {
+func (this *PivotTable) ConvertToFormulas(convertFilters bool) {
 	retVal, _ := this.Call(0x00000a08, []interface{}{convertFilters})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) AllowMultipleFilters() bool {
@@ -958,7 +958,7 @@ func (this *PivotTable) AllowMultipleFilters() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetAllowMultipleFilters(rhs bool)  {
+func (this *PivotTable) SetAllowMultipleFilters(rhs bool) {
 	_ = this.PropPut(0x00000a0a, []interface{}{rhs})
 }
 
@@ -967,7 +967,7 @@ func (this *PivotTable) CompactLayoutRowHeader() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetCompactLayoutRowHeader(rhs string)  {
+func (this *PivotTable) SetCompactLayoutRowHeader(rhs string) {
 	_ = this.PropPut(0x00000a0b, []interface{}{rhs})
 }
 
@@ -976,7 +976,7 @@ func (this *PivotTable) CompactLayoutColumnHeader() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetCompactLayoutColumnHeader(rhs string)  {
+func (this *PivotTable) SetCompactLayoutColumnHeader(rhs string) {
 	_ = this.PropPut(0x00000a0c, []interface{}{rhs})
 }
 
@@ -985,7 +985,7 @@ func (this *PivotTable) FieldListSortAscending() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetFieldListSortAscending(rhs bool)  {
+func (this *PivotTable) SetFieldListSortAscending(rhs bool) {
 	_ = this.PropPut(0x00000a0d, []interface{}{rhs})
 }
 
@@ -994,18 +994,18 @@ func (this *PivotTable) SortUsingCustomLists() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetSortUsingCustomLists(rhs bool)  {
+func (this *PivotTable) SetSortUsingCustomLists(rhs bool) {
 	_ = this.PropPut(0x00000a0e, []interface{}{rhs})
 }
 
-func (this *PivotTable) ChangeConnection(conn *WorkbookConnection)  {
+func (this *PivotTable) ChangeConnection(conn *WorkbookConnection) {
 	retVal, _ := this.Call(0x00000a0f, []interface{}{conn})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotTable) ChangePivotCache(pivotCache interface{})  {
+func (this *PivotTable) ChangePivotCache(pivotCache interface{}) {
 	retVal, _ := this.Call(0x00000a11, []interface{}{pivotCache})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) Location() string {
@@ -1013,7 +1013,7 @@ func (this *PivotTable) Location() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetLocation(rhs string)  {
+func (this *PivotTable) SetLocation(rhs string) {
 	_ = this.PropPut(0x00000575, []interface{}{rhs})
 }
 
@@ -1022,7 +1022,7 @@ func (this *PivotTable) EnableWriteback() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetEnableWriteback(rhs bool)  {
+func (this *PivotTable) SetEnableWriteback(rhs bool) {
 	_ = this.PropPut(0x00000b38, []interface{}{rhs})
 }
 
@@ -1031,7 +1031,7 @@ func (this *PivotTable) Allocation() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PivotTable) SetAllocation(rhs int32)  {
+func (this *PivotTable) SetAllocation(rhs int32) {
 	_ = this.PropPut(0x00000b39, []interface{}{rhs})
 }
 
@@ -1040,7 +1040,7 @@ func (this *PivotTable) AllocationValue() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PivotTable) SetAllocationValue(rhs int32)  {
+func (this *PivotTable) SetAllocationValue(rhs int32) {
 	_ = this.PropPut(0x00000b3a, []interface{}{rhs})
 }
 
@@ -1049,7 +1049,7 @@ func (this *PivotTable) AllocationMethod() int32 {
 	return retVal.LValVal()
 }
 
-func (this *PivotTable) SetAllocationMethod(rhs int32)  {
+func (this *PivotTable) SetAllocationMethod(rhs int32) {
 	_ = this.PropPut(0x00000b3b, []interface{}{rhs})
 }
 
@@ -1058,33 +1058,33 @@ func (this *PivotTable) AllocationWeightExpression() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetAllocationWeightExpression(rhs string)  {
+func (this *PivotTable) SetAllocationWeightExpression(rhs string) {
 	_ = this.PropPut(0x00000b3c, []interface{}{rhs})
 }
 
-func (this *PivotTable) AllocateChanges()  {
+func (this *PivotTable) AllocateChanges() {
 	retVal, _ := this.Call(0x00000b27, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotTable) CommitChanges()  {
+func (this *PivotTable) CommitChanges() {
 	retVal, _ := this.Call(0x00000b3d, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotTable) DiscardChanges()  {
+func (this *PivotTable) DiscardChanges() {
 	retVal, _ := this.Call(0x00000b28, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotTable) RefreshDataSourceValues()  {
+func (this *PivotTable) RefreshDataSourceValues() {
 	retVal, _ := this.Call(0x00000b3e, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *PivotTable) RepeatAllLabels(repeat int32)  {
+func (this *PivotTable) RepeatAllLabels(repeat int32) {
 	retVal, _ := this.Call(0x00000b3f, []interface{}{repeat})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PivotTable) ChangeList() *PivotTableChangeList {
@@ -1102,7 +1102,7 @@ func (this *PivotTable) AlternativeText() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetAlternativeText(rhs string)  {
+func (this *PivotTable) SetAlternativeText(rhs string) {
 	_ = this.PropPut(0x00000763, []interface{}{rhs})
 }
 
@@ -1111,7 +1111,7 @@ func (this *PivotTable) Summary() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *PivotTable) SetSummary(rhs string)  {
+func (this *PivotTable) SetSummary(rhs string) {
 	_ = this.PropPut(0x00000111, []interface{}{rhs})
 }
 
@@ -1120,7 +1120,7 @@ func (this *PivotTable) VisualTotalsForSets() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetVisualTotalsForSets(rhs bool)  {
+func (this *PivotTable) SetVisualTotalsForSets(rhs bool) {
 	_ = this.PropPut(0x00000b42, []interface{}{rhs})
 }
 
@@ -1129,7 +1129,7 @@ func (this *PivotTable) ShowValuesRow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetShowValuesRow(rhs bool)  {
+func (this *PivotTable) SetShowValuesRow(rhs bool) {
 	_ = this.PropPut(0x00000b43, []interface{}{rhs})
 }
 
@@ -1138,7 +1138,6 @@ func (this *PivotTable) CalculatedMembersInFilters() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *PivotTable) SetCalculatedMembersInFilters(rhs bool)  {
+func (this *PivotTable) SetCalculatedMembersInFilters(rhs bool) {
 	_ = this.PropPut(0x00000b44, []interface{}{rhs})
 }
-

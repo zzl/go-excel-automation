@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024428-0001-0000-C000-000000000046
-var IID_IQueryTable_ = syscall.GUID{0x00024428, 0x0001, 0x0000, 
+var IID_IQueryTable_ = syscall.GUID{0x00024428, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IQueryTable_ struct {
@@ -17,8 +17,8 @@ type IQueryTable_ struct {
 }
 
 func NewIQueryTable_(pUnk *win32.IUnknown, addRef bool, scoped bool) *IQueryTable_ {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IQueryTable_)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IQueryTable_) IID() *syscall.GUID {
 func (this *IQueryTable_) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,7 +50,7 @@ func (this *IQueryTable_) GetCreator(rhs *int32) com.Error {
 func (this *IQueryTable_) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -195,7 +195,7 @@ func (this *IQueryTable_) SetSavePassword(rhs bool) com.Error {
 func (this *IQueryTable_) GetDestination(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[33]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -238,7 +238,7 @@ func (this *IQueryTable_) SetPostText(rhs string) com.Error {
 func (this *IQueryTable_) GetResultRange(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[40]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -257,14 +257,14 @@ func (this *IQueryTable_) Refresh(backgroundQuery interface{}, rhs *win32.VARIAN
 func (this *IQueryTable_) GetParameters(rhs **Parameters) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IQueryTable_) GetRecordset(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[44]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -751,7 +751,7 @@ func (this *IQueryTable_) SaveAsODC(odcfileName string, description interface{},
 func (this *IQueryTable_) GetListObject(rhs **ListObject) com.Error {
 	addr := (*this.LpVtbl)[125]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -770,14 +770,13 @@ func (this *IQueryTable_) SetTextFileVisualLayout(rhs int32) com.Error {
 func (this *IQueryTable_) GetWorkbookConnection(rhs **WorkbookConnection) com.Error {
 	addr := (*this.LpVtbl)[128]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IQueryTable_) GetSort(rhs **Sort) com.Error {
 	addr := (*this.LpVtbl)[129]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
-

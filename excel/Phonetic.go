@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024438-0000-0000-C000-000000000046
-var IID_Phonetic = syscall.GUID{0x00024438, 0x0000, 0x0000, 
+var IID_Phonetic = syscall.GUID{0x00024438, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Phonetic struct {
@@ -17,8 +17,8 @@ type Phonetic struct {
 }
 
 func NewPhonetic(pDisp *win32.IDispatch, addRef bool, scoped bool) *Phonetic {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Phonetic{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Phonetic) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Phonetic) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Phonetic) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Phonetic) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Phonetic) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Phonetic) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Phonetic) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Phonetic) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Phonetic) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Phonetic) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Phonetic) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Phonetic) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Phonetic) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Phonetic) Application() *Application {
@@ -100,7 +100,7 @@ func (this *Phonetic) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Phonetic) SetVisible(rhs bool)  {
+func (this *Phonetic) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -109,7 +109,7 @@ func (this *Phonetic) CharacterType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Phonetic) SetCharacterType(rhs int32)  {
+func (this *Phonetic) SetCharacterType(rhs int32) {
 	_ = this.PropPut(0x0000068a, []interface{}{rhs})
 }
 
@@ -118,7 +118,7 @@ func (this *Phonetic) Alignment() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Phonetic) SetAlignment(rhs int32)  {
+func (this *Phonetic) SetAlignment(rhs int32) {
 	_ = this.PropPut(0x000001c5, []interface{}{rhs})
 }
 
@@ -132,7 +132,6 @@ func (this *Phonetic) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Phonetic) SetText(rhs string)  {
+func (this *Phonetic) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
-

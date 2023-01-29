@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024460-0000-0000-C000-000000000046
-var IID_SmartTag = syscall.GUID{0x00024460, 0x0000, 0x0000, 
+var IID_SmartTag = syscall.GUID{0x00024460, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type SmartTag struct {
@@ -17,8 +17,8 @@ type SmartTag struct {
 }
 
 func NewSmartTag(pDisp *win32.IDispatch, addRef bool, scoped bool) *SmartTag {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &SmartTag{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *SmartTag) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *SmartTag) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *SmartTag) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *SmartTag) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *SmartTag) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *SmartTag) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *SmartTag) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *SmartTag) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *SmartTag) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *SmartTag) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *SmartTag) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *SmartTag) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *SmartTag) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *SmartTag) Application() *Application {
@@ -120,9 +120,9 @@ func (this *SmartTag) Range() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-func (this *SmartTag) Delete()  {
+func (this *SmartTag) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *SmartTag) SmartTagActions() *SmartTagActions {
@@ -134,4 +134,3 @@ func (this *SmartTag) Properties() *CustomProperties {
 	retVal, _ := this.PropGet(0x00000857, nil)
 	return NewCustomProperties(retVal.IDispatch(), false, true)
 }
-

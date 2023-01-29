@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 0002444C-0000-0000-C000-000000000046
-var IID_CubeField = syscall.GUID{0x0002444C, 0x0000, 0x0000, 
+var IID_CubeField = syscall.GUID{0x0002444C, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type CubeField struct {
@@ -16,8 +16,8 @@ type CubeField struct {
 }
 
 func NewCubeField(pDisp *win32.IDispatch, addRef bool, scoped bool) *CubeField {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &CubeField{ole.OleClient{pDisp}}
 	if addRef {
@@ -84,7 +84,7 @@ func (this *CubeField) Orientation() int32 {
 	return retVal.LValVal()
 }
 
-func (this *CubeField) SetOrientation(rhs int32)  {
+func (this *CubeField) SetOrientation(rhs int32) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -93,7 +93,7 @@ func (this *CubeField) Position() int32 {
 	return retVal.LValVal()
 }
 
-func (this *CubeField) SetPosition(rhs int32)  {
+func (this *CubeField) SetPosition(rhs int32) {
 	_ = this.PropPut(0x00000085, []interface{}{rhs})
 }
 
@@ -107,7 +107,7 @@ func (this *CubeField) DragToColumn() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CubeField) SetDragToColumn(rhs bool)  {
+func (this *CubeField) SetDragToColumn(rhs bool) {
 	_ = this.PropPut(0x000005e4, []interface{}{rhs})
 }
 
@@ -116,7 +116,7 @@ func (this *CubeField) DragToHide() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CubeField) SetDragToHide(rhs bool)  {
+func (this *CubeField) SetDragToHide(rhs bool) {
 	_ = this.PropPut(0x000005e5, []interface{}{rhs})
 }
 
@@ -125,7 +125,7 @@ func (this *CubeField) DragToPage() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CubeField) SetDragToPage(rhs bool)  {
+func (this *CubeField) SetDragToPage(rhs bool) {
 	_ = this.PropPut(0x000005e6, []interface{}{rhs})
 }
 
@@ -134,7 +134,7 @@ func (this *CubeField) DragToRow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CubeField) SetDragToRow(rhs bool)  {
+func (this *CubeField) SetDragToRow(rhs bool) {
 	_ = this.PropPut(0x000005e7, []interface{}{rhs})
 }
 
@@ -143,7 +143,7 @@ func (this *CubeField) DragToData() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CubeField) SetDragToData(rhs bool)  {
+func (this *CubeField) SetDragToData(rhs bool) {
 	_ = this.PropPut(0x00000734, []interface{}{rhs})
 }
 
@@ -152,7 +152,7 @@ func (this *CubeField) HiddenLevels() int32 {
 	return retVal.LValVal()
 }
 
-func (this *CubeField) SetHiddenLevels(rhs int32)  {
+func (this *CubeField) SetHiddenLevels(rhs int32) {
 	_ = this.PropPut(0x00000780, []interface{}{rhs})
 }
 
@@ -166,7 +166,7 @@ func (this *CubeField) LayoutForm() int32 {
 	return retVal.LValVal()
 }
 
-func (this *CubeField) SetLayoutForm(rhs int32)  {
+func (this *CubeField) SetLayoutForm(rhs int32) {
 	_ = this.PropPut(0x00000738, []interface{}{rhs})
 }
 
@@ -175,14 +175,14 @@ func (this *CubeField) PivotFields() *PivotFields {
 	return NewPivotFields(retVal.IDispatch(), false, true)
 }
 
-var CubeField_AddMemberPropertyField__OptArgs= []string{
-	"PropertyOrder", 
+var CubeField_AddMemberPropertyField__OptArgs = []string{
+	"PropertyOrder",
 }
 
-func (this *CubeField) AddMemberPropertyField_(property string, optArgs ...interface{})  {
+func (this *CubeField) AddMemberPropertyField_(property string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(CubeField_AddMemberPropertyField__OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000886, []interface{}{property}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *CubeField) EnableMultiplePageItems() bool {
@@ -190,7 +190,7 @@ func (this *CubeField) EnableMultiplePageItems() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CubeField) SetEnableMultiplePageItems(rhs bool)  {
+func (this *CubeField) SetEnableMultiplePageItems(rhs bool) {
 	_ = this.PropPut(0x00000888, []interface{}{rhs})
 }
 
@@ -199,7 +199,7 @@ func (this *CubeField) LayoutSubtotalLocation() int32 {
 	return retVal.LValVal()
 }
 
-func (this *CubeField) SetLayoutSubtotalLocation(rhs int32)  {
+func (this *CubeField) SetLayoutSubtotalLocation(rhs int32) {
 	_ = this.PropPut(0x00000736, []interface{}{rhs})
 }
 
@@ -208,23 +208,23 @@ func (this *CubeField) ShowInFieldList() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CubeField) SetShowInFieldList(rhs bool)  {
+func (this *CubeField) SetShowInFieldList(rhs bool) {
 	_ = this.PropPut(0x00000889, []interface{}{rhs})
 }
 
-func (this *CubeField) Delete()  {
+func (this *CubeField) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
-var CubeField_AddMemberPropertyField_OptArgs= []string{
-	"PropertyOrder", "PropertyDisplayedIn", 
+var CubeField_AddMemberPropertyField_OptArgs = []string{
+	"PropertyOrder", "PropertyDisplayedIn",
 }
 
-func (this *CubeField) AddMemberPropertyField(property string, optArgs ...interface{})  {
+func (this *CubeField) AddMemberPropertyField(property string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(CubeField_AddMemberPropertyField_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000a6c, []interface{}{property}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *CubeField) IncludeNewItemsInFilter() bool {
@@ -232,7 +232,7 @@ func (this *CubeField) IncludeNewItemsInFilter() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CubeField) SetIncludeNewItemsInFilter(rhs bool)  {
+func (this *CubeField) SetIncludeNewItemsInFilter(rhs bool) {
 	_ = this.PropPut(0x00000a1b, []interface{}{rhs})
 }
 
@@ -246,14 +246,14 @@ func (this *CubeField) AllItemsVisible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CubeField) ClearManualFilter()  {
+func (this *CubeField) ClearManualFilter() {
 	retVal, _ := this.Call(0x00000a22, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *CubeField) CreatePivotFields()  {
+func (this *CubeField) CreatePivotFields() {
 	retVal, _ := this.Call(0x00000a6f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *CubeField) CurrentPageName() string {
@@ -261,7 +261,7 @@ func (this *CubeField) CurrentPageName() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *CubeField) SetCurrentPageName(rhs string)  {
+func (this *CubeField) SetCurrentPageName(rhs string) {
 	_ = this.PropPut(0x0000073c, []interface{}{rhs})
 }
 
@@ -275,7 +275,7 @@ func (this *CubeField) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *CubeField) SetCaption(rhs string)  {
+func (this *CubeField) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
@@ -284,7 +284,7 @@ func (this *CubeField) FlattenHierarchies() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CubeField) SetFlattenHierarchies(rhs bool)  {
+func (this *CubeField) SetFlattenHierarchies(rhs bool) {
 	_ = this.PropPut(0x00000b6c, []interface{}{rhs})
 }
 
@@ -293,7 +293,6 @@ func (this *CubeField) HierarchizeDistinct() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CubeField) SetHierarchizeDistinct(rhs bool)  {
+func (this *CubeField) SetHierarchizeDistinct(rhs bool) {
 	_ = this.PropPut(0x00000b6d, []interface{}{rhs})
 }
-

@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024499-0001-0000-C000-000000000046
-var IID_IIconCriterion = syscall.GUID{0x00024499, 0x0001, 0x0000, 
+var IID_IIconCriterion = syscall.GUID{0x00024499, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IIconCriterion struct {
@@ -17,8 +17,8 @@ type IIconCriterion struct {
 }
 
 func NewIIconCriterion(pUnk *win32.IUnknown, addRef bool, scoped bool) *IIconCriterion {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IIconCriterion)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -87,4 +87,3 @@ func (this *IIconCriterion) SetIcon(rhs int32) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(rhs))
 	return com.Error(ret)
 }
-

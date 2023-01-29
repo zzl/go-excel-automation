@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024478-0000-0000-C000-000000000046
-var IID_XmlDataBinding = syscall.GUID{0x00024478, 0x0000, 0x0000, 
+var IID_XmlDataBinding = syscall.GUID{0x00024478, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type XmlDataBinding struct {
@@ -17,8 +17,8 @@ type XmlDataBinding struct {
 }
 
 func NewXmlDataBinding(pDisp *win32.IDispatch, addRef bool, scoped bool) *XmlDataBinding {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &XmlDataBinding{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *XmlDataBinding) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *XmlDataBinding) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *XmlDataBinding) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *XmlDataBinding) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *XmlDataBinding) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *XmlDataBinding) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *XmlDataBinding) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *XmlDataBinding) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *XmlDataBinding) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *XmlDataBinding) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *XmlDataBinding) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *XmlDataBinding) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *XmlDataBinding) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *XmlDataBinding) Application() *Application {
@@ -105,18 +105,17 @@ func (this *XmlDataBinding) Refresh() int32 {
 	return retVal.LValVal()
 }
 
-func (this *XmlDataBinding) LoadSettings(url string)  {
+func (this *XmlDataBinding) LoadSettings(url string) {
 	retVal, _ := this.Call(0x00000919, []interface{}{url})
-	_= retVal
+	_ = retVal
 }
 
-func (this *XmlDataBinding) ClearSettings()  {
+func (this *XmlDataBinding) ClearSettings() {
 	retVal, _ := this.Call(0x0000091a, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *XmlDataBinding) SourceUrl() string {
 	retVal, _ := this.PropGet(0x0000091b, nil)
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
-

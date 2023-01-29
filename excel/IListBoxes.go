@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020888-0001-0000-C000-000000000046
-var IID_IListBoxes = syscall.GUID{0x00020888, 0x0001, 0x0000, 
+var IID_IListBoxes = syscall.GUID{0x00020888, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IListBoxes struct {
@@ -17,8 +17,8 @@ type IListBoxes struct {
 }
 
 func NewIListBoxes(pUnk *win32.IUnknown, addRef bool, scoped bool) *IListBoxes {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IListBoxes)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IListBoxes) IID() *syscall.GUID {
 func (this *IListBoxes) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,11 +50,11 @@ func (this *IListBoxes) GetCreator(rhs *int32) com.Error {
 func (this *IListBoxes) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IListBoxes) Dummy3_()  {
+func (this *IListBoxes) Dummy3_() {
 	addr := (*this.LpVtbl)[10]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -92,7 +92,7 @@ func (this *IListBoxes) Delete(rhs *ole.Variant) com.Error {
 func (this *IListBoxes) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -120,7 +120,7 @@ func (this *IListBoxes) SetHeight(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IListBoxes) Dummy12_()  {
+func (this *IListBoxes) Dummy12_() {
 	addr := (*this.LpVtbl)[21]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -149,7 +149,7 @@ func (this *IListBoxes) SetLocked(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IListBoxes) Dummy15_()  {
+func (this *IListBoxes) Dummy15_() {
 	addr := (*this.LpVtbl)[26]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -214,7 +214,7 @@ func (this *IListBoxes) SetTop(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IListBoxes) Dummy22_()  {
+func (this *IListBoxes) Dummy22_() {
 	addr := (*this.LpVtbl)[37]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -252,7 +252,7 @@ func (this *IListBoxes) GetZOrder(rhs *int32) com.Error {
 func (this *IListBoxes) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -298,7 +298,7 @@ func (this *IListBoxes) SetLinkedCell(rhs string) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IListBoxes) Dummy31_()  {
+func (this *IListBoxes) Dummy31_() {
 	addr := (*this.LpVtbl)[51]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -315,7 +315,7 @@ func (this *IListBoxes) SetList(index interface{}, rhs interface{}) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IListBoxes) Dummy33_()  {
+func (this *IListBoxes) Dummy33_() {
 	addr := (*this.LpVtbl)[54]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -395,7 +395,7 @@ func (this *IListBoxes) SetValue(rhs int32) com.Error {
 func (this *IListBoxes) Add(left float64, top float64, width float64, height float64, rhs **ListBox) com.Error {
 	addr := (*this.LpVtbl)[67]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(left), uintptr(top), uintptr(width), uintptr(height), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -408,21 +408,20 @@ func (this *IListBoxes) GetCount(rhs *int32) com.Error {
 func (this *IListBoxes) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[69]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IListBoxes) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[70]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IListBoxes) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[71]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
-

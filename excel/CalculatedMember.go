@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024455-0000-0000-C000-000000000046
-var IID_CalculatedMember = syscall.GUID{0x00024455, 0x0000, 0x0000, 
+var IID_CalculatedMember = syscall.GUID{0x00024455, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type CalculatedMember struct {
@@ -17,8 +17,8 @@ type CalculatedMember struct {
 }
 
 func NewCalculatedMember(pDisp *win32.IDispatch, addRef bool, scoped bool) *CalculatedMember {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &CalculatedMember{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *CalculatedMember) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *CalculatedMember) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *CalculatedMember) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *CalculatedMember) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *CalculatedMember) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *CalculatedMember) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *CalculatedMember) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *CalculatedMember) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *CalculatedMember) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *CalculatedMember) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *CalculatedMember) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *CalculatedMember) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *CalculatedMember) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *CalculatedMember) Application() *Application {
@@ -125,9 +125,9 @@ func (this *CalculatedMember) Default_() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *CalculatedMember) Delete()  {
+func (this *CalculatedMember) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *CalculatedMember) Type() int32 {
@@ -150,7 +150,7 @@ func (this *CalculatedMember) HierarchizeDistinct() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CalculatedMember) SetHierarchizeDistinct(rhs bool)  {
+func (this *CalculatedMember) SetHierarchizeDistinct(rhs bool) {
 	_ = this.PropPut(0x00000b6d, []interface{}{rhs})
 }
 
@@ -159,7 +159,6 @@ func (this *CalculatedMember) FlattenHierarchies() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CalculatedMember) SetFlattenHierarchies(rhs bool)  {
+func (this *CalculatedMember) SetFlattenHierarchies(rhs bool) {
 	_ = this.PropPut(0x00000b6c, []interface{}{rhs})
 }
-

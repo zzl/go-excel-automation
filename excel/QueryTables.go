@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024429-0000-0000-C000-000000000046
-var IID_QueryTables = syscall.GUID{0x00024429, 0x0000, 0x0000, 
+var IID_QueryTables = syscall.GUID{0x00024429, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type QueryTables struct {
@@ -17,8 +17,8 @@ type QueryTables struct {
 }
 
 func NewQueryTables(pDisp *win32.IDispatch, addRef bool, scoped bool) *QueryTables {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &QueryTables{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *QueryTables) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *QueryTables) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *QueryTables) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *QueryTables) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *QueryTables) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *QueryTables) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *QueryTables) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *QueryTables) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *QueryTables) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *QueryTables) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *QueryTables) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *QueryTables) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *QueryTables) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *QueryTables) Application() *Application {
@@ -100,8 +100,8 @@ func (this *QueryTables) Count() int32 {
 	return retVal.LValVal()
 }
 
-var QueryTables_Add_OptArgs= []string{
-	"Sql", 
+var QueryTables_Add_OptArgs = []string{
+	"Sql",
 }
 
 func (this *QueryTables) Add(connection interface{}, destination *Range, optArgs ...interface{}) *QueryTable {
@@ -129,7 +129,7 @@ func (this *QueryTables) ForEach(action func(item *QueryTable) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -145,4 +145,3 @@ func (this *QueryTables) ForEach(action func(item *QueryTable) bool) {
 		}
 	}
 }
-

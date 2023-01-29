@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020845-0000-0000-C000-000000000046
-var IID_WorksheetFunction = syscall.GUID{0x00020845, 0x0000, 0x0000, 
+var IID_WorksheetFunction = syscall.GUID{0x00020845, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type WorksheetFunction struct {
@@ -17,8 +17,8 @@ type WorksheetFunction struct {
 }
 
 func NewWorksheetFunction(pDisp *win32.IDispatch, addRef bool, scoped bool) *WorksheetFunction {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &WorksheetFunction{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *WorksheetFunction) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *WorksheetFunction) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *WorksheetFunction) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *WorksheetFunction) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *WorksheetFunction) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *WorksheetFunction) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *WorksheetFunction) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *WorksheetFunction) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *WorksheetFunction) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *WorksheetFunction) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *WorksheetFunction) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *WorksheetFunction) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *WorksheetFunction) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *WorksheetFunction) Application() *Application {
@@ -95,15 +95,15 @@ func (this *WorksheetFunction) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var WorksheetFunction_WSFunction__OptArgs= []string{
-	"Arg1", "Arg2", "Arg3", "Arg4", 
-	"Arg5", "Arg6", "Arg7", "Arg8", 
-	"Arg9", "Arg10", "Arg11", "Arg12", 
-	"Arg13", "Arg14", "Arg15", "Arg16", 
-	"Arg17", "Arg18", "Arg19", "Arg20", 
-	"Arg21", "Arg22", "Arg23", "Arg24", 
-	"Arg25", "Arg26", "Arg27", "Arg28", 
-	"Arg29", "Arg30", 
+var WorksheetFunction_WSFunction__OptArgs = []string{
+	"Arg1", "Arg2", "Arg3", "Arg4",
+	"Arg5", "Arg6", "Arg7", "Arg8",
+	"Arg9", "Arg10", "Arg11", "Arg12",
+	"Arg13", "Arg14", "Arg15", "Arg16",
+	"Arg17", "Arg18", "Arg19", "Arg20",
+	"Arg21", "Arg22", "Arg23", "Arg24",
+	"Arg25", "Arg26", "Arg27", "Arg28",
+	"Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) WSFunction_(optArgs ...interface{}) ole.Variant {
@@ -113,14 +113,14 @@ func (this *WorksheetFunction) WSFunction_(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var WorksheetFunction_Count_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Count_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Count(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -139,14 +139,14 @@ func (this *WorksheetFunction) IsError(arg1 interface{}) bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-var WorksheetFunction_Sum_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Sum_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Sum(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -155,14 +155,14 @@ func (this *WorksheetFunction) Sum(arg1 interface{}, optArgs ...interface{}) flo
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Average_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Average_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Average(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -171,14 +171,14 @@ func (this *WorksheetFunction) Average(arg1 interface{}, optArgs ...interface{})
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Min_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Min_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Min(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -187,14 +187,14 @@ func (this *WorksheetFunction) Min(arg1 interface{}, optArgs ...interface{}) flo
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Max_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Max_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Max(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -203,14 +203,14 @@ func (this *WorksheetFunction) Max(arg1 interface{}, optArgs ...interface{}) flo
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Npv_OptArgs= []string{
-	"Arg3", "Arg4", "Arg5", "Arg6", 
-	"Arg7", "Arg8", "Arg9", "Arg10", 
-	"Arg11", "Arg12", "Arg13", "Arg14", 
-	"Arg15", "Arg16", "Arg17", "Arg18", 
-	"Arg19", "Arg20", "Arg21", "Arg22", 
-	"Arg23", "Arg24", "Arg25", "Arg26", 
-	"Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Npv_OptArgs = []string{
+	"Arg3", "Arg4", "Arg5", "Arg6",
+	"Arg7", "Arg8", "Arg9", "Arg10",
+	"Arg11", "Arg12", "Arg13", "Arg14",
+	"Arg15", "Arg16", "Arg17", "Arg18",
+	"Arg19", "Arg20", "Arg21", "Arg22",
+	"Arg23", "Arg24", "Arg25", "Arg26",
+	"Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Npv(arg1 float64, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -219,14 +219,14 @@ func (this *WorksheetFunction) Npv(arg1 float64, arg2 interface{}, optArgs ...in
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_StDev_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_StDev_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) StDev(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -235,8 +235,8 @@ func (this *WorksheetFunction) StDev(arg1 interface{}, optArgs ...interface{}) f
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Dollar_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Dollar_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Dollar(arg1 float64, optArgs ...interface{}) string {
@@ -245,8 +245,8 @@ func (this *WorksheetFunction) Dollar(arg1 float64, optArgs ...interface{}) stri
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_Fixed_OptArgs= []string{
-	"Arg2", "Arg3", 
+var WorksheetFunction_Fixed_OptArgs = []string{
+	"Arg2", "Arg3",
 }
 
 func (this *WorksheetFunction) Fixed(arg1 float64, optArgs ...interface{}) string {
@@ -275,8 +275,8 @@ func (this *WorksheetFunction) Round(arg1 float64, arg2 float64) float64 {
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Lookup_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_Lookup_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) Lookup(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) ole.Variant {
@@ -286,8 +286,8 @@ func (this *WorksheetFunction) Lookup(arg1 interface{}, arg2 interface{}, optArg
 	return *retVal
 }
 
-var WorksheetFunction_Index_OptArgs= []string{
-	"Arg3", "Arg4", 
+var WorksheetFunction_Index_OptArgs = []string{
+	"Arg3", "Arg4",
 }
 
 func (this *WorksheetFunction) Index(arg1 interface{}, arg2 float64, optArgs ...interface{}) ole.Variant {
@@ -302,14 +302,14 @@ func (this *WorksheetFunction) Rept(arg1 string, arg2 float64) string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_And_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_And_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) And(arg1 interface{}, optArgs ...interface{}) bool {
@@ -318,14 +318,14 @@ func (this *WorksheetFunction) And(arg1 interface{}, optArgs ...interface{}) boo
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-var WorksheetFunction_Or_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Or_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Or(arg1 interface{}, optArgs ...interface{}) bool {
@@ -364,14 +364,14 @@ func (this *WorksheetFunction) DStDev(arg1 *Range, arg2 interface{}, arg3 interf
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Var_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Var_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Var(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -390,8 +390,8 @@ func (this *WorksheetFunction) Text(arg1 interface{}, arg2 string) string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_LinEst_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", 
+var WorksheetFunction_LinEst_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4",
 }
 
 func (this *WorksheetFunction) LinEst(arg1 interface{}, optArgs ...interface{}) ole.Variant {
@@ -401,8 +401,8 @@ func (this *WorksheetFunction) LinEst(arg1 interface{}, optArgs ...interface{}) 
 	return *retVal
 }
 
-var WorksheetFunction_Trend_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", 
+var WorksheetFunction_Trend_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4",
 }
 
 func (this *WorksheetFunction) Trend(arg1 interface{}, optArgs ...interface{}) ole.Variant {
@@ -412,8 +412,8 @@ func (this *WorksheetFunction) Trend(arg1 interface{}, optArgs ...interface{}) o
 	return *retVal
 }
 
-var WorksheetFunction_LogEst_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", 
+var WorksheetFunction_LogEst_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4",
 }
 
 func (this *WorksheetFunction) LogEst(arg1 interface{}, optArgs ...interface{}) ole.Variant {
@@ -423,8 +423,8 @@ func (this *WorksheetFunction) LogEst(arg1 interface{}, optArgs ...interface{}) 
 	return *retVal
 }
 
-var WorksheetFunction_Growth_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", 
+var WorksheetFunction_Growth_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4",
 }
 
 func (this *WorksheetFunction) Growth(arg1 interface{}, optArgs ...interface{}) ole.Variant {
@@ -434,8 +434,8 @@ func (this *WorksheetFunction) Growth(arg1 interface{}, optArgs ...interface{}) 
 	return *retVal
 }
 
-var WorksheetFunction_Pv_OptArgs= []string{
-	"Arg4", "Arg5", 
+var WorksheetFunction_Pv_OptArgs = []string{
+	"Arg4", "Arg5",
 }
 
 func (this *WorksheetFunction) Pv(arg1 float64, arg2 float64, arg3 float64, optArgs ...interface{}) float64 {
@@ -444,8 +444,8 @@ func (this *WorksheetFunction) Pv(arg1 float64, arg2 float64, arg3 float64, optA
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Fv_OptArgs= []string{
-	"Arg4", "Arg5", 
+var WorksheetFunction_Fv_OptArgs = []string{
+	"Arg4", "Arg5",
 }
 
 func (this *WorksheetFunction) Fv(arg1 float64, arg2 float64, arg3 float64, optArgs ...interface{}) float64 {
@@ -454,8 +454,8 @@ func (this *WorksheetFunction) Fv(arg1 float64, arg2 float64, arg3 float64, optA
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_NPer_OptArgs= []string{
-	"Arg4", "Arg5", 
+var WorksheetFunction_NPer_OptArgs = []string{
+	"Arg4", "Arg5",
 }
 
 func (this *WorksheetFunction) NPer(arg1 float64, arg2 float64, arg3 float64, optArgs ...interface{}) float64 {
@@ -464,8 +464,8 @@ func (this *WorksheetFunction) NPer(arg1 float64, arg2 float64, arg3 float64, op
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Pmt_OptArgs= []string{
-	"Arg4", "Arg5", 
+var WorksheetFunction_Pmt_OptArgs = []string{
+	"Arg4", "Arg5",
 }
 
 func (this *WorksheetFunction) Pmt(arg1 float64, arg2 float64, arg3 float64, optArgs ...interface{}) float64 {
@@ -474,8 +474,8 @@ func (this *WorksheetFunction) Pmt(arg1 float64, arg2 float64, arg3 float64, opt
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Rate_OptArgs= []string{
-	"Arg4", "Arg5", "Arg6", 
+var WorksheetFunction_Rate_OptArgs = []string{
+	"Arg4", "Arg5", "Arg6",
 }
 
 func (this *WorksheetFunction) Rate(arg1 float64, arg2 float64, arg3 float64, optArgs ...interface{}) float64 {
@@ -489,8 +489,8 @@ func (this *WorksheetFunction) MIrr(arg1 interface{}, arg2 float64, arg3 float64
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Irr_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Irr_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Irr(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -499,8 +499,8 @@ func (this *WorksheetFunction) Irr(arg1 interface{}, optArgs ...interface{}) flo
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Match_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_Match_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) Match(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -509,8 +509,8 @@ func (this *WorksheetFunction) Match(arg1 interface{}, arg2 interface{}, optArgs
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Weekday_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Weekday_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Weekday(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -519,8 +519,8 @@ func (this *WorksheetFunction) Weekday(arg1 interface{}, optArgs ...interface{})
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Search_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_Search_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) Search(arg1 string, arg2 string, optArgs ...interface{}) float64 {
@@ -550,14 +550,14 @@ func (this *WorksheetFunction) Acos(arg1 float64) float64 {
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Choose_OptArgs= []string{
-	"Arg3", "Arg4", "Arg5", "Arg6", 
-	"Arg7", "Arg8", "Arg9", "Arg10", 
-	"Arg11", "Arg12", "Arg13", "Arg14", 
-	"Arg15", "Arg16", "Arg17", "Arg18", 
-	"Arg19", "Arg20", "Arg21", "Arg22", 
-	"Arg23", "Arg24", "Arg25", "Arg26", 
-	"Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Choose_OptArgs = []string{
+	"Arg3", "Arg4", "Arg5", "Arg6",
+	"Arg7", "Arg8", "Arg9", "Arg10",
+	"Arg11", "Arg12", "Arg13", "Arg14",
+	"Arg15", "Arg16", "Arg17", "Arg18",
+	"Arg19", "Arg20", "Arg21", "Arg22",
+	"Arg23", "Arg24", "Arg25", "Arg26",
+	"Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Choose(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) ole.Variant {
@@ -567,8 +567,8 @@ func (this *WorksheetFunction) Choose(arg1 interface{}, arg2 interface{}, optArg
 	return *retVal
 }
 
-var WorksheetFunction_HLookup_OptArgs= []string{
-	"Arg4", 
+var WorksheetFunction_HLookup_OptArgs = []string{
+	"Arg4",
 }
 
 func (this *WorksheetFunction) HLookup(arg1 interface{}, arg2 interface{}, arg3 interface{}, optArgs ...interface{}) ole.Variant {
@@ -578,8 +578,8 @@ func (this *WorksheetFunction) HLookup(arg1 interface{}, arg2 interface{}, arg3 
 	return *retVal
 }
 
-var WorksheetFunction_VLookup_OptArgs= []string{
-	"Arg4", 
+var WorksheetFunction_VLookup_OptArgs = []string{
+	"Arg4",
 }
 
 func (this *WorksheetFunction) VLookup(arg1 interface{}, arg2 interface{}, arg3 interface{}, optArgs ...interface{}) ole.Variant {
@@ -589,8 +589,8 @@ func (this *WorksheetFunction) VLookup(arg1 interface{}, arg2 interface{}, arg3 
 	return *retVal
 }
 
-var WorksheetFunction_Log_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Log_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Log(arg1 float64, optArgs ...interface{}) float64 {
@@ -614,8 +614,8 @@ func (this *WorksheetFunction) Replace(arg1 string, arg2 float64, arg3 float64, 
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_Substitute_OptArgs= []string{
-	"Arg4", 
+var WorksheetFunction_Substitute_OptArgs = []string{
+	"Arg4",
 }
 
 func (this *WorksheetFunction) Substitute(arg1 string, arg2 string, arg3 string, optArgs ...interface{}) string {
@@ -624,8 +624,8 @@ func (this *WorksheetFunction) Substitute(arg1 string, arg2 string, arg3 string,
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_Find_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_Find_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) Find(arg1 string, arg2 string, optArgs ...interface{}) float64 {
@@ -659,8 +659,8 @@ func (this *WorksheetFunction) Syd(arg1 float64, arg2 float64, arg3 float64, arg
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Ddb_OptArgs= []string{
-	"Arg5", 
+var WorksheetFunction_Ddb_OptArgs = []string{
+	"Arg5",
 }
 
 func (this *WorksheetFunction) Ddb(arg1 float64, arg2 float64, arg3 float64, arg4 float64, optArgs ...interface{}) float64 {
@@ -691,8 +691,8 @@ func (this *WorksheetFunction) MMult(arg1 interface{}, arg2 interface{}) ole.Var
 	return *retVal
 }
 
-var WorksheetFunction_Ipmt_OptArgs= []string{
-	"Arg5", "Arg6", 
+var WorksheetFunction_Ipmt_OptArgs = []string{
+	"Arg5", "Arg6",
 }
 
 func (this *WorksheetFunction) Ipmt(arg1 float64, arg2 float64, arg3 float64, arg4 float64, optArgs ...interface{}) float64 {
@@ -701,8 +701,8 @@ func (this *WorksheetFunction) Ipmt(arg1 float64, arg2 float64, arg3 float64, ar
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Ppmt_OptArgs= []string{
-	"Arg5", "Arg6", 
+var WorksheetFunction_Ppmt_OptArgs = []string{
+	"Arg5", "Arg6",
 }
 
 func (this *WorksheetFunction) Ppmt(arg1 float64, arg2 float64, arg3 float64, arg4 float64, optArgs ...interface{}) float64 {
@@ -711,14 +711,14 @@ func (this *WorksheetFunction) Ppmt(arg1 float64, arg2 float64, arg3 float64, ar
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_CountA_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_CountA_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) CountA(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -727,14 +727,14 @@ func (this *WorksheetFunction) CountA(arg1 interface{}, optArgs ...interface{}) 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Product_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Product_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Product(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -758,14 +758,14 @@ func (this *WorksheetFunction) IsNonText(arg1 interface{}) bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-var WorksheetFunction_StDevP_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_StDevP_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) StDevP(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -774,14 +774,14 @@ func (this *WorksheetFunction) StDevP(arg1 interface{}, optArgs ...interface{}) 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_VarP_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_VarP_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) VarP(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -815,8 +815,8 @@ func (this *WorksheetFunction) USDollar(arg1 float64, arg2 float64) string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_FindB_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_FindB_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) FindB(arg1 string, arg2 string, optArgs ...interface{}) float64 {
@@ -825,8 +825,8 @@ func (this *WorksheetFunction) FindB(arg1 string, arg2 string, optArgs ...interf
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_SearchB_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_SearchB_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) SearchB(arg1 string, arg2 string, optArgs ...interface{}) float64 {
@@ -850,8 +850,8 @@ func (this *WorksheetFunction) RoundDown(arg1 float64, arg2 float64) float64 {
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Rank_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_Rank_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) Rank(arg1 float64, arg2 *Range, optArgs ...interface{}) float64 {
@@ -860,8 +860,8 @@ func (this *WorksheetFunction) Rank(arg1 float64, arg2 *Range, optArgs ...interf
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Days360_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_Days360_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) Days360(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -870,8 +870,8 @@ func (this *WorksheetFunction) Days360(arg1 interface{}, arg2 interface{}, optAr
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Vdb_OptArgs= []string{
-	"Arg6", "Arg7", 
+var WorksheetFunction_Vdb_OptArgs = []string{
+	"Arg6", "Arg7",
 }
 
 func (this *WorksheetFunction) Vdb(arg1 float64, arg2 float64, arg3 float64, arg4 float64, arg5 float64, optArgs ...interface{}) float64 {
@@ -880,14 +880,14 @@ func (this *WorksheetFunction) Vdb(arg1 float64, arg2 float64, arg3 float64, arg
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Median_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Median_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Median(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -896,14 +896,14 @@ func (this *WorksheetFunction) Median(arg1 interface{}, optArgs ...interface{}) 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_SumProduct_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_SumProduct_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) SumProduct(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -948,8 +948,8 @@ func (this *WorksheetFunction) DGet(arg1 *Range, arg2 interface{}, arg3 interfac
 	return *retVal
 }
 
-var WorksheetFunction_Db_OptArgs= []string{
-	"Arg5", 
+var WorksheetFunction_Db_OptArgs = []string{
+	"Arg5",
 }
 
 func (this *WorksheetFunction) Db(arg1 float64, arg2 float64, arg3 float64, arg4 float64, optArgs ...interface{}) float64 {
@@ -964,14 +964,14 @@ func (this *WorksheetFunction) Frequency(arg1 interface{}, arg2 interface{}) ole
 	return *retVal
 }
 
-var WorksheetFunction_AveDev_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_AveDev_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) AveDev(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -980,8 +980,8 @@ func (this *WorksheetFunction) AveDev(arg1 interface{}, optArgs ...interface{}) 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_BetaDist_OptArgs= []string{
-	"Arg4", "Arg5", 
+var WorksheetFunction_BetaDist_OptArgs = []string{
+	"Arg4", "Arg5",
 }
 
 func (this *WorksheetFunction) BetaDist(arg1 float64, arg2 float64, arg3 float64, optArgs ...interface{}) float64 {
@@ -995,8 +995,8 @@ func (this *WorksheetFunction) GammaLn(arg1 float64) float64 {
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_BetaInv_OptArgs= []string{
-	"Arg4", "Arg5", 
+var WorksheetFunction_BetaInv_OptArgs = []string{
+	"Arg4", "Arg5",
 }
 
 func (this *WorksheetFunction) BetaInv(arg1 float64, arg2 float64, arg3 float64, optArgs ...interface{}) float64 {
@@ -1225,8 +1225,8 @@ func (this *WorksheetFunction) TTest(arg1 interface{}, arg2 interface{}, arg3 fl
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Prob_OptArgs= []string{
-	"Arg4", 
+var WorksheetFunction_Prob_OptArgs = []string{
+	"Arg4",
 }
 
 func (this *WorksheetFunction) Prob(arg1 interface{}, arg2 interface{}, arg3 float64, optArgs ...interface{}) float64 {
@@ -1235,14 +1235,14 @@ func (this *WorksheetFunction) Prob(arg1 interface{}, arg2 interface{}, arg3 flo
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_DevSq_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_DevSq_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) DevSq(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -1251,14 +1251,14 @@ func (this *WorksheetFunction) DevSq(arg1 interface{}, optArgs ...interface{}) f
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_GeoMean_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_GeoMean_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) GeoMean(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -1267,14 +1267,14 @@ func (this *WorksheetFunction) GeoMean(arg1 interface{}, optArgs ...interface{})
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_HarMean_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_HarMean_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) HarMean(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -1283,14 +1283,14 @@ func (this *WorksheetFunction) HarMean(arg1 interface{}, optArgs ...interface{})
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_SumSq_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_SumSq_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) SumSq(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -1299,14 +1299,14 @@ func (this *WorksheetFunction) SumSq(arg1 interface{}, optArgs ...interface{}) f
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Kurt_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Kurt_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Kurt(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -1315,14 +1315,14 @@ func (this *WorksheetFunction) Kurt(arg1 interface{}, optArgs ...interface{}) fl
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Skew_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Skew_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Skew(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -1331,8 +1331,8 @@ func (this *WorksheetFunction) Skew(arg1 interface{}, optArgs ...interface{}) fl
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_ZTest_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_ZTest_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) ZTest(arg1 interface{}, arg2 float64, optArgs ...interface{}) float64 {
@@ -1361,8 +1361,8 @@ func (this *WorksheetFunction) Percentile(arg1 interface{}, arg2 float64) float6
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_PercentRank_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_PercentRank_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) PercentRank(arg1 interface{}, arg2 float64, optArgs ...interface{}) float64 {
@@ -1371,14 +1371,14 @@ func (this *WorksheetFunction) PercentRank(arg1 interface{}, arg2 float64, optAr
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Mode_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Mode_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Mode(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -1412,14 +1412,14 @@ func (this *WorksheetFunction) Degrees(arg1 float64) float64 {
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Subtotal_OptArgs= []string{
-	"Arg3", "Arg4", "Arg5", "Arg6", 
-	"Arg7", "Arg8", "Arg9", "Arg10", 
-	"Arg11", "Arg12", "Arg13", "Arg14", 
-	"Arg15", "Arg16", "Arg17", "Arg18", 
-	"Arg19", "Arg20", "Arg21", "Arg22", 
-	"Arg23", "Arg24", "Arg25", "Arg26", 
-	"Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Subtotal_OptArgs = []string{
+	"Arg3", "Arg4", "Arg5", "Arg6",
+	"Arg7", "Arg8", "Arg9", "Arg10",
+	"Arg11", "Arg12", "Arg13", "Arg14",
+	"Arg15", "Arg16", "Arg17", "Arg18",
+	"Arg19", "Arg20", "Arg21", "Arg22",
+	"Arg23", "Arg24", "Arg25", "Arg26",
+	"Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Subtotal(arg1 float64, arg2 *Range, optArgs ...interface{}) float64 {
@@ -1428,8 +1428,8 @@ func (this *WorksheetFunction) Subtotal(arg1 float64, arg2 *Range, optArgs ...in
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_SumIf_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_SumIf_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) SumIf(arg1 *Range, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -1453,8 +1453,8 @@ func (this *WorksheetFunction) Ispmt(arg1 float64, arg2 float64, arg3 float64, a
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Roman_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Roman_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Roman(arg1 float64, optArgs ...interface{}) string {
@@ -1533,14 +1533,14 @@ func (this *WorksheetFunction) ThaiYear(arg1 float64) float64 {
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_RTD_OptArgs= []string{
-	"topic2", "topic3", "topic4", "topic5", 
-	"topic6", "topic7", "topic8", "topic9", 
-	"topic10", "topic11", "topic12", "topic13", 
-	"topic14", "topic15", "topic16", "topic17", 
-	"topic18", "topic19", "topic20", "topic21", 
-	"topic22", "topic23", "topic24", "topic25", 
-	"topic26", "topic27", "topic28", 
+var WorksheetFunction_RTD_OptArgs = []string{
+	"topic2", "topic3", "topic4", "topic5",
+	"topic6", "topic7", "topic8", "topic9",
+	"topic10", "topic11", "topic12", "topic13",
+	"topic14", "topic15", "topic16", "topic17",
+	"topic18", "topic19", "topic20", "topic21",
+	"topic22", "topic23", "topic24", "topic25",
+	"topic26", "topic27", "topic28",
 }
 
 func (this *WorksheetFunction) RTD(progID interface{}, server interface{}, topic1 interface{}, optArgs ...interface{}) ole.Variant {
@@ -1550,8 +1550,8 @@ func (this *WorksheetFunction) RTD(progID interface{}, server interface{}, topic
 	return *retVal
 }
 
-var WorksheetFunction_Hex2Bin_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Hex2Bin_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Hex2Bin(arg1 interface{}, optArgs ...interface{}) string {
@@ -1565,8 +1565,8 @@ func (this *WorksheetFunction) Hex2Dec(arg1 interface{}) string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_Hex2Oct_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Hex2Oct_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Hex2Oct(arg1 interface{}, optArgs ...interface{}) string {
@@ -1575,8 +1575,8 @@ func (this *WorksheetFunction) Hex2Oct(arg1 interface{}, optArgs ...interface{})
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_Dec2Bin_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Dec2Bin_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Dec2Bin(arg1 interface{}, optArgs ...interface{}) string {
@@ -1585,8 +1585,8 @@ func (this *WorksheetFunction) Dec2Bin(arg1 interface{}, optArgs ...interface{})
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_Dec2Hex_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Dec2Hex_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Dec2Hex(arg1 interface{}, optArgs ...interface{}) string {
@@ -1595,8 +1595,8 @@ func (this *WorksheetFunction) Dec2Hex(arg1 interface{}, optArgs ...interface{})
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_Dec2Oct_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Dec2Oct_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Dec2Oct(arg1 interface{}, optArgs ...interface{}) string {
@@ -1605,8 +1605,8 @@ func (this *WorksheetFunction) Dec2Oct(arg1 interface{}, optArgs ...interface{})
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_Oct2Bin_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Oct2Bin_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Oct2Bin(arg1 interface{}, optArgs ...interface{}) string {
@@ -1615,8 +1615,8 @@ func (this *WorksheetFunction) Oct2Bin(arg1 interface{}, optArgs ...interface{})
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_Oct2Hex_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Oct2Hex_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Oct2Hex(arg1 interface{}, optArgs ...interface{}) string {
@@ -1635,8 +1635,8 @@ func (this *WorksheetFunction) Bin2Dec(arg1 interface{}) string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_Bin2Oct_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Bin2Oct_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Bin2Oct(arg1 interface{}, optArgs ...interface{}) string {
@@ -1645,8 +1645,8 @@ func (this *WorksheetFunction) Bin2Oct(arg1 interface{}, optArgs ...interface{})
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_Bin2Hex_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Bin2Hex_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Bin2Hex(arg1 interface{}, optArgs ...interface{}) string {
@@ -1730,8 +1730,8 @@ func (this *WorksheetFunction) ImReal(arg1 interface{}) float64 {
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Complex_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_Complex_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) Complex(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) string {
@@ -1740,14 +1740,14 @@ func (this *WorksheetFunction) Complex(arg1 interface{}, arg2 interface{}, optAr
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_ImSum_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_ImSum_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) ImSum(arg1 interface{}, optArgs ...interface{}) string {
@@ -1756,14 +1756,14 @@ func (this *WorksheetFunction) ImSum(arg1 interface{}, optArgs ...interface{}) s
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var WorksheetFunction_ImProduct_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_ImProduct_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) ImProduct(arg1 interface{}, optArgs ...interface{}) string {
@@ -1792,8 +1792,8 @@ func (this *WorksheetFunction) Quotient(arg1 interface{}, arg2 interface{}) floa
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Delta_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Delta_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Delta(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -1802,8 +1802,8 @@ func (this *WorksheetFunction) Delta(arg1 interface{}, optArgs ...interface{}) f
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_GeStep_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_GeStep_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) GeStep(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -1827,8 +1827,8 @@ func (this *WorksheetFunction) MRound(arg1 interface{}, arg2 interface{}) float6
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Erf_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Erf_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Erf(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -1862,8 +1862,8 @@ func (this *WorksheetFunction) BesselI(arg1 interface{}, arg2 interface{}) float
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Xirr_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_Xirr_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) Xirr(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -1877,8 +1877,8 @@ func (this *WorksheetFunction) Xnpv(arg1 interface{}, arg2 interface{}) float64 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_PriceMat_OptArgs= []string{
-	"Arg6", 
+var WorksheetFunction_PriceMat_OptArgs = []string{
+	"Arg6",
 }
 
 func (this *WorksheetFunction) PriceMat(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, arg5 interface{}, optArgs ...interface{}) float64 {
@@ -1887,8 +1887,8 @@ func (this *WorksheetFunction) PriceMat(arg1 interface{}, arg2 interface{}, arg3
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_YieldMat_OptArgs= []string{
-	"Arg6", 
+var WorksheetFunction_YieldMat_OptArgs = []string{
+	"Arg6",
 }
 
 func (this *WorksheetFunction) YieldMat(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, arg5 interface{}, optArgs ...interface{}) float64 {
@@ -1897,8 +1897,8 @@ func (this *WorksheetFunction) YieldMat(arg1 interface{}, arg2 interface{}, arg3
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_IntRate_OptArgs= []string{
-	"Arg5", 
+var WorksheetFunction_IntRate_OptArgs = []string{
+	"Arg5",
 }
 
 func (this *WorksheetFunction) IntRate(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, optArgs ...interface{}) float64 {
@@ -1907,8 +1907,8 @@ func (this *WorksheetFunction) IntRate(arg1 interface{}, arg2 interface{}, arg3 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Received_OptArgs= []string{
-	"Arg5", 
+var WorksheetFunction_Received_OptArgs = []string{
+	"Arg5",
 }
 
 func (this *WorksheetFunction) Received(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, optArgs ...interface{}) float64 {
@@ -1917,8 +1917,8 @@ func (this *WorksheetFunction) Received(arg1 interface{}, arg2 interface{}, arg3
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Disc_OptArgs= []string{
-	"Arg5", 
+var WorksheetFunction_Disc_OptArgs = []string{
+	"Arg5",
 }
 
 func (this *WorksheetFunction) Disc(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, optArgs ...interface{}) float64 {
@@ -1927,8 +1927,8 @@ func (this *WorksheetFunction) Disc(arg1 interface{}, arg2 interface{}, arg3 int
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_PriceDisc_OptArgs= []string{
-	"Arg5", 
+var WorksheetFunction_PriceDisc_OptArgs = []string{
+	"Arg5",
 }
 
 func (this *WorksheetFunction) PriceDisc(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, optArgs ...interface{}) float64 {
@@ -1937,8 +1937,8 @@ func (this *WorksheetFunction) PriceDisc(arg1 interface{}, arg2 interface{}, arg
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_YieldDisc_OptArgs= []string{
-	"Arg5", 
+var WorksheetFunction_YieldDisc_OptArgs = []string{
+	"Arg5",
 }
 
 func (this *WorksheetFunction) YieldDisc(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, optArgs ...interface{}) float64 {
@@ -1947,8 +1947,8 @@ func (this *WorksheetFunction) YieldDisc(arg1 interface{}, arg2 interface{}, arg
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_TBillEq_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_TBillEq_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) TBillEq(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -1957,8 +1957,8 @@ func (this *WorksheetFunction) TBillEq(arg1 interface{}, arg2 interface{}, optAr
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_TBillPrice_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_TBillPrice_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) TBillPrice(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -1967,8 +1967,8 @@ func (this *WorksheetFunction) TBillPrice(arg1 interface{}, arg2 interface{}, op
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_TBillYield_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_TBillYield_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) TBillYield(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -1977,8 +1977,8 @@ func (this *WorksheetFunction) TBillYield(arg1 interface{}, arg2 interface{}, op
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Price_OptArgs= []string{
-	"Arg7", 
+var WorksheetFunction_Price_OptArgs = []string{
+	"Arg7",
 }
 
 func (this *WorksheetFunction) Price(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, arg5 interface{}, arg6 interface{}, optArgs ...interface{}) float64 {
@@ -2027,8 +2027,8 @@ func (this *WorksheetFunction) EoMonth(arg1 interface{}, arg2 interface{}) float
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_YearFrac_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_YearFrac_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) YearFrac(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -2037,8 +2037,8 @@ func (this *WorksheetFunction) YearFrac(arg1 interface{}, arg2 interface{}, optA
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_CoupDayBs_OptArgs= []string{
-	"Arg4", 
+var WorksheetFunction_CoupDayBs_OptArgs = []string{
+	"Arg4",
 }
 
 func (this *WorksheetFunction) CoupDayBs(arg1 interface{}, arg2 interface{}, arg3 interface{}, optArgs ...interface{}) float64 {
@@ -2047,8 +2047,8 @@ func (this *WorksheetFunction) CoupDayBs(arg1 interface{}, arg2 interface{}, arg
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_CoupDays_OptArgs= []string{
-	"Arg4", 
+var WorksheetFunction_CoupDays_OptArgs = []string{
+	"Arg4",
 }
 
 func (this *WorksheetFunction) CoupDays(arg1 interface{}, arg2 interface{}, arg3 interface{}, optArgs ...interface{}) float64 {
@@ -2057,8 +2057,8 @@ func (this *WorksheetFunction) CoupDays(arg1 interface{}, arg2 interface{}, arg3
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_CoupDaysNc_OptArgs= []string{
-	"Arg4", 
+var WorksheetFunction_CoupDaysNc_OptArgs = []string{
+	"Arg4",
 }
 
 func (this *WorksheetFunction) CoupDaysNc(arg1 interface{}, arg2 interface{}, arg3 interface{}, optArgs ...interface{}) float64 {
@@ -2067,8 +2067,8 @@ func (this *WorksheetFunction) CoupDaysNc(arg1 interface{}, arg2 interface{}, ar
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_CoupNcd_OptArgs= []string{
-	"Arg4", 
+var WorksheetFunction_CoupNcd_OptArgs = []string{
+	"Arg4",
 }
 
 func (this *WorksheetFunction) CoupNcd(arg1 interface{}, arg2 interface{}, arg3 interface{}, optArgs ...interface{}) float64 {
@@ -2077,8 +2077,8 @@ func (this *WorksheetFunction) CoupNcd(arg1 interface{}, arg2 interface{}, arg3 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_CoupNum_OptArgs= []string{
-	"Arg4", 
+var WorksheetFunction_CoupNum_OptArgs = []string{
+	"Arg4",
 }
 
 func (this *WorksheetFunction) CoupNum(arg1 interface{}, arg2 interface{}, arg3 interface{}, optArgs ...interface{}) float64 {
@@ -2087,8 +2087,8 @@ func (this *WorksheetFunction) CoupNum(arg1 interface{}, arg2 interface{}, arg3 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_CoupPcd_OptArgs= []string{
-	"Arg4", 
+var WorksheetFunction_CoupPcd_OptArgs = []string{
+	"Arg4",
 }
 
 func (this *WorksheetFunction) CoupPcd(arg1 interface{}, arg2 interface{}, arg3 interface{}, optArgs ...interface{}) float64 {
@@ -2097,8 +2097,8 @@ func (this *WorksheetFunction) CoupPcd(arg1 interface{}, arg2 interface{}, arg3 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Duration_OptArgs= []string{
-	"Arg6", 
+var WorksheetFunction_Duration_OptArgs = []string{
+	"Arg6",
 }
 
 func (this *WorksheetFunction) Duration(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, arg5 interface{}, optArgs ...interface{}) float64 {
@@ -2107,8 +2107,8 @@ func (this *WorksheetFunction) Duration(arg1 interface{}, arg2 interface{}, arg3
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_MDuration_OptArgs= []string{
-	"Arg6", 
+var WorksheetFunction_MDuration_OptArgs = []string{
+	"Arg6",
 }
 
 func (this *WorksheetFunction) MDuration(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, arg5 interface{}, optArgs ...interface{}) float64 {
@@ -2117,8 +2117,8 @@ func (this *WorksheetFunction) MDuration(arg1 interface{}, arg2 interface{}, arg
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_OddLPrice_OptArgs= []string{
-	"Arg8", 
+var WorksheetFunction_OddLPrice_OptArgs = []string{
+	"Arg8",
 }
 
 func (this *WorksheetFunction) OddLPrice(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, arg5 interface{}, arg6 interface{}, arg7 interface{}, optArgs ...interface{}) float64 {
@@ -2127,8 +2127,8 @@ func (this *WorksheetFunction) OddLPrice(arg1 interface{}, arg2 interface{}, arg
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_OddLYield_OptArgs= []string{
-	"Arg8", 
+var WorksheetFunction_OddLYield_OptArgs = []string{
+	"Arg8",
 }
 
 func (this *WorksheetFunction) OddLYield(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, arg5 interface{}, arg6 interface{}, arg7 interface{}, optArgs ...interface{}) float64 {
@@ -2137,8 +2137,8 @@ func (this *WorksheetFunction) OddLYield(arg1 interface{}, arg2 interface{}, arg
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_OddFPrice_OptArgs= []string{
-	"Arg9", 
+var WorksheetFunction_OddFPrice_OptArgs = []string{
+	"Arg9",
 }
 
 func (this *WorksheetFunction) OddFPrice(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, arg5 interface{}, arg6 interface{}, arg7 interface{}, arg8 interface{}, optArgs ...interface{}) float64 {
@@ -2147,8 +2147,8 @@ func (this *WorksheetFunction) OddFPrice(arg1 interface{}, arg2 interface{}, arg
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_OddFYield_OptArgs= []string{
-	"Arg9", 
+var WorksheetFunction_OddFYield_OptArgs = []string{
+	"Arg9",
 }
 
 func (this *WorksheetFunction) OddFYield(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, arg5 interface{}, arg6 interface{}, arg7 interface{}, arg8 interface{}, optArgs ...interface{}) float64 {
@@ -2162,8 +2162,8 @@ func (this *WorksheetFunction) RandBetween(arg1 interface{}, arg2 interface{}) f
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_WeekNum_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_WeekNum_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) WeekNum(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -2172,8 +2172,8 @@ func (this *WorksheetFunction) WeekNum(arg1 interface{}, optArgs ...interface{})
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_AmorDegrc_OptArgs= []string{
-	"Arg7", 
+var WorksheetFunction_AmorDegrc_OptArgs = []string{
+	"Arg7",
 }
 
 func (this *WorksheetFunction) AmorDegrc(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, arg5 interface{}, arg6 interface{}, optArgs ...interface{}) float64 {
@@ -2182,8 +2182,8 @@ func (this *WorksheetFunction) AmorDegrc(arg1 interface{}, arg2 interface{}, arg
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_AmorLinc_OptArgs= []string{
-	"Arg7", 
+var WorksheetFunction_AmorLinc_OptArgs = []string{
+	"Arg7",
 }
 
 func (this *WorksheetFunction) AmorLinc(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, arg5 interface{}, arg6 interface{}, optArgs ...interface{}) float64 {
@@ -2197,8 +2197,8 @@ func (this *WorksheetFunction) Convert(arg1 interface{}, arg2 interface{}, arg3 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_AccrInt_OptArgs= []string{
-	"Arg7", 
+var WorksheetFunction_AccrInt_OptArgs = []string{
+	"Arg7",
 }
 
 func (this *WorksheetFunction) AccrInt(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, arg5 interface{}, arg6 interface{}, optArgs ...interface{}) float64 {
@@ -2207,8 +2207,8 @@ func (this *WorksheetFunction) AccrInt(arg1 interface{}, arg2 interface{}, arg3 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_AccrIntM_OptArgs= []string{
-	"Arg5", 
+var WorksheetFunction_AccrIntM_OptArgs = []string{
+	"Arg5",
 }
 
 func (this *WorksheetFunction) AccrIntM(arg1 interface{}, arg2 interface{}, arg3 interface{}, arg4 interface{}, optArgs ...interface{}) float64 {
@@ -2217,8 +2217,8 @@ func (this *WorksheetFunction) AccrIntM(arg1 interface{}, arg2 interface{}, arg3
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_WorkDay_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_WorkDay_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) WorkDay(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -2227,8 +2227,8 @@ func (this *WorksheetFunction) WorkDay(arg1 interface{}, arg2 interface{}, optAr
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_NetworkDays_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_NetworkDays_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) NetworkDays(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -2237,14 +2237,14 @@ func (this *WorksheetFunction) NetworkDays(arg1 interface{}, arg2 interface{}, o
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Gcd_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Gcd_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Gcd(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -2253,14 +2253,14 @@ func (this *WorksheetFunction) Gcd(arg1 interface{}, optArgs ...interface{}) flo
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_MultiNomial_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_MultiNomial_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) MultiNomial(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -2269,14 +2269,14 @@ func (this *WorksheetFunction) MultiNomial(arg1 interface{}, optArgs ...interfac
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Lcm_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Lcm_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Lcm(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -2290,14 +2290,14 @@ func (this *WorksheetFunction) FVSchedule(arg1 interface{}, arg2 interface{}) fl
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_SumIfs_OptArgs= []string{
-	"Arg4", "Arg5", "Arg6", "Arg7", 
-	"Arg8", "Arg9", "Arg10", "Arg11", 
-	"Arg12", "Arg13", "Arg14", "Arg15", 
-	"Arg16", "Arg17", "Arg18", "Arg19", 
-	"Arg20", "Arg21", "Arg22", "Arg23", 
-	"Arg24", "Arg25", "Arg26", "Arg27", 
-	"Arg28", "Arg29", 
+var WorksheetFunction_SumIfs_OptArgs = []string{
+	"Arg4", "Arg5", "Arg6", "Arg7",
+	"Arg8", "Arg9", "Arg10", "Arg11",
+	"Arg12", "Arg13", "Arg14", "Arg15",
+	"Arg16", "Arg17", "Arg18", "Arg19",
+	"Arg20", "Arg21", "Arg22", "Arg23",
+	"Arg24", "Arg25", "Arg26", "Arg27",
+	"Arg28", "Arg29",
 }
 
 func (this *WorksheetFunction) SumIfs(arg1 *Range, arg2 *Range, arg3 interface{}, optArgs ...interface{}) float64 {
@@ -2306,14 +2306,14 @@ func (this *WorksheetFunction) SumIfs(arg1 *Range, arg2 *Range, arg3 interface{}
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_CountIfs_OptArgs= []string{
-	"Arg3", "Arg4", "Arg5", "Arg6", 
-	"Arg7", "Arg8", "Arg9", "Arg10", 
-	"Arg11", "Arg12", "Arg13", "Arg14", 
-	"Arg15", "Arg16", "Arg17", "Arg18", 
-	"Arg19", "Arg20", "Arg21", "Arg22", 
-	"Arg23", "Arg24", "Arg25", "Arg26", 
-	"Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_CountIfs_OptArgs = []string{
+	"Arg3", "Arg4", "Arg5", "Arg6",
+	"Arg7", "Arg8", "Arg9", "Arg10",
+	"Arg11", "Arg12", "Arg13", "Arg14",
+	"Arg15", "Arg16", "Arg17", "Arg18",
+	"Arg19", "Arg20", "Arg21", "Arg22",
+	"Arg23", "Arg24", "Arg25", "Arg26",
+	"Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) CountIfs(arg1 *Range, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -2322,8 +2322,8 @@ func (this *WorksheetFunction) CountIfs(arg1 *Range, arg2 interface{}, optArgs .
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_AverageIf_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_AverageIf_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) AverageIf(arg1 *Range, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -2332,14 +2332,14 @@ func (this *WorksheetFunction) AverageIf(arg1 *Range, arg2 interface{}, optArgs 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_AverageIfs_OptArgs= []string{
-	"Arg4", "Arg5", "Arg6", "Arg7", 
-	"Arg8", "Arg9", "Arg10", "Arg11", 
-	"Arg12", "Arg13", "Arg14", "Arg15", 
-	"Arg16", "Arg17", "Arg18", "Arg19", 
-	"Arg20", "Arg21", "Arg22", "Arg23", 
-	"Arg24", "Arg25", "Arg26", "Arg27", 
-	"Arg28", "Arg29", 
+var WorksheetFunction_AverageIfs_OptArgs = []string{
+	"Arg4", "Arg5", "Arg6", "Arg7",
+	"Arg8", "Arg9", "Arg10", "Arg11",
+	"Arg12", "Arg13", "Arg14", "Arg15",
+	"Arg16", "Arg17", "Arg18", "Arg19",
+	"Arg20", "Arg21", "Arg22", "Arg23",
+	"Arg24", "Arg25", "Arg26", "Arg27",
+	"Arg28", "Arg29",
 }
 
 func (this *WorksheetFunction) AverageIfs(arg1 *Range, arg2 *Range, arg3 interface{}, optArgs ...interface{}) float64 {
@@ -2354,14 +2354,14 @@ func (this *WorksheetFunction) IfError(arg1 interface{}, arg2 interface{}) ole.V
 	return *retVal
 }
 
-var WorksheetFunction_Aggregate_OptArgs= []string{
-	"Arg4", "Arg5", "Arg6", "Arg7", 
-	"Arg8", "Arg9", "Arg10", "Arg11", 
-	"Arg12", "Arg13", "Arg14", "Arg15", 
-	"Arg16", "Arg17", "Arg18", "Arg19", 
-	"Arg20", "Arg21", "Arg22", "Arg23", 
-	"Arg24", "Arg25", "Arg26", "Arg27", 
-	"Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Aggregate_OptArgs = []string{
+	"Arg4", "Arg5", "Arg6", "Arg7",
+	"Arg8", "Arg9", "Arg10", "Arg11",
+	"Arg12", "Arg13", "Arg14", "Arg15",
+	"Arg16", "Arg17", "Arg18", "Arg19",
+	"Arg20", "Arg21", "Arg22", "Arg23",
+	"Arg24", "Arg25", "Arg26", "Arg27",
+	"Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Aggregate(arg1 float64, arg2 float64, arg3 *Range, optArgs ...interface{}) float64 {
@@ -2415,14 +2415,14 @@ func (this *WorksheetFunction) Gamma_Inv(arg1 float64, arg2 float64, arg3 float6
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Mode_Mult_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Mode_Mult_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Mode_Mult(arg1 interface{}, optArgs ...interface{}) ole.Variant {
@@ -2432,14 +2432,14 @@ func (this *WorksheetFunction) Mode_Mult(arg1 interface{}, optArgs ...interface{
 	return *retVal
 }
 
-var WorksheetFunction_Mode_Sngl_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Mode_Sngl_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Mode_Sngl(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -2468,8 +2468,8 @@ func (this *WorksheetFunction) Percentile_Inc(arg1 interface{}, arg2 float64) fl
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_PercentRank_Exc_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_PercentRank_Exc_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) PercentRank_Exc(arg1 interface{}, arg2 float64, optArgs ...interface{}) float64 {
@@ -2478,8 +2478,8 @@ func (this *WorksheetFunction) PercentRank_Exc(arg1 interface{}, arg2 float64, o
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_PercentRank_Inc_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_PercentRank_Inc_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) PercentRank_Inc(arg1 interface{}, arg2 float64, optArgs ...interface{}) float64 {
@@ -2503,8 +2503,8 @@ func (this *WorksheetFunction) Quartile_Inc(arg1 interface{}, arg2 float64) floa
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Rank_Avg_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_Rank_Avg_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) Rank_Avg(arg1 float64, arg2 *Range, optArgs ...interface{}) float64 {
@@ -2513,8 +2513,8 @@ func (this *WorksheetFunction) Rank_Avg(arg1 float64, arg2 *Range, optArgs ...in
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Rank_Eq_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_Rank_Eq_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) Rank_Eq(arg1 float64, arg2 *Range, optArgs ...interface{}) float64 {
@@ -2523,14 +2523,14 @@ func (this *WorksheetFunction) Rank_Eq(arg1 float64, arg2 *Range, optArgs ...int
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_StDev_S_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_StDev_S_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) StDev_S(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -2539,14 +2539,14 @@ func (this *WorksheetFunction) StDev_S(arg1 interface{}, optArgs ...interface{})
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_StDev_P_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_StDev_P_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) StDev_P(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -2580,14 +2580,14 @@ func (this *WorksheetFunction) T_Inv_2T(arg1 float64, arg2 float64) float64 {
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Var_S_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Var_S_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Var_S(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -2596,14 +2596,14 @@ func (this *WorksheetFunction) Var_S(arg1 interface{}, optArgs ...interface{}) f
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Var_P_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Var_P_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Var_P(arg1 interface{}, optArgs ...interface{}) float64 {
@@ -2617,8 +2617,8 @@ func (this *WorksheetFunction) Weibull_Dist(arg1 float64, arg2 float64, arg3 flo
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_NetworkDays_Intl_OptArgs= []string{
-	"Arg3", "Arg4", 
+var WorksheetFunction_NetworkDays_Intl_OptArgs = []string{
+	"Arg3", "Arg4",
 }
 
 func (this *WorksheetFunction) NetworkDays_Intl(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -2627,8 +2627,8 @@ func (this *WorksheetFunction) NetworkDays_Intl(arg1 interface{}, arg2 interface
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_WorkDay_Intl_OptArgs= []string{
-	"Arg3", "Arg4", 
+var WorksheetFunction_WorkDay_Intl_OptArgs = []string{
+	"Arg3", "Arg4",
 }
 
 func (this *WorksheetFunction) WorkDay_Intl(arg1 interface{}, arg2 interface{}, optArgs ...interface{}) float64 {
@@ -2637,8 +2637,8 @@ func (this *WorksheetFunction) WorkDay_Intl(arg1 interface{}, arg2 interface{}, 
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_ISO_Ceiling_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_ISO_Ceiling_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) ISO_Ceiling(arg1 float64, optArgs ...interface{}) float64 {
@@ -2652,14 +2652,14 @@ func (this *WorksheetFunction) Dummy21(arg1 float64, arg2 float64) float64 {
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Dummy19_OptArgs= []string{
-	"Arg2", "Arg3", "Arg4", "Arg5", 
-	"Arg6", "Arg7", "Arg8", "Arg9", 
-	"Arg10", "Arg11", "Arg12", "Arg13", 
-	"Arg14", "Arg15", "Arg16", "Arg17", 
-	"Arg18", "Arg19", "Arg20", "Arg21", 
-	"Arg22", "Arg23", "Arg24", "Arg25", 
-	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30", 
+var WorksheetFunction_Dummy19_OptArgs = []string{
+	"Arg2", "Arg3", "Arg4", "Arg5",
+	"Arg6", "Arg7", "Arg8", "Arg9",
+	"Arg10", "Arg11", "Arg12", "Arg13",
+	"Arg14", "Arg15", "Arg16", "Arg17",
+	"Arg18", "Arg19", "Arg20", "Arg21",
+	"Arg22", "Arg23", "Arg24", "Arg25",
+	"Arg26", "Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *WorksheetFunction) Dummy19(arg1 interface{}, optArgs ...interface{}) ole.Variant {
@@ -2669,8 +2669,8 @@ func (this *WorksheetFunction) Dummy19(arg1 interface{}, optArgs ...interface{})
 	return *retVal
 }
 
-var WorksheetFunction_Beta_Dist_OptArgs= []string{
-	"Arg5", "Arg6", 
+var WorksheetFunction_Beta_Dist_OptArgs = []string{
+	"Arg5", "Arg6",
 }
 
 func (this *WorksheetFunction) Beta_Dist(arg1 float64, arg2 float64, arg3 float64, arg4 bool, optArgs ...interface{}) float64 {
@@ -2679,8 +2679,8 @@ func (this *WorksheetFunction) Beta_Dist(arg1 float64, arg2 float64, arg3 float6
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Beta_Inv_OptArgs= []string{
-	"Arg4", "Arg5", 
+var WorksheetFunction_Beta_Inv_OptArgs = []string{
+	"Arg4", "Arg5",
 }
 
 func (this *WorksheetFunction) Beta_Inv(arg1 float64, arg2 float64, arg3 float64, optArgs ...interface{}) float64 {
@@ -2764,8 +2764,8 @@ func (this *WorksheetFunction) T_Test(arg1 interface{}, arg2 interface{}, arg3 f
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Z_Test_OptArgs= []string{
-	"Arg3", 
+var WorksheetFunction_Z_Test_OptArgs = []string{
+	"Arg3",
 }
 
 func (this *WorksheetFunction) Z_Test(arg1 interface{}, arg2 float64, optArgs ...interface{}) float64 {
@@ -2799,8 +2799,8 @@ func (this *WorksheetFunction) GammaLn_Precise(arg1 float64) float64 {
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Ceiling_Precise_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Ceiling_Precise_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Ceiling_Precise(arg1 float64, optArgs ...interface{}) float64 {
@@ -2809,8 +2809,8 @@ func (this *WorksheetFunction) Ceiling_Precise(arg1 float64, optArgs ...interfac
 	return retVal.DblValVal()
 }
 
-var WorksheetFunction_Floor_Precise_OptArgs= []string{
-	"Arg2", 
+var WorksheetFunction_Floor_Precise_OptArgs = []string{
+	"Arg2",
 }
 
 func (this *WorksheetFunction) Floor_Precise(arg1 float64, optArgs ...interface{}) float64 {
@@ -2818,4 +2818,3 @@ func (this *WorksheetFunction) Floor_Precise(arg1 float64, optArgs ...interface{
 	retVal, _ := this.Call(0x00004223, []interface{}{arg1}, optArgs...)
 	return retVal.DblValVal()
 }
-

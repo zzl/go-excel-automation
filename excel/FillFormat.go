@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 000C0314-0000-0000-C000-000000000046
-var IID_FillFormat = syscall.GUID{0x000C0314, 0x0000, 0x0000, 
+var IID_FillFormat = syscall.GUID{0x000C0314, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type FillFormat struct {
@@ -16,8 +16,8 @@ type FillFormat struct {
 }
 
 func NewFillFormat(pDisp *win32.IDispatch, addRef bool, scoped bool) *FillFormat {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &FillFormat{ole.OleClient{pDisp}}
 	if addRef {
@@ -59,49 +59,49 @@ func (this *FillFormat) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *FillFormat) Background()  {
+func (this *FillFormat) Background() {
 	retVal, _ := this.Call(0x0000000a, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *FillFormat) OneColorGradient(style int32, variant int32, degree float32)  {
+func (this *FillFormat) OneColorGradient(style int32, variant int32, degree float32) {
 	retVal, _ := this.Call(0x0000000b, []interface{}{style, variant, degree})
-	_= retVal
+	_ = retVal
 }
 
-func (this *FillFormat) Patterned(pattern int32)  {
+func (this *FillFormat) Patterned(pattern int32) {
 	retVal, _ := this.Call(0x0000000c, []interface{}{pattern})
-	_= retVal
+	_ = retVal
 }
 
-func (this *FillFormat) PresetGradient(style int32, variant int32, presetGradientType int32)  {
+func (this *FillFormat) PresetGradient(style int32, variant int32, presetGradientType int32) {
 	retVal, _ := this.Call(0x0000000d, []interface{}{style, variant, presetGradientType})
-	_= retVal
+	_ = retVal
 }
 
-func (this *FillFormat) PresetTextured(presetTexture int32)  {
+func (this *FillFormat) PresetTextured(presetTexture int32) {
 	retVal, _ := this.Call(0x0000000e, []interface{}{presetTexture})
-	_= retVal
+	_ = retVal
 }
 
-func (this *FillFormat) Solid()  {
+func (this *FillFormat) Solid() {
 	retVal, _ := this.Call(0x0000000f, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *FillFormat) TwoColorGradient(style int32, variant int32)  {
+func (this *FillFormat) TwoColorGradient(style int32, variant int32) {
 	retVal, _ := this.Call(0x00000010, []interface{}{style, variant})
-	_= retVal
+	_ = retVal
 }
 
-func (this *FillFormat) UserPicture(pictureFile string)  {
+func (this *FillFormat) UserPicture(pictureFile string) {
 	retVal, _ := this.Call(0x00000011, []interface{}{pictureFile})
-	_= retVal
+	_ = retVal
 }
 
-func (this *FillFormat) UserTextured(textureFile string)  {
+func (this *FillFormat) UserTextured(textureFile string) {
 	retVal, _ := this.Call(0x00000012, []interface{}{textureFile})
-	_= retVal
+	_ = retVal
 }
 
 func (this *FillFormat) BackColor() *ColorFormat {
@@ -109,7 +109,7 @@ func (this *FillFormat) BackColor() *ColorFormat {
 	return NewColorFormat(retVal.IDispatch(), false, true)
 }
 
-func (this *FillFormat) SetBackColor(rhs *ColorFormat)  {
+func (this *FillFormat) SetBackColor(rhs *ColorFormat) {
 	_ = this.PropPut(0x00000064, []interface{}{rhs})
 }
 
@@ -118,7 +118,7 @@ func (this *FillFormat) ForeColor() *ColorFormat {
 	return NewColorFormat(retVal.IDispatch(), false, true)
 }
 
-func (this *FillFormat) SetForeColor(rhs *ColorFormat)  {
+func (this *FillFormat) SetForeColor(rhs *ColorFormat) {
 	_ = this.PropPut(0x00000065, []interface{}{rhs})
 }
 
@@ -172,7 +172,7 @@ func (this *FillFormat) Transparency() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *FillFormat) SetTransparency(rhs float32)  {
+func (this *FillFormat) SetTransparency(rhs float32) {
 	_ = this.PropPut(0x0000006f, []interface{}{rhs})
 }
 
@@ -186,7 +186,7 @@ func (this *FillFormat) Visible() int32 {
 	return retVal.LValVal()
 }
 
-func (this *FillFormat) SetVisible(rhs int32)  {
+func (this *FillFormat) SetVisible(rhs int32) {
 	_ = this.PropPut(0x00000071, []interface{}{rhs})
 }
 
@@ -200,7 +200,7 @@ func (this *FillFormat) TextureOffsetX() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *FillFormat) SetTextureOffsetX(rhs float32)  {
+func (this *FillFormat) SetTextureOffsetX(rhs float32) {
 	_ = this.PropPut(0x00000073, []interface{}{rhs})
 }
 
@@ -209,7 +209,7 @@ func (this *FillFormat) TextureOffsetY() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *FillFormat) SetTextureOffsetY(rhs float32)  {
+func (this *FillFormat) SetTextureOffsetY(rhs float32) {
 	_ = this.PropPut(0x00000074, []interface{}{rhs})
 }
 
@@ -218,7 +218,7 @@ func (this *FillFormat) TextureAlignment() int32 {
 	return retVal.LValVal()
 }
 
-func (this *FillFormat) SetTextureAlignment(rhs int32)  {
+func (this *FillFormat) SetTextureAlignment(rhs int32) {
 	_ = this.PropPut(0x00000075, []interface{}{rhs})
 }
 
@@ -227,7 +227,7 @@ func (this *FillFormat) TextureHorizontalScale() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *FillFormat) SetTextureHorizontalScale(rhs float32)  {
+func (this *FillFormat) SetTextureHorizontalScale(rhs float32) {
 	_ = this.PropPut(0x00000076, []interface{}{rhs})
 }
 
@@ -236,7 +236,7 @@ func (this *FillFormat) TextureVerticalScale() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *FillFormat) SetTextureVerticalScale(rhs float32)  {
+func (this *FillFormat) SetTextureVerticalScale(rhs float32) {
 	_ = this.PropPut(0x00000077, []interface{}{rhs})
 }
 
@@ -245,7 +245,7 @@ func (this *FillFormat) TextureTile() int32 {
 	return retVal.LValVal()
 }
 
-func (this *FillFormat) SetTextureTile(rhs int32)  {
+func (this *FillFormat) SetTextureTile(rhs int32) {
 	_ = this.PropPut(0x00000078, []interface{}{rhs})
 }
 
@@ -254,7 +254,7 @@ func (this *FillFormat) RotateWithObject() int32 {
 	return retVal.LValVal()
 }
 
-func (this *FillFormat) SetRotateWithObject(rhs int32)  {
+func (this *FillFormat) SetRotateWithObject(rhs int32) {
 	_ = this.PropPut(0x00000079, []interface{}{rhs})
 }
 
@@ -268,7 +268,6 @@ func (this *FillFormat) GradientAngle() float32 {
 	return retVal.FltValVal()
 }
 
-func (this *FillFormat) SetGradientAngle(rhs float32)  {
+func (this *FillFormat) SetGradientAngle(rhs float32) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
-

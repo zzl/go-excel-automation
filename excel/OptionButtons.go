@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 00020882-0000-0000-C000-000000000046
-var IID_OptionButtons = syscall.GUID{0x00020882, 0x0000, 0x0000, 
+var IID_OptionButtons = syscall.GUID{0x00020882, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type OptionButtons struct {
@@ -17,8 +17,8 @@ type OptionButtons struct {
 }
 
 func NewOptionButtons(pDisp *win32.IDispatch, addRef bool, scoped bool) *OptionButtons {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &OptionButtons{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *OptionButtons) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *OptionButtons) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *OptionButtons) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *OptionButtons) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *OptionButtons) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *OptionButtons) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *OptionButtons) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *OptionButtons) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *OptionButtons) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *OptionButtons) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *OptionButtons) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *OptionButtons) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *OptionButtons) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *OptionButtons) Application() *Application {
@@ -95,9 +95,9 @@ func (this *OptionButtons) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *OptionButtons) Dummy3_()  {
+func (this *OptionButtons) Dummy3_() {
 	retVal, _ := this.Call(0x00010003, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *OptionButtons) BringToFront() ole.Variant {
@@ -112,8 +112,8 @@ func (this *OptionButtons) Copy() ole.Variant {
 	return *retVal
 }
 
-var OptionButtons_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var OptionButtons_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *OptionButtons) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *OptionButtons) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OptionButtons) SetEnabled(rhs bool)  {
+func (this *OptionButtons) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,13 +154,13 @@ func (this *OptionButtons) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *OptionButtons) SetHeight(rhs float64)  {
+func (this *OptionButtons) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
-func (this *OptionButtons) Dummy12_()  {
+func (this *OptionButtons) Dummy12_() {
 	retVal, _ := this.Call(0x0001000c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *OptionButtons) Left() float64 {
@@ -168,7 +168,7 @@ func (this *OptionButtons) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *OptionButtons) SetLeft(rhs float64)  {
+func (this *OptionButtons) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,13 +177,13 @@ func (this *OptionButtons) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OptionButtons) SetLocked(rhs bool)  {
+func (this *OptionButtons) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
-func (this *OptionButtons) Dummy15_()  {
+func (this *OptionButtons) Dummy15_() {
 	retVal, _ := this.Call(0x0001000f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *OptionButtons) OnAction() string {
@@ -191,7 +191,7 @@ func (this *OptionButtons) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *OptionButtons) SetOnAction(rhs string)  {
+func (this *OptionButtons) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *OptionButtons) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *OptionButtons) SetPlacement(rhs interface{})  {
+func (this *OptionButtons) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -210,12 +210,12 @@ func (this *OptionButtons) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OptionButtons) SetPrintObject(rhs bool)  {
+func (this *OptionButtons) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var OptionButtons_Select_OptArgs= []string{
-	"Replace", 
+var OptionButtons_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *OptionButtons) Select(optArgs ...interface{}) ole.Variant {
@@ -236,13 +236,13 @@ func (this *OptionButtons) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *OptionButtons) SetTop(rhs float64)  {
+func (this *OptionButtons) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
-func (this *OptionButtons) Dummy22_()  {
+func (this *OptionButtons) Dummy22_() {
 	retVal, _ := this.Call(0x00010016, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *OptionButtons) Visible() bool {
@@ -250,7 +250,7 @@ func (this *OptionButtons) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OptionButtons) SetVisible(rhs bool)  {
+func (this *OptionButtons) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *OptionButtons) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *OptionButtons) SetWidth(rhs float64)  {
+func (this *OptionButtons) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -278,12 +278,12 @@ func (this *OptionButtons) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *OptionButtons) SetCaption(rhs string)  {
+func (this *OptionButtons) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var OptionButtons_Characters_OptArgs= []string{
-	"Start", "Length", 
+var OptionButtons_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *OptionButtons) Characters(optArgs ...interface{}) *Characters {
@@ -292,8 +292,8 @@ func (this *OptionButtons) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var OptionButtons_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var OptionButtons_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *OptionButtons) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -308,7 +308,7 @@ func (this *OptionButtons) LockedText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OptionButtons) SetLockedText(rhs bool)  {
+func (this *OptionButtons) SetLockedText(rhs bool) {
 	_ = this.PropPut(0x00000268, []interface{}{rhs})
 }
 
@@ -317,7 +317,7 @@ func (this *OptionButtons) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *OptionButtons) SetText(rhs string)  {
+func (this *OptionButtons) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -327,7 +327,7 @@ func (this *OptionButtons) Accelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *OptionButtons) SetAccelerator(rhs interface{})  {
+func (this *OptionButtons) SetAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x0000034e, []interface{}{rhs})
 }
 
@@ -341,7 +341,7 @@ func (this *OptionButtons) Default_() int32 {
 	return retVal.LValVal()
 }
 
-func (this *OptionButtons) SetDefault_(rhs int32)  {
+func (this *OptionButtons) SetDefault_(rhs int32) {
 	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
@@ -350,7 +350,7 @@ func (this *OptionButtons) Display3DShading() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *OptionButtons) SetDisplay3DShading(rhs bool)  {
+func (this *OptionButtons) SetDisplay3DShading(rhs bool) {
 	_ = this.PropPut(0x00000462, []interface{}{rhs})
 }
 
@@ -364,7 +364,7 @@ func (this *OptionButtons) LinkedCell() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *OptionButtons) SetLinkedCell(rhs string)  {
+func (this *OptionButtons) SetLinkedCell(rhs string) {
 	_ = this.PropPut(0x00000422, []interface{}{rhs})
 }
 
@@ -374,7 +374,7 @@ func (this *OptionButtons) PhoneticAccelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *OptionButtons) SetPhoneticAccelerator(rhs interface{})  {
+func (this *OptionButtons) SetPhoneticAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x00000461, []interface{}{rhs})
 }
 
@@ -384,7 +384,7 @@ func (this *OptionButtons) Value() ole.Variant {
 	return *retVal
 }
 
-func (this *OptionButtons) SetValue(rhs interface{})  {
+func (this *OptionButtons) SetValue(rhs interface{}) {
 	_ = this.PropPut(0x00000006, []interface{}{rhs})
 }
 
@@ -422,7 +422,7 @@ func (this *OptionButtons) ForEach(action func(item int32) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant

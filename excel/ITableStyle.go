@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000244A7-0001-0000-C000-000000000046
-var IID_ITableStyle = syscall.GUID{0x000244A7, 0x0001, 0x0000, 
+var IID_ITableStyle = syscall.GUID{0x000244A7, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ITableStyle struct {
@@ -16,8 +16,8 @@ type ITableStyle struct {
 }
 
 func NewITableStyle(pUnk *win32.IUnknown, addRef bool, scoped bool) *ITableStyle {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ITableStyle)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -36,7 +36,7 @@ func (this *ITableStyle) IID() *syscall.GUID {
 func (this *ITableStyle) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -49,7 +49,7 @@ func (this *ITableStyle) GetCreator(rhs *int32) com.Error {
 func (this *ITableStyle) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -80,7 +80,7 @@ func (this *ITableStyle) GetBuiltIn(rhs *win32.VARIANT_BOOL) com.Error {
 func (this *ITableStyle) GetTableStyleElements(rhs **TableStyleElements) com.Error {
 	addr := (*this.LpVtbl)[14]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -117,7 +117,7 @@ func (this *ITableStyle) Delete() com.Error {
 func (this *ITableStyle) Duplicate(newTableStyleName interface{}, rhs **TableStyle) com.Error {
 	addr := (*this.LpVtbl)[20]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&newTableStyleName)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -132,4 +132,3 @@ func (this *ITableStyle) SetShowAsAvailableSlicerStyle(rhs bool) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(*(*uint8)(unsafe.Pointer(&rhs))))
 	return com.Error(ret)
 }
-

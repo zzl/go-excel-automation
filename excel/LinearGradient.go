@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000244AF-0000-0000-C000-000000000046
-var IID_LinearGradient = syscall.GUID{0x000244AF, 0x0000, 0x0000, 
+var IID_LinearGradient = syscall.GUID{0x000244AF, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type LinearGradient struct {
@@ -17,8 +17,8 @@ type LinearGradient struct {
 }
 
 func NewLinearGradient(pDisp *win32.IDispatch, addRef bool, scoped bool) *LinearGradient {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &LinearGradient{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *LinearGradient) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *LinearGradient) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *LinearGradient) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *LinearGradient) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *LinearGradient) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *LinearGradient) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *LinearGradient) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *LinearGradient) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *LinearGradient) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *LinearGradient) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *LinearGradient) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *LinearGradient) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *LinearGradient) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *LinearGradient) Application() *Application {
@@ -105,7 +105,6 @@ func (this *LinearGradient) Degree() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *LinearGradient) SetDegree(rhs float64)  {
+func (this *LinearGradient) SetDegree(rhs float64) {
 	_ = this.PropPut(0x00000657, []interface{}{rhs})
 }
-

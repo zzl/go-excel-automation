@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024466-0001-0000-C000-000000000046
-var IID_ISpeech = syscall.GUID{0x00024466, 0x0001, 0x0000, 
+var IID_ISpeech = syscall.GUID{0x00024466, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ISpeech struct {
@@ -16,8 +16,8 @@ type ISpeech struct {
 }
 
 func NewISpeech(pUnk *win32.IUnknown, addRef bool, scoped bool) *ISpeech {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ISpeech)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -62,4 +62,3 @@ func (this *ISpeech) SetSpeakCellOnEnter(rhs bool) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(*(*uint8)(unsafe.Pointer(&rhs))))
 	return com.Error(ret)
 }
-

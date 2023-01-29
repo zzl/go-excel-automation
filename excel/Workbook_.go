@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 000208DA-0000-0000-C000-000000000046
-var IID_Workbook_ = syscall.GUID{0x000208DA, 0x0000, 0x0000, 
+var IID_Workbook_ = syscall.GUID{0x000208DA, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Workbook_ struct {
@@ -16,8 +16,8 @@ type Workbook_ struct {
 }
 
 func NewWorkbook_(pDisp *win32.IDispatch, addRef bool, scoped bool) *Workbook_ {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Workbook_{ole.OleClient{pDisp}}
 	if addRef {
@@ -64,13 +64,13 @@ func (this *Workbook_) AcceptLabelsInFormulas() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetAcceptLabelsInFormulas(rhs bool)  {
+func (this *Workbook_) SetAcceptLabelsInFormulas(rhs bool) {
 	_ = this.PropPut(0x000005a1, []interface{}{rhs})
 }
 
-func (this *Workbook_) Activate()  {
+func (this *Workbook_) Activate() {
 	retVal, _ := this.Call(0x00000130, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) ActiveChart() *Chart {
@@ -88,7 +88,7 @@ func (this *Workbook_) Author() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Workbook_) SetAuthor(rhs string)  {
+func (this *Workbook_) SetAuthor(rhs string) {
 	_ = this.PropPut(0x0000023e, []interface{}{rhs})
 }
 
@@ -97,7 +97,7 @@ func (this *Workbook_) AutoUpdateFrequency() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Workbook_) SetAutoUpdateFrequency(rhs int32)  {
+func (this *Workbook_) SetAutoUpdateFrequency(rhs int32) {
 	_ = this.PropPut(0x000005a2, []interface{}{rhs})
 }
 
@@ -106,7 +106,7 @@ func (this *Workbook_) AutoUpdateSaveChanges() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetAutoUpdateSaveChanges(rhs bool)  {
+func (this *Workbook_) SetAutoUpdateSaveChanges(rhs bool) {
 	_ = this.PropPut(0x000005a3, []interface{}{rhs})
 }
 
@@ -115,7 +115,7 @@ func (this *Workbook_) ChangeHistoryDuration() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Workbook_) SetChangeHistoryDuration(rhs int32)  {
+func (this *Workbook_) SetChangeHistoryDuration(rhs int32) {
 	_ = this.PropPut(0x000005a4, []interface{}{rhs})
 }
 
@@ -124,24 +124,24 @@ func (this *Workbook_) BuiltinDocumentProperties() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Workbook__ChangeFileAccess_OptArgs= []string{
-	"WritePassword", "Notify", 
+var Workbook__ChangeFileAccess_OptArgs = []string{
+	"WritePassword", "Notify",
 }
 
-func (this *Workbook_) ChangeFileAccess(mode int32, optArgs ...interface{})  {
+func (this *Workbook_) ChangeFileAccess(mode int32, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__ChangeFileAccess_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000003dd, []interface{}{mode}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__ChangeLink_OptArgs= []string{
-	"Type", 
+var Workbook__ChangeLink_OptArgs = []string{
+	"Type",
 }
 
-func (this *Workbook_) ChangeLink(name string, newName string, optArgs ...interface{})  {
+func (this *Workbook_) ChangeLink(name string, newName string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__ChangeLink_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000322, []interface{}{name, newName}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) Charts() *Sheets {
@@ -149,14 +149,14 @@ func (this *Workbook_) Charts() *Sheets {
 	return NewSheets(retVal.IDispatch(), false, true)
 }
 
-var Workbook__Close_OptArgs= []string{
-	"SaveChanges", "Filename", "RouteWorkbook", 
+var Workbook__Close_OptArgs = []string{
+	"SaveChanges", "Filename", "RouteWorkbook",
 }
 
-func (this *Workbook_) Close(optArgs ...interface{})  {
+func (this *Workbook_) Close(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__Close_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000115, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) CodeName() string {
@@ -169,12 +169,12 @@ func (this *Workbook_) CodeName_() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Workbook_) SetCodeName_(rhs string)  {
+func (this *Workbook_) SetCodeName_(rhs string) {
 	_ = this.PropPut(-2147418112, []interface{}{rhs})
 }
 
-var Workbook__Colors_OptArgs= []string{
-	"Index", 
+var Workbook__Colors_OptArgs = []string{
+	"Index",
 }
 
 func (this *Workbook_) Colors(optArgs ...interface{}) ole.Variant {
@@ -184,11 +184,11 @@ func (this *Workbook_) Colors(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Workbook__SetColors_OptArgs= []string{
-	"Index", 
+var Workbook__SetColors_OptArgs = []string{
+	"Index",
 }
 
-func (this *Workbook_) SetColors(optArgs ...interface{})  {
+func (this *Workbook_) SetColors(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__SetColors_OptArgs, optArgs)
 	_ = this.PropPut(0x0000011e, nil, optArgs...)
 }
@@ -203,7 +203,7 @@ func (this *Workbook_) Comments() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Workbook_) SetComments(rhs string)  {
+func (this *Workbook_) SetComments(rhs string) {
 	_ = this.PropPut(0x0000023f, []interface{}{rhs})
 }
 
@@ -212,7 +212,7 @@ func (this *Workbook_) ConflictResolution() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Workbook_) SetConflictResolution(rhs int32)  {
+func (this *Workbook_) SetConflictResolution(rhs int32) {
 	_ = this.PropPut(0x00000497, []interface{}{rhs})
 }
 
@@ -236,13 +236,13 @@ func (this *Workbook_) Date1904() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetDate1904(rhs bool)  {
+func (this *Workbook_) SetDate1904(rhs bool) {
 	_ = this.PropPut(0x00000193, []interface{}{rhs})
 }
 
-func (this *Workbook_) DeleteNumberFormat(numberFormat string)  {
+func (this *Workbook_) DeleteNumberFormat(numberFormat string) {
 	retVal, _ := this.Call(0x0000018d, []interface{}{numberFormat})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) DialogSheets() *Sheets {
@@ -255,7 +255,7 @@ func (this *Workbook_) DisplayDrawingObjects() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Workbook_) SetDisplayDrawingObjects(rhs int32)  {
+func (this *Workbook_) SetDisplayDrawingObjects(rhs int32) {
 	_ = this.PropPut(0x00000194, []interface{}{rhs})
 }
 
@@ -269,9 +269,9 @@ func (this *Workbook_) FileFormat() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Workbook_) ForwardMailer()  {
+func (this *Workbook_) ForwardMailer() {
 	retVal, _ := this.Call(0x000003cd, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) FullName() string {
@@ -284,7 +284,7 @@ func (this *Workbook_) HasMailer() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetHasMailer(rhs bool)  {
+func (this *Workbook_) SetHasMailer(rhs bool) {
 	_ = this.PropPut(0x000003d0, []interface{}{rhs})
 }
 
@@ -298,7 +298,7 @@ func (this *Workbook_) HasRoutingSlip() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetHasRoutingSlip(rhs bool)  {
+func (this *Workbook_) SetHasRoutingSlip(rhs bool) {
 	_ = this.PropPut(0x000003b6, []interface{}{rhs})
 }
 
@@ -307,7 +307,7 @@ func (this *Workbook_) IsAddin() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetIsAddin(rhs bool)  {
+func (this *Workbook_) SetIsAddin(rhs bool) {
 	_ = this.PropPut(0x000005a5, []interface{}{rhs})
 }
 
@@ -316,12 +316,12 @@ func (this *Workbook_) Keywords() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Workbook_) SetKeywords(rhs string)  {
+func (this *Workbook_) SetKeywords(rhs string) {
 	_ = this.PropPut(0x00000241, []interface{}{rhs})
 }
 
-var Workbook__LinkInfo_OptArgs= []string{
-	"Type", "EditionRef", 
+var Workbook__LinkInfo_OptArgs = []string{
+	"Type", "EditionRef",
 }
 
 func (this *Workbook_) LinkInfo(name string, linkInfo int32, optArgs ...interface{}) ole.Variant {
@@ -331,8 +331,8 @@ func (this *Workbook_) LinkInfo(name string, linkInfo int32, optArgs ...interfac
 	return *retVal
 }
 
-var Workbook__LinkSources_OptArgs= []string{
-	"Type", 
+var Workbook__LinkSources_OptArgs = []string{
+	"Type",
 }
 
 func (this *Workbook_) LinkSources(optArgs ...interface{}) ole.Variant {
@@ -347,9 +347,9 @@ func (this *Workbook_) Mailer() *Mailer {
 	return NewMailer(retVal.IDispatch(), false, true)
 }
 
-func (this *Workbook_) MergeWorkbook(filename interface{})  {
+func (this *Workbook_) MergeWorkbook(filename interface{}) {
 	retVal, _ := this.Call(0x000005a6, []interface{}{filename})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) Modules() *Sheets {
@@ -382,7 +382,7 @@ func (this *Workbook_) OnSave() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Workbook_) SetOnSave(rhs string)  {
+func (this *Workbook_) SetOnSave(rhs string) {
 	_ = this.PropPut(0x0000049a, []interface{}{rhs})
 }
 
@@ -391,7 +391,7 @@ func (this *Workbook_) OnSheetActivate() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Workbook_) SetOnSheetActivate(rhs string)  {
+func (this *Workbook_) SetOnSheetActivate(rhs string) {
 	_ = this.PropPut(0x00000407, []interface{}{rhs})
 }
 
@@ -400,18 +400,18 @@ func (this *Workbook_) OnSheetDeactivate() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Workbook_) SetOnSheetDeactivate(rhs string)  {
+func (this *Workbook_) SetOnSheetDeactivate(rhs string) {
 	_ = this.PropPut(0x00000439, []interface{}{rhs})
 }
 
-var Workbook__OpenLinks_OptArgs= []string{
-	"ReadOnly", "Type", 
+var Workbook__OpenLinks_OptArgs = []string{
+	"ReadOnly", "Type",
 }
 
-func (this *Workbook_) OpenLinks(name string, optArgs ...interface{})  {
+func (this *Workbook_) OpenLinks(name string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__OpenLinks_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000323, []interface{}{name}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) Path() string {
@@ -424,7 +424,7 @@ func (this *Workbook_) PersonalViewListSettings() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetPersonalViewListSettings(rhs bool)  {
+func (this *Workbook_) SetPersonalViewListSettings(rhs bool) {
 	_ = this.PropPut(0x000005a7, []interface{}{rhs})
 }
 
@@ -433,7 +433,7 @@ func (this *Workbook_) PersonalViewPrintSettings() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetPersonalViewPrintSettings(rhs bool)  {
+func (this *Workbook_) SetPersonalViewPrintSettings(rhs bool) {
 	_ = this.PropPut(0x000005a8, []interface{}{rhs})
 }
 
@@ -442,14 +442,14 @@ func (this *Workbook_) PivotCaches() *PivotCaches {
 	return NewPivotCaches(retVal.IDispatch(), false, true)
 }
 
-var Workbook__Post_OptArgs= []string{
-	"DestName", 
+var Workbook__Post_OptArgs = []string{
+	"DestName",
 }
 
-func (this *Workbook_) Post(optArgs ...interface{})  {
+func (this *Workbook_) Post(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__Post_OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000048e, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) PrecisionAsDisplayed() bool {
@@ -457,50 +457,50 @@ func (this *Workbook_) PrecisionAsDisplayed() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetPrecisionAsDisplayed(rhs bool)  {
+func (this *Workbook_) SetPrecisionAsDisplayed(rhs bool) {
 	_ = this.PropPut(0x00000195, []interface{}{rhs})
 }
 
-var Workbook__PrintOut___OptArgs= []string{
-	"From", "To", "Copies", "Preview", 
-	"ActivePrinter", "PrintToFile", "Collate", 
+var Workbook__PrintOut___OptArgs = []string{
+	"From", "To", "Copies", "Preview",
+	"ActivePrinter", "PrintToFile", "Collate",
 }
 
-func (this *Workbook_) PrintOut__(optArgs ...interface{})  {
+func (this *Workbook_) PrintOut__(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__PrintOut___OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000389, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__PrintPreview_OptArgs= []string{
-	"EnableChanges", 
+var Workbook__PrintPreview_OptArgs = []string{
+	"EnableChanges",
 }
 
-func (this *Workbook_) PrintPreview(optArgs ...interface{})  {
+func (this *Workbook_) PrintPreview(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__PrintPreview_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000119, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__Protect__OptArgs= []string{
-	"Password", "Structure", "Windows", 
+var Workbook__Protect__OptArgs = []string{
+	"Password", "Structure", "Windows",
 }
 
-func (this *Workbook_) Protect_(optArgs ...interface{})  {
+func (this *Workbook_) Protect_(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__Protect__OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000011a, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__ProtectSharing__OptArgs= []string{
-	"Filename", "Password", "WriteResPassword", "ReadOnlyRecommended", 
-	"CreateBackup", "SharingPassword", 
+var Workbook__ProtectSharing__OptArgs = []string{
+	"Filename", "Password", "WriteResPassword", "ReadOnlyRecommended",
+	"CreateBackup", "SharingPassword",
 }
 
-func (this *Workbook_) ProtectSharing_(optArgs ...interface{})  {
+func (this *Workbook_) ProtectSharing_(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__ProtectSharing__OptArgs, optArgs)
 	retVal, _ := this.Call(0x000005aa, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) ProtectStructure() bool {
@@ -523,24 +523,24 @@ func (this *Workbook_) ReadOnlyRecommended_() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) RefreshAll()  {
+func (this *Workbook_) RefreshAll() {
 	retVal, _ := this.Call(0x000005ac, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) Reply()  {
+func (this *Workbook_) Reply() {
 	retVal, _ := this.Call(0x000003d1, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) ReplyAll()  {
+func (this *Workbook_) ReplyAll() {
 	retVal, _ := this.Call(0x000003d2, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) RemoveUser(index int32)  {
+func (this *Workbook_) RemoveUser(index int32) {
 	retVal, _ := this.Call(0x000005ad, []interface{}{index})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) RevisionNumber() int32 {
@@ -548,9 +548,9 @@ func (this *Workbook_) RevisionNumber() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Workbook_) Route()  {
+func (this *Workbook_) Route() {
 	retVal, _ := this.Call(0x000003b2, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) Routed() bool {
@@ -563,36 +563,36 @@ func (this *Workbook_) RoutingSlip() *RoutingSlip {
 	return NewRoutingSlip(retVal.IDispatch(), false, true)
 }
 
-func (this *Workbook_) RunAutoMacros(which int32)  {
+func (this *Workbook_) RunAutoMacros(which int32) {
 	retVal, _ := this.Call(0x0000027a, []interface{}{which})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) Save()  {
+func (this *Workbook_) Save() {
 	retVal, _ := this.Call(0x0000011b, nil)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__SaveAs__OptArgs= []string{
-	"Filename", "FileFormat", "Password", "WriteResPassword", 
-	"ReadOnlyRecommended", "CreateBackup", "AccessMode", "ConflictResolution", 
-	"AddToMru", "TextCodepage", "TextVisualLayout", 
+var Workbook__SaveAs__OptArgs = []string{
+	"Filename", "FileFormat", "Password", "WriteResPassword",
+	"ReadOnlyRecommended", "CreateBackup", "AccessMode", "ConflictResolution",
+	"AddToMru", "TextCodepage", "TextVisualLayout",
 }
 
-func (this *Workbook_) SaveAs_(optArgs ...interface{})  {
+func (this *Workbook_) SaveAs_(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__SaveAs__OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000011c, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__SaveCopyAs_OptArgs= []string{
-	"Filename", 
+var Workbook__SaveCopyAs_OptArgs = []string{
+	"Filename",
 }
 
-func (this *Workbook_) SaveCopyAs(optArgs ...interface{})  {
+func (this *Workbook_) SaveCopyAs(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__SaveCopyAs_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000000af, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) Saved() bool {
@@ -600,7 +600,7 @@ func (this *Workbook_) Saved() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetSaved(rhs bool)  {
+func (this *Workbook_) SetSaved(rhs bool) {
 	_ = this.PropPut(0x0000012a, []interface{}{rhs})
 }
 
@@ -609,38 +609,38 @@ func (this *Workbook_) SaveLinkValues() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetSaveLinkValues(rhs bool)  {
+func (this *Workbook_) SetSaveLinkValues(rhs bool) {
 	_ = this.PropPut(0x00000196, []interface{}{rhs})
 }
 
-var Workbook__SendMail_OptArgs= []string{
-	"Subject", "ReturnReceipt", 
+var Workbook__SendMail_OptArgs = []string{
+	"Subject", "ReturnReceipt",
 }
 
-func (this *Workbook_) SendMail(recipients interface{}, optArgs ...interface{})  {
+func (this *Workbook_) SendMail(recipients interface{}, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__SendMail_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000003b3, []interface{}{recipients}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__SendMailer_OptArgs= []string{
-	"FileFormat", "Priority", 
+var Workbook__SendMailer_OptArgs = []string{
+	"FileFormat", "Priority",
 }
 
-func (this *Workbook_) SendMailer(optArgs ...interface{})  {
+func (this *Workbook_) SendMailer(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__SendMailer_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000003d4, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__SetLinkOnData_OptArgs= []string{
-	"Procedure", 
+var Workbook__SetLinkOnData_OptArgs = []string{
+	"Procedure",
 }
 
-func (this *Workbook_) SetLinkOnData(name string, optArgs ...interface{})  {
+func (this *Workbook_) SetLinkOnData(name string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__SetLinkOnData_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000329, []interface{}{name}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) Sheets() *Sheets {
@@ -653,7 +653,7 @@ func (this *Workbook_) ShowConflictHistory() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetShowConflictHistory(rhs bool)  {
+func (this *Workbook_) SetShowConflictHistory(rhs bool) {
 	_ = this.PropPut(0x00000493, []interface{}{rhs})
 }
 
@@ -667,7 +667,7 @@ func (this *Workbook_) Subject() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Workbook_) SetSubject(rhs string)  {
+func (this *Workbook_) SetSubject(rhs string) {
 	_ = this.PropPut(0x000003b9, []interface{}{rhs})
 }
 
@@ -676,43 +676,43 @@ func (this *Workbook_) Title() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Workbook_) SetTitle(rhs string)  {
+func (this *Workbook_) SetTitle(rhs string) {
 	_ = this.PropPut(0x000000c7, []interface{}{rhs})
 }
 
-var Workbook__Unprotect_OptArgs= []string{
-	"Password", 
+var Workbook__Unprotect_OptArgs = []string{
+	"Password",
 }
 
-func (this *Workbook_) Unprotect(optArgs ...interface{})  {
+func (this *Workbook_) Unprotect(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__Unprotect_OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000011d, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__UnprotectSharing_OptArgs= []string{
-	"SharingPassword", 
+var Workbook__UnprotectSharing_OptArgs = []string{
+	"SharingPassword",
 }
 
-func (this *Workbook_) UnprotectSharing(optArgs ...interface{})  {
+func (this *Workbook_) UnprotectSharing(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__UnprotectSharing_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000005af, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) UpdateFromFile()  {
+func (this *Workbook_) UpdateFromFile() {
 	retVal, _ := this.Call(0x000003e3, nil)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__UpdateLink_OptArgs= []string{
-	"Name", "Type", 
+var Workbook__UpdateLink_OptArgs = []string{
+	"Name", "Type",
 }
 
-func (this *Workbook_) UpdateLink(optArgs ...interface{})  {
+func (this *Workbook_) UpdateLink(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__UpdateLink_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000324, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) UpdateRemoteReferences() bool {
@@ -720,7 +720,7 @@ func (this *Workbook_) UpdateRemoteReferences() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetUpdateRemoteReferences(rhs bool)  {
+func (this *Workbook_) SetUpdateRemoteReferences(rhs bool) {
 	_ = this.PropPut(0x0000019b, []interface{}{rhs})
 }
 
@@ -729,7 +729,7 @@ func (this *Workbook_) UserControl() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetUserControl(rhs bool)  {
+func (this *Workbook_) SetUserControl(rhs bool) {
 	_ = this.PropPut(0x000004ba, []interface{}{rhs})
 }
 
@@ -779,18 +779,18 @@ func (this *Workbook_) TemplateRemoveExtData() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetTemplateRemoveExtData(rhs bool)  {
+func (this *Workbook_) SetTemplateRemoveExtData(rhs bool) {
 	_ = this.PropPut(0x000005b1, []interface{}{rhs})
 }
 
-var Workbook__HighlightChangesOptions_OptArgs= []string{
-	"When", "Who", "Where", 
+var Workbook__HighlightChangesOptions_OptArgs = []string{
+	"When", "Who", "Where",
 }
 
-func (this *Workbook_) HighlightChangesOptions(optArgs ...interface{})  {
+func (this *Workbook_) HighlightChangesOptions(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__HighlightChangesOptions_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000005b2, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) HighlightChangesOnScreen() bool {
@@ -798,7 +798,7 @@ func (this *Workbook_) HighlightChangesOnScreen() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetHighlightChangesOnScreen(rhs bool)  {
+func (this *Workbook_) SetHighlightChangesOnScreen(rhs bool) {
 	_ = this.PropPut(0x000005b5, []interface{}{rhs})
 }
 
@@ -807,7 +807,7 @@ func (this *Workbook_) KeepChangeHistory() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetKeepChangeHistory(rhs bool)  {
+func (this *Workbook_) SetKeepChangeHistory(rhs bool) {
 	_ = this.PropPut(0x000005b6, []interface{}{rhs})
 }
 
@@ -816,56 +816,56 @@ func (this *Workbook_) ListChangesOnNewSheet() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetListChangesOnNewSheet(rhs bool)  {
+func (this *Workbook_) SetListChangesOnNewSheet(rhs bool) {
 	_ = this.PropPut(0x000005b7, []interface{}{rhs})
 }
 
-var Workbook__PurgeChangeHistoryNow_OptArgs= []string{
-	"SharingPassword", 
+var Workbook__PurgeChangeHistoryNow_OptArgs = []string{
+	"SharingPassword",
 }
 
-func (this *Workbook_) PurgeChangeHistoryNow(days int32, optArgs ...interface{})  {
+func (this *Workbook_) PurgeChangeHistoryNow(days int32, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__PurgeChangeHistoryNow_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000005b8, []interface{}{days}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__AcceptAllChanges_OptArgs= []string{
-	"When", "Who", "Where", 
+var Workbook__AcceptAllChanges_OptArgs = []string{
+	"When", "Who", "Where",
 }
 
-func (this *Workbook_) AcceptAllChanges(optArgs ...interface{})  {
+func (this *Workbook_) AcceptAllChanges(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__AcceptAllChanges_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000005ba, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__RejectAllChanges_OptArgs= []string{
-	"When", "Who", "Where", 
+var Workbook__RejectAllChanges_OptArgs = []string{
+	"When", "Who", "Where",
 }
 
-func (this *Workbook_) RejectAllChanges(optArgs ...interface{})  {
+func (this *Workbook_) RejectAllChanges(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__RejectAllChanges_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000005bb, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__PivotTableWizard_OptArgs= []string{
-	"SourceType", "SourceData", "TableDestination", "TableName", 
-	"RowGrand", "ColumnGrand", "SaveData", "HasAutoFormat", 
-	"AutoPage", "Reserved", "BackgroundQuery", "OptimizeCache", 
-	"PageFieldOrder", "PageFieldWrapCount", "ReadData", "Connection", 
+var Workbook__PivotTableWizard_OptArgs = []string{
+	"SourceType", "SourceData", "TableDestination", "TableName",
+	"RowGrand", "ColumnGrand", "SaveData", "HasAutoFormat",
+	"AutoPage", "Reserved", "BackgroundQuery", "OptimizeCache",
+	"PageFieldOrder", "PageFieldWrapCount", "ReadData", "Connection",
 }
 
-func (this *Workbook_) PivotTableWizard(optArgs ...interface{})  {
+func (this *Workbook_) PivotTableWizard(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__PivotTableWizard_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000002ac, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) ResetColors()  {
+func (this *Workbook_) ResetColors() {
 	retVal, _ := this.Call(0x000005bc, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) VBProject() *ole.DispatchClass {
@@ -873,20 +873,20 @@ func (this *Workbook_) VBProject() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Workbook__FollowHyperlink_OptArgs= []string{
-	"SubAddress", "NewWindow", "AddHistory", "ExtraInfo", 
-	"Method", "HeaderInfo", 
+var Workbook__FollowHyperlink_OptArgs = []string{
+	"SubAddress", "NewWindow", "AddHistory", "ExtraInfo",
+	"Method", "HeaderInfo",
 }
 
-func (this *Workbook_) FollowHyperlink(address string, optArgs ...interface{})  {
+func (this *Workbook_) FollowHyperlink(address string, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__FollowHyperlink_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000005be, []interface{}{address}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) AddToFavorites()  {
+func (this *Workbook_) AddToFavorites() {
 	retVal, _ := this.Call(0x000005c4, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) IsInplace() bool {
@@ -894,20 +894,20 @@ func (this *Workbook_) IsInplace() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-var Workbook__PrintOut__OptArgs= []string{
-	"From", "To", "Copies", "Preview", 
-	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName", 
+var Workbook__PrintOut__OptArgs = []string{
+	"From", "To", "Copies", "Preview",
+	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName",
 }
 
-func (this *Workbook_) PrintOut_(optArgs ...interface{})  {
+func (this *Workbook_) PrintOut_(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__PrintOut__OptArgs, optArgs)
 	retVal, _ := this.Call(0x000006ec, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) WebPagePreview()  {
+func (this *Workbook_) WebPagePreview() {
 	retVal, _ := this.Call(0x0000071a, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) PublishObjects() *PublishObjects {
@@ -920,9 +920,9 @@ func (this *Workbook_) WebOptions() *WebOptions {
 	return NewWebOptions(retVal.IDispatch(), false, true)
 }
 
-func (this *Workbook_) ReloadAs(encoding int32)  {
+func (this *Workbook_) ReloadAs(encoding int32) {
 	retVal, _ := this.Call(0x0000071d, []interface{}{encoding})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) HTMLProject() *ole.DispatchClass {
@@ -935,7 +935,7 @@ func (this *Workbook_) EnvelopeVisible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetEnvelopeVisible(rhs bool)  {
+func (this *Workbook_) SetEnvelopeVisible(rhs bool) {
 	_ = this.PropPut(0x00000720, []interface{}{rhs})
 }
 
@@ -944,14 +944,14 @@ func (this *Workbook_) CalculationVersion() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Workbook_) Dummy17(calcid int32)  {
+func (this *Workbook_) Dummy17(calcid int32) {
 	retVal, _ := this.Call(0x000007fc, []interface{}{calcid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) Sblt(s string)  {
+func (this *Workbook_) Sblt(s string) {
 	retVal, _ := this.Call(0x00000722, []interface{}{s})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) VBASigned() bool {
@@ -964,7 +964,7 @@ func (this *Workbook_) ShowPivotTableFieldList() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetShowPivotTableFieldList(rhs bool)  {
+func (this *Workbook_) SetShowPivotTableFieldList(rhs bool) {
 	_ = this.PropPut(0x000007fe, []interface{}{rhs})
 }
 
@@ -973,30 +973,30 @@ func (this *Workbook_) UpdateLinks() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Workbook_) SetUpdateLinks(rhs int32)  {
+func (this *Workbook_) SetUpdateLinks(rhs int32) {
 	_ = this.PropPut(0x00000360, []interface{}{rhs})
 }
 
-func (this *Workbook_) BreakLink(name string, type_ int32)  {
+func (this *Workbook_) BreakLink(name string, type_ int32) {
 	retVal, _ := this.Call(0x000007ff, []interface{}{name, type_})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) Dummy16()  {
+func (this *Workbook_) Dummy16() {
 	retVal, _ := this.Call(0x00000800, nil)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__SaveAs_OptArgs= []string{
-	"Filename", "FileFormat", "Password", "WriteResPassword", 
-	"ReadOnlyRecommended", "CreateBackup", "AccessMode", "ConflictResolution", 
-	"AddToMru", "TextCodepage", "TextVisualLayout", "Local", 
+var Workbook__SaveAs_OptArgs = []string{
+	"Filename", "FileFormat", "Password", "WriteResPassword",
+	"ReadOnlyRecommended", "CreateBackup", "AccessMode", "ConflictResolution",
+	"AddToMru", "TextCodepage", "TextVisualLayout", "Local",
 }
 
-func (this *Workbook_) SaveAs(optArgs ...interface{})  {
+func (this *Workbook_) SaveAs(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__SaveAs_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000785, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) EnableAutoRecover() bool {
@@ -1004,7 +1004,7 @@ func (this *Workbook_) EnableAutoRecover() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetEnableAutoRecover(rhs bool)  {
+func (this *Workbook_) SetEnableAutoRecover(rhs bool) {
 	_ = this.PropPut(0x00000801, []interface{}{rhs})
 }
 
@@ -1013,7 +1013,7 @@ func (this *Workbook_) RemovePersonalInformation() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetRemovePersonalInformation(rhs bool)  {
+func (this *Workbook_) SetRemovePersonalInformation(rhs bool) {
 	_ = this.PropPut(0x00000802, []interface{}{rhs})
 }
 
@@ -1022,14 +1022,14 @@ func (this *Workbook_) FullNameURLEncoded() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var Workbook__CheckIn_OptArgs= []string{
-	"SaveChanges", "Comments", "MakePublic", 
+var Workbook__CheckIn_OptArgs = []string{
+	"SaveChanges", "Comments", "MakePublic",
 }
 
-func (this *Workbook_) CheckIn(optArgs ...interface{})  {
+func (this *Workbook_) CheckIn(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__CheckIn_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000803, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) CanCheckIn() bool {
@@ -1037,29 +1037,29 @@ func (this *Workbook_) CanCheckIn() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-var Workbook__SendForReview_OptArgs= []string{
-	"Recipients", "Subject", "ShowMessage", "IncludeAttachment", 
+var Workbook__SendForReview_OptArgs = []string{
+	"Recipients", "Subject", "ShowMessage", "IncludeAttachment",
 }
 
-func (this *Workbook_) SendForReview(optArgs ...interface{})  {
+func (this *Workbook_) SendForReview(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__SendForReview_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000806, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Workbook__ReplyWithChanges_OptArgs= []string{
-	"ShowMessage", 
+var Workbook__ReplyWithChanges_OptArgs = []string{
+	"ShowMessage",
 }
 
-func (this *Workbook_) ReplyWithChanges(optArgs ...interface{})  {
+func (this *Workbook_) ReplyWithChanges(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__ReplyWithChanges_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000809, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) EndReview()  {
+func (this *Workbook_) EndReview() {
 	retVal, _ := this.Call(0x0000080a, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) Password() string {
@@ -1067,7 +1067,7 @@ func (this *Workbook_) Password() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Workbook_) SetPassword(rhs string)  {
+func (this *Workbook_) SetPassword(rhs string) {
 	_ = this.PropPut(0x000001ad, []interface{}{rhs})
 }
 
@@ -1076,7 +1076,7 @@ func (this *Workbook_) WritePassword() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Workbook_) SetWritePassword(rhs string)  {
+func (this *Workbook_) SetWritePassword(rhs string) {
 	_ = this.PropPut(0x00000468, []interface{}{rhs})
 }
 
@@ -1095,14 +1095,14 @@ func (this *Workbook_) PasswordEncryptionKeyLength() int32 {
 	return retVal.LValVal()
 }
 
-var Workbook__SetPasswordEncryptionOptions_OptArgs= []string{
-	"PasswordEncryptionProvider", "PasswordEncryptionAlgorithm", "PasswordEncryptionKeyLength", "PasswordEncryptionFileProperties", 
+var Workbook__SetPasswordEncryptionOptions_OptArgs = []string{
+	"PasswordEncryptionProvider", "PasswordEncryptionAlgorithm", "PasswordEncryptionKeyLength", "PasswordEncryptionFileProperties",
 }
 
-func (this *Workbook_) SetPasswordEncryptionOptions(optArgs ...interface{})  {
+func (this *Workbook_) SetPasswordEncryptionOptions(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__SetPasswordEncryptionOptions_OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000080e, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) PasswordEncryptionFileProperties() bool {
@@ -1115,18 +1115,18 @@ func (this *Workbook_) ReadOnlyRecommended() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetReadOnlyRecommended(rhs bool)  {
+func (this *Workbook_) SetReadOnlyRecommended(rhs bool) {
 	_ = this.PropPut(0x000007d5, []interface{}{rhs})
 }
 
-var Workbook__Protect_OptArgs= []string{
-	"Password", "Structure", "Windows", 
+var Workbook__Protect_OptArgs = []string{
+	"Password", "Structure", "Windows",
 }
 
-func (this *Workbook_) Protect(optArgs ...interface{})  {
+func (this *Workbook_) Protect(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__Protect_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000007ed, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) SmartTagOptions() *SmartTagOptions {
@@ -1134,9 +1134,9 @@ func (this *Workbook_) SmartTagOptions() *SmartTagOptions {
 	return NewSmartTagOptions(retVal.IDispatch(), false, true)
 }
 
-func (this *Workbook_) RecheckSmartTags()  {
+func (this *Workbook_) RecheckSmartTags() {
 	retVal, _ := this.Call(0x00000811, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) Permission() *ole.DispatchClass {
@@ -1154,14 +1154,14 @@ func (this *Workbook_) Sync() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Workbook__SendFaxOverInternet_OptArgs= []string{
-	"Recipients", "Subject", "ShowMessage", 
+var Workbook__SendFaxOverInternet_OptArgs = []string{
+	"Recipients", "Subject", "ShowMessage",
 }
 
-func (this *Workbook_) SendFaxOverInternet(optArgs ...interface{})  {
+func (this *Workbook_) SendFaxOverInternet(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__SendFaxOverInternet_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000008db, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) XmlNamespaces() *XmlNamespaces {
@@ -1174,8 +1174,8 @@ func (this *Workbook_) XmlMaps() *XmlMaps {
 	return NewXmlMaps(retVal.IDispatch(), false, true)
 }
 
-var Workbook__XmlImport_OptArgs= []string{
-	"Overwrite", "Destination", 
+var Workbook__XmlImport_OptArgs = []string{
+	"Overwrite", "Destination",
 }
 
 func (this *Workbook_) XmlImport(url string, importMap **XmlMap, optArgs ...interface{}) int32 {
@@ -1199,7 +1199,7 @@ func (this *Workbook_) InactiveListBorderVisible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetInactiveListBorderVisible(rhs bool)  {
+func (this *Workbook_) SetInactiveListBorderVisible(rhs bool) {
 	_ = this.PropPut(0x000008e3, []interface{}{rhs})
 }
 
@@ -1208,12 +1208,12 @@ func (this *Workbook_) DisplayInkComments() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetDisplayInkComments(rhs bool)  {
+func (this *Workbook_) SetDisplayInkComments(rhs bool) {
 	_ = this.PropPut(0x000008e4, []interface{}{rhs})
 }
 
-var Workbook__XmlImportXml_OptArgs= []string{
-	"Overwrite", "Destination", 
+var Workbook__XmlImportXml_OptArgs = []string{
+	"Overwrite", "Destination",
 }
 
 func (this *Workbook_) XmlImportXml(data string, importMap **XmlMap, optArgs ...interface{}) int32 {
@@ -1222,14 +1222,14 @@ func (this *Workbook_) XmlImportXml(data string, importMap **XmlMap, optArgs ...
 	return retVal.LValVal()
 }
 
-func (this *Workbook_) SaveAsXMLData(filename string, map_ *XmlMap)  {
+func (this *Workbook_) SaveAsXMLData(filename string, map_ *XmlMap) {
 	retVal, _ := this.Call(0x000008e6, []interface{}{filename, map_})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) ToggleFormsDesign()  {
+func (this *Workbook_) ToggleFormsDesign() {
 	retVal, _ := this.Call(0x000008e7, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) ContentTypeProperties() *ole.DispatchClass {
@@ -1242,9 +1242,9 @@ func (this *Workbook_) Connections() *Connections {
 	return NewConnections(retVal.IDispatch(), false, true)
 }
 
-func (this *Workbook_) RemoveDocumentInformation(removeDocInfoType int32)  {
+func (this *Workbook_) RemoveDocumentInformation(removeDocInfoType int32) {
 	retVal, _ := this.Call(0x000009d2, []interface{}{removeDocInfoType})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) Signatures() *ole.DispatchClass {
@@ -1252,14 +1252,14 @@ func (this *Workbook_) Signatures() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Workbook__CheckInWithVersion_OptArgs= []string{
-	"SaveChanges", "Comments", "MakePublic", "VersionType", 
+var Workbook__CheckInWithVersion_OptArgs = []string{
+	"SaveChanges", "Comments", "MakePublic", "VersionType",
 }
 
-func (this *Workbook_) CheckInWithVersion(optArgs ...interface{})  {
+func (this *Workbook_) CheckInWithVersion(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__CheckInWithVersion_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000009d5, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) ServerPolicy() *ole.DispatchClass {
@@ -1267,9 +1267,9 @@ func (this *Workbook_) ServerPolicy() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Workbook_) LockServerFile()  {
+func (this *Workbook_) LockServerFile() {
 	retVal, _ := this.Call(0x000009d8, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) DocumentInspectors() *ole.DispatchClass {
@@ -1287,15 +1287,15 @@ func (this *Workbook_) GetWorkflowTemplates() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Workbook__PrintOut_OptArgs= []string{
-	"From", "To", "Copies", "Preview", 
-	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName", "IgnorePrintAreas", 
+var Workbook__PrintOut_OptArgs = []string{
+	"From", "To", "Copies", "Preview",
+	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName", "IgnorePrintAreas",
 }
 
-func (this *Workbook_) PrintOut(optArgs ...interface{})  {
+func (this *Workbook_) PrintOut(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__PrintOut_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000939, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) ServerViewableItems() *ServerViewableItems {
@@ -1314,7 +1314,7 @@ func (this *Workbook_) DefaultTableStyle() ole.Variant {
 	return *retVal
 }
 
-func (this *Workbook_) SetDefaultTableStyle(rhs interface{})  {
+func (this *Workbook_) SetDefaultTableStyle(rhs interface{}) {
 	_ = this.PropPut(0x000009de, []interface{}{rhs})
 }
 
@@ -1324,7 +1324,7 @@ func (this *Workbook_) DefaultPivotTableStyle() ole.Variant {
 	return *retVal
 }
 
-func (this *Workbook_) SetDefaultPivotTableStyle(rhs interface{})  {
+func (this *Workbook_) SetDefaultPivotTableStyle(rhs interface{}) {
 	_ = this.PropPut(0x000009df, []interface{}{rhs})
 }
 
@@ -1333,7 +1333,7 @@ func (this *Workbook_) CheckCompatibility() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetCheckCompatibility(rhs bool)  {
+func (this *Workbook_) SetCheckCompatibility(rhs bool) {
 	_ = this.PropPut(0x000009e0, []interface{}{rhs})
 }
 
@@ -1352,7 +1352,7 @@ func (this *Workbook_) Final() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetFinal(rhs bool)  {
+func (this *Workbook_) SetFinal(rhs bool) {
 	_ = this.PropPut(0x000009e3, []interface{}{rhs})
 }
 
@@ -1366,9 +1366,9 @@ func (this *Workbook_) Theme() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Workbook_) ApplyTheme(filename string)  {
+func (this *Workbook_) ApplyTheme(filename string) {
 	retVal, _ := this.Call(0x000009e6, []interface{}{filename})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) Excel8CompatibilityMode() bool {
@@ -1381,9 +1381,9 @@ func (this *Workbook_) ConnectionsDisabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) EnableConnections()  {
+func (this *Workbook_) EnableConnections() {
 	retVal, _ := this.Call(0x000009e9, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) ShowPivotChartActiveFields() bool {
@@ -1391,19 +1391,19 @@ func (this *Workbook_) ShowPivotChartActiveFields() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetShowPivotChartActiveFields(rhs bool)  {
+func (this *Workbook_) SetShowPivotChartActiveFields(rhs bool) {
 	_ = this.PropPut(0x000009ea, []interface{}{rhs})
 }
 
-var Workbook__ExportAsFixedFormat_OptArgs= []string{
-	"Filename", "Quality", "IncludeDocProperties", "IgnorePrintAreas", 
-	"From", "To", "OpenAfterPublish", "FixedFormatExtClassPtr", 
+var Workbook__ExportAsFixedFormat_OptArgs = []string{
+	"Filename", "Quality", "IncludeDocProperties", "IgnorePrintAreas",
+	"From", "To", "OpenAfterPublish", "FixedFormatExtClassPtr",
 }
 
-func (this *Workbook_) ExportAsFixedFormat(type_ int32, optArgs ...interface{})  {
+func (this *Workbook_) ExportAsFixedFormat(type_ int32, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__ExportAsFixedFormat_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000009bd, []interface{}{type_}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) IconSets() *IconSets {
@@ -1416,7 +1416,7 @@ func (this *Workbook_) EncryptionProvider() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Workbook_) SetEncryptionProvider(rhs string)  {
+func (this *Workbook_) SetEncryptionProvider(rhs string) {
 	_ = this.PropPut(0x000009ec, []interface{}{rhs})
 }
 
@@ -1425,7 +1425,7 @@ func (this *Workbook_) DoNotPromptForConvert() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetDoNotPromptForConvert(rhs bool)  {
+func (this *Workbook_) SetDoNotPromptForConvert(rhs bool) {
 	_ = this.PropPut(0x000009ed, []interface{}{rhs})
 }
 
@@ -1434,19 +1434,19 @@ func (this *Workbook_) ForceFullCalculation() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Workbook_) SetForceFullCalculation(rhs bool)  {
+func (this *Workbook_) SetForceFullCalculation(rhs bool) {
 	_ = this.PropPut(0x000009ee, []interface{}{rhs})
 }
 
-var Workbook__ProtectSharing_OptArgs= []string{
-	"Filename", "Password", "WriteResPassword", "ReadOnlyRecommended", 
-	"CreateBackup", "SharingPassword", "FileFormat", 
+var Workbook__ProtectSharing_OptArgs = []string{
+	"Filename", "Password", "WriteResPassword", "ReadOnlyRecommended",
+	"CreateBackup", "SharingPassword", "FileFormat",
 }
 
-func (this *Workbook_) ProtectSharing(optArgs ...interface{})  {
+func (this *Workbook_) ProtectSharing(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Workbook__ProtectSharing_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000009ef, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) SlicerCaches() *SlicerCaches {
@@ -1465,18 +1465,18 @@ func (this *Workbook_) DefaultSlicerStyle() ole.Variant {
 	return *retVal
 }
 
-func (this *Workbook_) SetDefaultSlicerStyle(rhs interface{})  {
+func (this *Workbook_) SetDefaultSlicerStyle(rhs interface{}) {
 	_ = this.PropPut(0x00000b34, []interface{}{rhs})
 }
 
-func (this *Workbook_) Dummy26()  {
+func (this *Workbook_) Dummy26() {
 	retVal, _ := this.Call(0x00000b35, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Workbook_) Dummy27()  {
+func (this *Workbook_) Dummy27() {
 	retVal, _ := this.Call(0x00000b36, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Workbook_) AccuracyVersion() int32 {
@@ -1484,7 +1484,6 @@ func (this *Workbook_) AccuracyVersion() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Workbook_) SetAccuracyVersion(rhs int32)  {
+func (this *Workbook_) SetAccuracyVersion(rhs int32) {
 	_ = this.PropPut(0x00000b37, []interface{}{rhs})
 }
-

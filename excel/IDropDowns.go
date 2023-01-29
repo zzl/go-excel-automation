@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 0002088C-0001-0000-C000-000000000046
-var IID_IDropDowns = syscall.GUID{0x0002088C, 0x0001, 0x0000, 
+var IID_IDropDowns = syscall.GUID{0x0002088C, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IDropDowns struct {
@@ -17,8 +17,8 @@ type IDropDowns struct {
 }
 
 func NewIDropDowns(pUnk *win32.IUnknown, addRef bool, scoped bool) *IDropDowns {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IDropDowns)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IDropDowns) IID() *syscall.GUID {
 func (this *IDropDowns) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,11 +50,11 @@ func (this *IDropDowns) GetCreator(rhs *int32) com.Error {
 func (this *IDropDowns) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IDropDowns) Dummy3_()  {
+func (this *IDropDowns) Dummy3_() {
 	addr := (*this.LpVtbl)[10]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -92,7 +92,7 @@ func (this *IDropDowns) Delete(rhs *ole.Variant) com.Error {
 func (this *IDropDowns) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -120,7 +120,7 @@ func (this *IDropDowns) SetHeight(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDropDowns) Dummy12_()  {
+func (this *IDropDowns) Dummy12_() {
 	addr := (*this.LpVtbl)[21]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -149,7 +149,7 @@ func (this *IDropDowns) SetLocked(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDropDowns) Dummy15_()  {
+func (this *IDropDowns) Dummy15_() {
 	addr := (*this.LpVtbl)[26]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -214,7 +214,7 @@ func (this *IDropDowns) SetTop(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDropDowns) Dummy22_()  {
+func (this *IDropDowns) Dummy22_() {
 	addr := (*this.LpVtbl)[37]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -252,7 +252,7 @@ func (this *IDropDowns) GetZOrder(rhs *int32) com.Error {
 func (this *IDropDowns) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -298,7 +298,7 @@ func (this *IDropDowns) SetLinkedCell(rhs string) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDropDowns) Dummy31_()  {
+func (this *IDropDowns) Dummy31_() {
 	addr := (*this.LpVtbl)[51]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -315,7 +315,7 @@ func (this *IDropDowns) SetList(index interface{}, rhs interface{}) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDropDowns) Dummy33_()  {
+func (this *IDropDowns) Dummy33_() {
 	addr := (*this.LpVtbl)[54]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -344,7 +344,7 @@ func (this *IDropDowns) SetListIndex(rhs int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IDropDowns) Dummy36_()  {
+func (this *IDropDowns) Dummy36_() {
 	addr := (*this.LpVtbl)[59]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -400,7 +400,7 @@ func (this *IDropDowns) SetCaption(rhs string) com.Error {
 func (this *IDropDowns) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[68]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -431,7 +431,7 @@ func (this *IDropDowns) SetText(rhs string) com.Error {
 func (this *IDropDowns) Add(left float64, top float64, width float64, height float64, editable interface{}, rhs **DropDown) com.Error {
 	addr := (*this.LpVtbl)[73]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(left), uintptr(top), uintptr(width), uintptr(height), (uintptr)(unsafe.Pointer(&editable)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -444,21 +444,21 @@ func (this *IDropDowns) GetCount(rhs *int32) com.Error {
 func (this *IDropDowns) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[75]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDropDowns) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[76]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IDropDowns) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[77]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 

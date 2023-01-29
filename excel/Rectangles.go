@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002089D-0000-0000-C000-000000000046
-var IID_Rectangles = syscall.GUID{0x0002089D, 0x0000, 0x0000, 
+var IID_Rectangles = syscall.GUID{0x0002089D, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Rectangles struct {
@@ -17,8 +17,8 @@ type Rectangles struct {
 }
 
 func NewRectangles(pDisp *win32.IDispatch, addRef bool, scoped bool) *Rectangles {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Rectangles{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Rectangles) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Rectangles) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Rectangles) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Rectangles) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Rectangles) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Rectangles) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Rectangles) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Rectangles) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Rectangles) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Rectangles) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Rectangles) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Rectangles) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Rectangles) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Rectangles) Application() *Application {
@@ -95,9 +95,9 @@ func (this *Rectangles) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Rectangles) Dummy3_()  {
+func (this *Rectangles) Dummy3_() {
 	retVal, _ := this.Call(0x00010003, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Rectangles) BringToFront() ole.Variant {
@@ -112,8 +112,8 @@ func (this *Rectangles) Copy() ole.Variant {
 	return *retVal
 }
 
-var Rectangles_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var Rectangles_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *Rectangles) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *Rectangles) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Rectangles) SetEnabled(rhs bool)  {
+func (this *Rectangles) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,13 +154,13 @@ func (this *Rectangles) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Rectangles) SetHeight(rhs float64)  {
+func (this *Rectangles) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
-func (this *Rectangles) Dummy12_()  {
+func (this *Rectangles) Dummy12_() {
 	retVal, _ := this.Call(0x0001000c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Rectangles) Left() float64 {
@@ -168,7 +168,7 @@ func (this *Rectangles) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Rectangles) SetLeft(rhs float64)  {
+func (this *Rectangles) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,13 +177,13 @@ func (this *Rectangles) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Rectangles) SetLocked(rhs bool)  {
+func (this *Rectangles) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
-func (this *Rectangles) Dummy15_()  {
+func (this *Rectangles) Dummy15_() {
 	retVal, _ := this.Call(0x0001000f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Rectangles) OnAction() string {
@@ -191,7 +191,7 @@ func (this *Rectangles) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Rectangles) SetOnAction(rhs string)  {
+func (this *Rectangles) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *Rectangles) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *Rectangles) SetPlacement(rhs interface{})  {
+func (this *Rectangles) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -210,12 +210,12 @@ func (this *Rectangles) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Rectangles) SetPrintObject(rhs bool)  {
+func (this *Rectangles) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var Rectangles_Select_OptArgs= []string{
-	"Replace", 
+var Rectangles_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *Rectangles) Select(optArgs ...interface{}) ole.Variant {
@@ -236,13 +236,13 @@ func (this *Rectangles) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Rectangles) SetTop(rhs float64)  {
+func (this *Rectangles) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
-func (this *Rectangles) Dummy22_()  {
+func (this *Rectangles) Dummy22_() {
 	retVal, _ := this.Call(0x00010016, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Rectangles) Visible() bool {
@@ -250,7 +250,7 @@ func (this *Rectangles) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Rectangles) SetVisible(rhs bool)  {
+func (this *Rectangles) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *Rectangles) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Rectangles) SetWidth(rhs float64)  {
+func (this *Rectangles) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -278,7 +278,7 @@ func (this *Rectangles) AddIndent() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Rectangles) SetAddIndent(rhs bool)  {
+func (this *Rectangles) SetAddIndent(rhs bool) {
 	_ = this.PropPut(0x00000427, []interface{}{rhs})
 }
 
@@ -288,7 +288,7 @@ func (this *Rectangles) AutoScaleFont() ole.Variant {
 	return *retVal
 }
 
-func (this *Rectangles) SetAutoScaleFont(rhs interface{})  {
+func (this *Rectangles) SetAutoScaleFont(rhs interface{}) {
 	_ = this.PropPut(0x000005f5, []interface{}{rhs})
 }
 
@@ -297,7 +297,7 @@ func (this *Rectangles) AutoSize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Rectangles) SetAutoSize(rhs bool)  {
+func (this *Rectangles) SetAutoSize(rhs bool) {
 	_ = this.PropPut(0x00000266, []interface{}{rhs})
 }
 
@@ -306,12 +306,12 @@ func (this *Rectangles) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Rectangles) SetCaption(rhs string)  {
+func (this *Rectangles) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var Rectangles_Characters_OptArgs= []string{
-	"Start", "Length", 
+var Rectangles_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *Rectangles) Characters(optArgs ...interface{}) *Characters {
@@ -320,8 +320,8 @@ func (this *Rectangles) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var Rectangles_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var Rectangles_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *Rectangles) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -341,7 +341,7 @@ func (this *Rectangles) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Rectangles) SetFormula(rhs string)  {
+func (this *Rectangles) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -351,7 +351,7 @@ func (this *Rectangles) HorizontalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *Rectangles) SetHorizontalAlignment(rhs interface{})  {
+func (this *Rectangles) SetHorizontalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000088, []interface{}{rhs})
 }
 
@@ -360,7 +360,7 @@ func (this *Rectangles) LockedText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Rectangles) SetLockedText(rhs bool)  {
+func (this *Rectangles) SetLockedText(rhs bool) {
 	_ = this.PropPut(0x00000268, []interface{}{rhs})
 }
 
@@ -370,7 +370,7 @@ func (this *Rectangles) Orientation() ole.Variant {
 	return *retVal
 }
 
-func (this *Rectangles) SetOrientation(rhs interface{})  {
+func (this *Rectangles) SetOrientation(rhs interface{}) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -379,7 +379,7 @@ func (this *Rectangles) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Rectangles) SetText(rhs string)  {
+func (this *Rectangles) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -389,7 +389,7 @@ func (this *Rectangles) VerticalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *Rectangles) SetVerticalAlignment(rhs interface{})  {
+func (this *Rectangles) SetVerticalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000089, []interface{}{rhs})
 }
 
@@ -398,7 +398,7 @@ func (this *Rectangles) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Rectangles) SetReadingOrder(rhs int32)  {
+func (this *Rectangles) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -417,7 +417,7 @@ func (this *Rectangles) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Rectangles) SetShadow(rhs bool)  {
+func (this *Rectangles) SetShadow(rhs bool) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
@@ -426,7 +426,7 @@ func (this *Rectangles) RoundedCorners() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Rectangles) SetRoundedCorners(rhs bool)  {
+func (this *Rectangles) SetRoundedCorners(rhs bool) {
 	_ = this.PropPut(0x0000026b, []interface{}{rhs})
 }
 
@@ -459,7 +459,7 @@ func (this *Rectangles) ForEach(action func(item *ole.DispatchClass) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -475,4 +475,3 @@ func (this *Rectangles) ForEach(action func(item *ole.DispatchClass) bool) {
 		}
 	}
 }
-

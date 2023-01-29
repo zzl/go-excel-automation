@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020892-0000-0000-C000-000000000046
-var IID_Windows = syscall.GUID{0x00020892, 0x0000, 0x0000, 
+var IID_Windows = syscall.GUID{0x00020892, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Windows struct {
@@ -17,8 +17,8 @@ type Windows struct {
 }
 
 func NewWindows(pDisp *win32.IDispatch, addRef bool, scoped bool) *Windows {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Windows{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Windows) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Windows) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Windows) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Windows) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Windows) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Windows) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Windows) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Windows) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Windows) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Windows) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Windows) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Windows) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Windows) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Windows) Application() *Application {
@@ -95,8 +95,8 @@ func (this *Windows) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Windows_Arrange_OptArgs= []string{
-	"ArrangeStyle", "ActiveWorkbook", "SyncHorizontal", "SyncVertical", 
+var Windows_Arrange_OptArgs = []string{
+	"ArrangeStyle", "ActiveWorkbook", "SyncHorizontal", "SyncVertical",
 }
 
 func (this *Windows) Arrange(optArgs ...interface{}) ole.Variant {
@@ -125,7 +125,7 @@ func (this *Windows) ForEach(action func(item *Window) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -162,12 +162,11 @@ func (this *Windows) SyncScrollingSideBySide() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Windows) SetSyncScrollingSideBySide(rhs bool)  {
+func (this *Windows) SetSyncScrollingSideBySide(rhs bool) {
 	_ = this.PropPut(0x000008c9, []interface{}{rhs})
 }
 
-func (this *Windows) ResetPositionsSideBySide()  {
+func (this *Windows) ResetPositionsSideBySide() {
 	retVal, _ := this.Call(0x000008ca, nil)
-	_= retVal
+	_ = retVal
 }
-

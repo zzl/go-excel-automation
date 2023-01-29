@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020880-0001-0000-C000-000000000046
-var IID_ICheckBoxes = syscall.GUID{0x00020880, 0x0001, 0x0000, 
+var IID_ICheckBoxes = syscall.GUID{0x00020880, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ICheckBoxes struct {
@@ -17,8 +17,8 @@ type ICheckBoxes struct {
 }
 
 func NewICheckBoxes(pUnk *win32.IUnknown, addRef bool, scoped bool) *ICheckBoxes {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*ICheckBoxes)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *ICheckBoxes) IID() *syscall.GUID {
 func (this *ICheckBoxes) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,11 +50,11 @@ func (this *ICheckBoxes) GetCreator(rhs *int32) com.Error {
 func (this *ICheckBoxes) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *ICheckBoxes) Dummy3_()  {
+func (this *ICheckBoxes) Dummy3_() {
 	addr := (*this.LpVtbl)[10]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -92,7 +92,7 @@ func (this *ICheckBoxes) Delete(rhs *ole.Variant) com.Error {
 func (this *ICheckBoxes) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -120,7 +120,7 @@ func (this *ICheckBoxes) SetHeight(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ICheckBoxes) Dummy12_()  {
+func (this *ICheckBoxes) Dummy12_() {
 	addr := (*this.LpVtbl)[21]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -149,7 +149,7 @@ func (this *ICheckBoxes) SetLocked(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ICheckBoxes) Dummy15_()  {
+func (this *ICheckBoxes) Dummy15_() {
 	addr := (*this.LpVtbl)[26]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -214,7 +214,7 @@ func (this *ICheckBoxes) SetTop(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *ICheckBoxes) Dummy22_()  {
+func (this *ICheckBoxes) Dummy22_() {
 	addr := (*this.LpVtbl)[37]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -252,7 +252,7 @@ func (this *ICheckBoxes) GetZOrder(rhs *int32) com.Error {
 func (this *ICheckBoxes) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -271,7 +271,7 @@ func (this *ICheckBoxes) SetCaption(rhs string) com.Error {
 func (this *ICheckBoxes) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[46]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -320,7 +320,7 @@ func (this *ICheckBoxes) SetAccelerator(rhs interface{}) com.Error {
 func (this *ICheckBoxes) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[54]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -351,7 +351,7 @@ func (this *ICheckBoxes) SetDisplay3DShading(rhs bool) com.Error {
 func (this *ICheckBoxes) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[59]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -394,7 +394,7 @@ func (this *ICheckBoxes) SetValue(rhs interface{}) com.Error {
 func (this *ICheckBoxes) Add(left float64, top float64, width float64, height float64, rhs **CheckBox) com.Error {
 	addr := (*this.LpVtbl)[66]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(left), uintptr(top), uintptr(width), uintptr(height), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -407,21 +407,20 @@ func (this *ICheckBoxes) GetCount(rhs *int32) com.Error {
 func (this *ICheckBoxes) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[68]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ICheckBoxes) Item(index interface{}, rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[69]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&index)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *ICheckBoxes) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[70]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
-

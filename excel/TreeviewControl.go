@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 0002444B-0000-0000-C000-000000000046
-var IID_TreeviewControl = syscall.GUID{0x0002444B, 0x0000, 0x0000, 
+var IID_TreeviewControl = syscall.GUID{0x0002444B, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type TreeviewControl struct {
@@ -16,8 +16,8 @@ type TreeviewControl struct {
 }
 
 func NewTreeviewControl(pDisp *win32.IDispatch, addRef bool, scoped bool) *TreeviewControl {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &TreeviewControl{ole.OleClient{pDisp}}
 	if addRef {
@@ -65,7 +65,7 @@ func (this *TreeviewControl) Hidden() ole.Variant {
 	return *retVal
 }
 
-func (this *TreeviewControl) SetHidden(rhs interface{})  {
+func (this *TreeviewControl) SetHidden(rhs interface{}) {
 	_ = this.PropPut(0x0000010c, []interface{}{rhs})
 }
 
@@ -75,7 +75,6 @@ func (this *TreeviewControl) Drilled() ole.Variant {
 	return *retVal
 }
 
-func (this *TreeviewControl) SetDrilled(rhs interface{})  {
+func (this *TreeviewControl) SetDrilled(rhs interface{}) {
 	_ = this.PropPut(0x0000077d, []interface{}{rhs})
 }
-

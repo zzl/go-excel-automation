@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002449F-0000-0000-C000-000000000046
-var IID_UniqueValues = syscall.GUID{0x0002449F, 0x0000, 0x0000, 
+var IID_UniqueValues = syscall.GUID{0x0002449F, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type UniqueValues struct {
@@ -17,8 +17,8 @@ type UniqueValues struct {
 }
 
 func NewUniqueValues(pDisp *win32.IDispatch, addRef bool, scoped bool) *UniqueValues {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &UniqueValues{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *UniqueValues) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *UniqueValues) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *UniqueValues) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *UniqueValues) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *UniqueValues) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *UniqueValues) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *UniqueValues) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *UniqueValues) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *UniqueValues) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *UniqueValues) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *UniqueValues) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *UniqueValues) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *UniqueValues) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *UniqueValues) Application() *Application {
@@ -100,7 +100,7 @@ func (this *UniqueValues) Priority() int32 {
 	return retVal.LValVal()
 }
 
-func (this *UniqueValues) SetPriority(rhs int32)  {
+func (this *UniqueValues) SetPriority(rhs int32) {
 	_ = this.PropPut(0x000003d9, []interface{}{rhs})
 }
 
@@ -109,7 +109,7 @@ func (this *UniqueValues) StopIfTrue() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *UniqueValues) SetStopIfTrue(rhs bool)  {
+func (this *UniqueValues) SetStopIfTrue(rhs bool) {
 	_ = this.PropPut(0x00000a41, []interface{}{rhs})
 }
 
@@ -123,7 +123,7 @@ func (this *UniqueValues) DupeUnique() int32 {
 	return retVal.LValVal()
 }
 
-func (this *UniqueValues) SetDupeUnique(rhs int32)  {
+func (this *UniqueValues) SetDupeUnique(rhs int32) {
 	_ = this.PropPut(0x00000aad, []interface{}{rhs})
 }
 
@@ -153,28 +153,28 @@ func (this *UniqueValues) NumberFormat() ole.Variant {
 	return *retVal
 }
 
-func (this *UniqueValues) SetNumberFormat(rhs interface{})  {
+func (this *UniqueValues) SetNumberFormat(rhs interface{}) {
 	_ = this.PropPut(0x000000c1, []interface{}{rhs})
 }
 
-func (this *UniqueValues) SetFirstPriority()  {
+func (this *UniqueValues) SetFirstPriority() {
 	retVal, _ := this.Call(0x00000a45, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *UniqueValues) SetLastPriority()  {
+func (this *UniqueValues) SetLastPriority() {
 	retVal, _ := this.Call(0x00000a46, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *UniqueValues) Delete()  {
+func (this *UniqueValues) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *UniqueValues) ModifyAppliesToRange(range_ *Range)  {
+func (this *UniqueValues) ModifyAppliesToRange(range_ *Range) {
 	retVal, _ := this.Call(0x00000a43, []interface{}{range_})
-	_= retVal
+	_ = retVal
 }
 
 func (this *UniqueValues) PTCondition() bool {
@@ -187,7 +187,6 @@ func (this *UniqueValues) ScopeType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *UniqueValues) SetScopeType(rhs int32)  {
+func (this *UniqueValues) SetScopeType(rhs int32) {
 	_ = this.PropPut(0x00000a37, []interface{}{rhs})
 }
-

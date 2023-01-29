@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208A9-0000-0000-C000-000000000046
-var IID_Drawings = syscall.GUID{0x000208A9, 0x0000, 0x0000, 
+var IID_Drawings = syscall.GUID{0x000208A9, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Drawings struct {
@@ -17,8 +17,8 @@ type Drawings struct {
 }
 
 func NewDrawings(pDisp *win32.IDispatch, addRef bool, scoped bool) *Drawings {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Drawings{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Drawings) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Drawings) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Drawings) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Drawings) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Drawings) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Drawings) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Drawings) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Drawings) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Drawings) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Drawings) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Drawings) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Drawings) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Drawings) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Drawings) Application() *Application {
@@ -95,9 +95,9 @@ func (this *Drawings) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Drawings) Dummy3_()  {
+func (this *Drawings) Dummy3_() {
 	retVal, _ := this.Call(0x00010003, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Drawings) BringToFront() ole.Variant {
@@ -112,8 +112,8 @@ func (this *Drawings) Copy() ole.Variant {
 	return *retVal
 }
 
-var Drawings_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var Drawings_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *Drawings) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *Drawings) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Drawings) SetEnabled(rhs bool)  {
+func (this *Drawings) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,13 +154,13 @@ func (this *Drawings) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Drawings) SetHeight(rhs float64)  {
+func (this *Drawings) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
-func (this *Drawings) Dummy12_()  {
+func (this *Drawings) Dummy12_() {
 	retVal, _ := this.Call(0x0001000c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Drawings) Left() float64 {
@@ -168,7 +168,7 @@ func (this *Drawings) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Drawings) SetLeft(rhs float64)  {
+func (this *Drawings) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,13 +177,13 @@ func (this *Drawings) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Drawings) SetLocked(rhs bool)  {
+func (this *Drawings) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
-func (this *Drawings) Dummy15_()  {
+func (this *Drawings) Dummy15_() {
 	retVal, _ := this.Call(0x0001000f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Drawings) OnAction() string {
@@ -191,7 +191,7 @@ func (this *Drawings) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Drawings) SetOnAction(rhs string)  {
+func (this *Drawings) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *Drawings) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *Drawings) SetPlacement(rhs interface{})  {
+func (this *Drawings) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -210,12 +210,12 @@ func (this *Drawings) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Drawings) SetPrintObject(rhs bool)  {
+func (this *Drawings) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var Drawings_Select_OptArgs= []string{
-	"Replace", 
+var Drawings_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *Drawings) Select(optArgs ...interface{}) ole.Variant {
@@ -236,13 +236,13 @@ func (this *Drawings) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Drawings) SetTop(rhs float64)  {
+func (this *Drawings) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
-func (this *Drawings) Dummy22_()  {
+func (this *Drawings) Dummy22_() {
 	retVal, _ := this.Call(0x00010016, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Drawings) Visible() bool {
@@ -250,7 +250,7 @@ func (this *Drawings) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Drawings) SetVisible(rhs bool)  {
+func (this *Drawings) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *Drawings) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Drawings) SetWidth(rhs float64)  {
+func (this *Drawings) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -278,7 +278,7 @@ func (this *Drawings) AddIndent() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Drawings) SetAddIndent(rhs bool)  {
+func (this *Drawings) SetAddIndent(rhs bool) {
 	_ = this.PropPut(0x00000427, []interface{}{rhs})
 }
 
@@ -288,7 +288,7 @@ func (this *Drawings) AutoScaleFont() ole.Variant {
 	return *retVal
 }
 
-func (this *Drawings) SetAutoScaleFont(rhs interface{})  {
+func (this *Drawings) SetAutoScaleFont(rhs interface{}) {
 	_ = this.PropPut(0x000005f5, []interface{}{rhs})
 }
 
@@ -297,7 +297,7 @@ func (this *Drawings) AutoSize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Drawings) SetAutoSize(rhs bool)  {
+func (this *Drawings) SetAutoSize(rhs bool) {
 	_ = this.PropPut(0x00000266, []interface{}{rhs})
 }
 
@@ -306,12 +306,12 @@ func (this *Drawings) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Drawings) SetCaption(rhs string)  {
+func (this *Drawings) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var Drawings_Characters_OptArgs= []string{
-	"Start", "Length", 
+var Drawings_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *Drawings) Characters(optArgs ...interface{}) *Characters {
@@ -320,8 +320,8 @@ func (this *Drawings) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var Drawings_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var Drawings_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *Drawings) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -341,7 +341,7 @@ func (this *Drawings) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Drawings) SetFormula(rhs string)  {
+func (this *Drawings) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -351,7 +351,7 @@ func (this *Drawings) HorizontalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *Drawings) SetHorizontalAlignment(rhs interface{})  {
+func (this *Drawings) SetHorizontalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000088, []interface{}{rhs})
 }
 
@@ -360,7 +360,7 @@ func (this *Drawings) LockedText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Drawings) SetLockedText(rhs bool)  {
+func (this *Drawings) SetLockedText(rhs bool) {
 	_ = this.PropPut(0x00000268, []interface{}{rhs})
 }
 
@@ -370,7 +370,7 @@ func (this *Drawings) Orientation() ole.Variant {
 	return *retVal
 }
 
-func (this *Drawings) SetOrientation(rhs interface{})  {
+func (this *Drawings) SetOrientation(rhs interface{}) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -379,7 +379,7 @@ func (this *Drawings) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Drawings) SetText(rhs string)  {
+func (this *Drawings) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -389,7 +389,7 @@ func (this *Drawings) VerticalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *Drawings) SetVerticalAlignment(rhs interface{})  {
+func (this *Drawings) SetVerticalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000089, []interface{}{rhs})
 }
 
@@ -398,7 +398,7 @@ func (this *Drawings) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Drawings) SetReadingOrder(rhs int32)  {
+func (this *Drawings) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -417,17 +417,17 @@ func (this *Drawings) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Drawings) SetShadow(rhs bool)  {
+func (this *Drawings) SetShadow(rhs bool) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
-func (this *Drawings) Dummy44_()  {
+func (this *Drawings) Dummy44_() {
 	retVal, _ := this.Call(0x0001002c, nil)
-	_= retVal
+	_ = retVal
 }
 
-var Drawings_Reshape_OptArgs= []string{
-	"Left", "Top", 
+var Drawings_Reshape_OptArgs = []string{
+	"Left", "Top",
 }
 
 func (this *Drawings) Reshape(vertex int32, insert bool, optArgs ...interface{}) ole.Variant {
@@ -437,9 +437,9 @@ func (this *Drawings) Reshape(vertex int32, insert bool, optArgs ...interface{})
 	return *retVal
 }
 
-func (this *Drawings) Dummy46_()  {
+func (this *Drawings) Dummy46_() {
 	retVal, _ := this.Call(0x0001002e, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Drawings) Add(x1 float64, y1 float64, x2 float64, y2 float64, closed bool) *Drawing {
@@ -471,7 +471,7 @@ func (this *Drawings) ForEach(action func(item *ole.DispatchClass) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -487,4 +487,3 @@ func (this *Drawings) ForEach(action func(item *ole.DispatchClass) bool) {
 		}
 	}
 }
-

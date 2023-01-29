@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024443-0000-0000-C000-000000000046
-var IID_PublishObjects = syscall.GUID{0x00024443, 0x0000, 0x0000, 
+var IID_PublishObjects = syscall.GUID{0x00024443, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type PublishObjects struct {
@@ -17,8 +17,8 @@ type PublishObjects struct {
 }
 
 func NewPublishObjects(pDisp *win32.IDispatch, addRef bool, scoped bool) *PublishObjects {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &PublishObjects{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *PublishObjects) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *PublishObjects) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *PublishObjects) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PublishObjects) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *PublishObjects) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *PublishObjects) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *PublishObjects) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PublishObjects) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *PublishObjects) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PublishObjects) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *PublishObjects) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *PublishObjects) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *PublishObjects) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *PublishObjects) Application() *Application {
@@ -95,8 +95,8 @@ func (this *PublishObjects) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var PublishObjects_Add_OptArgs= []string{
-	"Sheet", "Source", "HtmlType", "DivID", "Title", 
+var PublishObjects_Add_OptArgs = []string{
+	"Sheet", "Source", "HtmlType", "DivID", "Title",
 }
 
 func (this *PublishObjects) Add(sourceType int32, filename string, optArgs ...interface{}) *PublishObject {
@@ -129,7 +129,7 @@ func (this *PublishObjects) ForEach(action func(item *PublishObject) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -146,13 +146,12 @@ func (this *PublishObjects) ForEach(action func(item *PublishObject) bool) {
 	}
 }
 
-func (this *PublishObjects) Delete()  {
+func (this *PublishObjects) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *PublishObjects) Publish()  {
+func (this *PublishObjects) Publish() {
 	retVal, _ := this.Call(0x00000767, nil)
-	_= retVal
+	_ = retVal
 }
-

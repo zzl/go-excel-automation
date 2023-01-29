@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208BE-0000-0000-C000-000000000046
-var IID_Trendline = syscall.GUID{0x000208BE, 0x0000, 0x0000, 
+var IID_Trendline = syscall.GUID{0x000208BE, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Trendline struct {
@@ -17,8 +17,8 @@ type Trendline struct {
 }
 
 func NewTrendline(pDisp *win32.IDispatch, addRef bool, scoped bool) *Trendline {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Trendline{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Trendline) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Trendline) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Trendline) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Trendline) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Trendline) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Trendline) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Trendline) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Trendline) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Trendline) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Trendline) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Trendline) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Trendline) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Trendline) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Trendline) Application() *Application {
@@ -100,7 +100,7 @@ func (this *Trendline) Backward() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Trendline) SetBackward(rhs int32)  {
+func (this *Trendline) SetBackward(rhs int32) {
 	_ = this.PropPut(0x000000b9, []interface{}{rhs})
 }
 
@@ -131,7 +131,7 @@ func (this *Trendline) DisplayEquation() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Trendline) SetDisplayEquation(rhs bool)  {
+func (this *Trendline) SetDisplayEquation(rhs bool) {
 	_ = this.PropPut(0x000000be, []interface{}{rhs})
 }
 
@@ -140,7 +140,7 @@ func (this *Trendline) DisplayRSquared() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Trendline) SetDisplayRSquared(rhs bool)  {
+func (this *Trendline) SetDisplayRSquared(rhs bool) {
 	_ = this.PropPut(0x000000bd, []interface{}{rhs})
 }
 
@@ -149,7 +149,7 @@ func (this *Trendline) Forward() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Trendline) SetForward(rhs int32)  {
+func (this *Trendline) SetForward(rhs int32) {
 	_ = this.PropPut(0x000000bf, []interface{}{rhs})
 }
 
@@ -163,7 +163,7 @@ func (this *Trendline) Intercept() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Trendline) SetIntercept(rhs float64)  {
+func (this *Trendline) SetIntercept(rhs float64) {
 	_ = this.PropPut(0x000000ba, []interface{}{rhs})
 }
 
@@ -172,7 +172,7 @@ func (this *Trendline) InterceptIsAuto() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Trendline) SetInterceptIsAuto(rhs bool)  {
+func (this *Trendline) SetInterceptIsAuto(rhs bool) {
 	_ = this.PropPut(0x000000bb, []interface{}{rhs})
 }
 
@@ -181,7 +181,7 @@ func (this *Trendline) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Trendline) SetName(rhs string)  {
+func (this *Trendline) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -190,7 +190,7 @@ func (this *Trendline) NameIsAuto() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Trendline) SetNameIsAuto(rhs bool)  {
+func (this *Trendline) SetNameIsAuto(rhs bool) {
 	_ = this.PropPut(0x000000bc, []interface{}{rhs})
 }
 
@@ -199,7 +199,7 @@ func (this *Trendline) Order() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Trendline) SetOrder(rhs int32)  {
+func (this *Trendline) SetOrder(rhs int32) {
 	_ = this.PropPut(0x000000c0, []interface{}{rhs})
 }
 
@@ -208,7 +208,7 @@ func (this *Trendline) Period() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Trendline) SetPeriod(rhs int32)  {
+func (this *Trendline) SetPeriod(rhs int32) {
 	_ = this.PropPut(0x000000b8, []interface{}{rhs})
 }
 
@@ -223,7 +223,7 @@ func (this *Trendline) Type() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Trendline) SetType(rhs int32)  {
+func (this *Trendline) SetType(rhs int32) {
 	_ = this.PropPut(0x0000006c, []interface{}{rhs})
 }
 
@@ -232,7 +232,7 @@ func (this *Trendline) Backward2() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Trendline) SetBackward2(rhs float64)  {
+func (this *Trendline) SetBackward2(rhs float64) {
 	_ = this.PropPut(0x00000a5a, []interface{}{rhs})
 }
 
@@ -241,7 +241,7 @@ func (this *Trendline) Forward2() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Trendline) SetForward2(rhs float64)  {
+func (this *Trendline) SetForward2(rhs float64) {
 	_ = this.PropPut(0x00000a5b, []interface{}{rhs})
 }
 
@@ -249,4 +249,3 @@ func (this *Trendline) Format() *ChartFormat {
 	retVal, _ := this.PropGet(0x00000074, nil)
 	return NewChartFormat(retVal.IDispatch(), false, true)
 }
-

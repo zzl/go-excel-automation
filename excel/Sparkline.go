@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 000244B9-0000-0000-C000-000000000046
-var IID_Sparkline = syscall.GUID{0x000244B9, 0x0000, 0x0000, 
+var IID_Sparkline = syscall.GUID{0x000244B9, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Sparkline struct {
@@ -17,8 +17,8 @@ type Sparkline struct {
 }
 
 func NewSparkline(pDisp *win32.IDispatch, addRef bool, scoped bool) *Sparkline {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Sparkline{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Sparkline) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Sparkline) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Sparkline) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Sparkline) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Sparkline) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Sparkline) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Sparkline) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Sparkline) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Sparkline) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Sparkline) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Sparkline) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Sparkline) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Sparkline) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Sparkline) Application() *Application {
@@ -100,7 +100,7 @@ func (this *Sparkline) Location() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-func (this *Sparkline) SetLocation(rhs *Range)  {
+func (this *Sparkline) SetLocation(rhs *Range) {
 	_ = this.PropPutRef(0x00000575, []interface{}{rhs})
 }
 
@@ -109,17 +109,17 @@ func (this *Sparkline) SourceData() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Sparkline) SetSourceData(rhs string)  {
+func (this *Sparkline) SetSourceData(rhs string) {
 	_ = this.PropPut(0x000002ae, []interface{}{rhs})
 }
 
-func (this *Sparkline) ModifyLocation(range_ *Range)  {
+func (this *Sparkline) ModifyLocation(range_ *Range) {
 	retVal, _ := this.Call(0x00000b85, []interface{}{range_})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Sparkline) ModifySourceData(formula string)  {
+func (this *Sparkline) ModifySourceData(formula string) {
 	retVal, _ := this.Call(0x00000b86, []interface{}{formula})
-	_= retVal
+	_ = retVal
 }
 

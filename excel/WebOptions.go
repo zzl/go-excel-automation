@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 00024449-0000-0000-C000-000000000046
-var IID_WebOptions = syscall.GUID{0x00024449, 0x0000, 0x0000, 
+var IID_WebOptions = syscall.GUID{0x00024449, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type WebOptions struct {
@@ -16,8 +16,8 @@ type WebOptions struct {
 }
 
 func NewWebOptions(pDisp *win32.IDispatch, addRef bool, scoped bool) *WebOptions {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &WebOptions{ole.OleClient{pDisp}}
 	if addRef {
@@ -64,7 +64,7 @@ func (this *WebOptions) RelyOnCSS() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *WebOptions) SetRelyOnCSS(rhs bool)  {
+func (this *WebOptions) SetRelyOnCSS(rhs bool) {
 	_ = this.PropPut(0x0000076b, []interface{}{rhs})
 }
 
@@ -73,7 +73,7 @@ func (this *WebOptions) OrganizeInFolder() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *WebOptions) SetOrganizeInFolder(rhs bool)  {
+func (this *WebOptions) SetOrganizeInFolder(rhs bool) {
 	_ = this.PropPut(0x0000076e, []interface{}{rhs})
 }
 
@@ -82,7 +82,7 @@ func (this *WebOptions) UseLongFileNames() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *WebOptions) SetUseLongFileNames(rhs bool)  {
+func (this *WebOptions) SetUseLongFileNames(rhs bool) {
 	_ = this.PropPut(0x00000770, []interface{}{rhs})
 }
 
@@ -91,7 +91,7 @@ func (this *WebOptions) DownloadComponents() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *WebOptions) SetDownloadComponents(rhs bool)  {
+func (this *WebOptions) SetDownloadComponents(rhs bool) {
 	_ = this.PropPut(0x00000772, []interface{}{rhs})
 }
 
@@ -100,7 +100,7 @@ func (this *WebOptions) RelyOnVML() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *WebOptions) SetRelyOnVML(rhs bool)  {
+func (this *WebOptions) SetRelyOnVML(rhs bool) {
 	_ = this.PropPut(0x00000773, []interface{}{rhs})
 }
 
@@ -109,7 +109,7 @@ func (this *WebOptions) AllowPNG() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *WebOptions) SetAllowPNG(rhs bool)  {
+func (this *WebOptions) SetAllowPNG(rhs bool) {
 	_ = this.PropPut(0x00000774, []interface{}{rhs})
 }
 
@@ -118,7 +118,7 @@ func (this *WebOptions) ScreenSize() int32 {
 	return retVal.LValVal()
 }
 
-func (this *WebOptions) SetScreenSize(rhs int32)  {
+func (this *WebOptions) SetScreenSize(rhs int32) {
 	_ = this.PropPut(0x00000775, []interface{}{rhs})
 }
 
@@ -127,7 +127,7 @@ func (this *WebOptions) PixelsPerInch() int32 {
 	return retVal.LValVal()
 }
 
-func (this *WebOptions) SetPixelsPerInch(rhs int32)  {
+func (this *WebOptions) SetPixelsPerInch(rhs int32) {
 	_ = this.PropPut(0x00000776, []interface{}{rhs})
 }
 
@@ -136,7 +136,7 @@ func (this *WebOptions) LocationOfComponents() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *WebOptions) SetLocationOfComponents(rhs string)  {
+func (this *WebOptions) SetLocationOfComponents(rhs string) {
 	_ = this.PropPut(0x00000777, []interface{}{rhs})
 }
 
@@ -145,7 +145,7 @@ func (this *WebOptions) Encoding() int32 {
 	return retVal.LValVal()
 }
 
-func (this *WebOptions) SetEncoding(rhs int32)  {
+func (this *WebOptions) SetEncoding(rhs int32) {
 	_ = this.PropPut(0x0000071e, []interface{}{rhs})
 }
 
@@ -154,9 +154,9 @@ func (this *WebOptions) FolderSuffix() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *WebOptions) UseDefaultFolderSuffix()  {
+func (this *WebOptions) UseDefaultFolderSuffix() {
 	retVal, _ := this.Call(0x0000077b, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *WebOptions) TargetBrowser() int32 {
@@ -164,7 +164,6 @@ func (this *WebOptions) TargetBrowser() int32 {
 	return retVal.LValVal()
 }
 
-func (this *WebOptions) SetTargetBrowser(rhs int32)  {
+func (this *WebOptions) SetTargetBrowser(rhs int32) {
 	_ = this.PropPut(0x00000883, []interface{}{rhs})
 }
-

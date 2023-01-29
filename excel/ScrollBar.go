@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020885-0000-0000-C000-000000000046
-var IID_ScrollBar = syscall.GUID{0x00020885, 0x0000, 0x0000, 
+var IID_ScrollBar = syscall.GUID{0x00020885, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ScrollBar struct {
@@ -17,8 +17,8 @@ type ScrollBar struct {
 }
 
 func NewScrollBar(pDisp *win32.IDispatch, addRef bool, scoped bool) *ScrollBar {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &ScrollBar{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *ScrollBar) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *ScrollBar) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *ScrollBar) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ScrollBar) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *ScrollBar) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *ScrollBar) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *ScrollBar) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ScrollBar) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *ScrollBar) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ScrollBar) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *ScrollBar) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ScrollBar) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *ScrollBar) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ScrollBar) Application() *Application {
@@ -112,8 +112,8 @@ func (this *ScrollBar) Copy() ole.Variant {
 	return *retVal
 }
 
-var ScrollBar_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var ScrollBar_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *ScrollBar) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *ScrollBar) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ScrollBar) SetEnabled(rhs bool)  {
+func (this *ScrollBar) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *ScrollBar) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *ScrollBar) SetHeight(rhs float64)  {
+func (this *ScrollBar) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -168,7 +168,7 @@ func (this *ScrollBar) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *ScrollBar) SetLeft(rhs float64)  {
+func (this *ScrollBar) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,7 +177,7 @@ func (this *ScrollBar) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ScrollBar) SetLocked(rhs bool)  {
+func (this *ScrollBar) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
@@ -186,7 +186,7 @@ func (this *ScrollBar) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ScrollBar) SetName(rhs string)  {
+func (this *ScrollBar) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -195,7 +195,7 @@ func (this *ScrollBar) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ScrollBar) SetOnAction(rhs string)  {
+func (this *ScrollBar) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -205,7 +205,7 @@ func (this *ScrollBar) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *ScrollBar) SetPlacement(rhs interface{})  {
+func (this *ScrollBar) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -214,12 +214,12 @@ func (this *ScrollBar) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ScrollBar) SetPrintObject(rhs bool)  {
+func (this *ScrollBar) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var ScrollBar_Select_OptArgs= []string{
-	"Replace", 
+var ScrollBar_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *ScrollBar) Select(optArgs ...interface{}) ole.Variant {
@@ -240,7 +240,7 @@ func (this *ScrollBar) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *ScrollBar) SetTop(rhs float64)  {
+func (this *ScrollBar) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -254,7 +254,7 @@ func (this *ScrollBar) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ScrollBar) SetVisible(rhs bool)  {
+func (this *ScrollBar) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -263,7 +263,7 @@ func (this *ScrollBar) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *ScrollBar) SetWidth(rhs float64)  {
+func (this *ScrollBar) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -282,7 +282,7 @@ func (this *ScrollBar) Default_() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ScrollBar) SetDefault_(rhs int32)  {
+func (this *ScrollBar) SetDefault_(rhs int32) {
 	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
@@ -291,7 +291,7 @@ func (this *ScrollBar) Display3DShading() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *ScrollBar) SetDisplay3DShading(rhs bool)  {
+func (this *ScrollBar) SetDisplay3DShading(rhs bool) {
 	_ = this.PropPut(0x00000462, []interface{}{rhs})
 }
 
@@ -300,7 +300,7 @@ func (this *ScrollBar) LinkedCell() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *ScrollBar) SetLinkedCell(rhs string)  {
+func (this *ScrollBar) SetLinkedCell(rhs string) {
 	_ = this.PropPut(0x00000422, []interface{}{rhs})
 }
 
@@ -309,7 +309,7 @@ func (this *ScrollBar) Max() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ScrollBar) SetMax(rhs int32)  {
+func (this *ScrollBar) SetMax(rhs int32) {
 	_ = this.PropPut(0x0000034a, []interface{}{rhs})
 }
 
@@ -318,7 +318,7 @@ func (this *ScrollBar) Min() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ScrollBar) SetMin(rhs int32)  {
+func (this *ScrollBar) SetMin(rhs int32) {
 	_ = this.PropPut(0x0000034b, []interface{}{rhs})
 }
 
@@ -327,7 +327,7 @@ func (this *ScrollBar) SmallChange() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ScrollBar) SetSmallChange(rhs int32)  {
+func (this *ScrollBar) SetSmallChange(rhs int32) {
 	_ = this.PropPut(0x0000034c, []interface{}{rhs})
 }
 
@@ -336,7 +336,7 @@ func (this *ScrollBar) Value() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ScrollBar) SetValue(rhs int32)  {
+func (this *ScrollBar) SetValue(rhs int32) {
 	_ = this.PropPut(0x00000006, []interface{}{rhs})
 }
 
@@ -345,7 +345,6 @@ func (this *ScrollBar) LargeChange() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ScrollBar) SetLargeChange(rhs int32)  {
+func (this *ScrollBar) SetLargeChange(rhs int32) {
 	_ = this.PropPut(0x0000034d, []interface{}{rhs})
 }
-

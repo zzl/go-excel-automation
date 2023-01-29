@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020897-0000-0000-C000-000000000046
-var IID_Scenario = syscall.GUID{0x00020897, 0x0000, 0x0000, 
+var IID_Scenario = syscall.GUID{0x00020897, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Scenario struct {
@@ -17,8 +17,8 @@ type Scenario struct {
 }
 
 func NewScenario(pDisp *win32.IDispatch, addRef bool, scoped bool) *Scenario {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Scenario{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Scenario) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Scenario) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Scenario) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Scenario) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Scenario) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Scenario) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Scenario) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Scenario) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Scenario) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Scenario) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Scenario) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Scenario) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Scenario) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Scenario) Application() *Application {
@@ -95,8 +95,8 @@ func (this *Scenario) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Scenario_ChangeScenario_OptArgs= []string{
-	"Values", 
+var Scenario_ChangeScenario_OptArgs = []string{
+	"Values",
 }
 
 func (this *Scenario) ChangeScenario(changingCells interface{}, optArgs ...interface{}) ole.Variant {
@@ -116,7 +116,7 @@ func (this *Scenario) Comment() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Scenario) SetComment(rhs string)  {
+func (this *Scenario) SetComment(rhs string) {
 	_ = this.PropPut(0x0000038e, []interface{}{rhs})
 }
 
@@ -131,7 +131,7 @@ func (this *Scenario) Hidden() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Scenario) SetHidden(rhs bool)  {
+func (this *Scenario) SetHidden(rhs bool) {
 	_ = this.PropPut(0x0000010c, []interface{}{rhs})
 }
 
@@ -145,7 +145,7 @@ func (this *Scenario) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Scenario) SetLocked(rhs bool)  {
+func (this *Scenario) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *Scenario) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Scenario) SetName(rhs string)  {
+func (this *Scenario) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -164,8 +164,8 @@ func (this *Scenario) Show() ole.Variant {
 	return *retVal
 }
 
-var Scenario_Values_OptArgs= []string{
-	"Index", 
+var Scenario_Values_OptArgs = []string{
+	"Index",
 }
 
 func (this *Scenario) Values(optArgs ...interface{}) ole.Variant {
@@ -174,4 +174,3 @@ func (this *Scenario) Values(optArgs ...interface{}) ole.Variant {
 	com.AddToScope(retVal)
 	return *retVal
 }
-

@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208BA-0000-0000-C000-000000000046
-var IID_LegendEntry = syscall.GUID{0x000208BA, 0x0000, 0x0000, 
+var IID_LegendEntry = syscall.GUID{0x000208BA, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type LegendEntry struct {
@@ -17,8 +17,8 @@ type LegendEntry struct {
 }
 
 func NewLegendEntry(pDisp *win32.IDispatch, addRef bool, scoped bool) *LegendEntry {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &LegendEntry{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *LegendEntry) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *LegendEntry) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *LegendEntry) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *LegendEntry) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *LegendEntry) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *LegendEntry) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *LegendEntry) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *LegendEntry) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *LegendEntry) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *LegendEntry) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *LegendEntry) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *LegendEntry) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *LegendEntry) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *LegendEntry) Application() *Application {
@@ -128,7 +128,7 @@ func (this *LegendEntry) AutoScaleFont() ole.Variant {
 	return *retVal
 }
 
-func (this *LegendEntry) SetAutoScaleFont(rhs interface{})  {
+func (this *LegendEntry) SetAutoScaleFont(rhs interface{}) {
 	_ = this.PropPut(0x000005f5, []interface{}{rhs})
 }
 
@@ -156,4 +156,3 @@ func (this *LegendEntry) Format() *ChartFormat {
 	retVal, _ := this.PropGet(0x00000074, nil)
 	return NewChartFormat(retVal.IDispatch(), false, true)
 }
-

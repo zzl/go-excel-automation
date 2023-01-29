@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002444D-0000-0000-C000-000000000046
-var IID_CubeFields = syscall.GUID{0x0002444D, 0x0000, 0x0000, 
+var IID_CubeFields = syscall.GUID{0x0002444D, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type CubeFields struct {
@@ -17,8 +17,8 @@ type CubeFields struct {
 }
 
 func NewCubeFields(pDisp *win32.IDispatch, addRef bool, scoped bool) *CubeFields {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &CubeFields{ole.OleClient{pDisp}}
 	if addRef {
@@ -84,7 +84,7 @@ func (this *CubeFields) ForEach(action func(item *CubeField) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -105,4 +105,3 @@ func (this *CubeFields) AddSet(name string, caption string) *CubeField {
 	retVal, _ := this.Call(0x0000088a, []interface{}{name, caption})
 	return NewCubeField(retVal.IDispatch(), false, true)
 }
-

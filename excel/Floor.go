@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208C7-0000-0000-C000-000000000046
-var IID_Floor = syscall.GUID{0x000208C7, 0x0000, 0x0000, 
+var IID_Floor = syscall.GUID{0x000208C7, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Floor struct {
@@ -17,8 +17,8 @@ type Floor struct {
 }
 
 func NewFloor(pDisp *win32.IDispatch, addRef bool, scoped bool) *Floor {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Floor{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Floor) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Floor) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Floor) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Floor) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Floor) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Floor) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Floor) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Floor) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Floor) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Floor) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Floor) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Floor) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Floor) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Floor) Application() *Application {
@@ -133,13 +133,13 @@ func (this *Floor) PictureType() ole.Variant {
 	return *retVal
 }
 
-func (this *Floor) SetPictureType(rhs interface{})  {
+func (this *Floor) SetPictureType(rhs interface{}) {
 	_ = this.PropPut(0x000000a1, []interface{}{rhs})
 }
 
-func (this *Floor) Paste()  {
+func (this *Floor) Paste() {
 	retVal, _ := this.Call(0x000000d3, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Floor) Thickness() int32 {
@@ -147,7 +147,7 @@ func (this *Floor) Thickness() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Floor) SetThickness(rhs int32)  {
+func (this *Floor) SetThickness(rhs int32) {
 	_ = this.PropPut(0x00000a5c, []interface{}{rhs})
 }
 
@@ -155,4 +155,3 @@ func (this *Floor) Format() *ChartFormat {
 	retVal, _ := this.PropGet(0x00000074, nil)
 	return NewChartFormat(retVal.IDispatch(), false, true)
 }
-

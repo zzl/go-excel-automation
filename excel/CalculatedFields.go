@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024420-0000-0000-C000-000000000046
-var IID_CalculatedFields = syscall.GUID{0x00024420, 0x0000, 0x0000, 
+var IID_CalculatedFields = syscall.GUID{0x00024420, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type CalculatedFields struct {
@@ -17,8 +17,8 @@ type CalculatedFields struct {
 }
 
 func NewCalculatedFields(pDisp *win32.IDispatch, addRef bool, scoped bool) *CalculatedFields {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &CalculatedFields{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *CalculatedFields) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *CalculatedFields) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *CalculatedFields) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *CalculatedFields) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *CalculatedFields) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *CalculatedFields) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *CalculatedFields) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *CalculatedFields) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *CalculatedFields) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *CalculatedFields) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *CalculatedFields) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *CalculatedFields) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *CalculatedFields) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *CalculatedFields) Application() *Application {
@@ -124,7 +124,7 @@ func (this *CalculatedFields) ForEach(action func(item *PivotField) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -141,8 +141,8 @@ func (this *CalculatedFields) ForEach(action func(item *PivotField) bool) {
 	}
 }
 
-var CalculatedFields_Add_OptArgs= []string{
-	"UseStandardFormula", 
+var CalculatedFields_Add_OptArgs = []string{
+	"UseStandardFormula",
 }
 
 func (this *CalculatedFields) Add(name string, formula string, optArgs ...interface{}) *PivotField {
@@ -150,4 +150,3 @@ func (this *CalculatedFields) Add(name string, formula string, optArgs ...interf
 	retVal, _ := this.Call(0x000000b5, []interface{}{name, formula}, optArgs...)
 	return NewPivotField(retVal.IDispatch(), false, true)
 }
-

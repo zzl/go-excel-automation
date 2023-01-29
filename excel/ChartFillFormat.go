@@ -1,7 +1,7 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
 	"syscall"
@@ -9,7 +9,7 @@ import (
 )
 
 // 00024435-0000-0000-C000-000000000046
-var IID_ChartFillFormat = syscall.GUID{0x00024435, 0x0000, 0x0000, 
+var IID_ChartFillFormat = syscall.GUID{0x00024435, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type ChartFillFormat struct {
@@ -17,8 +17,8 @@ type ChartFillFormat struct {
 }
 
 func NewChartFillFormat(pDisp *win32.IDispatch, addRef bool, scoped bool) *ChartFillFormat {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &ChartFillFormat{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *ChartFillFormat) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *ChartFillFormat) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *ChartFillFormat) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ChartFillFormat) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *ChartFillFormat) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *ChartFillFormat) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *ChartFillFormat) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ChartFillFormat) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *ChartFillFormat) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ChartFillFormat) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *ChartFillFormat) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ChartFillFormat) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *ChartFillFormat) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ChartFillFormat) Application() *Application {
@@ -95,49 +95,49 @@ func (this *ChartFillFormat) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *ChartFillFormat) OneColorGradient(style int32, variant int32, degree float32)  {
+func (this *ChartFillFormat) OneColorGradient(style int32, variant int32, degree float32) {
 	retVal, _ := this.Call(0x00000655, []interface{}{style, variant, degree})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ChartFillFormat) TwoColorGradient(style int32, variant int32)  {
+func (this *ChartFillFormat) TwoColorGradient(style int32, variant int32) {
 	retVal, _ := this.Call(0x00000658, []interface{}{style, variant})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ChartFillFormat) PresetTextured(presetTexture int32)  {
+func (this *ChartFillFormat) PresetTextured(presetTexture int32) {
 	retVal, _ := this.Call(0x00000659, []interface{}{presetTexture})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ChartFillFormat) Solid()  {
+func (this *ChartFillFormat) Solid() {
 	retVal, _ := this.Call(0x0000065b, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *ChartFillFormat) Patterned(pattern int32)  {
+func (this *ChartFillFormat) Patterned(pattern int32) {
 	retVal, _ := this.Call(0x0000065c, []interface{}{pattern})
-	_= retVal
+	_ = retVal
 }
 
-var ChartFillFormat_UserPicture_OptArgs= []string{
-	"PictureFile", "PictureFormat", "PictureStackUnit", "PicturePlacement", 
+var ChartFillFormat_UserPicture_OptArgs = []string{
+	"PictureFile", "PictureFormat", "PictureStackUnit", "PicturePlacement",
 }
 
-func (this *ChartFillFormat) UserPicture(optArgs ...interface{})  {
+func (this *ChartFillFormat) UserPicture(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(ChartFillFormat_UserPicture_OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000065d, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *ChartFillFormat) UserTextured(textureFile string)  {
+func (this *ChartFillFormat) UserTextured(textureFile string) {
 	retVal, _ := this.Call(0x00000662, []interface{}{textureFile})
-	_= retVal
+	_ = retVal
 }
 
-func (this *ChartFillFormat) PresetGradient(style int32, variant int32, presetGradientType int32)  {
+func (this *ChartFillFormat) PresetGradient(style int32, variant int32, presetGradientType int32) {
 	retVal, _ := this.Call(0x00000664, []interface{}{style, variant, presetGradientType})
-	_= retVal
+	_ = retVal
 }
 
 func (this *ChartFillFormat) BackColor() *ChartColorFormat {
@@ -205,7 +205,7 @@ func (this *ChartFillFormat) Visible() int32 {
 	return retVal.LValVal()
 }
 
-func (this *ChartFillFormat) SetVisible(rhs int32)  {
+func (this *ChartFillFormat) SetVisible(rhs int32) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 

@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024401-0000-0000-C000-000000000046
-var IID_HPageBreak = syscall.GUID{0x00024401, 0x0000, 0x0000, 
+var IID_HPageBreak = syscall.GUID{0x00024401, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type HPageBreak struct {
@@ -17,8 +17,8 @@ type HPageBreak struct {
 }
 
 func NewHPageBreak(pDisp *win32.IDispatch, addRef bool, scoped bool) *HPageBreak {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &HPageBreak{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *HPageBreak) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *HPageBreak) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *HPageBreak) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *HPageBreak) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *HPageBreak) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *HPageBreak) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *HPageBreak) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *HPageBreak) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *HPageBreak) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *HPageBreak) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *HPageBreak) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *HPageBreak) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *HPageBreak) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *HPageBreak) Application() *Application {
@@ -95,14 +95,14 @@ func (this *HPageBreak) Parent() *Worksheet {
 	return NewWorksheet(retVal.IDispatch(), false, true)
 }
 
-func (this *HPageBreak) Delete()  {
+func (this *HPageBreak) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *HPageBreak) DragOff(direction int32, regionIndex int32)  {
+func (this *HPageBreak) DragOff(direction int32, regionIndex int32) {
 	retVal, _ := this.Call(0x0000058c, []interface{}{direction, regionIndex})
-	_= retVal
+	_ = retVal
 }
 
 func (this *HPageBreak) Type() int32 {
@@ -110,7 +110,7 @@ func (this *HPageBreak) Type() int32 {
 	return retVal.LValVal()
 }
 
-func (this *HPageBreak) SetType(rhs int32)  {
+func (this *HPageBreak) SetType(rhs int32) {
 	_ = this.PropPut(0x0000006c, []interface{}{rhs})
 }
 
@@ -124,7 +124,6 @@ func (this *HPageBreak) Location() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-func (this *HPageBreak) SetLocation(rhs *Range)  {
+func (this *HPageBreak) SetLocation(rhs *Range) {
 	_ = this.PropPutRef(0x00000575, []interface{}{rhs})
 }
-

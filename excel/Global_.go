@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 000208D9-0000-0000-C000-000000000046
-var IID_Global_ = syscall.GUID{0x000208D9, 0x0000, 0x0000, 
+var IID_Global_ = syscall.GUID{0x000208D9, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Global_ struct {
@@ -16,8 +16,8 @@ type Global_ struct {
 }
 
 func NewGlobal_(pDisp *win32.IDispatch, addRef bool, scoped bool) *Global_ {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Global_{ole.OleClient{pDisp}}
 	if addRef {
@@ -84,7 +84,7 @@ func (this *Global_) ActivePrinter() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Global_) SetActivePrinter(rhs string)  {
+func (this *Global_) SetActivePrinter(rhs string) {
 	_ = this.PropPut(0x00000132, []interface{}{rhs})
 }
 
@@ -113,9 +113,9 @@ func (this *Global_) Assistant() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Global_) Calculate()  {
+func (this *Global_) Calculate() {
 	retVal, _ := this.Call(0x00000117, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Global_) Cells() *Range {
@@ -143,9 +143,9 @@ func (this *Global_) DDEAppReturnCode() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Global_) DDEExecute(channel int32, string string)  {
+func (this *Global_) DDEExecute(channel int32, string string) {
 	retVal, _ := this.Call(0x0000014d, []interface{}{channel, string})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Global_) DDEInitiate(app string, topic string) int32 {
@@ -153,9 +153,9 @@ func (this *Global_) DDEInitiate(app string, topic string) int32 {
 	return retVal.LValVal()
 }
 
-func (this *Global_) DDEPoke(channel int32, item interface{}, data interface{})  {
+func (this *Global_) DDEPoke(channel int32, item interface{}, data interface{}) {
 	retVal, _ := this.Call(0x0000014f, []interface{}{channel, item, data})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Global_) DDERequest(channel int32, item string) ole.Variant {
@@ -164,9 +164,9 @@ func (this *Global_) DDERequest(channel int32, item string) ole.Variant {
 	return *retVal
 }
 
-func (this *Global_) DDETerminate(channel int32)  {
+func (this *Global_) DDETerminate(channel int32) {
 	retVal, _ := this.Call(0x00000151, []interface{}{channel})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Global_) DialogSheets() *Sheets {
@@ -192,14 +192,14 @@ func (this *Global_) ExecuteExcel4Macro(string string) ole.Variant {
 	return *retVal
 }
 
-var Global__Intersect_OptArgs= []string{
-	"Arg3", "Arg4", "Arg5", "Arg6", 
-	"Arg7", "Arg8", "Arg9", "Arg10", 
-	"Arg11", "Arg12", "Arg13", "Arg14", 
-	"Arg15", "Arg16", "Arg17", "Arg18", 
-	"Arg19", "Arg20", "Arg21", "Arg22", 
-	"Arg23", "Arg24", "Arg25", "Arg26", 
-	"Arg27", "Arg28", "Arg29", "Arg30", 
+var Global__Intersect_OptArgs = []string{
+	"Arg3", "Arg4", "Arg5", "Arg6",
+	"Arg7", "Arg8", "Arg9", "Arg10",
+	"Arg11", "Arg12", "Arg13", "Arg14",
+	"Arg15", "Arg16", "Arg17", "Arg18",
+	"Arg19", "Arg20", "Arg21", "Arg22",
+	"Arg23", "Arg24", "Arg25", "Arg26",
+	"Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *Global_) Intersect(arg1 *Range, arg2 *Range, optArgs ...interface{}) *Range {
@@ -223,8 +223,8 @@ func (this *Global_) Names() *Names {
 	return NewNames(retVal.IDispatch(), false, true)
 }
 
-var Global__Range_OptArgs= []string{
-	"Cell2", 
+var Global__Range_OptArgs = []string{
+	"Cell2",
 }
 
 func (this *Global_) Range(cell1 interface{}, optArgs ...interface{}) *Range {
@@ -238,15 +238,15 @@ func (this *Global_) Rows() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var Global__Run_OptArgs= []string{
-	"Macro", "Arg1", "Arg2", "Arg3", 
-	"Arg4", "Arg5", "Arg6", "Arg7", 
-	"Arg8", "Arg9", "Arg10", "Arg11", 
-	"Arg12", "Arg13", "Arg14", "Arg15", 
-	"Arg16", "Arg17", "Arg18", "Arg19", 
-	"Arg20", "Arg21", "Arg22", "Arg23", 
-	"Arg24", "Arg25", "Arg26", "Arg27", 
-	"Arg28", "Arg29", "Arg30", 
+var Global__Run_OptArgs = []string{
+	"Macro", "Arg1", "Arg2", "Arg3",
+	"Arg4", "Arg5", "Arg6", "Arg7",
+	"Arg8", "Arg9", "Arg10", "Arg11",
+	"Arg12", "Arg13", "Arg14", "Arg15",
+	"Arg16", "Arg17", "Arg18", "Arg19",
+	"Arg20", "Arg21", "Arg22", "Arg23",
+	"Arg24", "Arg25", "Arg26", "Arg27",
+	"Arg28", "Arg29", "Arg30",
 }
 
 func (this *Global_) Run(optArgs ...interface{}) ole.Variant {
@@ -256,15 +256,15 @@ func (this *Global_) Run(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Global__Run2__OptArgs= []string{
-	"Macro", "Arg1", "Arg2", "Arg3", 
-	"Arg4", "Arg5", "Arg6", "Arg7", 
-	"Arg8", "Arg9", "Arg10", "Arg11", 
-	"Arg12", "Arg13", "Arg14", "Arg15", 
-	"Arg16", "Arg17", "Arg18", "Arg19", 
-	"Arg20", "Arg21", "Arg22", "Arg23", 
-	"Arg24", "Arg25", "Arg26", "Arg27", 
-	"Arg28", "Arg29", "Arg30", 
+var Global__Run2__OptArgs = []string{
+	"Macro", "Arg1", "Arg2", "Arg3",
+	"Arg4", "Arg5", "Arg6", "Arg7",
+	"Arg8", "Arg9", "Arg10", "Arg11",
+	"Arg12", "Arg13", "Arg14", "Arg15",
+	"Arg16", "Arg17", "Arg18", "Arg19",
+	"Arg20", "Arg21", "Arg22", "Arg23",
+	"Arg24", "Arg25", "Arg26", "Arg27",
+	"Arg28", "Arg29", "Arg30",
 }
 
 func (this *Global_) Run2_(optArgs ...interface{}) ole.Variant {
@@ -279,14 +279,14 @@ func (this *Global_) Selection() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-var Global__SendKeys_OptArgs= []string{
-	"Wait", 
+var Global__SendKeys_OptArgs = []string{
+	"Wait",
 }
 
-func (this *Global_) SendKeys(keys interface{}, optArgs ...interface{})  {
+func (this *Global_) SendKeys(keys interface{}, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Global__SendKeys_OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000017f, []interface{}{keys}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Global_) Sheets() *Sheets {
@@ -309,14 +309,14 @@ func (this *Global_) Toolbars() *Toolbars {
 	return NewToolbars(retVal.IDispatch(), false, true)
 }
 
-var Global__Union_OptArgs= []string{
-	"Arg3", "Arg4", "Arg5", "Arg6", 
-	"Arg7", "Arg8", "Arg9", "Arg10", 
-	"Arg11", "Arg12", "Arg13", "Arg14", 
-	"Arg15", "Arg16", "Arg17", "Arg18", 
-	"Arg19", "Arg20", "Arg21", "Arg22", 
-	"Arg23", "Arg24", "Arg25", "Arg26", 
-	"Arg27", "Arg28", "Arg29", "Arg30", 
+var Global__Union_OptArgs = []string{
+	"Arg3", "Arg4", "Arg5", "Arg6",
+	"Arg7", "Arg8", "Arg9", "Arg10",
+	"Arg11", "Arg12", "Arg13", "Arg14",
+	"Arg15", "Arg16", "Arg17", "Arg18",
+	"Arg19", "Arg20", "Arg21", "Arg22",
+	"Arg23", "Arg24", "Arg25", "Arg26",
+	"Arg27", "Arg28", "Arg29", "Arg30",
 }
 
 func (this *Global_) Union(arg1 *Range, arg2 *Range, optArgs ...interface{}) *Range {
@@ -354,4 +354,3 @@ func (this *Global_) Excel4MacroSheets() *Sheets {
 	retVal, _ := this.PropGet(0x00000243, nil)
 	return NewSheets(retVal.IDispatch(), false, true)
 }
-

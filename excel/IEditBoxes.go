@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020884-0001-0000-C000-000000000046
-var IID_IEditBoxes = syscall.GUID{0x00020884, 0x0001, 0x0000, 
+var IID_IEditBoxes = syscall.GUID{0x00020884, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IEditBoxes struct {
@@ -17,8 +17,8 @@ type IEditBoxes struct {
 }
 
 func NewIEditBoxes(pUnk *win32.IUnknown, addRef bool, scoped bool) *IEditBoxes {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IEditBoxes)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IEditBoxes) IID() *syscall.GUID {
 func (this *IEditBoxes) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,11 +50,11 @@ func (this *IEditBoxes) GetCreator(rhs *int32) com.Error {
 func (this *IEditBoxes) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IEditBoxes) Dummy3_()  {
+func (this *IEditBoxes) Dummy3_() {
 	addr := (*this.LpVtbl)[10]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -92,7 +92,7 @@ func (this *IEditBoxes) Delete(rhs *ole.Variant) com.Error {
 func (this *IEditBoxes) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -120,7 +120,7 @@ func (this *IEditBoxes) SetHeight(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IEditBoxes) Dummy12_()  {
+func (this *IEditBoxes) Dummy12_() {
 	addr := (*this.LpVtbl)[21]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -149,7 +149,7 @@ func (this *IEditBoxes) SetLocked(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IEditBoxes) Dummy15_()  {
+func (this *IEditBoxes) Dummy15_() {
 	addr := (*this.LpVtbl)[26]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -214,7 +214,7 @@ func (this *IEditBoxes) SetTop(rhs float64) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IEditBoxes) Dummy22_()  {
+func (this *IEditBoxes) Dummy22_() {
 	addr := (*this.LpVtbl)[37]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -252,7 +252,7 @@ func (this *IEditBoxes) GetZOrder(rhs *int32) com.Error {
 func (this *IEditBoxes) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[43]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -271,7 +271,7 @@ func (this *IEditBoxes) SetCaption(rhs string) com.Error {
 func (this *IEditBoxes) GetCharacters(start interface{}, length interface{}, rhs **Characters) com.Error {
 	addr := (*this.LpVtbl)[46]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), (uintptr)(unsafe.Pointer(&start)), (uintptr)(unsafe.Pointer(&length)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -329,7 +329,7 @@ func (this *IEditBoxes) SetInputType(rhs int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IEditBoxes) Dummy34_()  {
+func (this *IEditBoxes) Dummy34_() {
 	addr := (*this.LpVtbl)[56]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -361,7 +361,7 @@ func (this *IEditBoxes) SetPasswordEdit(rhs bool) com.Error {
 func (this *IEditBoxes) Add(left float64, top float64, width float64, height float64, rhs **EditBox) com.Error {
 	addr := (*this.LpVtbl)[61]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(left), uintptr(top), uintptr(width), uintptr(height), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -374,7 +374,7 @@ func (this *IEditBoxes) GetCount(rhs *int32) com.Error {
 func (this *IEditBoxes) Group(rhs **GroupObject) com.Error {
 	addr := (*this.LpVtbl)[63]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -387,7 +387,6 @@ func (this *IEditBoxes) Item(index interface{}, rhs *ole.Variant) com.Error {
 func (this *IEditBoxes) NewEnum_(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[65]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
-

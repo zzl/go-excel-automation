@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
+	"github.com/zzl/go-win32api/v2/win32"
 	"github.com/zzl/go-com/com"
 	"syscall"
 	"unsafe"
 )
 
 // 00024413-0001-0000-C000-000000000046
-var IID_IAppEvents = syscall.GUID{0x00024413, 0x0001, 0x0000, 
+var IID_IAppEvents = syscall.GUID{0x00024413, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IAppEvents struct {
@@ -16,8 +16,8 @@ type IAppEvents struct {
 }
 
 func NewIAppEvents(pUnk *win32.IUnknown, addRef bool, scoped bool) *IAppEvents {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IAppEvents)(unsafe.Pointer(pUnk))
 	if addRef {

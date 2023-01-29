@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208C9-0000-0000-C000-000000000046
-var IID_TickLabels = syscall.GUID{0x000208C9, 0x0000, 0x0000, 
+var IID_TickLabels = syscall.GUID{0x000208C9, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type TickLabels struct {
@@ -17,8 +17,8 @@ type TickLabels struct {
 }
 
 func NewTickLabels(pDisp *win32.IDispatch, addRef bool, scoped bool) *TickLabels {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &TickLabels{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *TickLabels) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *TickLabels) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *TickLabels) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *TickLabels) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *TickLabels) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *TickLabels) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *TickLabels) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *TickLabels) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *TickLabels) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *TickLabels) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *TickLabels) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *TickLabels) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *TickLabels) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *TickLabels) Application() *Application {
@@ -116,7 +116,7 @@ func (this *TickLabels) NumberFormat() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *TickLabels) SetNumberFormat(rhs string)  {
+func (this *TickLabels) SetNumberFormat(rhs string) {
 	_ = this.PropPut(0x000000c1, []interface{}{rhs})
 }
 
@@ -125,7 +125,7 @@ func (this *TickLabels) NumberFormatLinked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TickLabels) SetNumberFormatLinked(rhs bool)  {
+func (this *TickLabels) SetNumberFormatLinked(rhs bool) {
 	_ = this.PropPut(0x000000c2, []interface{}{rhs})
 }
 
@@ -135,7 +135,7 @@ func (this *TickLabels) NumberFormatLocal() ole.Variant {
 	return *retVal
 }
 
-func (this *TickLabels) SetNumberFormatLocal(rhs interface{})  {
+func (this *TickLabels) SetNumberFormatLocal(rhs interface{}) {
 	_ = this.PropPut(0x00000449, []interface{}{rhs})
 }
 
@@ -144,7 +144,7 @@ func (this *TickLabels) Orientation() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TickLabels) SetOrientation(rhs int32)  {
+func (this *TickLabels) SetOrientation(rhs int32) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -159,7 +159,7 @@ func (this *TickLabels) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TickLabels) SetReadingOrder(rhs int32)  {
+func (this *TickLabels) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -169,7 +169,7 @@ func (this *TickLabels) AutoScaleFont() ole.Variant {
 	return *retVal
 }
 
-func (this *TickLabels) SetAutoScaleFont(rhs interface{})  {
+func (this *TickLabels) SetAutoScaleFont(rhs interface{}) {
 	_ = this.PropPut(0x000005f5, []interface{}{rhs})
 }
 
@@ -183,7 +183,7 @@ func (this *TickLabels) Offset() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TickLabels) SetOffset(rhs int32)  {
+func (this *TickLabels) SetOffset(rhs int32) {
 	_ = this.PropPut(0x000000fe, []interface{}{rhs})
 }
 
@@ -192,7 +192,7 @@ func (this *TickLabels) Alignment() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TickLabels) SetAlignment(rhs int32)  {
+func (this *TickLabels) SetAlignment(rhs int32) {
 	_ = this.PropPut(0x000001c5, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *TickLabels) MultiLevel() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TickLabels) SetMultiLevel(rhs bool)  {
+func (this *TickLabels) SetMultiLevel(rhs bool) {
 	_ = this.PropPut(0x00000a5d, []interface{}{rhs})
 }
 
@@ -209,4 +209,3 @@ func (this *TickLabels) Format() *ChartFormat {
 	retVal, _ := this.PropGet(0x00000074, nil)
 	return NewChartFormat(retVal.IDispatch(), false, true)
 }
-

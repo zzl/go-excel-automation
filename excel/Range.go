@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020846-0000-0000-C000-000000000046
-var IID_Range = syscall.GUID{0x00020846, 0x0000, 0x0000, 
+var IID_Range = syscall.GUID{0x00020846, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Range struct {
@@ -17,8 +17,8 @@ type Range struct {
 }
 
 func NewRange(pDisp *win32.IDispatch, addRef bool, scoped bool) *Range {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Range{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Range) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Range) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Range) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Range) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Range) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Range) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Range) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Range) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Range) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Range) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Range) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Range) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Range) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Range) Application() *Application {
@@ -107,12 +107,12 @@ func (this *Range) AddIndent() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetAddIndent(rhs interface{})  {
+func (this *Range) SetAddIndent(rhs interface{}) {
 	_ = this.PropPut(0x00000427, []interface{}{rhs})
 }
 
-var Range_Address_OptArgs= []string{
-	"RowAbsolute", "ColumnAbsolute", "ReferenceStyle", "External", "RelativeTo", 
+var Range_Address_OptArgs = []string{
+	"RowAbsolute", "ColumnAbsolute", "ReferenceStyle", "External", "RelativeTo",
 }
 
 func (this *Range) Address(optArgs ...interface{}) string {
@@ -121,8 +121,8 @@ func (this *Range) Address(optArgs ...interface{}) string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var Range_AddressLocal_OptArgs= []string{
-	"RowAbsolute", "ColumnAbsolute", "ReferenceStyle", "External", "RelativeTo", 
+var Range_AddressLocal_OptArgs = []string{
+	"RowAbsolute", "ColumnAbsolute", "ReferenceStyle", "External", "RelativeTo",
 }
 
 func (this *Range) AddressLocal(optArgs ...interface{}) string {
@@ -131,8 +131,8 @@ func (this *Range) AddressLocal(optArgs ...interface{}) string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var Range_AdvancedFilter_OptArgs= []string{
-	"CriteriaRange", "CopyToRange", "Unique", 
+var Range_AdvancedFilter_OptArgs = []string{
+	"CriteriaRange", "CopyToRange", "Unique",
 }
 
 func (this *Range) AdvancedFilter(action int32, optArgs ...interface{}) ole.Variant {
@@ -142,9 +142,9 @@ func (this *Range) AdvancedFilter(action int32, optArgs ...interface{}) ole.Vari
 	return *retVal
 }
 
-var Range_ApplyNames_OptArgs= []string{
-	"Names", "IgnoreRelativeAbsolute", "UseRowColumnNames", "OmitColumn", 
-	"OmitRow", "Order", "AppendLast", 
+var Range_ApplyNames_OptArgs = []string{
+	"Names", "IgnoreRelativeAbsolute", "UseRowColumnNames", "OmitColumn",
+	"OmitRow", "Order", "AppendLast",
 }
 
 func (this *Range) ApplyNames(optArgs ...interface{}) ole.Variant {
@@ -170,8 +170,8 @@ func (this *Range) AutoComplete(string string) string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var Range_AutoFill_OptArgs= []string{
-	"Type", 
+var Range_AutoFill_OptArgs = []string{
+	"Type",
 }
 
 func (this *Range) AutoFill(destination *Range, optArgs ...interface{}) ole.Variant {
@@ -181,8 +181,8 @@ func (this *Range) AutoFill(destination *Range, optArgs ...interface{}) ole.Vari
 	return *retVal
 }
 
-var Range_AutoFilter_OptArgs= []string{
-	"Field", "Criteria1", "Operator", "Criteria2", "VisibleDropDown", 
+var Range_AutoFilter_OptArgs = []string{
+	"Field", "Criteria1", "Operator", "Criteria2", "VisibleDropDown",
 }
 
 func (this *Range) AutoFilter(optArgs ...interface{}) ole.Variant {
@@ -198,9 +198,9 @@ func (this *Range) AutoFit() ole.Variant {
 	return *retVal
 }
 
-var Range_AutoFormat_OptArgs= []string{
-	"Format", "Number", "Font", "Alignment", 
-	"Border", "Pattern", "Width", 
+var Range_AutoFormat_OptArgs = []string{
+	"Format", "Number", "Font", "Alignment",
+	"Border", "Pattern", "Width",
 }
 
 func (this *Range) AutoFormat(optArgs ...interface{}) ole.Variant {
@@ -216,8 +216,8 @@ func (this *Range) AutoOutline() ole.Variant {
 	return *retVal
 }
 
-var Range_BorderAround__OptArgs= []string{
-	"LineStyle", "Weight", "ColorIndex", "Color", 
+var Range_BorderAround__OptArgs = []string{
+	"LineStyle", "Weight", "ColorIndex", "Color",
 }
 
 func (this *Range) BorderAround_(optArgs ...interface{}) ole.Variant {
@@ -243,8 +243,8 @@ func (this *Range) Cells() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var Range_Characters_OptArgs= []string{
-	"Start", "Length", 
+var Range_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *Range) Characters(optArgs ...interface{}) *Characters {
@@ -253,8 +253,8 @@ func (this *Range) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var Range_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var Range_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *Range) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -315,12 +315,12 @@ func (this *Range) ColumnWidth() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetColumnWidth(rhs interface{})  {
+func (this *Range) SetColumnWidth(rhs interface{}) {
 	_ = this.PropPut(0x000000f2, []interface{}{rhs})
 }
 
-var Range_Consolidate_OptArgs= []string{
-	"Sources", "Function", "TopRow", "LeftColumn", "CreateLinks", 
+var Range_Consolidate_OptArgs = []string{
+	"Sources", "Function", "TopRow", "LeftColumn", "CreateLinks",
 }
 
 func (this *Range) Consolidate(optArgs ...interface{}) ole.Variant {
@@ -330,8 +330,8 @@ func (this *Range) Consolidate(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Range_Copy_OptArgs= []string{
-	"Destination", 
+var Range_Copy_OptArgs = []string{
+	"Destination",
 }
 
 func (this *Range) Copy(optArgs ...interface{}) ole.Variant {
@@ -341,8 +341,8 @@ func (this *Range) Copy(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Range_CopyFromRecordset_OptArgs= []string{
-	"MaxRows", "MaxColumns", 
+var Range_CopyFromRecordset_OptArgs = []string{
+	"MaxRows", "MaxColumns",
 }
 
 func (this *Range) CopyFromRecordset(data *win32.IUnknown, optArgs ...interface{}) int32 {
@@ -351,8 +351,8 @@ func (this *Range) CopyFromRecordset(data *win32.IUnknown, optArgs ...interface{
 	return retVal.LValVal()
 }
 
-var Range_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var Range_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *Range) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -367,8 +367,8 @@ func (this *Range) Count() int32 {
 	return retVal.LValVal()
 }
 
-var Range_CreateNames_OptArgs= []string{
-	"Top", "Left", "Bottom", "Right", 
+var Range_CreateNames_OptArgs = []string{
+	"Top", "Left", "Bottom", "Right",
 }
 
 func (this *Range) CreateNames(optArgs ...interface{}) ole.Variant {
@@ -378,9 +378,9 @@ func (this *Range) CreateNames(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Range_CreatePublisher_OptArgs= []string{
-	"Edition", "Appearance", "ContainsPICT", "ContainsBIFF", 
-	"ContainsRTF", "ContainsVALU", 
+var Range_CreatePublisher_OptArgs = []string{
+	"Edition", "Appearance", "ContainsPICT", "ContainsBIFF",
+	"ContainsRTF", "ContainsVALU",
 }
 
 func (this *Range) CreatePublisher(optArgs ...interface{}) ole.Variant {
@@ -400,8 +400,8 @@ func (this *Range) CurrentRegion() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var Range_Cut_OptArgs= []string{
-	"Destination", 
+var Range_Cut_OptArgs = []string{
+	"Destination",
 }
 
 func (this *Range) Cut(optArgs ...interface{}) ole.Variant {
@@ -411,9 +411,9 @@ func (this *Range) Cut(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Range_DataSeries_OptArgs= []string{
-	"Rowcol", "Type", "Date", "Step", 
-	"Stop", "Trend", 
+var Range_DataSeries_OptArgs = []string{
+	"Rowcol", "Type", "Date", "Step",
+	"Stop", "Trend",
 }
 
 func (this *Range) DataSeries(optArgs ...interface{}) ole.Variant {
@@ -423,8 +423,8 @@ func (this *Range) DataSeries(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Range_Default__OptArgs= []string{
-	"RowIndex", "ColumnIndex", 
+var Range_Default__OptArgs = []string{
+	"RowIndex", "ColumnIndex",
 }
 
 func (this *Range) Default_(optArgs ...interface{}) ole.Variant {
@@ -434,17 +434,17 @@ func (this *Range) Default_(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Range_SetDefault__OptArgs= []string{
-	"RowIndex", "ColumnIndex", 
+var Range_SetDefault__OptArgs = []string{
+	"RowIndex", "ColumnIndex",
 }
 
-func (this *Range) SetDefault_(optArgs ...interface{})  {
+func (this *Range) SetDefault_(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Range_SetDefault__OptArgs, optArgs)
 	_ = this.PropPut(0x00000000, nil, optArgs...)
 }
 
-var Range_Delete_OptArgs= []string{
-	"Shift", 
+var Range_Delete_OptArgs = []string{
+	"Shift",
 }
 
 func (this *Range) Delete(optArgs ...interface{}) ole.Variant {
@@ -475,8 +475,8 @@ func (this *Range) DirectPrecedents() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var Range_EditionOptions_OptArgs= []string{
-	"Name", "Reference", "Appearance", "ChartSize", "Format", 
+var Range_EditionOptions_OptArgs = []string{
+	"Name", "Reference", "Appearance", "ChartSize", "Format",
 }
 
 func (this *Range) EditionOptions(type_ int32, option int32, optArgs ...interface{}) ole.Variant {
@@ -525,9 +525,9 @@ func (this *Range) FillUp() ole.Variant {
 	return *retVal
 }
 
-var Range_Find_OptArgs= []string{
-	"After", "LookIn", "LookAt", "SearchOrder", 
-	"SearchDirection", "MatchCase", "MatchByte", "SearchFormat", 
+var Range_Find_OptArgs = []string{
+	"After", "LookIn", "LookAt", "SearchOrder",
+	"SearchDirection", "MatchCase", "MatchByte", "SearchFormat",
 }
 
 func (this *Range) Find(what interface{}, optArgs ...interface{}) *Range {
@@ -536,8 +536,8 @@ func (this *Range) Find(what interface{}, optArgs ...interface{}) *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var Range_FindNext_OptArgs= []string{
-	"After", 
+var Range_FindNext_OptArgs = []string{
+	"After",
 }
 
 func (this *Range) FindNext(optArgs ...interface{}) *Range {
@@ -546,8 +546,8 @@ func (this *Range) FindNext(optArgs ...interface{}) *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var Range_FindPrevious_OptArgs= []string{
-	"After", 
+var Range_FindPrevious_OptArgs = []string{
+	"After",
 }
 
 func (this *Range) FindPrevious(optArgs ...interface{}) *Range {
@@ -567,7 +567,7 @@ func (this *Range) Formula() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetFormula(rhs interface{})  {
+func (this *Range) SetFormula(rhs interface{}) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -577,7 +577,7 @@ func (this *Range) FormulaArray() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetFormulaArray(rhs interface{})  {
+func (this *Range) SetFormulaArray(rhs interface{}) {
 	_ = this.PropPut(0x0000024a, []interface{}{rhs})
 }
 
@@ -586,7 +586,7 @@ func (this *Range) FormulaLabel() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Range) SetFormulaLabel(rhs int32)  {
+func (this *Range) SetFormulaLabel(rhs int32) {
 	_ = this.PropPut(0x00000564, []interface{}{rhs})
 }
 
@@ -596,7 +596,7 @@ func (this *Range) FormulaHidden() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetFormulaHidden(rhs interface{})  {
+func (this *Range) SetFormulaHidden(rhs interface{}) {
 	_ = this.PropPut(0x00000106, []interface{}{rhs})
 }
 
@@ -606,7 +606,7 @@ func (this *Range) FormulaLocal() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetFormulaLocal(rhs interface{})  {
+func (this *Range) SetFormulaLocal(rhs interface{}) {
 	_ = this.PropPut(0x00000107, []interface{}{rhs})
 }
 
@@ -616,7 +616,7 @@ func (this *Range) FormulaR1C1() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetFormulaR1C1(rhs interface{})  {
+func (this *Range) SetFormulaR1C1(rhs interface{}) {
 	_ = this.PropPut(0x00000108, []interface{}{rhs})
 }
 
@@ -626,7 +626,7 @@ func (this *Range) FormulaR1C1Local() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetFormulaR1C1Local(rhs interface{})  {
+func (this *Range) SetFormulaR1C1Local(rhs interface{}) {
 	_ = this.PropPut(0x00000109, []interface{}{rhs})
 }
 
@@ -641,8 +641,8 @@ func (this *Range) GoalSeek(goal interface{}, changingCell *Range) bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-var Range_Group_OptArgs= []string{
-	"Start", "End", "By", "Periods", 
+var Range_Group_OptArgs = []string{
+	"Start", "End", "By", "Periods",
 }
 
 func (this *Range) Group(optArgs ...interface{}) ole.Variant {
@@ -676,7 +676,7 @@ func (this *Range) Hidden() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetHidden(rhs interface{})  {
+func (this *Range) SetHidden(rhs interface{}) {
 	_ = this.PropPut(0x0000010c, []interface{}{rhs})
 }
 
@@ -686,7 +686,7 @@ func (this *Range) HorizontalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetHorizontalAlignment(rhs interface{})  {
+func (this *Range) SetHorizontalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000088, []interface{}{rhs})
 }
 
@@ -696,17 +696,17 @@ func (this *Range) IndentLevel() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetIndentLevel(rhs interface{})  {
+func (this *Range) SetIndentLevel(rhs interface{}) {
 	_ = this.PropPut(0x000000c9, []interface{}{rhs})
 }
 
-func (this *Range) InsertIndent(insertAmount int32)  {
+func (this *Range) InsertIndent(insertAmount int32) {
 	retVal, _ := this.Call(0x00000565, []interface{}{insertAmount})
-	_= retVal
+	_ = retVal
 }
 
-var Range_Insert_OptArgs= []string{
-	"Shift", "CopyOrigin", 
+var Range_Insert_OptArgs = []string{
+	"Shift", "CopyOrigin",
 }
 
 func (this *Range) Insert(optArgs ...interface{}) ole.Variant {
@@ -721,8 +721,8 @@ func (this *Range) Interior() *Interior {
 	return NewInterior(retVal.IDispatch(), false, true)
 }
 
-var Range_Item_OptArgs= []string{
-	"ColumnIndex", 
+var Range_Item_OptArgs = []string{
+	"ColumnIndex",
 }
 
 func (this *Range) Item(rowIndex interface{}, optArgs ...interface{}) ole.Variant {
@@ -732,11 +732,11 @@ func (this *Range) Item(rowIndex interface{}, optArgs ...interface{}) ole.Varian
 	return *retVal
 }
 
-var Range_SetItem_OptArgs= []string{
-	"ColumnIndex", 
+var Range_SetItem_OptArgs = []string{
+	"ColumnIndex",
 }
 
-func (this *Range) SetItem(rowIndex interface{}, optArgs ...interface{})  {
+func (this *Range) SetItem(rowIndex interface{}, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Range_SetItem_OptArgs, optArgs)
 	_ = this.PropPut(0x000000aa, []interface{}{rowIndex}, optArgs...)
 }
@@ -775,23 +775,23 @@ func (this *Range) Locked() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetLocked(rhs interface{})  {
+func (this *Range) SetLocked(rhs interface{}) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
-var Range_Merge_OptArgs= []string{
-	"Across", 
+var Range_Merge_OptArgs = []string{
+	"Across",
 }
 
-func (this *Range) Merge(optArgs ...interface{})  {
+func (this *Range) Merge(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Range_Merge_OptArgs, optArgs)
 	retVal, _ := this.Call(0x00000234, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Range) UnMerge()  {
+func (this *Range) UnMerge() {
 	retVal, _ := this.Call(0x00000568, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Range) MergeArea() *Range {
@@ -805,7 +805,7 @@ func (this *Range) MergeCells() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetMergeCells(rhs interface{})  {
+func (this *Range) SetMergeCells(rhs interface{}) {
 	_ = this.PropPut(0x000000d0, []interface{}{rhs})
 }
 
@@ -815,12 +815,12 @@ func (this *Range) Name() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetName(rhs interface{})  {
+func (this *Range) SetName(rhs interface{}) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
-var Range_NavigateArrow_OptArgs= []string{
-	"TowardPrecedent", "ArrowNumber", "LinkNumber", 
+var Range_NavigateArrow_OptArgs = []string{
+	"TowardPrecedent", "ArrowNumber", "LinkNumber",
 }
 
 func (this *Range) NavigateArrow(optArgs ...interface{}) ole.Variant {
@@ -839,7 +839,7 @@ func (this *Range) ForEach(action func(item ole.Variant) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -860,8 +860,8 @@ func (this *Range) Next() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var Range_NoteText_OptArgs= []string{
-	"Text", "Start", "Length", 
+var Range_NoteText_OptArgs = []string{
+	"Text", "Start", "Length",
 }
 
 func (this *Range) NoteText(optArgs ...interface{}) string {
@@ -876,7 +876,7 @@ func (this *Range) NumberFormat() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetNumberFormat(rhs interface{})  {
+func (this *Range) SetNumberFormat(rhs interface{}) {
 	_ = this.PropPut(0x000000c1, []interface{}{rhs})
 }
 
@@ -886,12 +886,12 @@ func (this *Range) NumberFormatLocal() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetNumberFormatLocal(rhs interface{})  {
+func (this *Range) SetNumberFormatLocal(rhs interface{}) {
 	_ = this.PropPut(0x00000449, []interface{}{rhs})
 }
 
-var Range_Offset_OptArgs= []string{
-	"RowOffset", "ColumnOffset", 
+var Range_Offset_OptArgs = []string{
+	"RowOffset", "ColumnOffset",
 }
 
 func (this *Range) Offset(optArgs ...interface{}) *Range {
@@ -906,7 +906,7 @@ func (this *Range) Orientation() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetOrientation(rhs interface{})  {
+func (this *Range) SetOrientation(rhs interface{}) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -916,7 +916,7 @@ func (this *Range) OutlineLevel() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetOutlineLevel(rhs interface{})  {
+func (this *Range) SetOutlineLevel(rhs interface{}) {
 	_ = this.PropPut(0x0000010f, []interface{}{rhs})
 }
 
@@ -925,12 +925,12 @@ func (this *Range) PageBreak() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Range) SetPageBreak(rhs int32)  {
+func (this *Range) SetPageBreak(rhs int32) {
 	_ = this.PropPut(0x000000ff, []interface{}{rhs})
 }
 
-var Range_Parse_OptArgs= []string{
-	"ParseLine", "Destination", 
+var Range_Parse_OptArgs = []string{
+	"ParseLine", "Destination",
 }
 
 func (this *Range) Parse(optArgs ...interface{}) ole.Variant {
@@ -940,8 +940,8 @@ func (this *Range) Parse(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Range_PasteSpecial__OptArgs= []string{
-	"Paste", "Operation", "SkipBlanks", "Transpose", 
+var Range_PasteSpecial__OptArgs = []string{
+	"Paste", "Operation", "SkipBlanks", "Transpose",
 }
 
 func (this *Range) PasteSpecial_(optArgs ...interface{}) ole.Variant {
@@ -982,9 +982,9 @@ func (this *Range) Previous() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var Range_PrintOut___OptArgs= []string{
-	"From", "To", "Copies", "Preview", 
-	"ActivePrinter", "PrintToFile", "Collate", 
+var Range_PrintOut___OptArgs = []string{
+	"From", "To", "Copies", "Preview",
+	"ActivePrinter", "PrintToFile", "Collate",
 }
 
 func (this *Range) PrintOut__(optArgs ...interface{}) ole.Variant {
@@ -994,8 +994,8 @@ func (this *Range) PrintOut__(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Range_PrintPreview_OptArgs= []string{
-	"EnableChanges", 
+var Range_PrintPreview_OptArgs = []string{
+	"EnableChanges",
 }
 
 func (this *Range) PrintPreview(optArgs ...interface{}) ole.Variant {
@@ -1010,8 +1010,8 @@ func (this *Range) QueryTable() *QueryTable {
 	return NewQueryTable(retVal.IDispatch(), false, true)
 }
 
-var Range_Range_OptArgs= []string{
-	"Cell2", 
+var Range_Range_OptArgs = []string{
+	"Cell2",
 }
 
 func (this *Range) Range(cell1 interface{}, optArgs ...interface{}) *Range {
@@ -1026,9 +1026,9 @@ func (this *Range) RemoveSubtotal() ole.Variant {
 	return *retVal
 }
 
-var Range_Replace_OptArgs= []string{
-	"LookAt", "SearchOrder", "MatchCase", "MatchByte", 
-	"SearchFormat", "ReplaceFormat", 
+var Range_Replace_OptArgs = []string{
+	"LookAt", "SearchOrder", "MatchCase", "MatchByte",
+	"SearchFormat", "ReplaceFormat",
 }
 
 func (this *Range) Replace(what interface{}, replacement interface{}, optArgs ...interface{}) bool {
@@ -1037,8 +1037,8 @@ func (this *Range) Replace(what interface{}, replacement interface{}, optArgs ..
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-var Range_Resize_OptArgs= []string{
-	"RowSize", "ColumnSize", 
+var Range_Resize_OptArgs = []string{
+	"RowSize", "ColumnSize",
 }
 
 func (this *Range) Resize(optArgs ...interface{}) *Range {
@@ -1063,7 +1063,7 @@ func (this *Range) RowHeight() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetRowHeight(rhs interface{})  {
+func (this *Range) SetRowHeight(rhs interface{}) {
 	_ = this.PropPut(0x00000110, []interface{}{rhs})
 }
 
@@ -1072,15 +1072,15 @@ func (this *Range) Rows() *Range {
 	return NewRange(retVal.IDispatch(), false, true)
 }
 
-var Range_Run_OptArgs= []string{
-	"Arg1", "Arg2", "Arg3", "Arg4", 
-	"Arg5", "Arg6", "Arg7", "Arg8", 
-	"Arg9", "Arg10", "Arg11", "Arg12", 
-	"Arg13", "Arg14", "Arg15", "Arg16", 
-	"Arg17", "Arg18", "Arg19", "Arg20", 
-	"Arg21", "Arg22", "Arg23", "Arg24", 
-	"Arg25", "Arg26", "Arg27", "Arg28", 
-	"Arg29", "Arg30", 
+var Range_Run_OptArgs = []string{
+	"Arg1", "Arg2", "Arg3", "Arg4",
+	"Arg5", "Arg6", "Arg7", "Arg8",
+	"Arg9", "Arg10", "Arg11", "Arg12",
+	"Arg13", "Arg14", "Arg15", "Arg16",
+	"Arg17", "Arg18", "Arg19", "Arg20",
+	"Arg21", "Arg22", "Arg23", "Arg24",
+	"Arg25", "Arg26", "Arg27", "Arg28",
+	"Arg29", "Arg30",
 }
 
 func (this *Range) Run(optArgs ...interface{}) ole.Variant {
@@ -1102,8 +1102,8 @@ func (this *Range) Show() ole.Variant {
 	return *retVal
 }
 
-var Range_ShowDependents_OptArgs= []string{
-	"Remove", 
+var Range_ShowDependents_OptArgs = []string{
+	"Remove",
 }
 
 func (this *Range) ShowDependents(optArgs ...interface{}) ole.Variant {
@@ -1119,7 +1119,7 @@ func (this *Range) ShowDetail() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetShowDetail(rhs interface{})  {
+func (this *Range) SetShowDetail(rhs interface{}) {
 	_ = this.PropPut(0x00000249, []interface{}{rhs})
 }
 
@@ -1129,8 +1129,8 @@ func (this *Range) ShowErrors() ole.Variant {
 	return *retVal
 }
 
-var Range_ShowPrecedents_OptArgs= []string{
-	"Remove", 
+var Range_ShowPrecedents_OptArgs = []string{
+	"Remove",
 }
 
 func (this *Range) ShowPrecedents(optArgs ...interface{}) ole.Variant {
@@ -1146,15 +1146,15 @@ func (this *Range) ShrinkToFit() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetShrinkToFit(rhs interface{})  {
+func (this *Range) SetShrinkToFit(rhs interface{}) {
 	_ = this.PropPut(0x000000d1, []interface{}{rhs})
 }
 
-var Range_Sort_OptArgs= []string{
-	"Key1", "Order1", "Key2", "Type", 
-	"Order2", "Key3", "Order3", "Header", 
-	"OrderCustom", "MatchCase", "Orientation", "SortMethod", 
-	"DataOption1", "DataOption2", "DataOption3", 
+var Range_Sort_OptArgs = []string{
+	"Key1", "Order1", "Key2", "Type",
+	"Order2", "Key3", "Order3", "Header",
+	"OrderCustom", "MatchCase", "Orientation", "SortMethod",
+	"DataOption1", "DataOption2", "DataOption3",
 }
 
 func (this *Range) Sort(optArgs ...interface{}) ole.Variant {
@@ -1164,11 +1164,11 @@ func (this *Range) Sort(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Range_SortSpecial_OptArgs= []string{
-	"SortMethod", "Key1", "Order1", "Type", 
-	"Key2", "Order2", "Key3", "Order3", 
-	"Header", "OrderCustom", "MatchCase", "Orientation", 
-	"DataOption1", "DataOption2", "DataOption3", 
+var Range_SortSpecial_OptArgs = []string{
+	"SortMethod", "Key1", "Order1", "Type",
+	"Key2", "Order2", "Key3", "Order3",
+	"Header", "OrderCustom", "MatchCase", "Orientation",
+	"DataOption1", "DataOption2", "DataOption3",
 }
 
 func (this *Range) SortSpecial(optArgs ...interface{}) ole.Variant {
@@ -1183,8 +1183,8 @@ func (this *Range) SoundNote() *SoundNote {
 	return NewSoundNote(retVal.IDispatch(), false, true)
 }
 
-var Range_SpecialCells_OptArgs= []string{
-	"Value", 
+var Range_SpecialCells_OptArgs = []string{
+	"Value",
 }
 
 func (this *Range) SpecialCells(type_ int32, optArgs ...interface{}) *Range {
@@ -1199,12 +1199,12 @@ func (this *Range) Style() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetStyle(rhs interface{})  {
+func (this *Range) SetStyle(rhs interface{}) {
 	_ = this.PropPut(0x00000104, []interface{}{rhs})
 }
 
-var Range_SubscribeTo_OptArgs= []string{
-	"Format", 
+var Range_SubscribeTo_OptArgs = []string{
+	"Format",
 }
 
 func (this *Range) SubscribeTo(edition string, optArgs ...interface{}) ole.Variant {
@@ -1214,8 +1214,8 @@ func (this *Range) SubscribeTo(edition string, optArgs ...interface{}) ole.Varia
 	return *retVal
 }
 
-var Range_Subtotal_OptArgs= []string{
-	"Replace", "PageBreaks", "SummaryBelowData", 
+var Range_Subtotal_OptArgs = []string{
+	"Replace", "PageBreaks", "SummaryBelowData",
 }
 
 func (this *Range) Subtotal(groupBy int32, function int32, totalList interface{}, optArgs ...interface{}) ole.Variant {
@@ -1231,8 +1231,8 @@ func (this *Range) Summary() ole.Variant {
 	return *retVal
 }
 
-var Range_Table_OptArgs= []string{
-	"RowInput", "ColumnInput", 
+var Range_Table_OptArgs = []string{
+	"RowInput", "ColumnInput",
 }
 
 func (this *Range) Table(optArgs ...interface{}) ole.Variant {
@@ -1248,11 +1248,11 @@ func (this *Range) Text() ole.Variant {
 	return *retVal
 }
 
-var Range_TextToColumns_OptArgs= []string{
-	"Destination", "DataType", "TextQualifier", "ConsecutiveDelimiter", 
-	"Tab", "Semicolon", "Comma", "Space", 
-	"Other", "OtherChar", "FieldInfo", "DecimalSeparator", 
-	"ThousandsSeparator", "TrailingMinusNumbers", 
+var Range_TextToColumns_OptArgs = []string{
+	"Destination", "DataType", "TextQualifier", "ConsecutiveDelimiter",
+	"Tab", "Semicolon", "Comma", "Space",
+	"Other", "OtherChar", "FieldInfo", "DecimalSeparator",
+	"ThousandsSeparator", "TrailingMinusNumbers",
 }
 
 func (this *Range) TextToColumns(optArgs ...interface{}) ole.Variant {
@@ -1280,7 +1280,7 @@ func (this *Range) UseStandardHeight() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetUseStandardHeight(rhs interface{})  {
+func (this *Range) SetUseStandardHeight(rhs interface{}) {
 	_ = this.PropPut(0x00000112, []interface{}{rhs})
 }
 
@@ -1290,7 +1290,7 @@ func (this *Range) UseStandardWidth() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetUseStandardWidth(rhs interface{})  {
+func (this *Range) SetUseStandardWidth(rhs interface{}) {
 	_ = this.PropPut(0x00000113, []interface{}{rhs})
 }
 
@@ -1299,8 +1299,8 @@ func (this *Range) Validation() *Validation {
 	return NewValidation(retVal.IDispatch(), false, true)
 }
 
-var Range_Value_OptArgs= []string{
-	"RangeValueDataType", 
+var Range_Value_OptArgs = []string{
+	"RangeValueDataType",
 }
 
 func (this *Range) Value(optArgs ...interface{}) ole.Variant {
@@ -1310,11 +1310,11 @@ func (this *Range) Value(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-var Range_SetValue_OptArgs= []string{
-	"RangeValueDataType", 
+var Range_SetValue_OptArgs = []string{
+	"RangeValueDataType",
 }
 
-func (this *Range) SetValue(optArgs ...interface{})  {
+func (this *Range) SetValue(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Range_SetValue_OptArgs, optArgs)
 	_ = this.PropPut(0x00000006, nil, optArgs...)
 }
@@ -1325,7 +1325,7 @@ func (this *Range) Value2() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetValue2(rhs interface{})  {
+func (this *Range) SetValue2(rhs interface{}) {
 	_ = this.PropPut(0x0000056c, []interface{}{rhs})
 }
 
@@ -1335,7 +1335,7 @@ func (this *Range) VerticalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetVerticalAlignment(rhs interface{})  {
+func (this *Range) SetVerticalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000089, []interface{}{rhs})
 }
 
@@ -1356,12 +1356,12 @@ func (this *Range) WrapText() ole.Variant {
 	return *retVal
 }
 
-func (this *Range) SetWrapText(rhs interface{})  {
+func (this *Range) SetWrapText(rhs interface{}) {
 	_ = this.PropPut(0x00000114, []interface{}{rhs})
 }
 
-var Range_AddComment_OptArgs= []string{
-	"Text", 
+var Range_AddComment_OptArgs = []string{
+	"Text",
 }
 
 func (this *Range) AddComment(optArgs ...interface{}) *Comment {
@@ -1375,9 +1375,9 @@ func (this *Range) Comment() *Comment {
 	return NewComment(retVal.IDispatch(), false, true)
 }
 
-func (this *Range) ClearComments()  {
+func (this *Range) ClearComments() {
 	retVal, _ := this.Call(0x0000056e, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Range) Phonetic() *Phonetic {
@@ -1395,7 +1395,7 @@ func (this *Range) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Range) SetReadingOrder(rhs int32)  {
+func (this *Range) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -1409,9 +1409,9 @@ func (this *Range) Phonetics() *Phonetics {
 	return NewPhonetics(retVal.IDispatch(), false, true)
 }
 
-func (this *Range) SetPhonetic()  {
+func (this *Range) SetPhonetic() {
 	retVal, _ := this.Call(0x00000714, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Range) ID() string {
@@ -1419,13 +1419,13 @@ func (this *Range) ID() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Range) SetID(rhs string)  {
+func (this *Range) SetID(rhs string) {
 	_ = this.PropPut(0x00000715, []interface{}{rhs})
 }
 
-var Range_PrintOut__OptArgs= []string{
-	"From", "To", "Copies", "Preview", 
-	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName", 
+var Range_PrintOut__OptArgs = []string{
+	"From", "To", "Copies", "Preview",
+	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName",
 }
 
 func (this *Range) PrintOut_(optArgs ...interface{}) ole.Variant {
@@ -1440,9 +1440,9 @@ func (this *Range) PivotCell() *PivotCell {
 	return NewPivotCell(retVal.IDispatch(), false, true)
 }
 
-func (this *Range) Dirty()  {
+func (this *Range) Dirty() {
 	retVal, _ := this.Call(0x000007de, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Range) Errors() *Errors {
@@ -1455,18 +1455,18 @@ func (this *Range) SmartTags() *SmartTags {
 	return NewSmartTags(retVal.IDispatch(), false, true)
 }
 
-var Range_Speak_OptArgs= []string{
-	"SpeakDirection", "SpeakFormulas", 
+var Range_Speak_OptArgs = []string{
+	"SpeakDirection", "SpeakFormulas",
 }
 
-func (this *Range) Speak(optArgs ...interface{})  {
+func (this *Range) Speak(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Range_Speak_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000007e1, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Range_PasteSpecial_OptArgs= []string{
-	"Paste", "Operation", "SkipBlanks", "Transpose", 
+var Range_PasteSpecial_OptArgs = []string{
+	"Paste", "Operation", "SkipBlanks", "Transpose",
 }
 
 func (this *Range) PasteSpecial(optArgs ...interface{}) ole.Variant {
@@ -1496,19 +1496,19 @@ func (this *Range) ServerActions() *Actions {
 	return NewActions(retVal.IDispatch(), false, true)
 }
 
-var Range_RemoveDuplicates_OptArgs= []string{
-	"Columns", "Header", 
+var Range_RemoveDuplicates_OptArgs = []string{
+	"Columns", "Header",
 }
 
-func (this *Range) RemoveDuplicates(optArgs ...interface{})  {
+func (this *Range) RemoveDuplicates(optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Range_RemoveDuplicates_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000009bc, nil, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var Range_PrintOut_OptArgs= []string{
-	"From", "To", "Copies", "Preview", 
-	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName", 
+var Range_PrintOut_OptArgs = []string{
+	"From", "To", "Copies", "Preview",
+	"ActivePrinter", "PrintToFile", "Collate", "PrToFileName",
 }
 
 func (this *Range) PrintOut(optArgs ...interface{}) ole.Variant {
@@ -1523,15 +1523,15 @@ func (this *Range) MDX() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-var Range_ExportAsFixedFormat_OptArgs= []string{
-	"Filename", "Quality", "IncludeDocProperties", "IgnorePrintAreas", 
-	"From", "To", "OpenAfterPublish", "FixedFormatExtClassPtr", 
+var Range_ExportAsFixedFormat_OptArgs = []string{
+	"Filename", "Quality", "IncludeDocProperties", "IgnorePrintAreas",
+	"From", "To", "OpenAfterPublish", "FixedFormatExtClassPtr",
 }
 
-func (this *Range) ExportAsFixedFormat(type_ int32, optArgs ...interface{})  {
+func (this *Range) ExportAsFixedFormat(type_ int32, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(Range_ExportAsFixedFormat_OptArgs, optArgs)
 	retVal, _ := this.Call(0x000009bd, []interface{}{type_}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Range) CountLarge() ole.Variant {
@@ -1551,9 +1551,9 @@ func (this *Range) SparklineGroups() *SparklineGroups {
 	return NewSparklineGroups(retVal.IDispatch(), false, true)
 }
 
-func (this *Range) ClearHyperlinks()  {
+func (this *Range) ClearHyperlinks() {
 	retVal, _ := this.Call(0x00000b26, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Range) DisplayFormat() *DisplayFormat {
@@ -1561,8 +1561,8 @@ func (this *Range) DisplayFormat() *DisplayFormat {
 	return NewDisplayFormat(retVal.IDispatch(), false, true)
 }
 
-var Range_BorderAround_OptArgs= []string{
-	"LineStyle", "Weight", "ColorIndex", "Color", "ThemeColor", 
+var Range_BorderAround_OptArgs = []string{
+	"LineStyle", "Weight", "ColorIndex", "Color", "ThemeColor",
 }
 
 func (this *Range) BorderAround(optArgs ...interface{}) ole.Variant {
@@ -1572,13 +1572,12 @@ func (this *Range) BorderAround(optArgs ...interface{}) ole.Variant {
 	return *retVal
 }
 
-func (this *Range) AllocateChanges()  {
+func (this *Range) AllocateChanges() {
 	retVal, _ := this.Call(0x00000b27, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Range) DiscardChanges()  {
+func (this *Range) DiscardChanges() {
 	retVal, _ := this.Call(0x00000b28, nil)
-	_= retVal
+	_ = retVal
 }
-

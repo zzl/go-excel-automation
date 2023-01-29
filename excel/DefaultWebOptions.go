@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 00024448-0000-0000-C000-000000000046
-var IID_DefaultWebOptions = syscall.GUID{0x00024448, 0x0000, 0x0000, 
+var IID_DefaultWebOptions = syscall.GUID{0x00024448, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type DefaultWebOptions struct {
@@ -16,8 +16,8 @@ type DefaultWebOptions struct {
 }
 
 func NewDefaultWebOptions(pDisp *win32.IDispatch, addRef bool, scoped bool) *DefaultWebOptions {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &DefaultWebOptions{ole.OleClient{pDisp}}
 	if addRef {
@@ -64,7 +64,7 @@ func (this *DefaultWebOptions) RelyOnCSS() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DefaultWebOptions) SetRelyOnCSS(rhs bool)  {
+func (this *DefaultWebOptions) SetRelyOnCSS(rhs bool) {
 	_ = this.PropPut(0x0000076b, []interface{}{rhs})
 }
 
@@ -73,7 +73,7 @@ func (this *DefaultWebOptions) SaveHiddenData() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DefaultWebOptions) SetSaveHiddenData(rhs bool)  {
+func (this *DefaultWebOptions) SetSaveHiddenData(rhs bool) {
 	_ = this.PropPut(0x0000076c, []interface{}{rhs})
 }
 
@@ -82,7 +82,7 @@ func (this *DefaultWebOptions) LoadPictures() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DefaultWebOptions) SetLoadPictures(rhs bool)  {
+func (this *DefaultWebOptions) SetLoadPictures(rhs bool) {
 	_ = this.PropPut(0x0000076d, []interface{}{rhs})
 }
 
@@ -91,7 +91,7 @@ func (this *DefaultWebOptions) OrganizeInFolder() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DefaultWebOptions) SetOrganizeInFolder(rhs bool)  {
+func (this *DefaultWebOptions) SetOrganizeInFolder(rhs bool) {
 	_ = this.PropPut(0x0000076e, []interface{}{rhs})
 }
 
@@ -100,7 +100,7 @@ func (this *DefaultWebOptions) UpdateLinksOnSave() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DefaultWebOptions) SetUpdateLinksOnSave(rhs bool)  {
+func (this *DefaultWebOptions) SetUpdateLinksOnSave(rhs bool) {
 	_ = this.PropPut(0x0000076f, []interface{}{rhs})
 }
 
@@ -109,7 +109,7 @@ func (this *DefaultWebOptions) UseLongFileNames() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DefaultWebOptions) SetUseLongFileNames(rhs bool)  {
+func (this *DefaultWebOptions) SetUseLongFileNames(rhs bool) {
 	_ = this.PropPut(0x00000770, []interface{}{rhs})
 }
 
@@ -118,7 +118,7 @@ func (this *DefaultWebOptions) CheckIfOfficeIsHTMLEditor() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DefaultWebOptions) SetCheckIfOfficeIsHTMLEditor(rhs bool)  {
+func (this *DefaultWebOptions) SetCheckIfOfficeIsHTMLEditor(rhs bool) {
 	_ = this.PropPut(0x00000771, []interface{}{rhs})
 }
 
@@ -127,7 +127,7 @@ func (this *DefaultWebOptions) DownloadComponents() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DefaultWebOptions) SetDownloadComponents(rhs bool)  {
+func (this *DefaultWebOptions) SetDownloadComponents(rhs bool) {
 	_ = this.PropPut(0x00000772, []interface{}{rhs})
 }
 
@@ -136,7 +136,7 @@ func (this *DefaultWebOptions) RelyOnVML() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DefaultWebOptions) SetRelyOnVML(rhs bool)  {
+func (this *DefaultWebOptions) SetRelyOnVML(rhs bool) {
 	_ = this.PropPut(0x00000773, []interface{}{rhs})
 }
 
@@ -145,7 +145,7 @@ func (this *DefaultWebOptions) AllowPNG() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DefaultWebOptions) SetAllowPNG(rhs bool)  {
+func (this *DefaultWebOptions) SetAllowPNG(rhs bool) {
 	_ = this.PropPut(0x00000774, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *DefaultWebOptions) ScreenSize() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DefaultWebOptions) SetScreenSize(rhs int32)  {
+func (this *DefaultWebOptions) SetScreenSize(rhs int32) {
 	_ = this.PropPut(0x00000775, []interface{}{rhs})
 }
 
@@ -163,7 +163,7 @@ func (this *DefaultWebOptions) PixelsPerInch() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DefaultWebOptions) SetPixelsPerInch(rhs int32)  {
+func (this *DefaultWebOptions) SetPixelsPerInch(rhs int32) {
 	_ = this.PropPut(0x00000776, []interface{}{rhs})
 }
 
@@ -172,7 +172,7 @@ func (this *DefaultWebOptions) LocationOfComponents() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DefaultWebOptions) SetLocationOfComponents(rhs string)  {
+func (this *DefaultWebOptions) SetLocationOfComponents(rhs string) {
 	_ = this.PropPut(0x00000777, []interface{}{rhs})
 }
 
@@ -181,7 +181,7 @@ func (this *DefaultWebOptions) Encoding() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DefaultWebOptions) SetEncoding(rhs int32)  {
+func (this *DefaultWebOptions) SetEncoding(rhs int32) {
 	_ = this.PropPut(0x0000071e, []interface{}{rhs})
 }
 
@@ -190,7 +190,7 @@ func (this *DefaultWebOptions) AlwaysSaveInDefaultEncoding() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DefaultWebOptions) SetAlwaysSaveInDefaultEncoding(rhs bool)  {
+func (this *DefaultWebOptions) SetAlwaysSaveInDefaultEncoding(rhs bool) {
 	_ = this.PropPut(0x00000778, []interface{}{rhs})
 }
 
@@ -209,7 +209,7 @@ func (this *DefaultWebOptions) TargetBrowser() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DefaultWebOptions) SetTargetBrowser(rhs int32)  {
+func (this *DefaultWebOptions) SetTargetBrowser(rhs int32) {
 	_ = this.PropPut(0x00000883, []interface{}{rhs})
 }
 
@@ -218,7 +218,6 @@ func (this *DefaultWebOptions) SaveNewWebPagesAsWebArchives() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DefaultWebOptions) SetSaveNewWebPagesAsWebArchives(rhs bool)  {
+func (this *DefaultWebOptions) SetSaveNewWebPagesAsWebArchives(rhs bool) {
 	_ = this.PropPut(0x00000884, []interface{}{rhs})
 }
-

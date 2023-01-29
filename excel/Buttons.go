@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002087E-0000-0000-C000-000000000046
-var IID_Buttons = syscall.GUID{0x0002087E, 0x0000, 0x0000, 
+var IID_Buttons = syscall.GUID{0x0002087E, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Buttons struct {
@@ -17,8 +17,8 @@ type Buttons struct {
 }
 
 func NewButtons(pDisp *win32.IDispatch, addRef bool, scoped bool) *Buttons {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Buttons{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Buttons) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Buttons) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Buttons) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Buttons) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Buttons) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Buttons) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Buttons) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Buttons) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Buttons) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Buttons) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Buttons) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Buttons) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Buttons) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Buttons) Application() *Application {
@@ -95,9 +95,9 @@ func (this *Buttons) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Buttons) Dummy3_()  {
+func (this *Buttons) Dummy3_() {
 	retVal, _ := this.Call(0x00010003, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Buttons) BringToFront() ole.Variant {
@@ -112,8 +112,8 @@ func (this *Buttons) Copy() ole.Variant {
 	return *retVal
 }
 
-var Buttons_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var Buttons_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *Buttons) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *Buttons) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Buttons) SetEnabled(rhs bool)  {
+func (this *Buttons) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,13 +154,13 @@ func (this *Buttons) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Buttons) SetHeight(rhs float64)  {
+func (this *Buttons) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
-func (this *Buttons) Dummy12_()  {
+func (this *Buttons) Dummy12_() {
 	retVal, _ := this.Call(0x0001000c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Buttons) Left() float64 {
@@ -168,7 +168,7 @@ func (this *Buttons) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Buttons) SetLeft(rhs float64)  {
+func (this *Buttons) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,13 +177,13 @@ func (this *Buttons) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Buttons) SetLocked(rhs bool)  {
+func (this *Buttons) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
-func (this *Buttons) Dummy15_()  {
+func (this *Buttons) Dummy15_() {
 	retVal, _ := this.Call(0x0001000f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Buttons) OnAction() string {
@@ -191,7 +191,7 @@ func (this *Buttons) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Buttons) SetOnAction(rhs string)  {
+func (this *Buttons) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *Buttons) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *Buttons) SetPlacement(rhs interface{})  {
+func (this *Buttons) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -210,12 +210,12 @@ func (this *Buttons) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Buttons) SetPrintObject(rhs bool)  {
+func (this *Buttons) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var Buttons_Select_OptArgs= []string{
-	"Replace", 
+var Buttons_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *Buttons) Select(optArgs ...interface{}) ole.Variant {
@@ -236,13 +236,13 @@ func (this *Buttons) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Buttons) SetTop(rhs float64)  {
+func (this *Buttons) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
-func (this *Buttons) Dummy22_()  {
+func (this *Buttons) Dummy22_() {
 	retVal, _ := this.Call(0x00010016, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Buttons) Visible() bool {
@@ -250,7 +250,7 @@ func (this *Buttons) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Buttons) SetVisible(rhs bool)  {
+func (this *Buttons) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *Buttons) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Buttons) SetWidth(rhs float64)  {
+func (this *Buttons) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -278,7 +278,7 @@ func (this *Buttons) AddIndent() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Buttons) SetAddIndent(rhs bool)  {
+func (this *Buttons) SetAddIndent(rhs bool) {
 	_ = this.PropPut(0x00000427, []interface{}{rhs})
 }
 
@@ -288,7 +288,7 @@ func (this *Buttons) AutoScaleFont() ole.Variant {
 	return *retVal
 }
 
-func (this *Buttons) SetAutoScaleFont(rhs interface{})  {
+func (this *Buttons) SetAutoScaleFont(rhs interface{}) {
 	_ = this.PropPut(0x000005f5, []interface{}{rhs})
 }
 
@@ -297,7 +297,7 @@ func (this *Buttons) AutoSize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Buttons) SetAutoSize(rhs bool)  {
+func (this *Buttons) SetAutoSize(rhs bool) {
 	_ = this.PropPut(0x00000266, []interface{}{rhs})
 }
 
@@ -306,12 +306,12 @@ func (this *Buttons) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Buttons) SetCaption(rhs string)  {
+func (this *Buttons) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var Buttons_Characters_OptArgs= []string{
-	"Start", "Length", 
+var Buttons_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *Buttons) Characters(optArgs ...interface{}) *Characters {
@@ -320,8 +320,8 @@ func (this *Buttons) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var Buttons_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var Buttons_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *Buttons) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -341,7 +341,7 @@ func (this *Buttons) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Buttons) SetFormula(rhs string)  {
+func (this *Buttons) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -351,7 +351,7 @@ func (this *Buttons) HorizontalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *Buttons) SetHorizontalAlignment(rhs interface{})  {
+func (this *Buttons) SetHorizontalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000088, []interface{}{rhs})
 }
 
@@ -360,7 +360,7 @@ func (this *Buttons) LockedText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Buttons) SetLockedText(rhs bool)  {
+func (this *Buttons) SetLockedText(rhs bool) {
 	_ = this.PropPut(0x00000268, []interface{}{rhs})
 }
 
@@ -370,7 +370,7 @@ func (this *Buttons) Orientation() ole.Variant {
 	return *retVal
 }
 
-func (this *Buttons) SetOrientation(rhs interface{})  {
+func (this *Buttons) SetOrientation(rhs interface{}) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -379,7 +379,7 @@ func (this *Buttons) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Buttons) SetText(rhs string)  {
+func (this *Buttons) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -389,7 +389,7 @@ func (this *Buttons) VerticalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *Buttons) SetVerticalAlignment(rhs interface{})  {
+func (this *Buttons) SetVerticalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000089, []interface{}{rhs})
 }
 
@@ -398,7 +398,7 @@ func (this *Buttons) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Buttons) SetReadingOrder(rhs int32)  {
+func (this *Buttons) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -408,7 +408,7 @@ func (this *Buttons) Accelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *Buttons) SetAccelerator(rhs interface{})  {
+func (this *Buttons) SetAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x0000034e, []interface{}{rhs})
 }
 
@@ -417,7 +417,7 @@ func (this *Buttons) CancelButton() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Buttons) SetCancelButton(rhs bool)  {
+func (this *Buttons) SetCancelButton(rhs bool) {
 	_ = this.PropPut(0x0000035a, []interface{}{rhs})
 }
 
@@ -426,7 +426,7 @@ func (this *Buttons) DefaultButton() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Buttons) SetDefaultButton(rhs bool)  {
+func (this *Buttons) SetDefaultButton(rhs bool) {
 	_ = this.PropPut(0x00000359, []interface{}{rhs})
 }
 
@@ -435,7 +435,7 @@ func (this *Buttons) DismissButton() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Buttons) SetDismissButton(rhs bool)  {
+func (this *Buttons) SetDismissButton(rhs bool) {
 	_ = this.PropPut(0x0000035b, []interface{}{rhs})
 }
 
@@ -444,7 +444,7 @@ func (this *Buttons) HelpButton() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Buttons) SetHelpButton(rhs bool)  {
+func (this *Buttons) SetHelpButton(rhs bool) {
 	_ = this.PropPut(0x0000035c, []interface{}{rhs})
 }
 
@@ -454,7 +454,7 @@ func (this *Buttons) PhoneticAccelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *Buttons) SetPhoneticAccelerator(rhs interface{})  {
+func (this *Buttons) SetPhoneticAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x00000461, []interface{}{rhs})
 }
 
@@ -487,7 +487,7 @@ func (this *Buttons) ForEach(action func(item *ole.DispatchClass) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -503,4 +503,3 @@ func (this *Buttons) ForEach(action func(item *ole.DispatchClass) bool) {
 		}
 	}
 }
-

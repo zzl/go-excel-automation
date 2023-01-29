@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020880-0000-0000-C000-000000000046
-var IID_CheckBoxes = syscall.GUID{0x00020880, 0x0000, 0x0000, 
+var IID_CheckBoxes = syscall.GUID{0x00020880, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type CheckBoxes struct {
@@ -17,8 +17,8 @@ type CheckBoxes struct {
 }
 
 func NewCheckBoxes(pDisp *win32.IDispatch, addRef bool, scoped bool) *CheckBoxes {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &CheckBoxes{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *CheckBoxes) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *CheckBoxes) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *CheckBoxes) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *CheckBoxes) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *CheckBoxes) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *CheckBoxes) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *CheckBoxes) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *CheckBoxes) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *CheckBoxes) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *CheckBoxes) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *CheckBoxes) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *CheckBoxes) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *CheckBoxes) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *CheckBoxes) Application() *Application {
@@ -95,9 +95,9 @@ func (this *CheckBoxes) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *CheckBoxes) Dummy3_()  {
+func (this *CheckBoxes) Dummy3_() {
 	retVal, _ := this.Call(0x00010003, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *CheckBoxes) BringToFront() ole.Variant {
@@ -112,8 +112,8 @@ func (this *CheckBoxes) Copy() ole.Variant {
 	return *retVal
 }
 
-var CheckBoxes_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var CheckBoxes_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *CheckBoxes) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *CheckBoxes) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CheckBoxes) SetEnabled(rhs bool)  {
+func (this *CheckBoxes) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,13 +154,13 @@ func (this *CheckBoxes) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *CheckBoxes) SetHeight(rhs float64)  {
+func (this *CheckBoxes) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
-func (this *CheckBoxes) Dummy12_()  {
+func (this *CheckBoxes) Dummy12_() {
 	retVal, _ := this.Call(0x0001000c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *CheckBoxes) Left() float64 {
@@ -168,7 +168,7 @@ func (this *CheckBoxes) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *CheckBoxes) SetLeft(rhs float64)  {
+func (this *CheckBoxes) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,13 +177,13 @@ func (this *CheckBoxes) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CheckBoxes) SetLocked(rhs bool)  {
+func (this *CheckBoxes) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
-func (this *CheckBoxes) Dummy15_()  {
+func (this *CheckBoxes) Dummy15_() {
 	retVal, _ := this.Call(0x0001000f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *CheckBoxes) OnAction() string {
@@ -191,7 +191,7 @@ func (this *CheckBoxes) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *CheckBoxes) SetOnAction(rhs string)  {
+func (this *CheckBoxes) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *CheckBoxes) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *CheckBoxes) SetPlacement(rhs interface{})  {
+func (this *CheckBoxes) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -210,12 +210,12 @@ func (this *CheckBoxes) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CheckBoxes) SetPrintObject(rhs bool)  {
+func (this *CheckBoxes) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var CheckBoxes_Select_OptArgs= []string{
-	"Replace", 
+var CheckBoxes_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *CheckBoxes) Select(optArgs ...interface{}) ole.Variant {
@@ -236,13 +236,13 @@ func (this *CheckBoxes) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *CheckBoxes) SetTop(rhs float64)  {
+func (this *CheckBoxes) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
-func (this *CheckBoxes) Dummy22_()  {
+func (this *CheckBoxes) Dummy22_() {
 	retVal, _ := this.Call(0x00010016, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *CheckBoxes) Visible() bool {
@@ -250,7 +250,7 @@ func (this *CheckBoxes) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CheckBoxes) SetVisible(rhs bool)  {
+func (this *CheckBoxes) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *CheckBoxes) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *CheckBoxes) SetWidth(rhs float64)  {
+func (this *CheckBoxes) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -278,12 +278,12 @@ func (this *CheckBoxes) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *CheckBoxes) SetCaption(rhs string)  {
+func (this *CheckBoxes) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var CheckBoxes_Characters_OptArgs= []string{
-	"Start", "Length", 
+var CheckBoxes_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *CheckBoxes) Characters(optArgs ...interface{}) *Characters {
@@ -292,8 +292,8 @@ func (this *CheckBoxes) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var CheckBoxes_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var CheckBoxes_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *CheckBoxes) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -308,7 +308,7 @@ func (this *CheckBoxes) LockedText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CheckBoxes) SetLockedText(rhs bool)  {
+func (this *CheckBoxes) SetLockedText(rhs bool) {
 	_ = this.PropPut(0x00000268, []interface{}{rhs})
 }
 
@@ -317,7 +317,7 @@ func (this *CheckBoxes) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *CheckBoxes) SetText(rhs string)  {
+func (this *CheckBoxes) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -327,7 +327,7 @@ func (this *CheckBoxes) Accelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *CheckBoxes) SetAccelerator(rhs interface{})  {
+func (this *CheckBoxes) SetAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x0000034e, []interface{}{rhs})
 }
 
@@ -341,7 +341,7 @@ func (this *CheckBoxes) Default_() int32 {
 	return retVal.LValVal()
 }
 
-func (this *CheckBoxes) SetDefault_(rhs int32)  {
+func (this *CheckBoxes) SetDefault_(rhs int32) {
 	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
@@ -350,7 +350,7 @@ func (this *CheckBoxes) Display3DShading() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *CheckBoxes) SetDisplay3DShading(rhs bool)  {
+func (this *CheckBoxes) SetDisplay3DShading(rhs bool) {
 	_ = this.PropPut(0x00000462, []interface{}{rhs})
 }
 
@@ -364,7 +364,7 @@ func (this *CheckBoxes) LinkedCell() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *CheckBoxes) SetLinkedCell(rhs string)  {
+func (this *CheckBoxes) SetLinkedCell(rhs string) {
 	_ = this.PropPut(0x00000422, []interface{}{rhs})
 }
 
@@ -374,7 +374,7 @@ func (this *CheckBoxes) PhoneticAccelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *CheckBoxes) SetPhoneticAccelerator(rhs interface{})  {
+func (this *CheckBoxes) SetPhoneticAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x00000461, []interface{}{rhs})
 }
 
@@ -384,7 +384,7 @@ func (this *CheckBoxes) Value() ole.Variant {
 	return *retVal
 }
 
-func (this *CheckBoxes) SetValue(rhs interface{})  {
+func (this *CheckBoxes) SetValue(rhs interface{}) {
 	_ = this.PropPut(0x00000006, []interface{}{rhs})
 }
 
@@ -417,7 +417,7 @@ func (this *CheckBoxes) ForEach(action func(item int32) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -432,4 +432,3 @@ func (this *CheckBoxes) ForEach(action func(item int32) bool) {
 		}
 	}
 }
-

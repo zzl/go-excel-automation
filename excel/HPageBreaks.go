@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024404-0000-0000-C000-000000000046
-var IID_HPageBreaks = syscall.GUID{0x00024404, 0x0000, 0x0000, 
+var IID_HPageBreaks = syscall.GUID{0x00024404, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type HPageBreaks struct {
@@ -17,8 +17,8 @@ type HPageBreaks struct {
 }
 
 func NewHPageBreaks(pDisp *win32.IDispatch, addRef bool, scoped bool) *HPageBreaks {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &HPageBreaks{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *HPageBreaks) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *HPageBreaks) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *HPageBreaks) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *HPageBreaks) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *HPageBreaks) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *HPageBreaks) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *HPageBreaks) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *HPageBreaks) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *HPageBreaks) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *HPageBreaks) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *HPageBreaks) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *HPageBreaks) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *HPageBreaks) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *HPageBreaks) Application() *Application {
@@ -119,7 +119,7 @@ func (this *HPageBreaks) ForEach(action func(item *HPageBreak) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -140,4 +140,3 @@ func (this *HPageBreaks) Add(before *win32.IUnknown) *HPageBreak {
 	retVal, _ := this.Call(0x000000b5, []interface{}{before})
 	return NewHPageBreak(retVal.IDispatch(), false, true)
 }
-

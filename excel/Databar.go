@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024496-0000-0000-C000-000000000046
-var IID_Databar = syscall.GUID{0x00024496, 0x0000, 0x0000, 
+var IID_Databar = syscall.GUID{0x00024496, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Databar struct {
@@ -17,8 +17,8 @@ type Databar struct {
 }
 
 func NewDatabar(pDisp *win32.IDispatch, addRef bool, scoped bool) *Databar {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Databar{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Databar) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Databar) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Databar) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Databar) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Databar) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Databar) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Databar) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Databar) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Databar) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Databar) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Databar) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Databar) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Databar) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Databar) Application() *Application {
@@ -100,7 +100,7 @@ func (this *Databar) Priority() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Databar) SetPriority(rhs int32)  {
+func (this *Databar) SetPriority(rhs int32) {
 	_ = this.PropPut(0x000003d9, []interface{}{rhs})
 }
 
@@ -129,7 +129,7 @@ func (this *Databar) PercentMin() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Databar) SetPercentMin(rhs int32)  {
+func (this *Databar) SetPercentMin(rhs int32) {
 	_ = this.PropPut(0x00000aa0, []interface{}{rhs})
 }
 
@@ -138,7 +138,7 @@ func (this *Databar) PercentMax() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Databar) SetPercentMax(rhs int32)  {
+func (this *Databar) SetPercentMax(rhs int32) {
 	_ = this.PropPut(0x00000aa1, []interface{}{rhs})
 }
 
@@ -152,7 +152,7 @@ func (this *Databar) ShowValue() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Databar) SetShowValue(rhs bool)  {
+func (this *Databar) SetShowValue(rhs bool) {
 	_ = this.PropPut(0x000007e8, []interface{}{rhs})
 }
 
@@ -161,7 +161,7 @@ func (this *Databar) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Databar) SetFormula(rhs string)  {
+func (this *Databar) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -170,24 +170,24 @@ func (this *Databar) Type() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Databar) SetFirstPriority()  {
+func (this *Databar) SetFirstPriority() {
 	retVal, _ := this.Call(0x00000a45, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Databar) SetLastPriority()  {
+func (this *Databar) SetLastPriority() {
 	retVal, _ := this.Call(0x00000a46, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Databar) Delete()  {
+func (this *Databar) Delete() {
 	retVal, _ := this.Call(0x00000075, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *Databar) ModifyAppliesToRange(range_ *Range)  {
+func (this *Databar) ModifyAppliesToRange(range_ *Range) {
 	retVal, _ := this.Call(0x00000a43, []interface{}{range_})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Databar) PTCondition() bool {
@@ -200,7 +200,7 @@ func (this *Databar) ScopeType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Databar) SetScopeType(rhs int32)  {
+func (this *Databar) SetScopeType(rhs int32) {
 	_ = this.PropPut(0x00000a37, []interface{}{rhs})
 }
 
@@ -209,7 +209,7 @@ func (this *Databar) Direction() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Databar) SetDirection(rhs int32)  {
+func (this *Databar) SetDirection(rhs int32) {
 	_ = this.PropPut(0x000000a8, []interface{}{rhs})
 }
 
@@ -218,7 +218,7 @@ func (this *Databar) BarFillType() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Databar) SetBarFillType(rhs int32)  {
+func (this *Databar) SetBarFillType(rhs int32) {
 	_ = this.PropPut(0x00000b7d, []interface{}{rhs})
 }
 
@@ -227,7 +227,7 @@ func (this *Databar) AxisPosition() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Databar) SetAxisPosition(rhs int32)  {
+func (this *Databar) SetAxisPosition(rhs int32) {
 	_ = this.PropPut(0x00000b7e, []interface{}{rhs})
 }
 
@@ -245,4 +245,3 @@ func (this *Databar) NegativeBarFormat() *NegativeBarFormat {
 	retVal, _ := this.PropGet(0x00000b81, nil)
 	return NewNegativeBarFormat(retVal.IDispatch(), false, true)
 }
-

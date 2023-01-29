@@ -1,14 +1,14 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 )
 
 // 000C0370-0000-0000-C000-000000000046
-var IID_DiagramNode = syscall.GUID{0x000C0370, 0x0000, 0x0000, 
+var IID_DiagramNode = syscall.GUID{0x000C0370, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type DiagramNode struct {
@@ -16,8 +16,8 @@ type DiagramNode struct {
 }
 
 func NewDiagramNode(pDisp *win32.IDispatch, addRef bool, scoped bool) *DiagramNode {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &DiagramNode{ole.OleClient{pDisp}}
 	if addRef {
@@ -54,8 +54,8 @@ func (this *DiagramNode) Creator() int32 {
 	return retVal.LValVal()
 }
 
-var DiagramNode_AddNode_OptArgs= []string{
-	"pos", "nodeType", 
+var DiagramNode_AddNode_OptArgs = []string{
+	"pos", "nodeType",
 }
 
 func (this *DiagramNode) AddNode(optArgs ...interface{}) *DiagramNode {
@@ -64,33 +64,33 @@ func (this *DiagramNode) AddNode(optArgs ...interface{}) *DiagramNode {
 	return NewDiagramNode(retVal.IDispatch(), false, true)
 }
 
-func (this *DiagramNode) Delete()  {
+func (this *DiagramNode) Delete() {
 	retVal, _ := this.Call(0x0000000b, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *DiagramNode) MoveNode(pTargetNode *DiagramNode, pos int32)  {
+func (this *DiagramNode) MoveNode(pTargetNode *DiagramNode, pos int32) {
 	retVal, _ := this.Call(0x0000000c, []interface{}{pTargetNode, pos})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DiagramNode) ReplaceNode(pTargetNode *DiagramNode)  {
+func (this *DiagramNode) ReplaceNode(pTargetNode *DiagramNode) {
 	retVal, _ := this.Call(0x0000000d, []interface{}{pTargetNode})
-	_= retVal
+	_ = retVal
 }
 
-var DiagramNode_SwapNode_OptArgs= []string{
-	"swapChildren", 
+var DiagramNode_SwapNode_OptArgs = []string{
+	"swapChildren",
 }
 
-func (this *DiagramNode) SwapNode(pTargetNode *DiagramNode, optArgs ...interface{})  {
+func (this *DiagramNode) SwapNode(pTargetNode *DiagramNode, optArgs ...interface{}) {
 	optArgs = ole.ProcessOptArgs(DiagramNode_SwapNode_OptArgs, optArgs)
 	retVal, _ := this.Call(0x0000000e, []interface{}{pTargetNode}, optArgs...)
-	_= retVal
+	_ = retVal
 }
 
-var DiagramNode_CloneNode_OptArgs= []string{
-	"pos", 
+var DiagramNode_CloneNode_OptArgs = []string{
+	"pos",
 }
 
 func (this *DiagramNode) CloneNode(copyChildren bool, pTargetNode *DiagramNode, optArgs ...interface{}) *DiagramNode {
@@ -99,9 +99,9 @@ func (this *DiagramNode) CloneNode(copyChildren bool, pTargetNode *DiagramNode, 
 	return NewDiagramNode(retVal.IDispatch(), false, true)
 }
 
-func (this *DiagramNode) TransferChildren(pReceivingNode *DiagramNode)  {
+func (this *DiagramNode) TransferChildren(pReceivingNode *DiagramNode) {
 	retVal, _ := this.Call(0x00000010, []interface{}{pReceivingNode})
-	_= retVal
+	_ = retVal
 }
 
 func (this *DiagramNode) NextNode() *DiagramNode {
@@ -144,7 +144,7 @@ func (this *DiagramNode) Layout() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DiagramNode) SetLayout(rhs int32)  {
+func (this *DiagramNode) SetLayout(rhs int32) {
 	_ = this.PropPut(0x00000069, []interface{}{rhs})
 }
 
@@ -152,4 +152,3 @@ func (this *DiagramNode) TextShape() *Shape {
 	retVal, _ := this.PropGet(0x0000006a, nil)
 	return NewShape(retVal.IDispatch(), false, true)
 }
-

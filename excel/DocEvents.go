@@ -1,63 +1,63 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00024411-0000-0000-C000-000000000046
-var IID_DocEvents = syscall.GUID{0x00024411, 0x0000, 0x0000, 
+var IID_DocEvents = syscall.GUID{0x00024411, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type DocEventsDispInterface interface {
-	QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) 
+	QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)
 	AddRef_() uint32
 	Release_() uint32
-	GetTypeInfoCount_(pctinfo *uint32) 
-	GetTypeInfo_(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) 
-	GetIDsOfNames_(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) 
-	Invoke_(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) 
-	SelectionChange(target *Range) 
-	BeforeDoubleClick(target *Range, cancel *win32.VARIANT_BOOL) 
-	BeforeRightClick(target *Range, cancel *win32.VARIANT_BOOL) 
-	Activate() 
-	Deactivate() 
-	Calculate() 
-	Change(target *Range) 
-	FollowHyperlink(target *Hyperlink) 
-	PivotTableUpdate(target *PivotTable) 
-	PivotTableAfterValueChange(targetPivotTable *PivotTable, targetRange *Range) 
-	PivotTableBeforeAllocateChanges(targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) 
-	PivotTableBeforeCommitChanges(targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) 
-	PivotTableBeforeDiscardChanges(targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32) 
-	PivotTableChangeSync(target *PivotTable) 
+	GetTypeInfoCount_(pctinfo *uint32)
+	GetTypeInfo_(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)
+	GetIDsOfNames_(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)
+	Invoke_(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)
+	SelectionChange(target *Range)
+	BeforeDoubleClick(target *Range, cancel *win32.VARIANT_BOOL)
+	BeforeRightClick(target *Range, cancel *win32.VARIANT_BOOL)
+	Activate()
+	Deactivate()
+	Calculate()
+	Change(target *Range)
+	FollowHyperlink(target *Hyperlink)
+	PivotTableUpdate(target *PivotTable)
+	PivotTableAfterValueChange(targetPivotTable *PivotTable, targetRange *Range)
+	PivotTableBeforeAllocateChanges(targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL)
+	PivotTableBeforeCommitChanges(targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL)
+	PivotTableBeforeDiscardChanges(targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32)
+	PivotTableChangeSync(target *PivotTable)
 }
 
 type DocEventsHandlers struct {
-	QueryInterface_ func(riid *syscall.GUID, ppvObj unsafe.Pointer) 
-	AddRef_ func() uint32
-	Release_ func() uint32
-	GetTypeInfoCount_ func(pctinfo *uint32) 
-	GetTypeInfo_ func(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) 
-	GetIDsOfNames_ func(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) 
-	Invoke_ func(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) 
-	SelectionChange func(target *Range) 
-	BeforeDoubleClick func(target *Range, cancel *win32.VARIANT_BOOL) 
-	BeforeRightClick func(target *Range, cancel *win32.VARIANT_BOOL) 
-	Activate func() 
-	Deactivate func() 
-	Calculate func() 
-	Change func(target *Range) 
-	FollowHyperlink func(target *Hyperlink) 
-	PivotTableUpdate func(target *PivotTable) 
-	PivotTableAfterValueChange func(targetPivotTable *PivotTable, targetRange *Range) 
-	PivotTableBeforeAllocateChanges func(targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) 
-	PivotTableBeforeCommitChanges func(targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL) 
-	PivotTableBeforeDiscardChanges func(targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32) 
-	PivotTableChangeSync func(target *PivotTable) 
+	QueryInterface_                 func(riid *syscall.GUID, ppvObj unsafe.Pointer)
+	AddRef_                         func() uint32
+	Release_                        func() uint32
+	GetTypeInfoCount_               func(pctinfo *uint32)
+	GetTypeInfo_                    func(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)
+	GetIDsOfNames_                  func(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)
+	Invoke_                         func(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)
+	SelectionChange                 func(target *Range)
+	BeforeDoubleClick               func(target *Range, cancel *win32.VARIANT_BOOL)
+	BeforeRightClick                func(target *Range, cancel *win32.VARIANT_BOOL)
+	Activate                        func()
+	Deactivate                      func()
+	Calculate                       func()
+	Change                          func(target *Range)
+	FollowHyperlink                 func(target *Hyperlink)
+	PivotTableUpdate                func(target *PivotTable)
+	PivotTableAfterValueChange      func(targetPivotTable *PivotTable, targetRange *Range)
+	PivotTableBeforeAllocateChanges func(targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL)
+	PivotTableBeforeCommitChanges   func(targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32, cancel *win32.VARIANT_BOOL)
+	PivotTableBeforeDiscardChanges  func(targetPivotTable *PivotTable, valueChangeStart int32, valueChangeEnd int32)
+	PivotTableChangeSync            func(target *PivotTable)
 }
 
 type DocEventsDispImpl struct {
@@ -346,10 +346,9 @@ type DocEventsComObj struct {
 
 func NewDocEventsComObj(dispImpl DocEventsDispInterface, scoped bool) *DocEventsComObj {
 	comObj := com.NewComObj[DocEventsComObj](
-		&DocEventsImpl {DispImpl: dispImpl})
+		&DocEventsImpl{DispImpl: dispImpl})
 	if scoped {
 		com.AddToScope(comObj)
 	}
 	return comObj
 }
-

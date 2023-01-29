@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020899-0000-0000-C000-000000000046
-var IID_GroupObjects = syscall.GUID{0x00020899, 0x0000, 0x0000, 
+var IID_GroupObjects = syscall.GUID{0x00020899, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type GroupObjects struct {
@@ -17,8 +17,8 @@ type GroupObjects struct {
 }
 
 func NewGroupObjects(pDisp *win32.IDispatch, addRef bool, scoped bool) *GroupObjects {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &GroupObjects{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *GroupObjects) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *GroupObjects) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *GroupObjects) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *GroupObjects) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *GroupObjects) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *GroupObjects) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *GroupObjects) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *GroupObjects) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *GroupObjects) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) Application() *Application {
@@ -95,9 +95,9 @@ func (this *GroupObjects) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *GroupObjects) Dummy3_()  {
+func (this *GroupObjects) Dummy3_() {
 	retVal, _ := this.Call(0x00010003, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) BringToFront() ole.Variant {
@@ -112,8 +112,8 @@ func (this *GroupObjects) Copy() ole.Variant {
 	return *retVal
 }
 
-var GroupObjects_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var GroupObjects_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *GroupObjects) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *GroupObjects) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupObjects) SetEnabled(rhs bool)  {
+func (this *GroupObjects) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,13 +154,13 @@ func (this *GroupObjects) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *GroupObjects) SetHeight(rhs float64)  {
+func (this *GroupObjects) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
-func (this *GroupObjects) Dummy12_()  {
+func (this *GroupObjects) Dummy12_() {
 	retVal, _ := this.Call(0x0001000c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) Left() float64 {
@@ -168,7 +168,7 @@ func (this *GroupObjects) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *GroupObjects) SetLeft(rhs float64)  {
+func (this *GroupObjects) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,13 +177,13 @@ func (this *GroupObjects) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupObjects) SetLocked(rhs bool)  {
+func (this *GroupObjects) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
-func (this *GroupObjects) Dummy15_()  {
+func (this *GroupObjects) Dummy15_() {
 	retVal, _ := this.Call(0x0001000f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) OnAction() string {
@@ -191,7 +191,7 @@ func (this *GroupObjects) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *GroupObjects) SetOnAction(rhs string)  {
+func (this *GroupObjects) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *GroupObjects) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *GroupObjects) SetPlacement(rhs interface{})  {
+func (this *GroupObjects) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -210,12 +210,12 @@ func (this *GroupObjects) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupObjects) SetPrintObject(rhs bool)  {
+func (this *GroupObjects) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var GroupObjects_Select_OptArgs= []string{
-	"Replace", 
+var GroupObjects_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *GroupObjects) Select(optArgs ...interface{}) ole.Variant {
@@ -236,13 +236,13 @@ func (this *GroupObjects) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *GroupObjects) SetTop(rhs float64)  {
+func (this *GroupObjects) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
-func (this *GroupObjects) Dummy22_()  {
+func (this *GroupObjects) Dummy22_() {
 	retVal, _ := this.Call(0x00010016, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) Visible() bool {
@@ -250,7 +250,7 @@ func (this *GroupObjects) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupObjects) SetVisible(rhs bool)  {
+func (this *GroupObjects) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *GroupObjects) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *GroupObjects) SetWidth(rhs float64)  {
+func (this *GroupObjects) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -273,14 +273,14 @@ func (this *GroupObjects) ShapeRange() *ShapeRange {
 	return NewShapeRange(retVal.IDispatch(), false, true)
 }
 
-func (this *GroupObjects) Dummy27_()  {
+func (this *GroupObjects) Dummy27_() {
 	retVal, _ := this.Call(0x0001001b, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy28_()  {
+func (this *GroupObjects) Dummy28_() {
 	retVal, _ := this.Call(0x0001001c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) AddIndent() bool {
@@ -288,13 +288,13 @@ func (this *GroupObjects) AddIndent() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupObjects) SetAddIndent(rhs bool)  {
+func (this *GroupObjects) SetAddIndent(rhs bool) {
 	_ = this.PropPut(0x00000427, []interface{}{rhs})
 }
 
-func (this *GroupObjects) Dummy30_()  {
+func (this *GroupObjects) Dummy30_() {
 	retVal, _ := this.Call(0x0001001e, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) ArrowHeadLength() ole.Variant {
@@ -303,7 +303,7 @@ func (this *GroupObjects) ArrowHeadLength() ole.Variant {
 	return *retVal
 }
 
-func (this *GroupObjects) SetArrowHeadLength(rhs interface{})  {
+func (this *GroupObjects) SetArrowHeadLength(rhs interface{}) {
 	_ = this.PropPut(0x00000263, []interface{}{rhs})
 }
 
@@ -313,7 +313,7 @@ func (this *GroupObjects) ArrowHeadStyle() ole.Variant {
 	return *retVal
 }
 
-func (this *GroupObjects) SetArrowHeadStyle(rhs interface{})  {
+func (this *GroupObjects) SetArrowHeadStyle(rhs interface{}) {
 	_ = this.PropPut(0x00000264, []interface{}{rhs})
 }
 
@@ -323,7 +323,7 @@ func (this *GroupObjects) ArrowHeadWidth() ole.Variant {
 	return *retVal
 }
 
-func (this *GroupObjects) SetArrowHeadWidth(rhs interface{})  {
+func (this *GroupObjects) SetArrowHeadWidth(rhs interface{}) {
 	_ = this.PropPut(0x00000265, []interface{}{rhs})
 }
 
@@ -332,7 +332,7 @@ func (this *GroupObjects) AutoSize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupObjects) SetAutoSize(rhs bool)  {
+func (this *GroupObjects) SetAutoSize(rhs bool) {
 	_ = this.PropPut(0x00000266, []interface{}{rhs})
 }
 
@@ -341,23 +341,23 @@ func (this *GroupObjects) Border() *Border {
 	return NewBorder(retVal.IDispatch(), false, true)
 }
 
-func (this *GroupObjects) Dummy36_()  {
+func (this *GroupObjects) Dummy36_() {
 	retVal, _ := this.Call(0x00010024, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy37_()  {
+func (this *GroupObjects) Dummy37_() {
 	retVal, _ := this.Call(0x00010025, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy38_()  {
+func (this *GroupObjects) Dummy38_() {
 	retVal, _ := this.Call(0x00010026, nil)
-	_= retVal
+	_ = retVal
 }
 
-var GroupObjects_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var GroupObjects_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *GroupObjects) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -372,33 +372,33 @@ func (this *GroupObjects) Default_() int32 {
 	return retVal.LValVal()
 }
 
-func (this *GroupObjects) SetDefault_(rhs int32)  {
+func (this *GroupObjects) SetDefault_(rhs int32) {
 	_ = this.PropPut(0x00000000, []interface{}{rhs})
 }
 
-func (this *GroupObjects) Dummy41_()  {
+func (this *GroupObjects) Dummy41_() {
 	retVal, _ := this.Call(0x00010029, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy42_()  {
+func (this *GroupObjects) Dummy42_() {
 	retVal, _ := this.Call(0x0001002a, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy43_()  {
+func (this *GroupObjects) Dummy43_() {
 	retVal, _ := this.Call(0x0001002b, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy44_()  {
+func (this *GroupObjects) Dummy44_() {
 	retVal, _ := this.Call(0x0001002c, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy45_()  {
+func (this *GroupObjects) Dummy45_() {
 	retVal, _ := this.Call(0x0001002d, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) Font() *Font {
@@ -406,14 +406,14 @@ func (this *GroupObjects) Font() *Font {
 	return NewFont(retVal.IDispatch(), false, true)
 }
 
-func (this *GroupObjects) Dummy47_()  {
+func (this *GroupObjects) Dummy47_() {
 	retVal, _ := this.Call(0x0001002f, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy48_()  {
+func (this *GroupObjects) Dummy48_() {
 	retVal, _ := this.Call(0x00010030, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) HorizontalAlignment() ole.Variant {
@@ -422,13 +422,13 @@ func (this *GroupObjects) HorizontalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *GroupObjects) SetHorizontalAlignment(rhs interface{})  {
+func (this *GroupObjects) SetHorizontalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000088, []interface{}{rhs})
 }
 
-func (this *GroupObjects) Dummy50_()  {
+func (this *GroupObjects) Dummy50_() {
 	retVal, _ := this.Call(0x00010032, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) Interior() *Interior {
@@ -436,64 +436,64 @@ func (this *GroupObjects) Interior() *Interior {
 	return NewInterior(retVal.IDispatch(), false, true)
 }
 
-func (this *GroupObjects) Dummy52_()  {
+func (this *GroupObjects) Dummy52_() {
 	retVal, _ := this.Call(0x00010034, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy53_()  {
+func (this *GroupObjects) Dummy53_() {
 	retVal, _ := this.Call(0x00010035, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy54_()  {
+func (this *GroupObjects) Dummy54_() {
 	retVal, _ := this.Call(0x00010036, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy55_()  {
+func (this *GroupObjects) Dummy55_() {
 	retVal, _ := this.Call(0x00010037, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy56_()  {
+func (this *GroupObjects) Dummy56_() {
 	retVal, _ := this.Call(0x00010038, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy57_()  {
+func (this *GroupObjects) Dummy57_() {
 	retVal, _ := this.Call(0x00010039, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy58_()  {
+func (this *GroupObjects) Dummy58_() {
 	retVal, _ := this.Call(0x0001003a, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy59_()  {
+func (this *GroupObjects) Dummy59_() {
 	retVal, _ := this.Call(0x0001003b, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy60_()  {
+func (this *GroupObjects) Dummy60_() {
 	retVal, _ := this.Call(0x0001003c, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy61_()  {
+func (this *GroupObjects) Dummy61_() {
 	retVal, _ := this.Call(0x0001003d, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy62_()  {
+func (this *GroupObjects) Dummy62_() {
 	retVal, _ := this.Call(0x0001003e, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy63_()  {
+func (this *GroupObjects) Dummy63_() {
 	retVal, _ := this.Call(0x0001003f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) Orientation() ole.Variant {
@@ -502,28 +502,28 @@ func (this *GroupObjects) Orientation() ole.Variant {
 	return *retVal
 }
 
-func (this *GroupObjects) SetOrientation(rhs interface{})  {
+func (this *GroupObjects) SetOrientation(rhs interface{}) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
-func (this *GroupObjects) Dummy65_()  {
+func (this *GroupObjects) Dummy65_() {
 	retVal, _ := this.Call(0x00010041, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy66_()  {
+func (this *GroupObjects) Dummy66_() {
 	retVal, _ := this.Call(0x00010042, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy67_()  {
+func (this *GroupObjects) Dummy67_() {
 	retVal, _ := this.Call(0x00010043, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy68_()  {
+func (this *GroupObjects) Dummy68_() {
 	retVal, _ := this.Call(0x00010044, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) RoundedCorners() bool {
@@ -531,13 +531,13 @@ func (this *GroupObjects) RoundedCorners() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupObjects) SetRoundedCorners(rhs bool)  {
+func (this *GroupObjects) SetRoundedCorners(rhs bool) {
 	_ = this.PropPut(0x0000026b, []interface{}{rhs})
 }
 
-func (this *GroupObjects) Dummy70_()  {
+func (this *GroupObjects) Dummy70_() {
 	retVal, _ := this.Call(0x00010046, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) Shadow() bool {
@@ -545,18 +545,18 @@ func (this *GroupObjects) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *GroupObjects) SetShadow(rhs bool)  {
+func (this *GroupObjects) SetShadow(rhs bool) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
-func (this *GroupObjects) Dummy72_()  {
+func (this *GroupObjects) Dummy72_() {
 	retVal, _ := this.Call(0x00010048, nil)
-	_= retVal
+	_ = retVal
 }
 
-func (this *GroupObjects) Dummy73_()  {
+func (this *GroupObjects) Dummy73_() {
 	retVal, _ := this.Call(0x00010049, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) Ungroup() *ole.DispatchClass {
@@ -564,9 +564,9 @@ func (this *GroupObjects) Ungroup() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *GroupObjects) Dummy75_()  {
+func (this *GroupObjects) Dummy75_() {
 	retVal, _ := this.Call(0x0001004b, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) VerticalAlignment() ole.Variant {
@@ -575,13 +575,13 @@ func (this *GroupObjects) VerticalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *GroupObjects) SetVerticalAlignment(rhs interface{})  {
+func (this *GroupObjects) SetVerticalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000089, []interface{}{rhs})
 }
 
-func (this *GroupObjects) Dummy77_()  {
+func (this *GroupObjects) Dummy77_() {
 	retVal, _ := this.Call(0x0001004d, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *GroupObjects) ReadingOrder() int32 {
@@ -589,7 +589,7 @@ func (this *GroupObjects) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *GroupObjects) SetReadingOrder(rhs int32)  {
+func (this *GroupObjects) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -617,7 +617,7 @@ func (this *GroupObjects) ForEach(action func(item int32) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -632,4 +632,3 @@ func (this *GroupObjects) ForEach(action func(item int32) bool) {
 		}
 	}
 }
-

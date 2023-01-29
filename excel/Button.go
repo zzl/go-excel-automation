@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 0002087D-0000-0000-C000-000000000046
-var IID_Button = syscall.GUID{0x0002087D, 0x0000, 0x0000, 
+var IID_Button = syscall.GUID{0x0002087D, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Button struct {
@@ -17,8 +17,8 @@ type Button struct {
 }
 
 func NewButton(pDisp *win32.IDispatch, addRef bool, scoped bool) *Button {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Button{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Button) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Button) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Button) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Button) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Button) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Button) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Button) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Button) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Button) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Button) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Button) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Button) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Button) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Button) Application() *Application {
@@ -112,8 +112,8 @@ func (this *Button) Copy() ole.Variant {
 	return *retVal
 }
 
-var Button_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var Button_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *Button) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *Button) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Button) SetEnabled(rhs bool)  {
+func (this *Button) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *Button) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Button) SetHeight(rhs float64)  {
+func (this *Button) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -168,7 +168,7 @@ func (this *Button) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Button) SetLeft(rhs float64)  {
+func (this *Button) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,7 +177,7 @@ func (this *Button) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Button) SetLocked(rhs bool)  {
+func (this *Button) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
@@ -186,7 +186,7 @@ func (this *Button) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Button) SetName(rhs string)  {
+func (this *Button) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -195,7 +195,7 @@ func (this *Button) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Button) SetOnAction(rhs string)  {
+func (this *Button) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -205,7 +205,7 @@ func (this *Button) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *Button) SetPlacement(rhs interface{})  {
+func (this *Button) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -214,12 +214,12 @@ func (this *Button) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Button) SetPrintObject(rhs bool)  {
+func (this *Button) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var Button_Select_OptArgs= []string{
-	"Replace", 
+var Button_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *Button) Select(optArgs ...interface{}) ole.Variant {
@@ -240,7 +240,7 @@ func (this *Button) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Button) SetTop(rhs float64)  {
+func (this *Button) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -254,7 +254,7 @@ func (this *Button) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Button) SetVisible(rhs bool)  {
+func (this *Button) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -263,7 +263,7 @@ func (this *Button) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Button) SetWidth(rhs float64)  {
+func (this *Button) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -282,7 +282,7 @@ func (this *Button) AddIndent() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Button) SetAddIndent(rhs bool)  {
+func (this *Button) SetAddIndent(rhs bool) {
 	_ = this.PropPut(0x00000427, []interface{}{rhs})
 }
 
@@ -292,7 +292,7 @@ func (this *Button) AutoScaleFont() ole.Variant {
 	return *retVal
 }
 
-func (this *Button) SetAutoScaleFont(rhs interface{})  {
+func (this *Button) SetAutoScaleFont(rhs interface{}) {
 	_ = this.PropPut(0x000005f5, []interface{}{rhs})
 }
 
@@ -301,7 +301,7 @@ func (this *Button) AutoSize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Button) SetAutoSize(rhs bool)  {
+func (this *Button) SetAutoSize(rhs bool) {
 	_ = this.PropPut(0x00000266, []interface{}{rhs})
 }
 
@@ -310,12 +310,12 @@ func (this *Button) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Button) SetCaption(rhs string)  {
+func (this *Button) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var Button_Characters_OptArgs= []string{
-	"Start", "Length", 
+var Button_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *Button) Characters(optArgs ...interface{}) *Characters {
@@ -324,8 +324,8 @@ func (this *Button) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var Button_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var Button_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *Button) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -345,7 +345,7 @@ func (this *Button) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Button) SetFormula(rhs string)  {
+func (this *Button) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -355,7 +355,7 @@ func (this *Button) HorizontalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *Button) SetHorizontalAlignment(rhs interface{})  {
+func (this *Button) SetHorizontalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000088, []interface{}{rhs})
 }
 
@@ -364,7 +364,7 @@ func (this *Button) LockedText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Button) SetLockedText(rhs bool)  {
+func (this *Button) SetLockedText(rhs bool) {
 	_ = this.PropPut(0x00000268, []interface{}{rhs})
 }
 
@@ -374,7 +374,7 @@ func (this *Button) Orientation() ole.Variant {
 	return *retVal
 }
 
-func (this *Button) SetOrientation(rhs interface{})  {
+func (this *Button) SetOrientation(rhs interface{}) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -383,7 +383,7 @@ func (this *Button) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Button) SetText(rhs string)  {
+func (this *Button) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -393,7 +393,7 @@ func (this *Button) VerticalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *Button) SetVerticalAlignment(rhs interface{})  {
+func (this *Button) SetVerticalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000089, []interface{}{rhs})
 }
 
@@ -402,7 +402,7 @@ func (this *Button) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *Button) SetReadingOrder(rhs int32)  {
+func (this *Button) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -412,7 +412,7 @@ func (this *Button) Accelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *Button) SetAccelerator(rhs interface{})  {
+func (this *Button) SetAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x0000034e, []interface{}{rhs})
 }
 
@@ -421,7 +421,7 @@ func (this *Button) CancelButton() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Button) SetCancelButton(rhs bool)  {
+func (this *Button) SetCancelButton(rhs bool) {
 	_ = this.PropPut(0x0000035a, []interface{}{rhs})
 }
 
@@ -430,7 +430,7 @@ func (this *Button) DefaultButton() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Button) SetDefaultButton(rhs bool)  {
+func (this *Button) SetDefaultButton(rhs bool) {
 	_ = this.PropPut(0x00000359, []interface{}{rhs})
 }
 
@@ -439,7 +439,7 @@ func (this *Button) DismissButton() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Button) SetDismissButton(rhs bool)  {
+func (this *Button) SetDismissButton(rhs bool) {
 	_ = this.PropPut(0x0000035b, []interface{}{rhs})
 }
 
@@ -448,7 +448,7 @@ func (this *Button) HelpButton() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Button) SetHelpButton(rhs bool)  {
+func (this *Button) SetHelpButton(rhs bool) {
 	_ = this.PropPut(0x0000035c, []interface{}{rhs})
 }
 
@@ -458,7 +458,6 @@ func (this *Button) PhoneticAccelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *Button) SetPhoneticAccelerator(rhs interface{})  {
+func (this *Button) SetPhoneticAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x00000461, []interface{}{rhs})
 }
-

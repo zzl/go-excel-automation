@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020898-0001-0000-C000-000000000046
-var IID_IGroupObject = syscall.GUID{0x00020898, 0x0001, 0x0000, 
+var IID_IGroupObject = syscall.GUID{0x00020898, 0x0001, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type IGroupObject struct {
@@ -17,8 +17,8 @@ type IGroupObject struct {
 }
 
 func NewIGroupObject(pUnk *win32.IUnknown, addRef bool, scoped bool) *IGroupObject {
-	 if pUnk == nil {
-		return nil;
+	if pUnk == nil {
+		return nil
 	}
 	p := (*IGroupObject)(unsafe.Pointer(pUnk))
 	if addRef {
@@ -37,7 +37,7 @@ func (this *IGroupObject) IID() *syscall.GUID {
 func (this *IGroupObject) GetApplication(rhs **Application) com.Error {
 	addr := (*this.LpVtbl)[7]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -50,14 +50,14 @@ func (this *IGroupObject) GetCreator(rhs *int32) com.Error {
 func (this *IGroupObject) GetParent(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[9]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
 func (this *IGroupObject) GetBottomRightCell(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[10]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -94,7 +94,7 @@ func (this *IGroupObject) Delete(rhs *ole.Variant) com.Error {
 func (this *IGroupObject) Duplicate(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[16]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -227,7 +227,7 @@ func (this *IGroupObject) SetTop(rhs float64) com.Error {
 func (this *IGroupObject) GetTopLeftCell(rhs **Range) com.Error {
 	addr := (*this.LpVtbl)[38]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
@@ -264,16 +264,16 @@ func (this *IGroupObject) GetZOrder(rhs *int32) com.Error {
 func (this *IGroupObject) GetShapeRange(rhs **ShapeRange) com.Error {
 	addr := (*this.LpVtbl)[44]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IGroupObject) Dummy27_()  {
+func (this *IGroupObject) Dummy27_() {
 	addr := (*this.LpVtbl)[45]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy28_()  {
+func (this *IGroupObject) Dummy28_() {
 	addr := (*this.LpVtbl)[46]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -290,7 +290,7 @@ func (this *IGroupObject) SetAddIndent(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IGroupObject) Dummy30_()  {
+func (this *IGroupObject) Dummy30_() {
 	addr := (*this.LpVtbl)[49]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -346,21 +346,21 @@ func (this *IGroupObject) SetAutoSize(rhs bool) com.Error {
 func (this *IGroupObject) GetBorder(rhs **Border) com.Error {
 	addr := (*this.LpVtbl)[58]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IGroupObject) Dummy36_()  {
+func (this *IGroupObject) Dummy36_() {
 	addr := (*this.LpVtbl)[59]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy37_()  {
+func (this *IGroupObject) Dummy37_() {
 	addr := (*this.LpVtbl)[60]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy38_()  {
+func (this *IGroupObject) Dummy38_() {
 	addr := (*this.LpVtbl)[61]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -383,27 +383,27 @@ func (this *IGroupObject) SetDefault_(rhs int32) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IGroupObject) Dummy41_()  {
+func (this *IGroupObject) Dummy41_() {
 	addr := (*this.LpVtbl)[65]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy42_()  {
+func (this *IGroupObject) Dummy42_() {
 	addr := (*this.LpVtbl)[66]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy43_()  {
+func (this *IGroupObject) Dummy43_() {
 	addr := (*this.LpVtbl)[67]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy44_()  {
+func (this *IGroupObject) Dummy44_() {
 	addr := (*this.LpVtbl)[68]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy45_()  {
+func (this *IGroupObject) Dummy45_() {
 	addr := (*this.LpVtbl)[69]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -411,16 +411,16 @@ func (this *IGroupObject) Dummy45_()  {
 func (this *IGroupObject) GetFont(rhs **Font) com.Error {
 	addr := (*this.LpVtbl)[70]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IGroupObject) Dummy47_()  {
+func (this *IGroupObject) Dummy47_() {
 	addr := (*this.LpVtbl)[71]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy48_()  {
+func (this *IGroupObject) Dummy48_() {
 	addr := (*this.LpVtbl)[72]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -437,7 +437,7 @@ func (this *IGroupObject) SetHorizontalAlignment(rhs interface{}) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IGroupObject) Dummy50_()  {
+func (this *IGroupObject) Dummy50_() {
 	addr := (*this.LpVtbl)[75]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -445,66 +445,66 @@ func (this *IGroupObject) Dummy50_()  {
 func (this *IGroupObject) GetInterior(rhs **Interior) com.Error {
 	addr := (*this.LpVtbl)[76]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IGroupObject) Dummy52_()  {
+func (this *IGroupObject) Dummy52_() {
 	addr := (*this.LpVtbl)[77]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy53_()  {
+func (this *IGroupObject) Dummy53_() {
 	addr := (*this.LpVtbl)[78]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy54_()  {
+func (this *IGroupObject) Dummy54_() {
 	addr := (*this.LpVtbl)[79]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy55_()  {
+func (this *IGroupObject) Dummy55_() {
 	addr := (*this.LpVtbl)[80]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy56_()  {
+func (this *IGroupObject) Dummy56_() {
 	addr := (*this.LpVtbl)[81]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy57_()  {
+func (this *IGroupObject) Dummy57_() {
 	addr := (*this.LpVtbl)[82]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy58_()  {
+func (this *IGroupObject) Dummy58_() {
 	addr := (*this.LpVtbl)[83]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy59_()  {
+func (this *IGroupObject) Dummy59_() {
 	addr := (*this.LpVtbl)[84]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy60_()  {
+func (this *IGroupObject) Dummy60_() {
 	addr := (*this.LpVtbl)[85]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy61_()  {
+func (this *IGroupObject) Dummy61_() {
 	addr := (*this.LpVtbl)[86]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy62_()  {
+func (this *IGroupObject) Dummy62_() {
 	addr := (*this.LpVtbl)[87]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy63_()  {
+func (this *IGroupObject) Dummy63_() {
 	addr := (*this.LpVtbl)[88]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -521,22 +521,22 @@ func (this *IGroupObject) SetOrientation(rhs interface{}) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IGroupObject) Dummy65_()  {
+func (this *IGroupObject) Dummy65_() {
 	addr := (*this.LpVtbl)[91]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy66_()  {
+func (this *IGroupObject) Dummy66_() {
 	addr := (*this.LpVtbl)[92]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy67_()  {
+func (this *IGroupObject) Dummy67_() {
 	addr := (*this.LpVtbl)[93]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy68_()  {
+func (this *IGroupObject) Dummy68_() {
 	addr := (*this.LpVtbl)[94]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -553,7 +553,7 @@ func (this *IGroupObject) SetRoundedCorners(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IGroupObject) Dummy70_()  {
+func (this *IGroupObject) Dummy70_() {
 	addr := (*this.LpVtbl)[97]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -570,12 +570,12 @@ func (this *IGroupObject) SetShadow(rhs bool) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IGroupObject) Dummy72_()  {
+func (this *IGroupObject) Dummy72_() {
 	addr := (*this.LpVtbl)[100]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
 
-func (this *IGroupObject) Dummy73_()  {
+func (this *IGroupObject) Dummy73_() {
 	addr := (*this.LpVtbl)[101]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -583,11 +583,11 @@ func (this *IGroupObject) Dummy73_()  {
 func (this *IGroupObject) Ungroup(rhs **win32.IUnknown) com.Error {
 	addr := (*this.LpVtbl)[102]
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(unsafe.Pointer(rhs)))
-		com.AddToScope(rhs)
+	com.AddToScope(rhs)
 	return com.Error(ret)
 }
 
-func (this *IGroupObject) Dummy75_()  {
+func (this *IGroupObject) Dummy75_() {
 	addr := (*this.LpVtbl)[103]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -604,7 +604,7 @@ func (this *IGroupObject) SetVerticalAlignment(rhs interface{}) com.Error {
 	return com.Error(ret)
 }
 
-func (this *IGroupObject) Dummy77_()  {
+func (this *IGroupObject) Dummy77_() {
 	addr := (*this.LpVtbl)[106]
 	_, _, _ = syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)))
 }
@@ -620,4 +620,3 @@ func (this *IGroupObject) SetReadingOrder(rhs int32) com.Error {
 	ret, _, _ := syscall.SyscallN(addr, uintptr(unsafe.Pointer(this)), uintptr(rhs))
 	return com.Error(ret)
 }
-

@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208B2-0000-0000-C000-000000000046
-var IID_DataLabel = syscall.GUID{0x000208B2, 0x0000, 0x0000, 
+var IID_DataLabel = syscall.GUID{0x000208B2, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type DataLabel struct {
@@ -17,8 +17,8 @@ type DataLabel struct {
 }
 
 func NewDataLabel(pDisp *win32.IDispatch, addRef bool, scoped bool) *DataLabel {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &DataLabel{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *DataLabel) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *DataLabel) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *DataLabel) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *DataLabel) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *DataLabel) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *DataLabel) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *DataLabel) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DataLabel) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *DataLabel) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DataLabel) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *DataLabel) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *DataLabel) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *DataLabel) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *DataLabel) Application() *Application {
@@ -132,12 +132,12 @@ func (this *DataLabel) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DataLabel) SetCaption(rhs string)  {
+func (this *DataLabel) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var DataLabel_Characters_OptArgs= []string{
-	"Start", "Length", 
+var DataLabel_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *DataLabel) Characters(optArgs ...interface{}) *Characters {
@@ -157,7 +157,7 @@ func (this *DataLabel) HorizontalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabel) SetHorizontalAlignment(rhs interface{})  {
+func (this *DataLabel) SetHorizontalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000088, []interface{}{rhs})
 }
 
@@ -166,7 +166,7 @@ func (this *DataLabel) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *DataLabel) SetLeft(rhs float64)  {
+func (this *DataLabel) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -176,7 +176,7 @@ func (this *DataLabel) Orientation() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabel) SetOrientation(rhs interface{})  {
+func (this *DataLabel) SetOrientation(rhs interface{}) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -185,7 +185,7 @@ func (this *DataLabel) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabel) SetShadow(rhs bool)  {
+func (this *DataLabel) SetShadow(rhs bool) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
 
@@ -194,7 +194,7 @@ func (this *DataLabel) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DataLabel) SetText(rhs string)  {
+func (this *DataLabel) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -203,7 +203,7 @@ func (this *DataLabel) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *DataLabel) SetTop(rhs float64)  {
+func (this *DataLabel) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -213,7 +213,7 @@ func (this *DataLabel) VerticalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabel) SetVerticalAlignment(rhs interface{})  {
+func (this *DataLabel) SetVerticalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000089, []interface{}{rhs})
 }
 
@@ -222,7 +222,7 @@ func (this *DataLabel) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DataLabel) SetReadingOrder(rhs int32)  {
+func (this *DataLabel) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -232,7 +232,7 @@ func (this *DataLabel) AutoScaleFont() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabel) SetAutoScaleFont(rhs interface{})  {
+func (this *DataLabel) SetAutoScaleFont(rhs interface{}) {
 	_ = this.PropPut(0x000005f5, []interface{}{rhs})
 }
 
@@ -241,7 +241,7 @@ func (this *DataLabel) AutoText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabel) SetAutoText(rhs bool)  {
+func (this *DataLabel) SetAutoText(rhs bool) {
 	_ = this.PropPut(0x00000087, []interface{}{rhs})
 }
 
@@ -250,7 +250,7 @@ func (this *DataLabel) NumberFormat() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DataLabel) SetNumberFormat(rhs string)  {
+func (this *DataLabel) SetNumberFormat(rhs string) {
 	_ = this.PropPut(0x000000c1, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *DataLabel) NumberFormatLinked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabel) SetNumberFormatLinked(rhs bool)  {
+func (this *DataLabel) SetNumberFormatLinked(rhs bool) {
 	_ = this.PropPut(0x000000c2, []interface{}{rhs})
 }
 
@@ -269,7 +269,7 @@ func (this *DataLabel) NumberFormatLocal() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabel) SetNumberFormatLocal(rhs interface{})  {
+func (this *DataLabel) SetNumberFormatLocal(rhs interface{}) {
 	_ = this.PropPut(0x00000449, []interface{}{rhs})
 }
 
@@ -278,7 +278,7 @@ func (this *DataLabel) ShowLegendKey() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabel) SetShowLegendKey(rhs bool)  {
+func (this *DataLabel) SetShowLegendKey(rhs bool) {
 	_ = this.PropPut(0x000000ab, []interface{}{rhs})
 }
 
@@ -288,7 +288,7 @@ func (this *DataLabel) Type() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabel) SetType(rhs interface{})  {
+func (this *DataLabel) SetType(rhs interface{}) {
 	_ = this.PropPut(0x0000006c, []interface{}{rhs})
 }
 
@@ -297,7 +297,7 @@ func (this *DataLabel) Position() int32 {
 	return retVal.LValVal()
 }
 
-func (this *DataLabel) SetPosition(rhs int32)  {
+func (this *DataLabel) SetPosition(rhs int32) {
 	_ = this.PropPut(0x00000085, []interface{}{rhs})
 }
 
@@ -306,7 +306,7 @@ func (this *DataLabel) ShowSeriesName() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabel) SetShowSeriesName(rhs bool)  {
+func (this *DataLabel) SetShowSeriesName(rhs bool) {
 	_ = this.PropPut(0x000007e6, []interface{}{rhs})
 }
 
@@ -315,7 +315,7 @@ func (this *DataLabel) ShowCategoryName() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabel) SetShowCategoryName(rhs bool)  {
+func (this *DataLabel) SetShowCategoryName(rhs bool) {
 	_ = this.PropPut(0x000007e7, []interface{}{rhs})
 }
 
@@ -324,7 +324,7 @@ func (this *DataLabel) ShowValue() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabel) SetShowValue(rhs bool)  {
+func (this *DataLabel) SetShowValue(rhs bool) {
 	_ = this.PropPut(0x000007e8, []interface{}{rhs})
 }
 
@@ -333,7 +333,7 @@ func (this *DataLabel) ShowPercentage() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabel) SetShowPercentage(rhs bool)  {
+func (this *DataLabel) SetShowPercentage(rhs bool) {
 	_ = this.PropPut(0x000007e9, []interface{}{rhs})
 }
 
@@ -342,7 +342,7 @@ func (this *DataLabel) ShowBubbleSize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *DataLabel) SetShowBubbleSize(rhs bool)  {
+func (this *DataLabel) SetShowBubbleSize(rhs bool) {
 	_ = this.PropPut(0x000007ea, []interface{}{rhs})
 }
 
@@ -352,7 +352,7 @@ func (this *DataLabel) Separator() ole.Variant {
 	return *retVal
 }
 
-func (this *DataLabel) SetSeparator(rhs interface{})  {
+func (this *DataLabel) SetSeparator(rhs interface{}) {
 	_ = this.PropPut(0x000007eb, []interface{}{rhs})
 }
 
@@ -376,7 +376,7 @@ func (this *DataLabel) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DataLabel) SetFormula(rhs string)  {
+func (this *DataLabel) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -385,7 +385,7 @@ func (this *DataLabel) FormulaR1C1() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DataLabel) SetFormulaR1C1(rhs string)  {
+func (this *DataLabel) SetFormulaR1C1(rhs string) {
 	_ = this.PropPut(0x00000108, []interface{}{rhs})
 }
 
@@ -394,7 +394,7 @@ func (this *DataLabel) FormulaLocal() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DataLabel) SetFormulaLocal(rhs string)  {
+func (this *DataLabel) SetFormulaLocal(rhs string) {
 	_ = this.PropPut(0x00000107, []interface{}{rhs})
 }
 
@@ -403,7 +403,6 @@ func (this *DataLabel) FormulaR1C1Local() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *DataLabel) SetFormulaR1C1Local(rhs string)  {
+func (this *DataLabel) SetFormulaR1C1Local(rhs string) {
 	_ = this.PropPut(0x00000109, []interface{}{rhs})
 }
-

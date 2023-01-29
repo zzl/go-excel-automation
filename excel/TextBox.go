@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 000208A4-0000-0000-C000-000000000046
-var IID_TextBox = syscall.GUID{0x000208A4, 0x0000, 0x0000, 
+var IID_TextBox = syscall.GUID{0x000208A4, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type TextBox struct {
@@ -17,8 +17,8 @@ type TextBox struct {
 }
 
 func NewTextBox(pDisp *win32.IDispatch, addRef bool, scoped bool) *TextBox {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &TextBox{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *TextBox) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *TextBox) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *TextBox) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *TextBox) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *TextBox) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *TextBox) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *TextBox) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *TextBox) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *TextBox) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *TextBox) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *TextBox) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *TextBox) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *TextBox) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *TextBox) Application() *Application {
@@ -112,8 +112,8 @@ func (this *TextBox) Copy() ole.Variant {
 	return *retVal
 }
 
-var TextBox_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var TextBox_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *TextBox) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *TextBox) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TextBox) SetEnabled(rhs bool)  {
+func (this *TextBox) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,7 +154,7 @@ func (this *TextBox) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *TextBox) SetHeight(rhs float64)  {
+func (this *TextBox) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
@@ -168,7 +168,7 @@ func (this *TextBox) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *TextBox) SetLeft(rhs float64)  {
+func (this *TextBox) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,7 +177,7 @@ func (this *TextBox) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TextBox) SetLocked(rhs bool)  {
+func (this *TextBox) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
@@ -186,7 +186,7 @@ func (this *TextBox) Name() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *TextBox) SetName(rhs string)  {
+func (this *TextBox) SetName(rhs string) {
 	_ = this.PropPut(0x0000006e, []interface{}{rhs})
 }
 
@@ -195,7 +195,7 @@ func (this *TextBox) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *TextBox) SetOnAction(rhs string)  {
+func (this *TextBox) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -205,7 +205,7 @@ func (this *TextBox) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *TextBox) SetPlacement(rhs interface{})  {
+func (this *TextBox) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -214,12 +214,12 @@ func (this *TextBox) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TextBox) SetPrintObject(rhs bool)  {
+func (this *TextBox) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var TextBox_Select_OptArgs= []string{
-	"Replace", 
+var TextBox_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *TextBox) Select(optArgs ...interface{}) ole.Variant {
@@ -240,7 +240,7 @@ func (this *TextBox) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *TextBox) SetTop(rhs float64)  {
+func (this *TextBox) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
@@ -254,7 +254,7 @@ func (this *TextBox) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TextBox) SetVisible(rhs bool)  {
+func (this *TextBox) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -263,7 +263,7 @@ func (this *TextBox) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *TextBox) SetWidth(rhs float64)  {
+func (this *TextBox) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -282,7 +282,7 @@ func (this *TextBox) AddIndent() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TextBox) SetAddIndent(rhs bool)  {
+func (this *TextBox) SetAddIndent(rhs bool) {
 	_ = this.PropPut(0x00000427, []interface{}{rhs})
 }
 
@@ -292,7 +292,7 @@ func (this *TextBox) AutoScaleFont() ole.Variant {
 	return *retVal
 }
 
-func (this *TextBox) SetAutoScaleFont(rhs interface{})  {
+func (this *TextBox) SetAutoScaleFont(rhs interface{}) {
 	_ = this.PropPut(0x000005f5, []interface{}{rhs})
 }
 
@@ -301,7 +301,7 @@ func (this *TextBox) AutoSize() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TextBox) SetAutoSize(rhs bool)  {
+func (this *TextBox) SetAutoSize(rhs bool) {
 	_ = this.PropPut(0x00000266, []interface{}{rhs})
 }
 
@@ -310,12 +310,12 @@ func (this *TextBox) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *TextBox) SetCaption(rhs string)  {
+func (this *TextBox) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var TextBox_Characters_OptArgs= []string{
-	"Start", "Length", 
+var TextBox_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *TextBox) Characters(optArgs ...interface{}) *Characters {
@@ -324,8 +324,8 @@ func (this *TextBox) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var TextBox_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var TextBox_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *TextBox) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -345,7 +345,7 @@ func (this *TextBox) Formula() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *TextBox) SetFormula(rhs string)  {
+func (this *TextBox) SetFormula(rhs string) {
 	_ = this.PropPut(0x00000105, []interface{}{rhs})
 }
 
@@ -355,7 +355,7 @@ func (this *TextBox) HorizontalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *TextBox) SetHorizontalAlignment(rhs interface{})  {
+func (this *TextBox) SetHorizontalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000088, []interface{}{rhs})
 }
 
@@ -364,7 +364,7 @@ func (this *TextBox) LockedText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TextBox) SetLockedText(rhs bool)  {
+func (this *TextBox) SetLockedText(rhs bool) {
 	_ = this.PropPut(0x00000268, []interface{}{rhs})
 }
 
@@ -374,7 +374,7 @@ func (this *TextBox) Orientation() ole.Variant {
 	return *retVal
 }
 
-func (this *TextBox) SetOrientation(rhs interface{})  {
+func (this *TextBox) SetOrientation(rhs interface{}) {
 	_ = this.PropPut(0x00000086, []interface{}{rhs})
 }
 
@@ -383,7 +383,7 @@ func (this *TextBox) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *TextBox) SetText(rhs string)  {
+func (this *TextBox) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -393,7 +393,7 @@ func (this *TextBox) VerticalAlignment() ole.Variant {
 	return *retVal
 }
 
-func (this *TextBox) SetVerticalAlignment(rhs interface{})  {
+func (this *TextBox) SetVerticalAlignment(rhs interface{}) {
 	_ = this.PropPut(0x00000089, []interface{}{rhs})
 }
 
@@ -402,7 +402,7 @@ func (this *TextBox) ReadingOrder() int32 {
 	return retVal.LValVal()
 }
 
-func (this *TextBox) SetReadingOrder(rhs int32)  {
+func (this *TextBox) SetReadingOrder(rhs int32) {
 	_ = this.PropPut(0x000003cf, []interface{}{rhs})
 }
 
@@ -421,7 +421,7 @@ func (this *TextBox) RoundedCorners() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TextBox) SetRoundedCorners(rhs bool)  {
+func (this *TextBox) SetRoundedCorners(rhs bool) {
 	_ = this.PropPut(0x0000026b, []interface{}{rhs})
 }
 
@@ -430,7 +430,6 @@ func (this *TextBox) Shadow() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *TextBox) SetShadow(rhs bool)  {
+func (this *TextBox) SetShadow(rhs bool) {
 	_ = this.PropPut(0x00000067, []interface{}{rhs})
 }
-

@@ -1,15 +1,15 @@
 package excel
 
 import (
-	"github.com/zzl/go-win32api/win32"
 	"github.com/zzl/go-com/com"
 	"github.com/zzl/go-com/ole"
+	"github.com/zzl/go-win32api/v2/win32"
 	"syscall"
 	"unsafe"
 )
 
 // 00020891-0000-0000-C000-000000000046
-var IID_Labels = syscall.GUID{0x00020891, 0x0000, 0x0000, 
+var IID_Labels = syscall.GUID{0x00020891, 0x0000, 0x0000,
 	[8]byte{0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46}}
 
 type Labels struct {
@@ -17,8 +17,8 @@ type Labels struct {
 }
 
 func NewLabels(pDisp *win32.IDispatch, addRef bool, scoped bool) *Labels {
-	 if pDisp == nil {
-		return nil;
+	if pDisp == nil {
+		return nil
 	}
 	p := &Labels{ole.OleClient{pDisp}}
 	if addRef {
@@ -45,9 +45,9 @@ func (this *Labels) GetIDispatch(addRef bool) *win32.IDispatch {
 	return this.IDispatch
 }
 
-func (this *Labels) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer)  {
+func (this *Labels) QueryInterface_(riid *syscall.GUID, ppvObj unsafe.Pointer) {
 	retVal, _ := this.Call(0x60000000, []interface{}{riid, ppvObj})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Labels) AddRef() uint32 {
@@ -60,24 +60,24 @@ func (this *Labels) Release() uint32 {
 	return retVal.UintValVal()
 }
 
-func (this *Labels) GetTypeInfoCount(pctinfo *uint32)  {
+func (this *Labels) GetTypeInfoCount(pctinfo *uint32) {
 	retVal, _ := this.Call(0x60010000, []interface{}{pctinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Labels) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer)  {
+func (this *Labels) GetTypeInfo(itinfo uint32, lcid uint32, pptinfo unsafe.Pointer) {
 	retVal, _ := this.Call(0x60010001, []interface{}{itinfo, lcid, pptinfo})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Labels) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32)  {
+func (this *Labels) GetIDsOfNames(riid *syscall.GUID, rgszNames **int8, cNames uint32, lcid uint32, rgdispid *int32) {
 	retVal, _ := this.Call(0x60010002, []interface{}{riid, rgszNames, cNames, lcid, rgdispid})
-	_= retVal
+	_ = retVal
 }
 
-func (this *Labels) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32)  {
+func (this *Labels) Invoke(dispidMember int32, riid *syscall.GUID, lcid uint32, wFlags uint16, pdispparams *win32.DISPPARAMS, pvarResult *ole.Variant, pexcepinfo *win32.EXCEPINFO, puArgErr *uint32) {
 	retVal, _ := this.Call(0x60010003, []interface{}{dispidMember, riid, lcid, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr})
-	_= retVal
+	_ = retVal
 }
 
 func (this *Labels) Application() *Application {
@@ -95,9 +95,9 @@ func (this *Labels) Parent() *ole.DispatchClass {
 	return ole.NewDispatchClass(retVal.IDispatch(), true)
 }
 
-func (this *Labels) Dummy3_()  {
+func (this *Labels) Dummy3_() {
 	retVal, _ := this.Call(0x00010003, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Labels) BringToFront() ole.Variant {
@@ -112,8 +112,8 @@ func (this *Labels) Copy() ole.Variant {
 	return *retVal
 }
 
-var Labels_CopyPicture_OptArgs= []string{
-	"Appearance", "Format", 
+var Labels_CopyPicture_OptArgs = []string{
+	"Appearance", "Format",
 }
 
 func (this *Labels) CopyPicture(optArgs ...interface{}) ole.Variant {
@@ -145,7 +145,7 @@ func (this *Labels) Enabled() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Labels) SetEnabled(rhs bool)  {
+func (this *Labels) SetEnabled(rhs bool) {
 	_ = this.PropPut(0x00000258, []interface{}{rhs})
 }
 
@@ -154,13 +154,13 @@ func (this *Labels) Height() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Labels) SetHeight(rhs float64)  {
+func (this *Labels) SetHeight(rhs float64) {
 	_ = this.PropPut(0x0000007b, []interface{}{rhs})
 }
 
-func (this *Labels) Dummy12_()  {
+func (this *Labels) Dummy12_() {
 	retVal, _ := this.Call(0x0001000c, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Labels) Left() float64 {
@@ -168,7 +168,7 @@ func (this *Labels) Left() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Labels) SetLeft(rhs float64)  {
+func (this *Labels) SetLeft(rhs float64) {
 	_ = this.PropPut(0x0000007f, []interface{}{rhs})
 }
 
@@ -177,13 +177,13 @@ func (this *Labels) Locked() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Labels) SetLocked(rhs bool)  {
+func (this *Labels) SetLocked(rhs bool) {
 	_ = this.PropPut(0x0000010d, []interface{}{rhs})
 }
 
-func (this *Labels) Dummy15_()  {
+func (this *Labels) Dummy15_() {
 	retVal, _ := this.Call(0x0001000f, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Labels) OnAction() string {
@@ -191,7 +191,7 @@ func (this *Labels) OnAction() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Labels) SetOnAction(rhs string)  {
+func (this *Labels) SetOnAction(rhs string) {
 	_ = this.PropPut(0x00000254, []interface{}{rhs})
 }
 
@@ -201,7 +201,7 @@ func (this *Labels) Placement() ole.Variant {
 	return *retVal
 }
 
-func (this *Labels) SetPlacement(rhs interface{})  {
+func (this *Labels) SetPlacement(rhs interface{}) {
 	_ = this.PropPut(0x00000269, []interface{}{rhs})
 }
 
@@ -210,12 +210,12 @@ func (this *Labels) PrintObject() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Labels) SetPrintObject(rhs bool)  {
+func (this *Labels) SetPrintObject(rhs bool) {
 	_ = this.PropPut(0x0000026a, []interface{}{rhs})
 }
 
-var Labels_Select_OptArgs= []string{
-	"Replace", 
+var Labels_Select_OptArgs = []string{
+	"Replace",
 }
 
 func (this *Labels) Select(optArgs ...interface{}) ole.Variant {
@@ -236,13 +236,13 @@ func (this *Labels) Top() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Labels) SetTop(rhs float64)  {
+func (this *Labels) SetTop(rhs float64) {
 	_ = this.PropPut(0x0000007e, []interface{}{rhs})
 }
 
-func (this *Labels) Dummy22_()  {
+func (this *Labels) Dummy22_() {
 	retVal, _ := this.Call(0x00010016, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Labels) Visible() bool {
@@ -250,7 +250,7 @@ func (this *Labels) Visible() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Labels) SetVisible(rhs bool)  {
+func (this *Labels) SetVisible(rhs bool) {
 	_ = this.PropPut(0x0000022e, []interface{}{rhs})
 }
 
@@ -259,7 +259,7 @@ func (this *Labels) Width() float64 {
 	return retVal.DblValVal()
 }
 
-func (this *Labels) SetWidth(rhs float64)  {
+func (this *Labels) SetWidth(rhs float64) {
 	_ = this.PropPut(0x0000007a, []interface{}{rhs})
 }
 
@@ -278,12 +278,12 @@ func (this *Labels) Caption() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Labels) SetCaption(rhs string)  {
+func (this *Labels) SetCaption(rhs string) {
 	_ = this.PropPut(0x0000008b, []interface{}{rhs})
 }
 
-var Labels_Characters_OptArgs= []string{
-	"Start", "Length", 
+var Labels_Characters_OptArgs = []string{
+	"Start", "Length",
 }
 
 func (this *Labels) Characters(optArgs ...interface{}) *Characters {
@@ -292,8 +292,8 @@ func (this *Labels) Characters(optArgs ...interface{}) *Characters {
 	return NewCharacters(retVal.IDispatch(), false, true)
 }
 
-var Labels_CheckSpelling_OptArgs= []string{
-	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang", 
+var Labels_CheckSpelling_OptArgs = []string{
+	"CustomDictionary", "IgnoreUppercase", "AlwaysSuggest", "SpellLang",
 }
 
 func (this *Labels) CheckSpelling(optArgs ...interface{}) ole.Variant {
@@ -308,7 +308,7 @@ func (this *Labels) LockedText() bool {
 	return retVal.BoolValVal() != win32.VARIANT_FALSE
 }
 
-func (this *Labels) SetLockedText(rhs bool)  {
+func (this *Labels) SetLockedText(rhs bool) {
 	_ = this.PropPut(0x00000268, []interface{}{rhs})
 }
 
@@ -317,7 +317,7 @@ func (this *Labels) Text() string {
 	return win32.BstrToStrAndFree(retVal.BstrValVal())
 }
 
-func (this *Labels) SetText(rhs string)  {
+func (this *Labels) SetText(rhs string) {
 	_ = this.PropPut(0x0000008a, []interface{}{rhs})
 }
 
@@ -327,13 +327,13 @@ func (this *Labels) Accelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *Labels) SetAccelerator(rhs interface{})  {
+func (this *Labels) SetAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x0000034e, []interface{}{rhs})
 }
 
-func (this *Labels) Dummy33_()  {
+func (this *Labels) Dummy33_() {
 	retVal, _ := this.Call(0x00010021, nil)
-	_= retVal
+	_ = retVal
 }
 
 func (this *Labels) PhoneticAccelerator() ole.Variant {
@@ -342,7 +342,7 @@ func (this *Labels) PhoneticAccelerator() ole.Variant {
 	return *retVal
 }
 
-func (this *Labels) SetPhoneticAccelerator(rhs interface{})  {
+func (this *Labels) SetPhoneticAccelerator(rhs interface{}) {
 	_ = this.PropPut(0x00000461, []interface{}{rhs})
 }
 
@@ -375,7 +375,7 @@ func (this *Labels) ForEach(action func(item *ole.DispatchClass) bool) {
 	pEnum := this.NewEnum_()
 	var pEnumVar *win32.IEnumVARIANT
 	pEnum.QueryInterface(&win32.IID_IEnumVARIANT, unsafe.Pointer(&pEnumVar))
-	defer pEnumVar.Release();
+	defer pEnumVar.Release()
 	for {
 		var c uint32
 		var v ole.Variant
@@ -391,4 +391,3 @@ func (this *Labels) ForEach(action func(item *ole.DispatchClass) bool) {
 		}
 	}
 }
-
